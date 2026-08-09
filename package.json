@@ -1,0 +1,41 @@
+{
+  "name": "hsr-dashboard",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "predev": "tsx scripts/copy-maplibre-worker.ts",
+    "dev": "vite",
+    "prebuild": "tsx scripts/copy-maplibre-worker.ts",
+    "build": "tsc -b && vite build",
+    "fetch": "tsx scripts/fetch-arcgis.ts && tsx scripts/build-centerline.ts && tsx scripts/build-segments.ts && tsx scripts/build-history.ts",
+    "fetch:cvsr": "tsx scripts/fetch-cvsr.ts --manifest",
+    "parse:cvsr": "tsx scripts/fetch-cvsr.ts --parse",
+    "lint": "oxlint src scripts vite.config.ts",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@turf/along": "7.4.0",
+    "@turf/helpers": "7.4.0",
+    "@turf/length": "7.4.0",
+    "@turf/line-slice-along": "7.4.0",
+    "@turf/nearest-point-on-line": "7.4.0",
+    "d3-scale": "4.0.2",
+    "maplibre-gl": "6.2.0",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@types/d3-scale": "4.0.9",
+    "@types/geojson": "7946.0.16",
+    "@types/node": "24.13.3",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react": "6.0.5",
+    "oxlint": "1.75.0",
+    "pdf-parse": "2.4.5",
+    "tsx": "4.23.11",
+    "typescript": "5.9.3",
+    "vite": "8.2.1"
+  }
+}
