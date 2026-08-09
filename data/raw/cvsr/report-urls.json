@@ -1,0 +1,548 @@
+{
+  "20240818-CVSR_2401_2311_Data-FINAL-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2024/01/20240818-CVSR_2401_2311_Data-FINAL-A11Y.pdf",
+    "bytes": 2358004,
+    "prefixSha256": "f0ef2a0bf5bc50ec46ae6b477691af4220145905a9eb1947a1161b015180cf19",
+    "verifiedAt": "2026-08-09T18:35:57.429Z"
+  },
+  "508_CVSR_2105_2103_Data-FINAL_V0_ADA.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2021/05/508_CVSR_2105_2103_Data-FINAL_V0_ADA.pdf",
+    "bytes": 5129948,
+    "prefixSha256": "9198a2abe154e057d337c71178ffbfa2f320e1517c507c0ea29709e198e3f74f",
+    "verifiedAt": "2026-08-09T18:35:58.262Z"
+  },
+  "CVSR-2024-06-Data-2024-04-FINAL-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2024/06/CVSR-2024-06-Data-2024-04-FINAL-A11Y.pdf",
+    "bytes": 2853667,
+    "prefixSha256": "559b80387d290c4c70250eb419163d1ce4efdbffa16feeb744acfdb42a81b2b1",
+    "verifiedAt": "2026-08-09T18:35:59.130Z"
+  },
+  "CVSR-2024-09-Data-2024-07-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2024/09/CVSR-2024-09-Data-2024-07-FINAL-V0-A11Y.pdf",
+    "bytes": 3286698,
+    "prefixSha256": "315988c4748888781980d76214d9ff577c4e703cd0e7b8076539ab492dff310b",
+    "verifiedAt": "2026-08-09T18:36:04.274Z"
+  },
+  "CVSR-2024-10-Data-2024-08-Draft-3-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2024/11/CVSR-2024-10-Data-2024-08-Draft-3-A11Y.pdf",
+    "bytes": 2879322,
+    "prefixSha256": "26c3a134a65acfb8135db19b3fadb069b5615c86faf770a354937b27c74d18a9",
+    "verifiedAt": "2026-08-09T18:36:09.851Z"
+  },
+  "CVSR-2025-01-Data-2024-11-FINAL-V0-Remediation-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2025/01/CVSR-2025-01-Data-2024-11-FINAL-V0-Remediation-A11Y.pdf",
+    "bytes": 2577628,
+    "prefixSha256": "060a013ff8d72aa548dd4c612be93ac220b6aedf949dc8bd4225db9c58084a5c",
+    "verifiedAt": "2026-08-09T18:36:12.143Z"
+  },
+  "CVSR-2025-03-Data-2024-12-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2025/02/CVSR-2025-03-Data-2024-12-FINAL-V0-A11Y.pdf",
+    "bytes": 2615411,
+    "prefixSha256": "863c39ea701fa55614aa7e3aa906a2d6554e13e0640ee6fac7e2835125e07ce6",
+    "verifiedAt": "2026-08-09T18:36:14.549Z"
+  },
+  "CVSR-2025-05-01-Data-2025-02-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2025/04/CVSR-2025-05-01-Data-2025-02-FINAL-V0-A11Y.pdf",
+    "bytes": 1198058,
+    "prefixSha256": "c7f4150596049595b9dab13b333b8a776894f817ed62736fda8dfdfdb0d614c0",
+    "verifiedAt": "2026-08-09T18:36:16.982Z"
+  },
+  "CVSR-2025-05-29-Data-2025-03-Final2-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2025/05/CVSR-2025-05-29-Data-2025-03-Final2-A11Y.pdf",
+    "bytes": 2064930,
+    "prefixSha256": "11c43e1345b1d2322d43bea5db4b40a14d15cd424a35071d3604aa02ca4c31ec",
+    "verifiedAt": "2026-08-09T18:36:19.448Z"
+  },
+  "CVSR-2025-08-Data-2025-06-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2025/08/CVSR-2025-08-Data-2025-06-FINAL-V0-A11Y.pdf",
+    "bytes": 2229034,
+    "prefixSha256": "1a771f753419cc3d6b8e874b56cd2d0a1fd1f74dac024aad0559df4a226613e5",
+    "verifiedAt": "2026-08-09T18:36:26.214Z"
+  },
+  "CVSR-2025-10-Data-2025-07-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2025/10/CVSR-2025-10-Data-2025-07-FINAL-V0-A11Y.pdf",
+    "bytes": 2329594,
+    "prefixSha256": "02d1c4171ebba4402a6ac9d52907fb2a5f41a3886a5ded16f2f0c50bced16c43",
+    "verifiedAt": "2026-08-09T18:36:27.217Z"
+  },
+  "CVSR-2025-11-Data-2025-09-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2025/11/CVSR-2025-11-Data-2025-09-FINAL-V0-A11Y.pdf",
+    "bytes": 2209344,
+    "prefixSha256": "81a4175489ad7f342a2bd602aba9bacc64f0dfed4c2488e5673e5ec9391f878a",
+    "verifiedAt": "2026-08-09T18:36:28.228Z"
+  },
+  "CVSR-2204-2202-Data-FINAL-v0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2022/04/CVSR-2204-2202-Data-FINAL-v0-A11Y.pdf",
+    "bytes": 2342409,
+    "prefixSha256": "bb80ea73cb8c25fb2b4e6ca64ed6730aaa67efc2b6dee2e890dd5e3cfe9bc47c",
+    "verifiedAt": "2026-08-09T18:36:29.227Z"
+  },
+  "CVSR-2205-2203-Data-FINAL-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2022/05/CVSR-2205-2203-Data-FINAL-A11Y.pdf",
+    "bytes": 2378325,
+    "prefixSha256": "2b37c67827829bf91d325a883a5a5a41fb615bd987b8eb703f8b803680977fd2",
+    "verifiedAt": "2026-08-09T18:36:30.222Z"
+  },
+  "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2022/06/CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
+    "bytes": 2394051,
+    "prefixSha256": "b6e48771b97c7b8d88feb402aff747362c6542b967095dab8b7da17f705fa811",
+    "verifiedAt": "2026-08-09T18:36:31.236Z"
+  },
+  "CVSR-2207-2205-Data-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2022/07/CVSR-2207-2205-Data-FINAL-V0-A11Y.pdf",
+    "bytes": 2423096,
+    "prefixSha256": "af81c4622105b055e4bbc373a7cf1a934e967c45fa4fafc19f48efea5cd44a4d",
+    "verifiedAt": "2026-08-09T18:36:32.228Z"
+  },
+  "CVSR-2209-2207-Data-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2022/09/CVSR-2209-2207-Data-FINAL-V0-A11Y.pdf",
+    "bytes": 2534075,
+    "prefixSha256": "9a33fcdf58e9ba8d3b367400f4dd468e161d5bbcb2c909ea3c52e55941af5aa2",
+    "verifiedAt": "2026-08-09T18:36:33.223Z"
+  },
+  "CVSR-2210-2208-Data-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2022/10/CVSR-2210-2208-Data-FINAL-V0-A11Y.pdf",
+    "bytes": 2546379,
+    "prefixSha256": "71c9da335578f3d6584d5c32bf4a2c4c8d5be80fe021b84ad9dd8c8aa93d8423",
+    "verifiedAt": "2026-08-09T18:36:34.218Z"
+  },
+  "CVSR-2211-2209-Data-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2022/11/CVSR-2211-2209-Data-FINAL-V0-A11Y.pdf",
+    "bytes": 2613848,
+    "prefixSha256": "4919efce7557cafd073907f0f55bc9fd75b33c262034d3a93290440cea80de98",
+    "verifiedAt": "2026-08-09T18:36:35.236Z"
+  },
+  "CVSR-2212-2210-Data-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2022/12/CVSR-2212-2210-Data-FINAL-V0-A11Y.pdf",
+    "bytes": 2649432,
+    "prefixSha256": "b1716970b82321e930dd0529ca2a812c606c862e2b5abb481c05c6963d9df887",
+    "verifiedAt": "2026-08-09T18:36:36.228Z"
+  },
+  "CVSR-2305-2303-Data-FINAL-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2023/05/CVSR-2305-2303-Data-FINAL-A11Y.pdf",
+    "bytes": 2078240,
+    "prefixSha256": "58143d4a407ea190a593408b7909cfebc5c746a9c25ed7c4f953aff6edd5b39b",
+    "verifiedAt": "2026-08-09T18:36:37.231Z"
+  },
+  "CVSR-2306-2304-Data-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2023/06/CVSR-2306-2304-Data-FINAL-V0-A11Y.pdf",
+    "bytes": 2315231,
+    "prefixSha256": "fb24da1cba62d6605202297e7ca551638ed514439d3f0af8afa809323df58798",
+    "verifiedAt": "2026-08-09T18:36:38.231Z"
+  },
+  "CVSR-2308-2306-Data-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2023/08/CVSR-2308-2306-Data-FINAL-V0-A11Y.pdf",
+    "bytes": 2347093,
+    "prefixSha256": "d006fd057e98c9713db3763a5ca3f9ef7661984a59c45749bf5a88a6ba5091b6",
+    "verifiedAt": "2026-08-09T18:36:39.239Z"
+  },
+  "CVSR-2309-2307-Data-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2023/09/CVSR-2309-2307-Data-FINAL-V0-A11Y.pdf",
+    "bytes": 2357854,
+    "prefixSha256": "e280f78408a6b46aa6179e6e4d3b8e5c6dbb13af6ed24d933af293683d5cc8e0",
+    "verifiedAt": "2026-08-09T18:36:40.236Z"
+  },
+  "CVSR-2404-2402-Data-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2024/04/CVSR-2404-2402-Data-FINAL-V0-A11Y.pdf",
+    "bytes": 2307153,
+    "prefixSha256": "58393abdb93c7d670132592854a40f6e8c756084740b940776701e4245e9b819",
+    "verifiedAt": "2026-08-09T18:36:42.683Z"
+  },
+  "CVSR-2405-2403-Data-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2024/05/CVSR-2405-2403-Data-FINAL-V0-A11Y.pdf",
+    "bytes": 2324380,
+    "prefixSha256": "9c4aaab1e81cbd9f556df4f7a4c1e78d943b31575fd80d992029932a629914c1",
+    "verifiedAt": "2026-08-09T18:36:45.096Z"
+  },
+  "CVSR-December-2024-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2025/01/CVSR-December-2024-A11Y.pdf",
+    "bytes": 2674551,
+    "prefixSha256": "844b5a1c519d12970f12afdb7a15c5eb107469a4f7dca31bc2b819185204ca40",
+    "verifiedAt": "2026-08-09T18:36:48.537Z"
+  },
+  "CVSR0-2301-2211-Data-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2023/01/CVSR0-2301-2211-Data-FINAL-V0-A11Y.pdf",
+    "bytes": 2728417,
+    "prefixSha256": "8515443d11dcb427c0b6410984ec4e27a8ff177b259b03cd540afdf57bb8e617",
+    "verifiedAt": "2026-08-09T18:36:49.534Z"
+  },
+  "CVSR_2106_2104_Data-FINAL_V3.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2021/06/CVSR_2106_2104_Data-FINAL_V3.pdf",
+    "bytes": 3355228,
+    "prefixSha256": "7450e779d538c18b451d6761877d35ef2bfe22a3393cde2824f3ce01d155050d",
+    "verifiedAt": "2026-08-09T18:36:50.539Z"
+  },
+  "CVSR_2107_2105_Data-FINAL_V0_A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2021/07/CVSR_2107_2105_Data-FINAL_V0_A11Y.pdf",
+    "bytes": 3306252,
+    "prefixSha256": "d9da5e3aa8e1abb0d64ad5d506ae391ed0ff9e567106744cb1b68e0b24d4e8e7",
+    "verifiedAt": "2026-08-09T18:36:51.534Z"
+  },
+  "CVSR_2108_2106_Data-FINAL_V0_A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2021/08/CVSR_2108_2106_Data-FINAL_V0_A11Y.pdf",
+    "bytes": 3321223,
+    "prefixSha256": "f6ae1a9c4c0f70adbfb51b3afebd3d6e0d82b726009c2773fc415231a0b95133",
+    "verifiedAt": "2026-08-09T18:36:52.528Z"
+  },
+  "CVSR_2109_2107_Data-FINAL_V0_ADA.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2021/09/CVSR_2109_2107_Data-FINAL_V0_ADA.pdf",
+    "bytes": 3424228,
+    "prefixSha256": "7662ff6ccf113efaf64b581671038a3680777bfc436a13e1060b72efb009d0e8",
+    "verifiedAt": "2026-08-09T18:36:53.546Z"
+  },
+  "CVSR_2110_2108_Data-FINAL_V0_ADA.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2021/10/CVSR_2110_2108_Data-FINAL_V0_ADA.pdf",
+    "bytes": 3380891,
+    "prefixSha256": "298fbb9ccebcfa510e23f294721a1d900a872683d648dbfc3f5ffb98b8b95acc",
+    "verifiedAt": "2026-08-09T18:36:54.582Z"
+  },
+  "CVSR_2111_2109_Data-FINAL_V0_A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2021/11/CVSR_2111_2109_Data-FINAL_V0_A11Y.pdf",
+    "bytes": 2236569,
+    "prefixSha256": "d0efa608cc2ddab497982f79ae03a0bda4ab5fcde6e9e2b511e7e4b5e5396225",
+    "verifiedAt": "2026-08-09T18:36:55.550Z"
+  },
+  "CVSR_2112_2110_Data-FINAL_V0_ADA.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2021/12/CVSR_2112_2110_Data-FINAL_V0_ADA.pdf",
+    "bytes": 1995441,
+    "prefixSha256": "306f4ce83efa956f250daf2f4ded67b5d2dcb094397126eb230e95581391ef75",
+    "verifiedAt": "2026-08-09T18:36:56.555Z"
+  },
+  "CVSR_2201_2111_Data-FINAL_V0_A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2022/01/CVSR_2201_2111_Data-FINAL_V0_A11Y.pdf",
+    "bytes": 2043364,
+    "prefixSha256": "bf96b2b858eeaa222f454eda693e12c97fd4f118ed44f99578c564be07c77e03",
+    "verifiedAt": "2026-08-09T18:36:57.554Z"
+  },
+  "CVSR_2202_2112_Data-FINAL_V0_ADA.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2022/02/CVSR_2202_2112_Data-FINAL_V0_ADA.pdf",
+    "bytes": 2113422,
+    "prefixSha256": "1649f2043ccd874dc3c760f45e6ba2da4482a009e0dbb4ae3c81b39cf19c554e",
+    "verifiedAt": "2026-08-09T18:36:58.546Z"
+  },
+  "CVSR_2203_2201_Data-FINAL_V0_A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2022/03/CVSR_2203_2201_Data-FINAL_V0_A11Y.pdf",
+    "bytes": 2162915,
+    "prefixSha256": "5ffc01cf5fb56ccaa91073867e3e659bdb9b54f63b08d3f7750ab22ee827fbb0",
+    "verifiedAt": "2026-08-09T18:36:59.595Z"
+  },
+  "CVSR_2208_2206_Data-FINAL-V0-ADA.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2022/08/CVSR_2208_2206_Data-FINAL-V0-ADA.pdf",
+    "bytes": 2502801,
+    "prefixSha256": "2eb821892b70d3e876f69bd99d80786d4eb344f3d5504b2eea5a891e95b7d0a5",
+    "verifiedAt": "2026-08-09T18:37:00.546Z"
+  },
+  "CVSR_2302_2212_Data-FINAL-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2023/02/CVSR_2302_2212_Data-FINAL-A11Y.pdf",
+    "bytes": 2755466,
+    "prefixSha256": "309616966cd9659a83519878f38c94c22f39b60345bfbae4cb195e271272f57c",
+    "verifiedAt": "2026-08-09T18:37:01.555Z"
+  },
+  "CVSR_2303_2301_Data-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2023/03/CVSR_2303_2301_Data-FINAL-V0-A11Y.pdf",
+    "bytes": 2296193,
+    "prefixSha256": "828bfd1e0d9b38075b86cdd0c621de7fb5da67c6e1bf7e0d0c38205c975fac95",
+    "verifiedAt": "2026-08-09T18:37:02.581Z"
+  },
+  "CVSR_2304_2302_Data-FINAL-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2023/04/CVSR_2304_2302_Data-FINAL-A11Y.pdf",
+    "bytes": 2166145,
+    "prefixSha256": "cf49b59a99b199ba0e17c20eb045b5112a8dca80a984493ddd620f9b4b853b4f",
+    "verifiedAt": "2026-08-09T18:37:03.557Z"
+  },
+  "CVSR_231102_2308_Data-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2023/10/CVSR_231102_2308_Data-FINAL-V0-A11Y.pdf",
+    "bytes": 2291509,
+    "prefixSha256": "9c7de0c9e14b0b12574ede316dbe1060d9551e9f57a1ebb83cd7a995cf1f3cd6",
+    "verifiedAt": "2026-08-09T18:37:06.008Z"
+  },
+  "CVSR_231206_2309_Data-FINAL-V0-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2023/11/CVSR_231206_2309_Data-FINAL-V0-A11Y.pdf",
+    "bytes": 2320916,
+    "prefixSha256": "9535cb096ede21d64213717206dbc7053a1556d99648fce3d9805141051df1eb",
+    "verifiedAt": "2026-08-09T18:37:09.722Z"
+  },
+  "CVSR_2402_2312_Data-FINAL.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2024/02/CVSR_2402_2312_Data-FINAL.pdf",
+    "bytes": 1992724,
+    "prefixSha256": "9af21dcef7cdbd35047909ee3f187a91f37b08ecb247027b38026babea06b2cc",
+    "verifiedAt": "2026-08-09T18:37:12.256Z"
+  },
+  "FA-Central-Valley-Status-Report-April-2026.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2026/04/FA-Central-Valley-Status-Report-April-2026.pdf",
+    "bytes": 1651101,
+    "prefixSha256": "b69e3e3e408d33a6f274273aa54c9cf30ba3f700ece67504e45842d3fff557ba",
+    "verifiedAt": "2026-08-09T18:37:13.251Z"
+  },
+  "FA-Central-Valley-Status-Report-January-2026-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2026/01/FA-Central-Valley-Status-Report-January-2026-A11Y.pdf",
+    "bytes": 1603326,
+    "prefixSha256": "933627b49f0871df836ea08c80011d970d6c10d018e41f8d93eb85ee1c7bac25",
+    "verifiedAt": "2026-08-09T18:37:14.245Z"
+  },
+  "FA-Central-Valley-Status-Report-June-2026-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2026/05/FA-Central-Valley-Status-Report-June-2026-A11Y.pdf",
+    "bytes": 1276472,
+    "prefixSha256": "b3f6ebbcd14854ac0cd843e24f27160b7cc191025d76e33757fedc03c2fd356e",
+    "verifiedAt": "2026-08-09T18:37:16.811Z"
+  },
+  "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+    "bytes": 1227258,
+    "prefixSha256": "e31a93a8f9b4b49615dbe93f0759d29072c6da5686152736c225892a2c69f025",
+    "verifiedAt": "2026-08-09T18:37:19.214Z"
+  },
+  "FA-Central-Valley-Status-Report-March-2026-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2026/02/FA-Central-Valley-Status-Report-March-2026-A11Y.pdf",
+    "bytes": 1514511,
+    "prefixSha256": "2a966cd844eec8d0ba8b2287490ebf587a9e4ab338a724c0b32941ec725b0a8a",
+    "verifiedAt": "2026-08-09T18:37:21.574Z"
+  },
+  "brdmtg_011420_FA_Central_Valley_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_011420_FA_Central_Valley_Status_Report.pdf",
+    "bytes": 788377,
+    "prefixSha256": "4ef0b1c570177c00a01aa35b732e45650ed6ae500007e0919bfd64dffe4ce710",
+    "verifiedAt": "2026-08-09T18:37:28.118Z"
+  },
+  "brdmtg_011519_FA_Operations_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_011519_FA_Operations_Report.pdf",
+    "bytes": 1466280,
+    "prefixSha256": "245dc59a426579c1881245d9af6a588bb887a7086a0873f98f5f919b026ffa34",
+    "verifiedAt": "2026-08-09T18:37:33.391Z"
+  },
+  "brdmtg_011618_FA_CP1_Monthly_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2018/brdmtg_011618_FA_CP1_Monthly_Status_Report.pdf",
+    "bytes": 198957,
+    "prefixSha256": "3c170b6b133b620af346310d8ecc32ccfca5f447292f54b34100a54c1a29b350",
+    "verifiedAt": "2026-08-09T18:37:34.388Z"
+  },
+  "brdmtg_011618_FA_CP4_Monthly_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2018/brdmtg_011618_FA_CP4_Monthly_Status_Report.pdf",
+    "bytes": 107536,
+    "prefixSha256": "2336a21f104e1c11acb9eba626cc22dff4ce4e8709f0979c2beb3466ae3b2d11",
+    "verifiedAt": "2026-08-09T18:37:35.387Z"
+  },
+  "brdmtg_021820_FA_Central_Valley_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_021820_FA_Central_Valley_Status_Report.pdf",
+    "bytes": 746859,
+    "prefixSha256": "48f1025fde17129dfc8a3f8cc22c6a54fa4b7752039c255cfebf58aae5c17d5e",
+    "verifiedAt": "2026-08-09T18:38:47.547Z"
+  },
+  "brdmtg_021919_FA_Operations_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_021919_FA_Operations_Report.pdf",
+    "bytes": 1552510,
+    "prefixSha256": "e0bdc62b026f1903a2e83073bf26dc79d866209ccbab994503a181c1f0dc64cb",
+    "verifiedAt": "2026-08-09T18:38:53.239Z"
+  },
+  "brdmtg_022018_FA_CP1_Monthly_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2018/brdmtg_022018_FA_CP1_Monthly_Status_Report.pdf",
+    "bytes": 302556,
+    "prefixSha256": "715ecbec5c51aaefe8436b5c067a8d7ea5f5998da27797815d4b779ca5b800f1",
+    "verifiedAt": "2026-08-09T18:38:54.412Z"
+  },
+  "brdmtg_022018_FA_CP2_3_Monthly_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2018/brdmtg_022018_FA_CP2_3_Monthly_Status_Report.pdf",
+    "bytes": 69685,
+    "prefixSha256": "0fe78d0d9648beb87fb2e3a096bd519e174393fddf23ca4e6c1f6cc8031d363a",
+    "verifiedAt": "2026-08-09T18:38:55.235Z"
+  },
+  "brdmtg_022018_FA_CP4_Monthly_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2018/brdmtg_022018_FA_CP4_Monthly_Status_Report.pdf",
+    "bytes": 63341,
+    "prefixSha256": "1ae43eb1e53cd53da1f107eaf9f1829e71fa53d3a5beb2b90b34901511a6435f",
+    "verifiedAt": "2026-08-09T18:38:56.222Z"
+  },
+  "brdmtg_031720_FA_Central_Valley_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_031720_FA_Central_Valley_Status_Report.pdf",
+    "bytes": 761030,
+    "prefixSha256": "017f1fb9e19dafcd904145948d0219f7889483f3e6ebe61d3212b60710784c45",
+    "verifiedAt": "2026-08-09T18:39:01.966Z"
+  },
+  "brdmtg_031919_FA_Operations_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_031919_FA_Operations_Report.pdf",
+    "bytes": 1523648,
+    "prefixSha256": "d633f9dbfca53786cc57e8b2732d76a2e9c3af060974e535df31a8990b8abcfa",
+    "verifiedAt": "2026-08-09T18:39:07.507Z"
+  },
+  "brdmtg_032018_FA_Projects_and_Initiatives_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2018/brdmtg_032018_FA_Projects_and_Initiatives_Report.pdf",
+    "bytes": 487037,
+    "prefixSha256": "f3bbffe43e0a485e6d45d9f85a69f829610db7023654d2411d8284d595f4bde6",
+    "verifiedAt": "2026-08-09T18:39:08.507Z"
+  },
+  "brdmtg_032521_FA_CVSR_2103_2101_Data.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2021/04/brdmtg_032521_FA_CVSR_2103_2101_Data.pdf",
+    "bytes": 2502789,
+    "prefixSha256": "e78a15fb2328c539a18a56a06a701d4b7b27169eb820922bafe0b236db1a9c2f",
+    "verifiedAt": "2026-08-09T18:39:11.027Z"
+  },
+  "brdmtg_041619_FA_Operations_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_041619_FA_Operations_Report.pdf",
+    "bytes": 1818249,
+    "prefixSha256": "2231acf8780db30702ab16d71c089ec75450b9e93eff87f1f7fd69e3f5a73aa9",
+    "verifiedAt": "2026-08-09T18:39:17.631Z"
+  },
+  "brdmtg_041718_FA_Projects_and_Initiatives_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2018/brdmtg_041718_FA_Projects_and_Initiatives_Report.pdf",
+    "bytes": 390404,
+    "prefixSha256": "6d3bb81ab6fbc537863446231b0ed8037a068a68f5f52460cb76ca8d0f8e8186",
+    "verifiedAt": "2026-08-09T18:39:18.649Z"
+  },
+  "brdmtg_042120_FA_Central_Valley_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_042120_FA_Central_Valley_Status_Report.pdf",
+    "bytes": 981987,
+    "prefixSha256": "780a9146f2d7025cff1059a30ad1750b765e36744d695f4785a708e675df568e",
+    "verifiedAt": "2026-08-09T18:39:24.050Z"
+  },
+  "brdmtg_042221_FA_CVSR_2104_2102_Data.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2021/04/brdmtg_042221_FA_CVSR_2104_2102_Data.pdf",
+    "bytes": 2641069,
+    "prefixSha256": "57b17e4d36b6e1437f9c6cf982f01e53170469e6ab908252f8c9be1811587b6e",
+    "verifiedAt": "2026-08-09T18:39:25.053Z"
+  },
+  "brdmtg_051420_FA_Central_Valley_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_051420_FA_Central_Valley_Status_Report.pdf",
+    "bytes": 974806,
+    "prefixSha256": "08fe579379455b831235d5d3a23d1ea5623315575c2801ca237915db47658b23",
+    "verifiedAt": "2026-08-09T18:39:32.563Z"
+  },
+  "brdmtg_051518_FA_Projects_and_Initiatives_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2018/brdmtg_051518_FA_Projects_and_Initiatives_Report.pdf",
+    "bytes": 459203,
+    "prefixSha256": "99954cec528c11898ff07ce45aa1b003cdf010ece24241c7ef47f618efa8e2fc",
+    "verifiedAt": "2026-08-09T18:39:33.549Z"
+  },
+  "brdmtg_052119_FA_Central_Valley_Status_Update.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_052119_FA_Central_Valley_Status_Update.pdf",
+    "bytes": 4039574,
+    "prefixSha256": "7358cbab940d0c19be66b2d40385be90e874d63ed1a206fa9b8d233bc15fdc73",
+    "verifiedAt": "2026-08-09T18:39:38.988Z"
+  },
+  "brdmtg_061819_FA_Central_Valley_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_061819_FA_Central_Valley_Status_Report.pdf",
+    "bytes": 1291855,
+    "prefixSha256": "ce42dd71873e483307ff53e5b095034d5ae57c70cb03cc8f0038c2b8fce58747",
+    "verifiedAt": "2026-08-09T18:39:44.558Z"
+  },
+  "brdmtg_061918_FA_Projects_and_Initiatives_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2018/brdmtg_061918_FA_Projects_and_Initiatives_Report.pdf",
+    "bytes": 450035,
+    "prefixSha256": "391ad4e805b1d2e9399cc23c086c4e80f0edef1aee198c9e7fb7a110892ba2ba",
+    "verifiedAt": "2026-08-09T18:39:45.398Z"
+  },
+  "brdmtg_062520_FA_Central_Valley_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_062520_FA_Central_Valley_Status_Report.pdf",
+    "bytes": 1046716,
+    "prefixSha256": "4dffd78cd73af3b9a1f4f3981f0d356d8fbace308e4a1177c5964ca705cfdb9f",
+    "verifiedAt": "2026-08-09T18:39:50.915Z"
+  },
+  "brdmtg_071619_FA_Central_Valley_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_071619_FA_Central_Valley_Status_Report.pdf",
+    "bytes": 4424324,
+    "prefixSha256": "72ff8ae1ea294635a01a641906c66dd9fdbff301f89a236c092ea79ca9789d9d",
+    "verifiedAt": "2026-08-09T18:39:56.170Z"
+  },
+  "brdmtg_071620_FA_Central_Valley_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_071620_FA_Central_Valley_Status_Report.pdf",
+    "bytes": 1542127,
+    "prefixSha256": "f4b61036000749fa191b221a9d1d1c9479b95fe459005e3a73c0aefebe1a0e3e",
+    "verifiedAt": "2026-08-09T18:40:01.612Z"
+  },
+  "brdmtg_071718_FA_Projects_and_Initiatives_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2018/brdmtg_071718_FA_Projects_and_Initiatives_Report.pdf",
+    "bytes": 370145,
+    "prefixSha256": "7f2d90042cc91711977946ca3d740ca18f0b1393a776d9f19736c2fea427803e",
+    "verifiedAt": "2026-08-09T18:40:02.617Z"
+  },
+  "brdmtg_081320_FA_Central_Valley_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_081320_FA_Central_Valley_Status_Report.pdf",
+    "bytes": 2264296,
+    "prefixSha256": "32846af6a6f57e0889b59db17b8d2e7f727ea3f9b31b96491125179ecf545693",
+    "verifiedAt": "2026-08-09T18:40:08.201Z"
+  },
+  "brdmtg_081618_FA_Projects_and_Initiatives_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2018/brdmtg_081618_FA_Projects_and_Initiatives_Report.pdf",
+    "bytes": 459129,
+    "prefixSha256": "7643afc5f0bfedbd5e56a6f5972e43f55e38623c8811da35453c9ca27e8f617d",
+    "verifiedAt": "2026-08-09T18:40:09.211Z"
+  },
+  "brdmtg_082019_FA_Central_Valley_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_082019_FA_Central_Valley_Status_Report.pdf",
+    "bytes": 1647831,
+    "prefixSha256": "c9c477183a43ae74301e77f7a6ef891b5c2d74c44f0fa982292e14c0518b21b1",
+    "verifiedAt": "2026-08-09T18:40:14.529Z"
+  },
+  "brdmtg_090920_FA_CVSR_2009_2007_Data.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_090920_FA_CVSR_2009_2007_Data.pdf",
+    "bytes": 2335902,
+    "prefixSha256": "928908cf62d148cb86c4b3a495b609c5c48efb98ac10baaf20114a2471a0c456",
+    "verifiedAt": "2026-08-09T18:40:19.759Z"
+  },
+  "brdmtg_091318_FA_Projects_and_Initiatives_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2018/brdmtg_091318_FA_Projects_and_Initiatives_Report.pdf",
+    "bytes": 377390,
+    "prefixSha256": "eb1af3b52534acfd8f0972970dd468bacdc51ce8c981e800dd571142999aa7da",
+    "verifiedAt": "2026-08-09T18:40:20.752Z"
+  },
+  "brdmtg_091719_FA_Central_Valley_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_091719_FA_Central_Valley_Status_Report.pdf",
+    "bytes": 3421917,
+    "prefixSha256": "a4e7aee2754ddefd38a2682f929740fd9679e28e1e46b0d716a96cb275ee5dc2",
+    "verifiedAt": "2026-08-09T18:40:27.120Z"
+  },
+  "brdmtg_101519_FA_Central_Valley_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_101519_FA_Central_Valley_Status_Report.pdf",
+    "bytes": 772079,
+    "prefixSha256": "37b3cb11f980b7e704b857abc9742e231eb6c3d9b7597fa842c7e94bc89e5a9e",
+    "verifiedAt": "2026-08-09T18:40:33.283Z"
+  },
+  "brdmtg_101520_FA_CVSR_2010_2008_Data.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_101520_FA_CVSR_2010_2008_Data.pdf",
+    "bytes": 2443258,
+    "prefixSha256": "63704807e8e6401f66cd5a059cbb05c20b2d250f5b31d542bf0d102556fae5bf",
+    "verifiedAt": "2026-08-09T18:40:38.720Z"
+  },
+  "brdmtg_101618_FA_Projects_and_Initiatives_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2018/brdmtg_101618_FA_Projects_and_Initiatives_Report.pdf",
+    "bytes": 337770,
+    "prefixSha256": "5a0040409305bff3cd0f91e3debed842e83b0fc2fe5f5ea086780563ea4b119e",
+    "verifiedAt": "2026-08-09T18:40:39.720Z"
+  },
+  "brdmtg_111518_FA_ProjectsandInitiativesReport.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2018/brdmtg_111518_FA_ProjectsandInitiativesReport.pdf",
+    "bytes": 338211,
+    "prefixSha256": "338ce149843fe87af9760fc1bafd69db06ef4265ce6e524253235fc415cbba9b",
+    "verifiedAt": "2026-08-09T18:40:40.730Z"
+  },
+  "brdmtg_111919_FA_Central_Valley_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_111919_FA_Central_Valley_Status_Report.pdf",
+    "bytes": 777177,
+    "prefixSha256": "cfdd939c62fe4a3f3518dfefd37bcfef76e94a77100233b3a2561694fc488702",
+    "verifiedAt": "2026-08-09T18:40:46.362Z"
+  },
+  "brdmtg_111920_FA_CVSR_2011_2009_Data.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_111920_FA_CVSR_2011_2009_Data.pdf",
+    "bytes": 2432537,
+    "prefixSha256": "565c0f4a4c5d240bcb7082ad7b1e8c336b85809296c4688aabe6a51d7e34487b",
+    "verifiedAt": "2026-08-09T18:40:51.854Z"
+  },
+  "brdmtg_121019_FA_Central_Valley_Status_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_121019_FA_Central_Valley_Status_Report.pdf",
+    "bytes": 954199,
+    "prefixSha256": "51e78f581f04743638e1837abb2014c6154a576d55f9f1b45a4ebafab406fd4b",
+    "verifiedAt": "2026-08-09T18:40:57.125Z"
+  },
+  "brdmtg_121020_FA_CVSR_2012_2010_Data.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_121020_FA_CVSR_2012_2010_Data.pdf",
+    "bytes": 2583841,
+    "prefixSha256": "4ac29fcc277d88a572d452676582549609776e271ab30e7df872b14aa6a157ba",
+    "verifiedAt": "2026-08-09T18:41:02.631Z"
+  },
+  "brdmtg_121318_FA_Projects_and_Initiatives_Report.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2018/brdmtg_121318_FA_Projects_and_Initiatives_Report.pdf",
+    "bytes": 649881,
+    "prefixSha256": "97f87a97de07c8d2aab32a0a5c945b8df6173ba87b81cfcfa92d3012097288b9",
+    "verifiedAt": "2026-08-09T18:41:03.637Z"
+  }
+}

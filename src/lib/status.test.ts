@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import type { Segment, StructureEvidence } from '../data/types';
-import { deriveStatuses, resolveSegmentStatus } from './status';
+import type { Segment, Snapshot, StructureEvidence } from '../data/types';
+import { deriveStatuses, resolveSegmentStatus, selectedCompletions } from './status';
 
 function segment(overrides: Partial<Segment> = {}): Segment {
   return {
@@ -88,4 +88,31 @@ test('null observations allow dated evidence and produce mixed replay provenance
   assert.equal(result.statuses['CP1:176'], 'under_construction');
   assert.equal(result.statuses['CP1:177'], 'not_started');
   assert.equal(result.provenance, 'mixed');
+});
+
+
+test('an absent observation yields null, never today\u2019s completion', () => {
+  const built = segment({ id: 'CP1:200', kind: 'guideway', completion: 0.82 });
+  const untouched = segment({ id: 'CP1:201', kind: 'guideway', completion: 0 });
+
+  assert.deepEqual(selectedCompletions([built, untouched], undefined), {
+    'CP1:200': null,
+    'CP1:201': null,
+  });
+});
+
+test('only segments present in the snapshot read from it', () => {
+  const observed = segment({ id: 'CP1:200', kind: 'guideway', completion: 0.82 });
+  const missing = segment({ id: 'CP1:201', kind: 'guideway', completion: 0.4 });
+  const snapshot: Snapshot = {
+    date: '2022-06-01',
+    tier: 3,
+    sourceId: 'arcgis_progress',
+    perSegment: { 'CP1:200': { completion: 0.31 } },
+  };
+
+  assert.deepEqual(selectedCompletions([observed, missing], snapshot), {
+    'CP1:200': 0.31,
+    'CP1:201': null,
+  });
 });

@@ -6,12 +6,16 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_052119_FA_Central_Valley_Status_Update.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_052119_FA_Central_Valley_Status_Update.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 4,
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 815,
           "parcelsTotal": 877
@@ -21,6 +25,9 @@
           "structuresTotal": 50,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 512,
           "parcelsTotal": 749
@@ -30,6 +37,9 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 163,
           "parcelsTotal": 190
@@ -42,12 +52,16 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_061819_FA_Central_Valley_Status_Report.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_061819_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 4,
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 818,
           "parcelsTotal": 881
@@ -57,6 +71,9 @@
           "structuresTotal": 50,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 514,
           "parcelsTotal": 752
@@ -66,6 +83,9 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 164,
           "parcelsTotal": 194
@@ -78,12 +98,16 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_071619_FA_Central_Valley_Status_Report.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_071619_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 4,
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 818,
           "parcelsTotal": 881
@@ -93,6 +117,9 @@
           "structuresTotal": 50,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 526,
           "parcelsTotal": 752
@@ -102,6 +129,9 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 164,
           "parcelsTotal": 196
@@ -114,12 +144,17 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_082019_FA_Central_Valley_Status_Report.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_082019_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 5,
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
+          "transcribedFields": [
+            "progress",
+            "parcels"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 819,
           "parcelsTotal": 892
@@ -129,6 +164,10 @@
           "structuresTotal": 50,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress",
+            "parcels"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 533,
           "parcelsTotal": 755
@@ -138,6 +177,10 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress",
+            "parcels"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 164,
           "parcelsTotal": 208
@@ -150,12 +193,17 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_091719_FA_Central_Valley_Status_Report.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_091719_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 5,
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
+          "transcribedFields": [
+            "progress",
+            "parcels"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 823,
           "parcelsTotal": 893
@@ -165,6 +213,10 @@
           "structuresTotal": 50,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress",
+            "parcels"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 540,
           "parcelsTotal": 756
@@ -174,6 +226,10 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress",
+            "parcels"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 165,
           "parcelsTotal": 210
@@ -186,12 +242,17 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_101519_FA_Central_Valley_Status_Report.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_101519_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 6,
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
+          "transcribedFields": [
+            "progress",
+            "parcels"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 827,
           "parcelsTotal": 932
@@ -201,6 +262,10 @@
           "structuresTotal": 50,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress",
+            "parcels"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 547,
           "parcelsTotal": 854
@@ -210,6 +275,10 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress",
+            "parcels"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 166,
           "parcelsTotal": 223
@@ -222,12 +291,16 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_111919_FA_Central_Valley_Status_Report.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_111919_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 6,
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 827,
           "parcelsTotal": 928
@@ -237,6 +310,9 @@
           "structuresTotal": 50,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 559,
           "parcelsTotal": 850
@@ -246,6 +322,9 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 166,
           "parcelsTotal": 223
@@ -258,12 +337,16 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_121019_FA_Central_Valley_Status_Report.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_121019_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 6,
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 827,
           "parcelsTotal": 928
@@ -273,6 +356,9 @@
           "structuresTotal": 49,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 565,
           "parcelsTotal": 850
@@ -282,6 +368,9 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 166,
           "parcelsTotal": 223
@@ -294,12 +383,16 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_011420_FA_Central_Valley_Status_Report.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_011420_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 6,
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 827,
           "parcelsTotal": 928
@@ -309,6 +402,9 @@
           "structuresTotal": 49,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 573,
           "parcelsTotal": 850
@@ -318,6 +414,9 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 172,
           "parcelsTotal": 223
@@ -330,12 +429,16 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_021820_FA_Central_Valley_Status_Report.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_021820_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 7,
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 804,
           "parcelsTotal": 908
@@ -345,6 +448,9 @@
           "structuresTotal": 49,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 582,
           "parcelsTotal": 886
@@ -354,6 +460,9 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 159,
           "parcelsTotal": 248
@@ -366,12 +475,16 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_031720_FA_Central_Valley_Status_Report.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_031720_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 7,
           "structuresTotal": 33,
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 827,
           "parcelsTotal": 919
@@ -381,6 +494,9 @@
           "structuresTotal": 49,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 573,
           "parcelsTotal": 956
@@ -390,6 +506,9 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 172,
           "parcelsTotal": 263
@@ -402,12 +521,16 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_042120_FA_Central_Valley_Status_Report.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_042120_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 7,
           "structuresTotal": 33,
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 824,
           "parcelsTotal": 1066
@@ -417,6 +540,9 @@
           "structuresTotal": 49,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 587,
           "parcelsTotal": 1011
@@ -426,6 +552,9 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 159,
           "parcelsTotal": 253
@@ -438,12 +567,16 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_051420_FA_Central_Valley_Status_Report.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_051420_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 7,
           "structuresTotal": 33,
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 828,
           "parcelsTotal": 1088
@@ -453,6 +586,9 @@
           "structuresTotal": 49,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 596,
           "parcelsTotal": 1000
@@ -462,6 +598,9 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 159,
           "parcelsTotal": 266
@@ -474,12 +613,16 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_062520_FA_Central_Valley_Status_Report.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_062520_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 7,
           "structuresTotal": 33,
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 829,
           "parcelsTotal": 1082
@@ -489,6 +632,9 @@
           "structuresTotal": 49,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 601,
           "parcelsTotal": 992
@@ -498,6 +644,9 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 159,
           "parcelsTotal": 266
@@ -510,12 +659,16 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_071620_FA_Central_Valley_Status_Report.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_071620_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 7,
           "structuresTotal": 33,
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 829,
           "parcelsTotal": 1080
@@ -525,6 +678,9 @@
           "structuresTotal": 49,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 609,
           "parcelsTotal": 995
@@ -534,6 +690,9 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 159,
           "parcelsTotal": 266
@@ -546,12 +705,16 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_081320_FA_Central_Valley_Status_Report.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_081320_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 7,
           "structuresTotal": 33,
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 1,
           "parcelsTotal": 831
@@ -561,6 +724,9 @@
           "structuresTotal": 49,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 629,
           "parcelsTotal": 1014
@@ -570,6 +736,9 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 163,
           "parcelsTotal": 266
@@ -582,12 +751,16 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_090920_FA_CVSR_2009_2007_Data.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_090920_FA_CVSR_2009_2007_Data.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 7,
           "structuresTotal": 33,
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 832,
           "parcelsTotal": 1072
@@ -597,6 +770,9 @@
           "structuresTotal": 49,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 645,
           "parcelsTotal": 1011
@@ -606,6 +782,9 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "parcelsDelivered": 0,
           "parcelsTotal": 163
@@ -618,12 +797,16 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_101520_FA_CVSR_2010_2008_Data.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_101520_FA_CVSR_2010_2008_Data.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 12,
           "structuresTotal": 33,
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "utilitiesRelocated": 202,
           "utilitiesTotal": 1202,
@@ -635,6 +818,9 @@
           "structuresTotal": 49,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "utilitiesRelocated": 187,
           "utilitiesTotal": 692,
@@ -646,6 +832,9 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "utilitiesRelocated": 23,
           "utilitiesTotal": 173,
@@ -666,12 +855,16 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_111920_FA_CVSR_2011_2009_Data.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_111920_FA_CVSR_2011_2009_Data.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 12,
           "structuresTotal": 33,
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "utilitiesRelocated": 202,
           "utilitiesTotal": 1202,
@@ -683,6 +876,9 @@
           "structuresTotal": 49,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "utilitiesRelocated": 187,
           "utilitiesTotal": 692,
@@ -694,6 +890,9 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "utilitiesRelocated": 23,
           "utilitiesTotal": 173,
@@ -714,12 +913,16 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_121020_FA_CVSR_2012_2010_Data.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_121020_FA_CVSR_2012_2010_Data.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 12,
           "structuresTotal": 33,
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "utilitiesRelocated": 209,
           "utilitiesTotal": 1202,
@@ -731,6 +934,9 @@
           "structuresTotal": 49,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "utilitiesRelocated": 241,
           "utilitiesTotal": 694,
@@ -742,6 +948,9 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "utilitiesRelocated": 26,
           "utilitiesTotal": 166,
@@ -768,6 +977,9 @@
           "structuresTotal": 33,
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "utilitiesRelocated": 214,
           "utilitiesTotal": 1202,
@@ -779,6 +991,9 @@
           "structuresTotal": 49,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "utilitiesRelocated": 245,
           "utilitiesTotal": 694,
@@ -790,6 +1005,9 @@
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
+          "transcribedFields": [
+            "progress"
+          ],
           "sourceId": "cvsr",
           "utilitiesRelocated": 26,
           "utilitiesTotal": 166,
@@ -858,6 +1076,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_032521_FA_CVSR_2103_2101_Data.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/04/brdmtg_032521_FA_CVSR_2103_2101_Data.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 13,
@@ -906,6 +1125,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_042221_FA_CVSR_2104_2102_Data.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/04/brdmtg_042221_FA_CVSR_2104_2102_Data.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 13,
@@ -954,6 +1174,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "508_CVSR_2105_2103_Data-FINAL_V0_ADA.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/05/508_CVSR_2105_2103_Data-FINAL_V0_ADA.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 13,
@@ -1002,6 +1223,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2106_2104_Data-FINAL_V3.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/06/CVSR_2106_2104_Data-FINAL_V3.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 13,
@@ -1050,6 +1272,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2107_2105_Data-FINAL_V0_A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/07/CVSR_2107_2105_Data-FINAL_V0_A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 13,
@@ -1098,6 +1321,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2108_2106_Data-FINAL_V0_A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/08/CVSR_2108_2106_Data-FINAL_V0_A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 13,
@@ -1146,6 +1370,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2109_2107_Data-FINAL_V0_ADA.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/09/CVSR_2109_2107_Data-FINAL_V0_ADA.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 13,
@@ -1194,6 +1419,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2110_2108_Data-FINAL_V0_ADA.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/10/CVSR_2110_2108_Data-FINAL_V0_ADA.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 14,
@@ -1242,6 +1468,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2111_2109_Data-FINAL_V0_A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/11/CVSR_2111_2109_Data-FINAL_V0_A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 14,
@@ -1290,6 +1517,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2112_2110_Data-FINAL_V0_ADA.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/12/CVSR_2112_2110_Data-FINAL_V0_ADA.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 14,
@@ -1338,6 +1566,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2201_2111_Data-FINAL_V0_A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/01/CVSR_2201_2111_Data-FINAL_V0_A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 14,
@@ -1386,6 +1615,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2202_2112_Data-FINAL_V0_ADA.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/02/CVSR_2202_2112_Data-FINAL_V0_ADA.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 14,
@@ -1434,6 +1664,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2203_2201_Data-FINAL_V0_A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/03/CVSR_2203_2201_Data-FINAL_V0_A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 14,
@@ -1482,6 +1713,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2204-2202-Data-FINAL-v0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/04/CVSR-2204-2202-Data-FINAL-v0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 14,
@@ -1530,6 +1762,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2205-2203-Data-FINAL-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/05/CVSR-2205-2203-Data-FINAL-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 14,
@@ -1578,6 +1811,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/06/CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 14,
@@ -1626,6 +1860,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2207-2205-Data-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/07/CVSR-2207-2205-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 14,
@@ -1674,6 +1909,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2208_2206_Data-FINAL-V0-ADA.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/08/CVSR_2208_2206_Data-FINAL-V0-ADA.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 14,
@@ -1722,6 +1958,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2209-2207-Data-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/09/CVSR-2209-2207-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 14,
@@ -1770,6 +2007,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2210-2208-Data-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/10/CVSR-2210-2208-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 14,
@@ -1818,6 +2056,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2211-2209-Data-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/11/CVSR-2211-2209-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 16,
@@ -1866,6 +2105,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2212-2210-Data-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/12/CVSR-2212-2210-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 16,
@@ -1914,6 +2154,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR0-2301-2211-Data-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/01/CVSR0-2301-2211-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 16,
@@ -1962,6 +2203,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2302_2212_Data-FINAL-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/02/CVSR_2302_2212_Data-FINAL-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 16,
@@ -2010,6 +2252,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2303_2301_Data-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/03/CVSR_2303_2301_Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 16,
@@ -2058,6 +2301,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2304_2302_Data-FINAL-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/04/CVSR_2304_2302_Data-FINAL-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 17,
@@ -2106,6 +2350,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2305-2303-Data-FINAL-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/05/CVSR-2305-2303-Data-FINAL-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 17,
@@ -2154,6 +2399,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2306-2304-Data-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/06/CVSR-2306-2304-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 17,
@@ -2252,6 +2498,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2308-2306-Data-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/08/CVSR-2308-2306-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 17,
@@ -2300,6 +2547,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2309-2307-Data-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/09/CVSR-2309-2307-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 17,
@@ -2348,6 +2596,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR_231102_2308_Data-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/10/CVSR_231102_2308_Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 17,
@@ -2396,6 +2645,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR_231206_2309_Data-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/11/CVSR_231206_2309_Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 17,
@@ -2493,6 +2743,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "20240818-CVSR_2401_2311_Data-FINAL-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/01/20240818-CVSR_2401_2311_Data-FINAL-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 18,
@@ -2541,6 +2792,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2402_2312_Data-FINAL.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/02/CVSR_2402_2312_Data-FINAL.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 18,
@@ -2638,6 +2890,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2404-2402-Data-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/04/CVSR-2404-2402-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 18,
@@ -2686,6 +2939,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2405-2403-Data-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/05/CVSR-2405-2403-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 18,
@@ -2734,6 +2988,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2024-06-Data-2024-04-FINAL-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/06/CVSR-2024-06-Data-2024-04-FINAL-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 18,
@@ -2880,6 +3135,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2024-09-Data-2024-07-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/09/CVSR-2024-09-Data-2024-07-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 18,
@@ -2928,6 +3184,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2024-10-Data-2024-08-Draft-3-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/11/CVSR-2024-10-Data-2024-08-Draft-3-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 18,
@@ -3025,6 +3282,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-December-2024-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/01/CVSR-December-2024-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 18,
@@ -3073,6 +3331,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-01-Data-2024-11-FINAL-V0-Remediation-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/01/CVSR-2025-01-Data-2024-11-FINAL-V0-Remediation-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 18,
@@ -3121,6 +3380,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-03-Data-2024-12-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/02/CVSR-2025-03-Data-2024-12-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 18,
@@ -3218,6 +3478,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-05-01-Data-2025-02-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/04/CVSR-2025-05-01-Data-2025-02-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 18,
@@ -3266,6 +3527,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-05-29-Data-2025-03-Final2-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/05/CVSR-2025-05-29-Data-2025-03-Final2-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 18,
@@ -3411,6 +3673,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-08-Data-2025-06-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/08/CVSR-2025-08-Data-2025-06-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 20,
@@ -3459,6 +3722,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-10-Data-2025-07-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/10/CVSR-2025-10-Data-2025-07-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 21,
@@ -3556,6 +3820,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-11-Data-2025-09-FINAL-V0-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/11/CVSR-2025-11-Data-2025-09-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 21,
@@ -3653,6 +3918,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "FA-Central-Valley-Status-Report-January-2026-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/01/FA-Central-Valley-Status-Report-January-2026-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 22,
@@ -3701,6 +3967,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "FA-Central-Valley-Status-Report-March-2026-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/02/FA-Central-Valley-Status-Report-March-2026-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 22,
@@ -3798,6 +4065,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "FA-Central-Valley-Status-Report-April-2026.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/04/FA-Central-Valley-Status-Report-April-2026.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 22,
@@ -3846,6 +4114,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "FA-Central-Valley-Status-Report-June-2026-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/05/FA-Central-Valley-Status-Report-June-2026-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 23,
@@ -3894,6 +4163,7 @@
       "tier": 2,
       "sourceId": "cvsr",
       "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 23,
@@ -4388,6 +4658,184 @@
         "dataMonth": "2023-04",
         "reason": "Rejected as May data: the document header says data through April 2023 and duplicates the retained April snapshot; the Authority overwrote the original URL."
       }
+    ],
+    "transcriptions": [
+      {
+        "month": "2019-03",
+        "reportFile": "brdmtg_052119_FA_Central_Valley_Status_Update.pdf",
+        "fields": [
+          "progress"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2019-04",
+        "reportFile": "brdmtg_061819_FA_Central_Valley_Status_Report.pdf",
+        "fields": [
+          "progress"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2019-05",
+        "reportFile": "brdmtg_071619_FA_Central_Valley_Status_Report.pdf",
+        "fields": [
+          "progress"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2019-06",
+        "reportFile": "brdmtg_082019_FA_Central_Valley_Status_Report.pdf",
+        "fields": [
+          "progress",
+          "parcels"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2019-07",
+        "reportFile": "brdmtg_091719_FA_Central_Valley_Status_Report.pdf",
+        "fields": [
+          "progress",
+          "parcels"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2019-08",
+        "reportFile": "brdmtg_101519_FA_Central_Valley_Status_Report.pdf",
+        "fields": [
+          "progress",
+          "parcels"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2019-09",
+        "reportFile": "brdmtg_111919_FA_Central_Valley_Status_Report.pdf",
+        "fields": [
+          "progress"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2019-10",
+        "reportFile": "brdmtg_121019_FA_Central_Valley_Status_Report.pdf",
+        "fields": [
+          "progress"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2019-11",
+        "reportFile": "brdmtg_011420_FA_Central_Valley_Status_Report.pdf",
+        "fields": [
+          "progress"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2019-12",
+        "reportFile": "brdmtg_021820_FA_Central_Valley_Status_Report.pdf",
+        "fields": [
+          "progress"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2020-01",
+        "reportFile": "brdmtg_031720_FA_Central_Valley_Status_Report.pdf",
+        "fields": [
+          "progress"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2020-02",
+        "reportFile": "brdmtg_042120_FA_Central_Valley_Status_Report.pdf",
+        "fields": [
+          "progress"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2020-03",
+        "reportFile": "brdmtg_051420_FA_Central_Valley_Status_Report.pdf",
+        "fields": [
+          "progress"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2020-04",
+        "reportFile": "brdmtg_062520_FA_Central_Valley_Status_Report.pdf",
+        "fields": [
+          "progress"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2020-05",
+        "reportFile": "brdmtg_071620_FA_Central_Valley_Status_Report.pdf",
+        "fields": [
+          "progress"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2020-06",
+        "reportFile": "brdmtg_081320_FA_Central_Valley_Status_Report.pdf",
+        "fields": [
+          "progress"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2020-07",
+        "reportFile": "brdmtg_090920_FA_CVSR_2009_2007_Data.pdf",
+        "fields": [
+          "progress"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2020-08",
+        "reportFile": "brdmtg_101520_FA_CVSR_2010_2008_Data.pdf",
+        "fields": [
+          "progress"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2020-09",
+        "reportFile": "brdmtg_111920_FA_CVSR_2011_2009_Data.pdf",
+        "fields": [
+          "progress"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2020-10",
+        "reportFile": "brdmtg_121020_FA_CVSR_2012_2010_Data.pdf",
+        "fields": [
+          "progress"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      },
+      {
+        "month": "2020-11",
+        "reportFile": "brdmtg_012121_FA_CVSR_2011_Data.pdf",
+        "fields": [
+          "progress"
+        ],
+        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      }
+    ],
+    "unresolvedReportUrls": [
+      "CVSR-2025-07-Data-2025-05-FINAL-V2-A11Y.pdf",
+      "brdmtg_012121_FA_CVSR_2011_Data.pdf",
+      "brdmtg_020921_FA_CVSR_2102_2012_Data.pdf"
     ]
   },
   "diagnostics": {

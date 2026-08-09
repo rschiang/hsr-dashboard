@@ -13,14 +13,6 @@ function monthSequence(start: string, end: string): string[] {
   return result;
 }
 
-function scheduledCompletion(segment: Segment, date: string): number | null {
-  if (segment.completion === null) return null;
-  if (segment.start === null || segment.finish === null) return segment.completion === 0 ? 0 : null;
-  if (date < segment.start) return 0;
-  if (date < segment.finish) return segment.completion <= 0 ? 0 : Math.min(segment.completion, 0.5);
-  return segment.completion;
-}
-
 function observedSnapshot(date: string, segments: Segment[]): Snapshot {
   return {
     date: date.slice(0, 10),
@@ -31,13 +23,10 @@ function observedSnapshot(date: string, segments: Segment[]): Snapshot {
 }
 
 const artifact = JSON.parse(await readFile('public/data/segments.json', 'utf8')) as SegmentsArtifact;
-const scheduledDates = monthSequence('2018-11-01', artifact.generatedAt.slice(0, 10));
-const snapshots: Snapshot[] = scheduledDates.map((date) => ({
-  date,
-  tier: 1,
-  sourceId: 'arcgis_progress',
-  perSegment: Object.fromEntries(artifact.segments.map((segment) => [segment.id, { completion: scheduledCompletion(segment, date) }])),
-}));
+// Every scrubbable month. Replay colours before the first observation come from
+// published Start/Finish dates via scheduledStatus; no completion number is invented.
+const replayMonths = monthSequence('2018-11-01', artifact.generatedAt.slice(0, 10));
+const snapshots: Snapshot[] = [];
 
 const parsed = JSON.parse(await readFile('data/raw/cvsr/parsed-snapshots.json', 'utf8')) as {
   snapshots?: Snapshot[];
@@ -82,6 +71,7 @@ snapshots.sort((a, b) => a.date.localeCompare(b.date) || a.tier - b.tier);
 
 const history: HistoryArtifact = {
   generatedAt: artifact.generatedAt,
+  replayMonths,
   snapshots,
   cvsrInventory: parsed.cvsrInventory,
 };
@@ -90,4 +80,4 @@ const counts = snapshots.reduce<Record<number, number>>((result, snapshot) => {
   result[snapshot.tier] = (result[snapshot.tier] ?? 0) + 1;
   return result;
 }, {});
-console.log(`history: tier 1=${counts[1] ?? 0}, tier 2=${counts[2] ?? 0}, tier 3=${counts[3] ?? 0}`);
+console.log(`history: months=${replayMonths.length}, tier 2=${counts[2] ?? 0}, tier 3=${counts[3] ?? 0}`);

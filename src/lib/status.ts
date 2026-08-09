@@ -135,7 +135,6 @@ export function deriveStatuses(
   statuses: Record<string, AlignmentStatus>;
   evidence: Record<string, StructureEvidence | undefined>;
   provenance: ReplayProvenance;
-  tier: 1 | 2 | 3;
 } {
   const observed = history
     .filter((snapshot) => snapshot.tier === 3 && snapshot.date <= date && snapshot.perSegment)
@@ -157,6 +156,24 @@ export function deriveStatuses(
     statuses,
     evidence,
     provenance: provenance.size > 1 ? 'mixed' : (provenance.values().next().value ?? 'scheduled'),
-    tier: observed ? 3 : 1,
   };
+}
+
+/**
+ * Per-segment earthwork completion at the selected date, read only from the
+ * observation. A segment absent from the snapshot yields `null`, never
+ * `segment.completion` — that would leak today's value backwards into replay.
+ */
+export function selectedCompletions(
+  segments: Segment[],
+  observation: Snapshot | undefined,
+): Record<string, number | null> {
+  const perSegment = observation?.perSegment;
+  const result: Record<string, number | null> = {};
+  for (const segment of segments) {
+    result[segment.id] = perSegment !== undefined && Object.hasOwn(perSegment, segment.id)
+      ? perSegment[segment.id].completion
+      : null;
+  }
+  return result;
 }

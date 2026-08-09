@@ -25,6 +25,10 @@ export type CvsrFieldFailure = {
   metric: 'utilities' | 'parcels';
 };
 
+/** Verbatim provenance note attached to every hand-transcribed package value. */
+export const TRANSCRIPTION_DETAIL =
+  'Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text.';
+
 type BuildCvsrInventoryInput = {
   snapshots: Snapshot[];
   localFiles: ReadonlySet<string>;
@@ -34,6 +38,8 @@ type BuildCvsrInventoryInput = {
   fieldFailures: readonly CvsrFieldFailure[];
   coverageStart: string;
   coverageEnd: string;
+  /** Local CVSR candidate filenames with no byte-verified direct PDF URL. */
+  unresolvedReportUrls?: readonly string[];
 };
 
 function monthRange(start: string, end: string): string[] {
@@ -56,6 +62,7 @@ export function buildCvsrInventory({
   fieldFailures,
   coverageStart,
   coverageEnd,
+  unresolvedReportUrls = [],
 }: BuildCvsrInventoryInput): CvsrInventory {
   const expectedMonths = monthRange(coverageStart, coverageEnd);
   const availableMonths = snapshots.map((snapshot) => snapshot.dataMonth);
@@ -139,6 +146,27 @@ export function buildCvsrInventory({
     });
   }
 
+  // Transcriptions are recovered values, not gaps: every field listed here holds
+  // a real published number, so it never enters `gaps`.
+  const transcriptions = [...snapshots]
+    .sort((a, b) => a.dataMonth.localeCompare(b.dataMonth))
+    .flatMap((snapshot) => {
+      const fields: Array<'progress' | 'parcels'> = [];
+      for (const cp of CVSR_PACKAGES) {
+        for (const field of snapshot.perPackage?.[cp]?.transcribedFields ?? []) {
+          if (!fields.includes(field)) fields.push(field);
+        }
+      }
+      if (fields.length === 0) return [];
+      fields.sort((a, b) => (a === b ? 0 : a === 'progress' ? -1 : 1));
+      return [{
+        month: snapshot.dataMonth,
+        reportFile: snapshot.reportFile ?? '',
+        fields,
+        detail: TRANSCRIPTION_DETAIL,
+      }];
+    });
+
   return {
     coverageStart,
     coverageEnd,
@@ -146,5 +174,7 @@ export function buildCvsrInventory({
     availableMonths,
     gaps,
     rejectedReports,
+    transcriptions,
+    unresolvedReportUrls: [...unresolvedReportUrls].sort(),
   };
 }

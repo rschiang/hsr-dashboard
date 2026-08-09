@@ -3,7 +3,7 @@ import length from '@turf/length';
 import lineSliceAlong from '@turf/line-slice-along';
 import nearestPointOnLine from '@turf/nearest-point-on-line';
 import { lineString, point, type Feature, type LineString, type Position } from '@turf/helpers';
-import type { ConstructionPackage, Segment, SegmentsArtifact } from '../src/data/types';
+import type { ConstructionPackage, CvsrPackageId, Segment, SegmentsArtifact, Snapshot } from '../src/data/types';
 import { STRUCTURE_CROSSWALK, STRUCTURE_EVIDENCE } from '../src/data/structure-evidence';
 import { SOURCES } from '../src/data/sources';
 import { formatOfficialMp, stationToIosMile } from '../src/lib/mileposts';
@@ -371,10 +371,96 @@ if (completedStructures !== 59 || inProgressStructures !== 29) {
 }
 
 const calibration = assignWeights(segments);
+
+// Overlap invariant. CP1 publishes structure rows nested inside the guideway
+// rows they sit on, so those miles are counted twice by the difficulty model.
+// Every overlap must be exactly one guideway containing one structure; anything
+// else means the milepost projection has drifted.
+const overlaps: SegmentsArtifact['overlaps'] = [];
+for (const cp of ['CP1', 'CP2-3', 'CP4'] as const) {
+  const cpSegments = segments.filter((segment) => segment.cp === cp);
+  let cpOverlaps = 0;
+  for (let left = 0; left < cpSegments.length; left += 1) {
+    for (let right = left + 1; right < cpSegments.length; right += 1) {
+      const first = cpSegments[left];
+      const second = cpSegments[right];
+      const miles = Math.min(first.iosMileEnd, second.iosMileEnd) - Math.max(first.iosMileStart, second.iosMileStart);
+      if (miles <= 0.001) continue;
+      const guidewaySegment = first.kind === 'guideway' ? first : second.kind === 'guideway' ? second : null;
+      const structureSegment = first.kind === 'structure' ? first : second.kind === 'structure' ? second : null;
+      if (!guidewaySegment || !structureSegment) {
+        throw new Error(`${cp}: ${first.id} (${first.kind}) and ${second.id} (${second.kind}) overlap by ${miles.toFixed(3)} mi without being a guideway containing a structure`);
+      }
+      if (structureSegment.iosMileStart < guidewaySegment.iosMileStart - 0.001
+        || structureSegment.iosMileEnd > guidewaySegment.iosMileEnd + 0.001) {
+        throw new Error(`${cp}: structure ${structureSegment.id} is not contained by guideway ${guidewaySegment.id}`);
+      }
+      cpOverlaps += 1;
+      overlaps.push({ guidewayId: guidewaySegment.id, structureId: structureSegment.id, miles });
+    }
+  }
+  if (cp === 'CP2-3' && cpOverlaps > 0) throw new Error(`CP2-3 must tile without overlap; found ${cpOverlaps}`);
+}
+const overlapMiles = overlaps.reduce((sum, overlap) => sum + overlap.miles, 0);
+if (!(overlapMiles < 3)) throw new Error(`Nested structure corridor ${overlapMiles.toFixed(2)} mi exceeds the 3 mi ceiling`);
+
+// Per-package cross-check against the latest published CVSR. Earthwork-equivalent
+// miles (Σ span × ArcGIS completion) and the CVSR's "guideway miles complete"
+// are independent measures of the same thing, so they must land close; a strict
+// 100%-complete count is not the same measure and would be vacuous here.
+const CVSR_PACKAGE_IDS = ['CP1', 'CP2-3', 'CP4'] as const satisfies readonly CvsrPackageId[];
+const equivalentByPackage = Object.fromEntries(CVSR_PACKAGE_IDS.map((cp) => [
+  cp,
+  segments
+    .filter((segment) => segment.cp === cp && segment.kind === 'guideway')
+    .reduce((sum, segment) => sum + (segment.iosMileEnd - segment.iosMileStart) * (segment.completion ?? 0), 0),
+])) as Record<CvsrPackageId, number>;
+const equivalentTotal = CVSR_PACKAGE_IDS.reduce((sum, cp) => sum + equivalentByPackage[cp], 0);
+
+const parsedSnapshotsRaw = await readFile('data/raw/cvsr/parsed-snapshots.json', 'utf8').catch(
+  (error: NodeJS.ErrnoException) => {
+    if (error.code === 'ENOENT') return null;
+    throw error;
+  },
+);
+let crossCheck: SegmentsArtifact['crossCheck'];
+if (parsedSnapshotsRaw === null) {
+  console.warn('data/raw/cvsr/parsed-snapshots.json absent; skipping the per-package CVSR cross-check');
+} else {
+  const parsed = JSON.parse(parsedSnapshotsRaw) as { snapshots?: Snapshot[] };
+  const latest = (parsed.snapshots ?? [])
+    .filter((snapshot) => snapshot.tier === 2 && snapshot.perPackage !== undefined)
+    .sort((a, b) => a.dataMonth!.localeCompare(b.dataMonth!))
+    .at(-1);
+  if (!latest) throw new Error('parsed-snapshots.json holds no tier-2 CVSR snapshot with package metrics');
+  const perPackage = {} as NonNullable<SegmentsArtifact['crossCheck']>['perPackage'];
+  for (const cp of CVSR_PACKAGE_IDS) {
+    const metrics = latest.perPackage?.[cp];
+    if (!metrics) throw new Error(`CVSR ${latest.dataMonth} is missing ${cp} package metrics`);
+    const delta = equivalentByPackage[cp] - metrics.guidewayMilesComplete;
+    if (Math.abs(delta) > 1.5) {
+      throw new Error(`${cp} earthwork-equivalent ${equivalentByPackage[cp].toFixed(2)} mi differs from CVSR ${latest.dataMonth} guideway complete ${metrics.guidewayMilesComplete} mi by ${delta.toFixed(2)} mi`);
+    }
+    perPackage[cp] = {
+      equivalentMiles: equivalentByPackage[cp],
+      cvsrMilesComplete: metrics.guidewayMilesComplete,
+      cvsrMilesTotal: metrics.guidewayMilesTotal,
+    };
+  }
+  const cvsrTotalComplete = CVSR_PACKAGE_IDS.reduce((sum, cp) => sum + perPackage[cp].cvsrMilesComplete, 0);
+  if (Math.abs(equivalentTotal - cvsrTotalComplete) > 2) {
+    throw new Error(`Earthwork-equivalent ${equivalentTotal.toFixed(2)} mi does not reconcile with CVSR ${latest.dataMonth} total ${cvsrTotalComplete.toFixed(2)} mi`);
+  }
+  crossCheck = { cvsrDataMonth: latest.dataMonth!, perPackage };
+  console.log(`cross-check vs CVSR ${latest.dataMonth}: ${CVSR_PACKAGE_IDS.map((cp) => `${cp} ${equivalentByPackage[cp].toFixed(2)} vs ${perPackage[cp].cvsrMilesComplete}`).join('; ')}; total ${equivalentTotal.toFixed(2)} vs ${cvsrTotalComplete.toFixed(2)}`);
+}
+
 const artifact: SegmentsArtifact = {
   generatedAt: metadata.fetchedAt,
-  model: 'Official earthwork quantities plus an unofficial structure heuristic calibrated to published package totals',
+  model: 'Package and extension totals are published contract values; the structure/guideway split and structure type factors are editorial with no published basis',
   calibration,
+  ...(crossCheck ? { crossCheck } : {}),
+  overlaps,
   segments,
 };
 await writeFile('public/data/segments.json', `${JSON.stringify(artifact)}\n`);
@@ -431,20 +517,7 @@ for (const cp of ['CP1', 'CP2-3', 'CP4'] as const) {
     .reduce((sum, segment) => sum + segment.iosMileEnd - segment.iosMileStart, 0);
 }
 const totalComplete = Object.values(completeByPackage).reduce((sum, value) => sum + value, 0);
-const equivalentByPackage: Partial<Record<ConstructionPackage, number>> = {};
-for (const cp of ['CP1', 'CP2-3', 'CP4'] as const) {
-  equivalentByPackage[cp] = segments
-    .filter((segment) => segment.cp === cp && segment.kind === 'guideway')
-    .reduce(
-      (sum, segment) => sum + (segment.iosMileEnd - segment.iosMileStart) * (segment.completion ?? 0),
-      0,
-    );
-}
-const equivalentTotal = Object.values(equivalentByPackage).reduce((sum, value) => sum + value, 0);
-if (Math.abs(equivalentTotal - 81) > 8) {
-  throw new Error(`Earthwork-equivalent ${equivalentTotal.toFixed(1)} mi does not reconcile with CVSR's 81 mi`);
-}
 console.log(`segments: 102 inputs → ${segments.length} outputs; CP1 no-data gaps: ${cp1Gaps.length}`);
 console.log(`coverage: ${coveredMiles.toFixed(2)} mi; strict 100% guideway ${JSON.stringify(completeByPackage)} = ${totalComplete.toFixed(1)} mi`);
-console.log(`cross-check: earthwork-equivalent ${JSON.stringify(equivalentByPackage)} = ${equivalentTotal.toFixed(1)} mi vs CVSR 81 mi (API snapshot is three months newer)`);
+console.log(`overlaps: ${overlaps.length} nested structure/guideway pairs totalling ${overlapMiles.toFixed(2)} mi of double-counted corridor`);
 console.log(`structures: ${completedStructures} completed + ${inProgressStructures} in progress`);

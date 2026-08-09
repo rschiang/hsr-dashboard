@@ -66,13 +66,24 @@ export type Calibration = {
   publishedMiles: number;
   publishedStructures: number;
   modelledStructureShare: number;
-  structureScale: number;
+  structurePerGuidewayScale: number;
 };
+
+export type CvsrPackageId = 'CP1' | 'CP2-3' | 'CP4';
 
 export type SegmentsArtifact = {
   generatedAt: string;
   model: string;
   calibration: Partial<Record<ConstructionPackage, Calibration>>;
+  crossCheck?: {
+    cvsrDataMonth: string;
+    perPackage: Record<CvsrPackageId, {
+      equivalentMiles: number;
+      cvsrMilesComplete: number;
+      cvsrMilesTotal: number;
+    }>;
+  };
+  overlaps: Array<{ guidewayId: string; structureId: string; miles: number }>;
   segments: Segment[];
 };
 
@@ -85,6 +96,8 @@ export type PackageMetrics = {
   utilitiesTotal?: number;
   parcelsDelivered?: number;
   parcelsTotal?: number;
+  /** Fields hand-transcribed from a chart image because the PDF exposes no extractable text for them. */
+  transcribedFields?: Array<'progress' | 'parcels'>;
   sourceId: SourceId;
 };
 
@@ -103,7 +116,7 @@ type SnapshotFields = {
 
 export type Snapshot = SnapshotFields & ({
   date: string;
-  tier: 1 | 3;
+  tier: 3;
   dataMonth?: never;
   reportUrl?: never;
 } | {
@@ -144,12 +157,23 @@ export type CvsrInventory = {
   availableMonths: string[];
   gaps: CvsrGap[];
   rejectedReports: CvsrReportDiagnostic[];
+  /** Hand-transcribed package values, recorded because the PDF exposes no extractable text for them. */
+  transcriptions: Array<{
+    month: string;
+    reportFile: string;
+    fields: Array<'progress' | 'parcels'>;
+    detail: string;
+  }>;
+  /** Local report filenames with no byte-verified direct PDF URL. */
+  unresolvedReportUrls: string[];
 };
 
 export type ReplayProvenance = 'scheduled' | 'observed' | 'mixed';
 
 export type HistoryArtifact = {
   generatedAt: string;
+  /** Every scrubbable month as YYYY-MM-01, independent of whether any snapshot exists for it. */
+  replayMonths: string[];
   snapshots: Snapshot[];
   cvsrInventory: CvsrInventory;
 };

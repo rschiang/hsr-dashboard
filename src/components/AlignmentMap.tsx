@@ -44,6 +44,18 @@ export function AlignmentMap({
       style: 'https://tiles.openfreemap.org/styles/positron',
       center: [-119.73, 36.35],
       zoom: 6.55,
+      // The OpenFreeMap style JSON carries no `attribution` field, so MapLibre would
+      // otherwise credit only itself. Supplying `customAttribution` replaces MapLibre's
+      // default entry, hence the explicit MapLibre item below.
+      attributionControl: {
+        compact: false,
+        customAttribution: [
+          '<a href="https://openfreemap.org" target="_blank" rel="noreferrer">OpenFreeMap</a>',
+          '\u00a9 <a href="https://www.openmaptiles.org/" target="_blank" rel="noreferrer">OpenMapTiles</a>',
+          'Data from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>',
+          '<a href="https://maplibre.org/" target="_blank" rel="noreferrer">MapLibre</a>',
+        ],
+      },
     });
     map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'top-left');
     mapRef.current = map;
@@ -145,7 +157,11 @@ export function AlignmentMap({
         </div>
         <span>Hover to link · click to focus</span>
       </div>
-      <div ref={containerRef} className="map-container" />
+      <div
+        ref={containerRef}
+        className="map-container"
+        aria-label="Alignment map; the strip chart above carries the same data in keyboard-accessible form"
+      />
     </section>
   );
 }

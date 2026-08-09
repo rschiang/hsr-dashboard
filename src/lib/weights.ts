@@ -20,6 +20,23 @@ export const STRUCTURE_TYPE_FACTORS = {
   other: 3,
 } as const;
 
+/**
+ * UNOFFICIAL EDITORIAL SPLIT — NOT A CAHSRA METHODOLOGY. No published source
+ * splits a construction package's contract value between structures and
+ * guideway; the contract award is a single number. These three fractions are
+ * this dashboard's editorial judgment, chosen to sit near the effective split
+ * implied by the published structure counts. Changing them changes strip
+ * widths only — never a source value, never a reported completion.
+ *
+ * CP4 is 0 because the ArcGIS layer publishes no CP4 structure rows at all
+ * (three coarse guideway rows only), so there is nothing to weight.
+ */
+export const EDITORIAL_STRUCTURE_SHARE: Record<'CP1' | 'CP2-3' | 'CP4', number> = {
+  CP1: 0.5,
+  'CP2-3': 0.45,
+  CP4: 0,
+};
+
 const PACKAGE_INPUTS: Record<'CP1' | 'CP2-3' | 'CP4', {
   contractAmountMillions: number;
   publishedMiles: number;
@@ -61,7 +78,9 @@ export function assignWeights(segments: Segment[]): Partial<Record<ConstructionP
       .map((segment) => segment.baselineDirt! / Math.max(0.001, segment.iosMileEnd - segment.iosMileStart));
     const fallbackDirtPerMile = median(dirtPerMile);
 
-    const guideway = packageSegments.filter((segment) => segment.kind !== 'structure');
+    // Only real guideway rows carry modelled dirt. `no-data` spans have no
+    // alignment-resolved progress, so they must not be handed median effort.
+    const guideway = packageSegments.filter((segment) => segment.kind === 'guideway');
     const structures = packageSegments.filter((segment) => segment.kind === 'structure');
     for (const segment of guideway) {
       const miles = Math.max(0.001, segment.iosMileEnd - segment.iosMileStart);
@@ -75,9 +94,13 @@ export function assignWeights(segments: Segment[]): Partial<Record<ConstructionP
     const guidewayRaw = guideway.reduce((sum, segment) => sum + (rawWeight.get(segment.id) ?? 0), 0);
     const structureRaw = structures.reduce((sum, segment) => sum + (rawWeight.get(segment.id) ?? 0), 0);
     const input = PACKAGE_INPUTS[cp];
-    const modelledStructureShare = structureRaw > 0
-      ? Math.min(0.7, input.publishedStructures / (input.publishedStructures + input.publishedMiles))
-      : 0;
+    const modelledStructureShare = structureRaw > 0 ? EDITORIAL_STRUCTURE_SHARE[cp] : 0;
+    if (structureRaw > 0 && modelledStructureShare <= 0) {
+      throw new Error(`${cp} has structure segments but a zero editorial structure share`);
+    }
+    if (modelledStructureShare > 0.7) {
+      throw new Error(`${cp} editorial structure share ${modelledStructureShare} exceeds 0.7`);
+    }
     const guidewayScale = guidewayRaw > 0 ? input.contractAmountMillions * (1 - modelledStructureShare) / guidewayRaw : 0;
     const structureScale = structureRaw > 0 ? input.contractAmountMillions * modelledStructureShare / structureRaw : 0;
     for (const segment of guideway) segment.weight = (rawWeight.get(segment.id) ?? 0) * guidewayScale;
@@ -86,7 +109,7 @@ export function assignWeights(segments: Segment[]): Partial<Record<ConstructionP
     calibration[cp] = {
       ...input,
       modelledStructureShare,
-      structureScale: guidewayScale === 0 ? 0 : structureScale / guidewayScale,
+      structurePerGuidewayScale: guidewayScale === 0 ? 0 : structureScale / guidewayScale,
     };
   }
 

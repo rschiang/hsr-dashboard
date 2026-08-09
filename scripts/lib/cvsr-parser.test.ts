@@ -6,6 +6,7 @@ import {
   normalizeDataMonth,
   parseDataMonth,
   parseParcelPair,
+  parseReportMonth,
   parseUtilityPair,
   parseUtilityTypeStatusPair,
   validateCountPair,
@@ -37,6 +38,22 @@ test('derives duplicate upstream basenames independently from internal report he
     parseDataMonth('July 2023 Report (data through May 2023)', `${file}.archive-20230725.pdf`, {}),
     '2023-05',
   );
+});
+
+test('reads the publication month from a data-through report heading', () => {
+  assert.equal(parseReportMonth('July 2023 Report (data through May 2023)'), '2023-07');
+  assert.equal(parseReportMonth('MARCH 2026 REPORT ( DATA THROUGH JANUARY 2026 )'), '2026-03');
+});
+
+test('reads the publication month from a titled status-report heading', () => {
+  assert.equal(parseReportMonth('Central Valley Status Report \u2013 December 2021'), '2021-12');
+  assert.equal(parseReportMonth('Central Valley Status Report September 2019'), '2019-09');
+});
+
+test('returns null rather than guessing a publication month', () => {
+  assert.equal(parseReportMonth('Central Valley Status Report'), null);
+  assert.equal(parseReportMonth('Spring 2024 Report (data through March 2024)'), null);
+  assert.equal(parseReportMonth(''), null);
 });
 
 test('maps utility values by semantic headers, including reordered columns', () => {

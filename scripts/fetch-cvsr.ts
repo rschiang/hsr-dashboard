@@ -1,7 +1,9 @@
+import { createHash } from 'node:crypto';
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { basename } from 'node:path';
 import { PDFParse } from 'pdf-parse';
 import type {
+  CvsrInventory,
   CvsrReportDiagnostic,
   PackageMetrics,
   Snapshot,
@@ -12,6 +14,7 @@ import {
   parseDataMonth,
   parseParcelPair,
   parseProgressMetrics,
+  parseReportMonth,
   parseUtilityPair,
   type CvsrPackage,
 } from './lib/cvsr-parser';
@@ -25,7 +28,31 @@ import {
 const DIRECTORY = 'data/raw/cvsr';
 const MANIFEST = `${DIRECTORY}/MANIFEST.md`;
 const PARSED = `${DIRECTORY}/parsed-snapshots.json`;
+const REPORT_URLS = `${DIRECTORY}/report-urls.json`;
 const CURRENT_INDEX = 'https://hsr.ca.gov/about/board-of-directors/finance-audit-committee/';
+const CVSR_CANDIDATE = /CVSR|Central[_ -]Valley[_ -]Status[_ -](?:Report|Update)/i;
+/** Prefix probed and hashed to prove a remote PDF is byte-identical to the local copy. */
+const PREFIX_BYTES = 262144;
+const USER_AGENT = 'hsr-dashboard/1.0 (+https://github.com/rschiang/hsr-dashboard)';
+const REQUEST_INTERVAL_MS = 1000;
+
+/** A direct hsr.ca.gov PDF URL proven to serve the exact local file. */
+type ResolvedReportUrl = {
+  url: string;
+  bytes: number;
+  prefixSha256: string;
+  verifiedAt: string;
+};
+type ReportUrlRegistry = Record<string, ResolvedReportUrl>;
+
+async function loadReportUrls(): Promise<ReportUrlRegistry> {
+  try {
+    return JSON.parse(await readFile(REPORT_URLS, 'utf8')) as ReportUrlRegistry;
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') return {};
+    throw error;
+  }
+}
 
 const REVIEWED_CVSR_REPORTS: readonly ReviewedCvsrReport[] = [
   {
@@ -116,6 +143,42 @@ async function writeManifest(): Promise<void> {
     '',
     `Canonical Finance & Audit index: ${CURRENT_INDEX}`,
   );
+
+  // Offline enrichment: the parse artifact is the only source of transcription and
+  // URL-resolution state, and it may legitimately be absent on a fresh checkout.
+  let inventory: CvsrInventory | undefined;
+  try {
+    // Our own artifact, written by parseLocalPdfs in this file.
+    const artifact = JSON.parse(await readFile(PARSED, 'utf8')) as { cvsrInventory: CvsrInventory };
+    inventory = artifact.cvsrInventory;
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
+  }
+  if (inventory) {
+    lines.push(
+      '',
+      '## Transcribed values',
+      '',
+      'Package values read by hand from chart images in the source PDF. They are published',
+      'Authority figures, not estimates, and they are not gaps.',
+      '',
+      '| Data month | Report filename | Transcribed fields | Detail |',
+      '|---|---|---|---|',
+    );
+    for (const record of inventory.transcriptions) {
+      lines.push(`| \`${record.month}\` | \`${record.reportFile}\` | ${record.fields.join(', ')} | ${record.detail} |`);
+    }
+    lines.push(
+      '',
+      '## Unresolved report URLs',
+      '',
+      'No direct hsr.ca.gov PDF URL could be byte-verified for these local files; the dashboard',
+      'falls back to the CVSR registry link and shows the filename instead of a per-report link.',
+      '',
+    );
+    if (inventory.unresolvedReportUrls.length === 0) lines.push('- none');
+    for (const file of inventory.unresolvedReportUrls) lines.push(`- \`${file}\``);
+  }
   await writeFile(MANIFEST, `${lines.join('\n')}\n`);
   console.log(`CVSR manifest: ${MANIFEST}`);
 }
@@ -277,7 +340,7 @@ function reportMetadata(file: string): ReviewedCvsrReport | undefined {
 }
 
 
-async function parsePdf(path: string): Promise<Snapshot> {
+async function parsePdf(path: string, reportUrls: ReportUrlRegistry): Promise<Snapshot> {
   const parser = new PDFParse({ data: await readFile(path) });
   let text: string;
   try {
@@ -292,7 +355,10 @@ async function parsePdf(path: string): Promise<Snapshot> {
   const manualProgress = LEGACY_PROGRESS[reportFile];
   const perPackage = (manualProgress
     ? Object.fromEntries(
-        Object.entries(manualProgress).map(([cp, metrics]) => [cp, { ...metrics, sourceId: 'cvsr' }]),
+        Object.entries(manualProgress).map(([cp, metrics]) => [
+          cp,
+          { ...metrics, transcribedFields: ['progress'], sourceId: 'cvsr' },
+        ]),
       )
     : parseProgressMetrics(text, dataMonth)) as Record<CvsrPackage, PackageMetrics>;
 
@@ -304,10 +370,12 @@ async function parsePdf(path: string): Promise<Snapshot> {
         perPackage[cp].utilitiesTotal = utilities.total;
       }
     }
-    const parcels = LEGACY_PARCELS[reportFile]?.[cp] ?? parseParcelPair(text, cp);
+    const transcribedParcels = LEGACY_PARCELS[reportFile]?.[cp];
+    const parcels = transcribedParcels ?? parseParcelPair(text, cp);
     if (parcels) {
       perPackage[cp].parcelsDelivered = parcels.delivered;
       perPackage[cp].parcelsTotal = parcels.total;
+      if (transcribedParcels) (perPackage[cp].transcribedFields ??= []).push('parcels');
     }
   }
 
@@ -337,12 +405,16 @@ async function parsePdf(path: string): Promise<Snapshot> {
     tier: 2,
     sourceId: 'cvsr',
     reportFile,
+    // Reviewed metadata wins over the resolver registry: the archived May 2023
+    // capture must keep its Wayback URL and its overwritten original.
     ...(report
       ? {
           reportUrl: report.reportUrl,
           ...(report.originalReportUrl ? { originalReportUrl: report.originalReportUrl } : {}),
         }
-      : {}),
+      : reportUrls[reportFile]
+        ? { reportUrl: reportUrls[reportFile].url }
+        : {}),
     perPackage,
     aggregate,
   };
@@ -350,8 +422,9 @@ async function parsePdf(path: string): Promise<Snapshot> {
 
 async function parseLocalPdfs(): Promise<void> {
   await mkdir(DIRECTORY, { recursive: true });
+  const reportUrls = await loadReportUrls();
   const files = (await readdir(DIRECTORY)).filter((file) => file.toLowerCase().endsWith('.pdf')).sort();
-  const candidates = files.filter((file) => /CVSR|Central[_ -]Valley[_ -]Status[_ -](?:Report|Update)/i.test(file));
+  const candidates = files.filter((file) => CVSR_CANDIDATE.test(file));
   const alternativeFiles = files.filter((file) => !candidates.includes(file));
   const rejectedReports: CvsrReportDiagnostic[] = alternativeFiles.map((reportFile) => ({
     reportFile,
@@ -362,7 +435,7 @@ async function parseLocalPdfs(): Promise<void> {
   const parseFailures: CvsrParseFailure[] = [];
   for (const file of candidates) {
     try {
-      const snapshot = await parsePdf(`${DIRECTORY}/${file}`);
+      const snapshot = await parsePdf(`${DIRECTORY}/${file}`, reportUrls);
       const existing = snapshotsByDate.get(snapshot.date);
       if (existing) {
         const existingPayload = JSON.stringify({ perPackage: existing.perPackage, aggregate: existing.aggregate });
@@ -430,6 +503,9 @@ async function parseLocalPdfs(): Promise<void> {
     fieldFailures,
     coverageStart: '2019-03',
     coverageEnd: '2026-04',
+    unresolvedReportUrls: candidates.filter(
+      (file) => !reportMetadata(file) && !reportUrls[file],
+    ),
   });
   await writeFile(PARSED, `${JSON.stringify({ snapshots, cvsrInventory, diagnostics: { parseFailures, fieldFailures } }, null, 2)}\n`);
   console.log(`CVSR parse: ${snapshots.length} monthly snapshots from ${candidates.length} candidate reports; ${alternativeFiles.length} non-CVSR alternatives ignored; network requests: 0`);
@@ -442,6 +518,157 @@ async function parseLocalPdfs(): Promise<void> {
   }
 }
 
+function shiftMonth(month: string, delta: number): string {
+  const cursor = new Date(`${month}-01T00:00:00Z`);
+  cursor.setUTCMonth(cursor.getUTCMonth() + delta);
+  return `${cursor.getUTCFullYear()}-${String(cursor.getUTCMonth() + 1).padStart(2, '0')}`;
+}
+
+/**
+ * Resolve a direct, byte-verified hsr.ca.gov PDF URL for every local report.
+ *
+ * This is the only network path in this file, and the policy is deliberately narrow.
+ *
+ * 1. `data/raw/cvsr/report-urls.json` is the committed registry. Any file already in it
+ *    is skipped with zero requests, so anything already proven costs nothing to re-run.
+ *    Files carrying reviewed metadata already have a canonical URL and are never probed.
+ * 2. Each unresolved local PDF gets at most eight ordered, deduped candidates, every one
+ *    of them built from evidence already in hand: the publication month printed inside
+ *    the PDF, then the data month plus two, three and one month, then every `20YY` + `MM`
+ *    pair in the filename, and for `brdmtg_*` files the legacy
+ *    `uploads/docs/brdmeetings/{year}/` layout. Months are never brute-forced.
+ * 3. Every probe is one `GET` with `Range: bytes=0-262143` and a single fixed
+ *    User-Agent, with a hard 1000 ms gap between requests — including across files.
+ *    No URL is requested twice in a run.
+ * 4. A candidate is accepted only when all of these hold: status 200 or 206; content type
+ *    `application/pdf`; the advertised full length (Content-Range total, else
+ *    Content-Length) equals the local byte size; and SHA-256 of the returned prefix
+ *    equals SHA-256 of the local file's first 262144 bytes. An unverified URL is never
+ *    recorded.
+ * 5. `wp-json` and HTML pages are Incapsula-gated and are never requested. An HTML answer
+ *    to a PDF request means the host is challenging us, so the file's remaining
+ *    candidates are abandoned and it is recorded unresolved. A `404` with an HTML body is
+ *    the site's ordinary not-found page, which is a miss, not a challenge.
+ */
+async function resolveReportUrls(): Promise<void> {
+  await mkdir(DIRECTORY, { recursive: true });
+  const registry = await loadReportUrls();
+  const files = (await readdir(DIRECTORY)).filter((file) => file.toLowerCase().endsWith('.pdf')).sort();
+  const attempted = new Set<string>();
+  const unresolved: string[] = [];
+  let requests = 0;
+  let lastRequestAt = 0;
+
+  for (const file of files) {
+    if (registry[file]) {
+      console.log(`${file}: already verified`);
+      continue;
+    }
+    if (reportMetadata(file)) {
+      console.log(`${file}: reviewed metadata URL, not probed`);
+      continue;
+    }
+
+    const data = await readFile(`${DIRECTORY}/${file}`);
+    const bytes = data.length;
+    const localPrefixSha256 = createHash('sha256').update(data.subarray(0, PREFIX_BYTES)).digest('hex');
+
+    let reportMonth: string | null = null;
+    let dataMonth: string | null = null;
+    const parser = new PDFParse({ data });
+    try {
+      const text = normalizeCvsrText((await parser.getText()).text);
+      reportMonth = parseReportMonth(text);
+      try {
+        dataMonth = parseDataMonth(text, file, LEGACY_DATES);
+      } catch {
+        dataMonth = null;
+      }
+    } catch {
+      // An unreadable PDF still has filename-derived candidates.
+    } finally {
+      await parser.destroy();
+    }
+
+    const urls: string[] = [];
+    const addUpload = (month: string): void => {
+      const url = `https://hsr.ca.gov/wp-content/uploads/${month.slice(0, 4)}/${month.slice(5, 7)}/${file}`;
+      if (!urls.includes(url)) urls.push(url);
+    };
+    if (reportMonth) addUpload(reportMonth);
+    if (dataMonth) for (const delta of [2, 3, 1]) addUpload(shiftMonth(dataMonth, delta));
+    for (const [, year, month] of file.matchAll(/(20\d{2})[-_]?(0[1-9]|1[0-2])/g)) addUpload(`${year}-${month}`);
+    const boardMeeting = /^brdmtg_\d{4}(\d{2})_/.exec(file);
+    if (boardMeeting) {
+      const url = `https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/20${boardMeeting[1]}/${file}`;
+      if (!urls.includes(url)) urls.push(url);
+    }
+    const ordered = urls.slice(0, 8);
+
+    let resolved: ResolvedReportUrl | undefined;
+    let challenged = false;
+    for (const url of ordered) {
+      if (attempted.has(url)) continue;
+      attempted.add(url);
+      const idle = REQUEST_INTERVAL_MS - (Date.now() - lastRequestAt);
+      if (idle > 0) {
+        const { promise, resolve } = Promise.withResolvers<void>();
+        setTimeout(resolve, idle);
+        await promise;
+      }
+      lastRequestAt = Date.now();
+      requests += 1;
+
+      let response: Response;
+      try {
+        response = await fetch(url, {
+          headers: { Range: `bytes=0-${PREFIX_BYTES - 1}`, 'User-Agent': USER_AGENT },
+        });
+      } catch (error) {
+        console.warn(`  ${url}: request failed (${error instanceof Error ? error.message : String(error)})`);
+        continue;
+      }
+      const contentType = response.headers.get('content-type') ?? '';
+      const body = Buffer.from(await response.arrayBuffer());
+      if (contentType.startsWith('text/html') && response.status !== 404) {
+        challenged = true;
+        break;
+      }
+      if (response.status !== 200 && response.status !== 206) continue;
+      if (!contentType.startsWith('application/pdf')) continue;
+      const contentRange = response.headers.get('content-range');
+      const total = Number(
+        contentRange?.split('/')[1] ?? response.headers.get('content-length') ?? Number.NaN,
+      );
+      if (total !== bytes) continue;
+      const prefixSha256 = createHash('sha256').update(body.subarray(0, PREFIX_BYTES)).digest('hex');
+      if (prefixSha256 !== localPrefixSha256) continue;
+      resolved = { url, bytes, prefixSha256, verifiedAt: new Date().toISOString() };
+      break;
+    }
+
+    if (resolved) {
+      registry[file] = resolved;
+      console.log(`${file}: verified ${resolved.url}`);
+    } else {
+      unresolved.push(file);
+      console.log(
+        `${file}: unresolved after ${ordered.length} candidate${ordered.length === 1 ? '' : 's'}${challenged ? ' (host answered a PDF request with HTML; remaining candidates abandoned)' : ''}`,
+      );
+    }
+  }
+
+  const sorted = Object.fromEntries(Object.keys(registry).sort().map((file) => [file, registry[file]]));
+  await writeFile(REPORT_URLS, `${JSON.stringify(sorted, null, 2)}\n`);
+  console.log(
+    `CVSR report URLs: ${Object.keys(sorted).length} verified, ${unresolved.length} unresolved; network requests: ${requests}`,
+  );
+  for (const file of unresolved) console.log(`  unresolved: ${file}`);
+  console.log(`CVSR report URLs → ${REPORT_URLS}`);
+}
+
 const parseMode = process.argv.includes('--parse');
-if (parseMode) await parseLocalPdfs();
+const resolveMode = process.argv.includes('--resolve-urls');
+if (resolveMode) await resolveReportUrls();
+else if (parseMode) await parseLocalPdfs();
 else await writeManifest();

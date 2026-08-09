@@ -1,10 +1,15 @@
 import { SOURCES, type SourceId } from '../data/sources';
 
-export function SourceLink({ sourceId, label = 'source' }: { sourceId: SourceId; label?: string }) {
+export function SourceLink({ sourceId, label = 'source', title }: { sourceId: SourceId; label?: string; title?: string }) {
   const source = SOURCES[sourceId];
   return (
     <sup className="source-link">
-      <a href={source.url} target="_blank" rel="noreferrer" title={`${source.publisher}, ${source.title} (${source.date})`}>
+      <a
+        href={source.url}
+        target="_blank"
+        rel="noreferrer"
+        title={title ?? `${source.publisher}, ${source.title} (${source.date})`}
+      >
         {label}
       </a>
     </sup>

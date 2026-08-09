@@ -27,7 +27,7 @@ body,
   margin: 0;
 }
 
-body { overflow: hidden; }
+body { overflow: auto; }
 button,
 input { font: inherit; }
 a { color: inherit; }
@@ -36,7 +36,6 @@ h2,
 p { margin: 0; }
 
 @media (max-width: 900px) {
-  body { overflow: auto; }
   html,
   body,
   #root { height: auto; min-height: 100%; }

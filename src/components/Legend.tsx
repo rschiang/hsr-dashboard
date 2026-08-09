@@ -31,7 +31,8 @@ export function Legend() {
             >
               <span className={`legend-swatch ${status === 'no_data' ? 'hatched' : ''}`} style={{ backgroundColor: STATUS_COLORS[status] }} />
               <span>{STATUS_LABELS[status]}</span>
-              {(status === 'track_laid' || status === 'systems_installed') && <span className="legend-zero">0% <SourceLink sourceId="cvsr" /></span>}
+              {/* The 0% is attributed by the two definition citations below; a third and fourth identical CVSR link is wallpaper. */}
+              {(status === 'track_laid' || status === 'systems_installed') && <span className="legend-zero">0%</span>}
             </li>
           ))}
         </ul>

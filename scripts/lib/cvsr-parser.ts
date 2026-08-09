@@ -41,6 +41,21 @@ export function parseDataMonth(
   return normalizeDataMonth(value);
 }
 
+/**
+ * Publication month of a report — the month it was posted under on hsr.ca.gov,
+ * which is not the data month. Strict: returns null rather than guessing.
+ */
+export function parseReportMonth(text: string): string | null {
+  const match = /([A-Z][a-z]+)\s+(20\d{2})\s+Report\s*\(\s*data\s+through/i.exec(text)
+    ?? /Central Valley Status Report\s*[-\u2013\u2014]?\s*([A-Z][a-z]+)\s+(20\d{2})/i.exec(text);
+  if (!match) return null;
+  try {
+    return normalizeDataMonth(`${match[1]} ${match[2]}`);
+  } catch {
+    return null;
+  }
+}
+
 function integer(value: string): number {
   return Number(value.replaceAll(',', ''));
 }
