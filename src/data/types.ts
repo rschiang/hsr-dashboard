@@ -111,6 +111,7 @@ export type Snapshot = SnapshotFields & ({
   dataMonth: string;
   tier: 2;
   reportUrl?: string;
+  originalReportUrl?: string;
 });
 
 export type CvsrGapCause =

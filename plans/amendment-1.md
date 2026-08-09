@@ -21,46 +21,46 @@ The fix keeps numeric completion null unless a source publishes a number. Catego
 - Missing monthly reports and missing fields are never interpolated. The UI may show the last observed package metrics only with an explicit source month and staleness/missing-month badge; it must not present them as the selected month's observation.
 - Canonical CAHSRA/BuildHSR sources only for status-changing evidence. No automated bypass of hsr.ca.gov protections.
 
-## Observed gaps before the change
+## Observed gaps and recovered corpus
 
 ### Segment status
 
-The ArcGIS progress layer contains 33 structure rows in CP1/CP2-3 with null completion. The generated artifact currently attaches named-project points spatially, then mutates only `currentStatus`. Historical snapshots retain only `{ completion }`; `deriveStatuses()` reuses timeless current state for some null observations and shows `no_data` before the first tier-3 snapshot. It also calls completed structures `guideway_complete` and in-progress structures `preconstruction`, both semantically wrong.
+Before the status correction, the ArcGIS progress layer contained 33 structure rows in CP1/CP2-3 with null completion. The generated artifact attached named-project points spatially, then mutated only `currentStatus`; historical snapshots retained only `{ completion }`. `CP1:176` has station 1,041,545.5–1,046,286.83 ft / IOS mile 49.018–49.877, null completion/start/finish, and canonical evidence that the San Joaquin River Viaduct & Pergola was completed during February 2021.
 
-`CP1:176` has station 1,041,545.5–1,046,286.83 ft / IOS mile 49.018–49.877, null completion/start/finish, and a canonical named project “San Joaquin River Viaduct & Pergola” marked Completed. BuildHSR states completion in February 2021.
+### CVSR parser reconciliation
 
-### CVSR parser gaps in the 75 local snapshots
+The pre-recovery inventory contained 105 local PDFs: 85 valid in-coverage monthly snapshots, one rejected April 2023 duplicate stored under the apparent May-report basename, and 19 pre-series or non-combined alternatives. Before parser reconciliation, published utility rows from `2020-08` onward and multiple parcel layouts were not extracted consistently. Those were parser defects, not source omissions or zeroes.
 
-Current per-package nulls:
+After adding the archived May 2023 capture, the inventory contains 106 local PDFs: all 86 valid monthly snapshots in `2019-03`–`2026-04`, the same rejected April duplicate, and the same 19 alternatives. There are no parcel gaps, no utility gaps from `2020-08` onward, and no parser failures.
 
-- Utilities, all CP1/CP2-3/CP4: every month `2019-03` through `2021-03` (25 months). Audit separates these into source non-comparability for `2019-03`–`2020-07` (17 months) and parser failures for `2020-08`–`2021-03` (8 months). August 2020 already contains package ratios such as CP1 `202 / 1,202` and CP2-3 `187 / 692`; February 2021 contains CP1 `239 / 1,210`, CP2-3 `301 / 694`, CP4 `35 / 161`.
-- Parcels, all packages: `2019-03`–`2020-01` and `2021-04`–`2021-08`.
-- Parcels, CP1/CP2-3/CP4: `2025-03`.
-- Parcels, CP2-3 only: `2024-04`.
+The only official-source omissions are the package utility relocated/total fields for CP1, CP2-3, and CP4 in the 17 months `2019-03`–`2020-07`. They are recorded as `source_not_reported`; values are never inferred or carried into that interval. Parser failures remain defects and are never classified as source omissions.
 
-The parcel rows are present in the corresponding local PDFs and are parser defects, not zeroes. The implementation target is no parcel field gaps in locally available snapshots. If the strict parser still cannot prove a row, it must emit `parser_failure` rather than a number.
+### Recovered official reports
 
-### Reports not present locally
-
-These 11 data months are absent from `data/raw/cvsr/` and therefore absent for both utilities and parcels. Ten official reports are available for manual download. The apparent `2023-05` report link is not valid May evidence: its filename says `2305`, but the PDF itself says “data through April 2023,” duplicating the prior data month. Classify that month as `report_not_located`, not as a downloadable report and never as May data.
+All eleven reviewed official reports are present and classified `downloaded`:
 
 | Data month | State | Canonical report or audit evidence |
 |---|---|---|
-| `2023-05` | `report_not_located` | The official index links https://hsr.ca.gov/wp-content/uploads/2023/07/CVSR-2307-2305-Data-FINAL-V0-A11Y.pdf, but the document internally says “data through April 2023”; retain it only as a rejected duplicate diagnostic. |
-| `2023-10` | `report_not_downloaded` | https://hsr.ca.gov/wp-content/uploads/2024/01/CVSR-2312-2310-Data-FINAL-V0-A11Y.pdf |
-| `2024-01` | `report_not_downloaded` | https://hsr.ca.gov/wp-content/uploads/2024/03/CVSR_2403_2401_Data-FINAL-V0-A11Y.pdf |
-| `2024-05` | `report_not_downloaded` | https://hsr.ca.gov/wp-content/uploads/2024/08/Supplemental-CVSR-2024-08-Data-2024-05-FINAL-A11Y.pdf |
-| `2024-06` | `report_not_downloaded` | https://hsr.ca.gov/wp-content/uploads/2024/08/CVSR-2024-08-Data-2024-06-FINAL-V0-A11Y.pdf |
-| `2024-09` | `report_not_downloaded` | https://hsr.ca.gov/wp-content/uploads/2024/12/CVSR-2024-11-Data-2024-A11Y.pdf |
-| `2025-01` | `report_not_downloaded` | https://hsr.ca.gov/wp-content/uploads/2025/03/CVSR-2025-03-20-Data-2025-01-FINAL-V0-A11Y.pdf |
-| `2025-04` | `report_not_downloaded` | https://hsr.ca.gov/wp-content/uploads/2025/06/CVSR-2025-06-Data-2025-04-FINAL-V0-A11Y.pdf |
-| `2025-08` | `report_not_downloaded` | https://hsr.ca.gov/wp-content/uploads/2025/10/CVSR-2025-10-Data-2025-08-Supplemental-FINAL-V0-A11Y.pdf |
-| `2025-10` | `report_not_downloaded` | https://hsr.ca.gov/wp-content/uploads/2025/12/CVSR-2025-12-Data-2025-10-FINAL-V0-A11Y.pdf |
-| `2026-01` | `report_not_downloaded` | https://hsr.ca.gov/wp-content/uploads/2026/03/FA-Central-Valley-Status-Report-Supplemental-March-2026-A11Y.pdf |
+| `2023-05` | `downloaded` | Archived Authority capture: https://web.archive.org/web/20230725134531id_/https://hsr.ca.gov/wp-content/uploads/2023/07/CVSR-2307-2305-Data-FINAL-V0-A11Y.pdf; original overwritten Authority URL: https://hsr.ca.gov/wp-content/uploads/2023/07/CVSR-2307-2305-Data-FINAL-V0-A11Y.pdf; local file: `CVSR-2307-2305-Data-FINAL-V0-A11Y.archive-20230725.pdf`. The archive internally says “data through May 2023.” |
+| `2023-10` | `downloaded` | https://hsr.ca.gov/wp-content/uploads/2024/01/CVSR-2312-2310-Data-FINAL-V0-A11Y.pdf |
+| `2024-01` | `downloaded` | https://hsr.ca.gov/wp-content/uploads/2024/03/CVSR_2403_2401_Data-FINAL-V0-A11Y.pdf |
+| `2024-05` | `downloaded` | https://hsr.ca.gov/wp-content/uploads/2024/08/Supplemental-CVSR-2024-08-Data-2024-05-FINAL-A11Y.pdf |
+| `2024-06` | `downloaded` | https://hsr.ca.gov/wp-content/uploads/2024/08/CVSR-2024-08-Data-2024-06-FINAL-V0-A11Y.pdf |
+| `2024-09` | `downloaded` | https://hsr.ca.gov/wp-content/uploads/2024/12/CVSR-2024-11-Data-2024-A11Y.pdf |
+| `2025-01` | `downloaded` | https://hsr.ca.gov/wp-content/uploads/2025/03/CVSR-2025-03-20-Data-2025-01-FINAL-V0-A11Y.pdf |
+| `2025-04` | `downloaded` | https://hsr.ca.gov/wp-content/uploads/2025/06/CVSR-2025-06-Data-2025-04-FINAL-V0-A11Y.pdf |
+| `2025-08` | `downloaded` | https://hsr.ca.gov/wp-content/uploads/2025/10/CVSR-2025-10-Data-2025-08-Supplemental-FINAL-V0-A11Y.pdf |
+| `2025-10` | `downloaded` | https://hsr.ca.gov/wp-content/uploads/2025/12/CVSR-2025-12-Data-2025-10-FINAL-V0-A11Y.pdf |
+| `2026-01` | `downloaded` | https://hsr.ca.gov/wp-content/uploads/2026/03/FA-Central-Valley-Status-Report-Supplemental-March-2026-A11Y.pdf |
 
-After a human downloads the ten valid PDFs, the expected period `2019-03`–`2026-04` contains 86 calendar months, 85 available snapshots, and one unresolved source month (`2023-05`). Until then, the committed dashboard must disclose ten not-downloaded reports plus the one unresolved month.
+The current local `CVSR-2307-2305-Data-FINAL-V0-A11Y.pdf` remains a rejected duplicate with internally derived `dataMonth: '2023-04'`; the retained April snapshot is `CVSR-2306-2304-Data-FINAL-V0-A11Y.pdf`. The settled result is 86 of 86 monthly snapshots with no missing official monthly report.
 
 ## Implementation
+
+Status at amendment approval:
+
+- Implemented: data contracts; reviewed GlobalID crosswalk and dated evidence; centralized status resolution; status rendering; replay provenance; strict failure diagnostics; and the Node/tsx test runner.
+- Pending amendment work: parser reconciliation and layout support; corrected generated artifacts; report provenance and data-gap UI; selected-date tooltip values; the Finance & Audit source-index link; and the revised verification scenarios below.
 
 ### 1. Add explicit evidence and gap contracts
 
@@ -149,17 +149,17 @@ Add `structure_complete` color/label to `src/lib/status.ts`, `src/components/Leg
 
 Update `src/App.tsx`:
 
-- Replace `activeSnapshot?.perSegment?.[id]?.completion ?? segment.completion` with property-presence semantics. An explicit historical null remains null and cannot fall through to current completion.
+- Use property-presence semantics for selected-date completion. An explicit historical null remains null and cannot fall through to current completion.
 - Keep `Earthwork-equivalent` numeric-only.
-- For the modelled difficulty metric, count a categorical `structure_complete` as binary complete only for structure weight; do not invent partial percentages for in-progress structures. Rename/help-text the metric so this modelling rule is explicit.
-- Replace the timeless deduplicated point count in “Structures observed” with the CVSR aggregate structure count at the displayed report month. If the selected month has no exact snapshot, show the last observation with an explicit `as of YYYY-MM` qualifier.
-- Return replay provenance `scheduled`, `observed`, or `mixed`; update `TimeScrubber` badges so a replay containing dated milestone evidence plus scheduled segments says “Mixed observed + scheduled,” not “Scheduled replay.”
+- For the modelled difficulty metric, count categorical `structure_complete` as binary complete only for structure weight; do not invent partial percentages for in-progress structures.
+- Use an exact tier-2 report for the selected `YYYY-MM`; otherwise show the latest earlier tier-2 report only as `Last observed YYYY-MM` beside the typed report-gap cause.
+- Return replay provenance `scheduled`, `observed`, or `mixed`; a replay containing dated milestone evidence plus scheduled segments says “Mixed observed + scheduled.”
 
 Update `src/components/StripChart.tsx`:
 
-- Pass selected date and resolved evidence into the tooltip.
-- Preserve `Current earthwork completion: not reported` for null values.
-- Add an evidence line with exact wording, date precision (“during,” “on,” or “by”), and direct source link.
+- Pass selected date, resolved evidence, and the selected-date completion record into the tooltip.
+- Render `Earthwork completion at selected date`; an explicit historical null remains `not reported`.
+- Keep the evidence line with exact wording, date precision (“during,” “on,” or “by”), and direct source link.
 - Do not show a current ArcGIS point status as if it existed at a historical selected date. Location markers may remain, but their state must be labelled with its observation date.
 
 ### 6. Make CVSR parsing strict and auditable
@@ -185,46 +185,44 @@ Canonicalize report data dates to `date: YYYY-MM-01` plus `dataMonth: YYYY-MM`; 
 
 ### 7. Persist and render the missing-data inventory
 
-Update `data/raw/cvsr/MANIFEST.md` generation to include the ten valid download URLs plus the rejected `2023-05` candidate, expected local filename, data month, and `downloaded/missing/rejected-duplicate` state. The command remains a human handoff and must not fetch around bot protection.
+`data/raw/cvsr/MANIFEST.md` records eleven reviewed `downloaded` reports and separately records the overwritten current April bytes as `rejected-duplicate`. The archived May record keeps both the stable archive URL and the original overwritten Authority URL.
 
-`parsed-snapshots.json` must contain:
+`parsed-snapshots.json` contains:
 
-- continuous expected month list;
-- available snapshot list;
-- one `report_not_downloaded` gap for each valid known URL absent locally;
-- `report_not_located` when no valid official report was found, including `2023-05`; retain the mislabeled April-data PDF as a rejected duplicate diagnostic;
-- field-level `source_not_reported` and `parser_failure` entries;
-- ignored duplicate/non-CVSR/missing-data-month report diagnostics.
+- the continuous 86-month expected list;
+- 86 unique available months;
+- no snapshot-level gap;
+- 17 `source_not_reported` utility records for `2019-03`–`2020-07`;
+- no parcel gap and no post-`2020-07` utility gap;
+- rejected duplicate/non-CVSR diagnostics and zero parser failures.
 
-Copy the inventory through `scripts/build-history.ts` to `public/data/history.json`.
+Copy the inventory and all tier-2 snapshots through `scripts/build-history.ts` to `public/data/history.json`; do not refresh unrelated ArcGIS or alignment artifacts for this correction.
 
 Update `PackageBands` and `src/App.css`:
 
-- Show the report's `dataMonth` and direct `reportUrl` when available.
-- Exact snapshot + missing field: “Not reported by source” or “Parser failed,” from inventory cause.
-- Missing selected month: show the last snapshot only as “Last observed YYYY-MM”; add “YYYY-MM report not downloaded/not located.”
-- Add a compact “Data gaps” disclosure listing missing report months and source-omission months. Do not render a repeated generic `CVSR PDF required` for each package cell.
+- Show `Data through YYYY-MM` and the exact monthly report link for an exact snapshot.
+- For archived May 2023, link the stable capture as `archived Authority report` and expose the original overwritten Authority URL in the link title.
+- Exact snapshot plus missing field: show the inventory cause.
+- Missing selected month: show a prior snapshot only as `Last observed YYYY-MM` beside the typed gap cause.
+- Group consecutive `Data gaps` only when metric, cause, package set, and detail match. The corrected corpus renders only `Utilities (CP1, CP2-3, CP4): 2019-03–2020-07 — Not published in source`.
 
-Change `SOURCES.cvsr` from the April 2026 PDF to the Finance & Audit index root; per-snapshot links point to the exact report. Add direct structure-event links in the evidence records.
+`SOURCES.cvsr` points to the Finance & Audit Committee index; per-snapshot links point to the exact live or archived report.
 
 ### 8. Tests and verification
 
-Add Node/tsx tests without a new framework:
-
-- `scripts/lib/cvsr-parser.test.ts`: one fixture per utility/ROW layout; validates the February 2021 values above, reversed-column rejection, date normalization, and known source-gap classification.
-- `src/lib/status.test.ts`: San Joaquin is under construction at `2020-08`, `structure_complete` at `2021-02`, and no present-day categorical state leaks to an earlier date; completed structure is not `guideway_complete`; explicit null does not fall through to current numeric completion.
-- Add `npm test` using `tsx --test`.
+The Node/tsx suite covers utility narrative, semantic row and column-grouped summaries, utility type/status reconciliation and mismatch, legacy parcel narrative, ROW summary, current delivery table, reversed/ambiguous rejection, the `2020-07`/`2020-08` source-gap boundary, gap-cause precedence, and independent internal months for the overwritten and archived same-basename reports. Status tests cover San Joaquin replay, categorical status semantics, evidence timing, and explicit historical nulls.
 
 Pipeline verification:
 
-1. Run `npm run parse:cvsr`. With the current 75 PDFs: zero parser failures; parcel gaps zero; utility `source_not_reported` exactly the 17 months `2019-03`–`2020-07`; ten `report_not_downloaded` months and one `report_not_located` month (`2023-05`). With the ten valid official PDFs later added: 85 of 86 calendar-month snapshots, no not-downloaded reports, and the one unresolved May 2023 source gap.
-2. Run `npm run fetch` to regenerate `segments.json`, `segments.geojson`, and `history.json`. Assert all crosswalk GlobalIDs resolve once, `CP1:176` has null numeric completion plus dated evidence, and GeoJSON current status is `structure_complete` rather than `guideway_complete`.
-3. Run `npm test`, `npm run build`, and `npm run lint`.
-4. Browser smoke test the production build:
-   - `2020-08`: San Joaquin is `under_construction`, with August 2020 CVSR evidence; utilities show package values including CP1 `202 / 1,202`.
-   - `2021-02`: San Joaquin becomes `structure_complete`, tooltip says completed during February 2021, earthwork percentage remains “not reported,” and the BuildHSR link is present.
-   - A date before a current-only point observation does not show that current status.
-   - `2024-05` before its PDF is added: package bands identify the report as not downloaded and label any displayed April values “Last observed 2024-04.”
+1. Run `npm run parse:cvsr`: 86 unique monthly snapshots from 87 candidates, 19 alternatives ignored, zero report failures, zero package field failures, and only the 17 audited utility source omissions.
+2. Run `npm run fetch:cvsr`, then `npx tsx scripts/build-history.ts`; do not run the unrelated full `npm run fetch`.
+3. Assert the parsed and public inventories are identical, every tier-2 snapshot has `date === dataMonth + '-01'` and `sourceId === 'cvsr'`, and the overwritten current file appears only as a rejected April duplicate.
+4. Run `npm test`, `npm run build`, and `npm run lint`.
+5. Browser smoke test the production build:
+   - `2023-05`: exact archived Authority report; utilities CP1 `473 / 992`, CP2-3 `457 / 701`, CP4 `115 / 143`; parcels CP1 `1,062 / 1,083`, CP2-3 `942 / 987`, CP4 `221 / 223`. It must not use the current April duplicate as May evidence.
+   - `2024-05`: exact supplemental report; utilities CP1 `673 / 992`, CP2-3 `527 / 701`, CP4 `133 / 143`; parcels CP1 `1,066 / 1,079`, CP2-3 `975 / 987`, CP4 `223 / 223`.
+   - `Data gaps`: only the 17-month utility source omission group; no monthly report gap.
+   - `2020-08` and `2021-02`: San Joaquin remains `under_construction` then `structure_complete`; earthwork completion at selected date remains `not reported` for explicit historical null.
    - Current date: completed null-progress structures use `structure_complete`; in-progress null-progress structures use `under_construction`; map and strip remain linked; no failed data requests or console errors.
 
 ## Files changed
@@ -238,6 +236,7 @@ Pipeline verification:
 - `scripts/build-segments.ts`
 - `scripts/build-history.ts`
 - `scripts/fetch-cvsr.ts`
+- `scripts/lib/cvsr-inventory.ts` (new pure inventory builder)
 - `scripts/lib/cvsr-parser.ts` (new)
 - `scripts/lib/cvsr-parser.test.ts` (new)
 - `src/App.tsx`
@@ -248,4 +247,5 @@ Pipeline verification:
 - `src/App.css`
 - `package.json`
 - `README.md`
-- generated `data/raw/cvsr/MANIFEST.md`, `data/raw/cvsr/parsed-snapshots.json`, `public/data/segments.json`, `public/data/segments.geojson`, and `public/data/history.json`
+- archived `data/raw/cvsr/CVSR-2307-2305-Data-FINAL-V0-A11Y.archive-20230725.pdf`
+- generated `data/raw/cvsr/MANIFEST.md`, `data/raw/cvsr/parsed-snapshots.json`, and `public/data/history.json`

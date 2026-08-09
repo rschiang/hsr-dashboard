@@ -11,6 +11,9 @@ const PACKAGE_LABELS: Record<CvsrPackage, string> = {
   CP4: '4',
 };
 
+const EXPLICIT_PACKAGE_ORDER =
+  String.raw`CP[-\s]*1(?:\s+Number)?(?![-\d])\s+CP[-\s]*2[-–\s]+3(?:\s+Number)?(?![-\d])\s+CP[-\s]*4(?:\s+Number)?(?![-\d])`;
+
 export function normalizeCvsrText(text: string): string {
   return text.replace(/\u00a0/g, ' ').replace(/[ \t]+/g, ' ');
 }
@@ -153,15 +156,136 @@ function parseSemanticRow(
   const headingMatch = heading.exec(text);
   if (!headingMatch) return null;
   const section = text.slice(headingMatch.index, headingMatch.index + 9000);
-  const row = new RegExp(`CP\\s*${PACKAGE_LABELS[cp]}(?![-\\d])\\s+([0-9,]+)\\s+([0-9,]+)\\s+([0-9,]+)`, 'i').exec(section);
-  if (!row) return null;
-  const header = section.slice(0, row.index);
-  const order = semanticOrder(header, labels);
-  if (!order || order.length !== 3) return null;
+  const row = new RegExp(
+    `CP\\s*${PACKAGE_LABELS[cp]}(?![-\\d])\\s+([0-9,]+)\\s+([0-9,]+)\\s+([0-9,]+)`,
+    'i',
+  ).exec(section);
+  if (row) {
+    const header = section.slice(0, row.index);
+    const order = semanticOrder(header, labels);
+    if (!order || order.length !== 3) return null;
+    const pair: Partial<CountPair> = {};
+    order.forEach((key, index) => { pair[key] = integer(row[index + 1]); });
+    if (pair.delivered === undefined || pair.total === undefined) return null;
+    return validateCountPair(pair as CountPair, `${context} ${cp}`);
+  }
+
+  const packageOrder = new RegExp(EXPLICIT_PACKAGE_ORDER, 'i');
+  if (!packageOrder.test(section)) {
+    throw new Error(`${context} ${cp}: semantic table is missing explicit CP 1, CP 2-3, CP 4 order`);
+  }
   const pair: Partial<CountPair> = {};
-  order.forEach((key, index) => { pair[key] = integer(row[index + 1]); });
+  for (const [key, pattern] of labels) {
+    const matches = [...section.matchAll(new RegExp(pattern.source, 'gi'))];
+    const columns = matches.flatMap((match) => {
+      const start = match.index + match[0].length;
+      const nextLabel = labels
+        .flatMap(([, candidate]) => {
+          const next = new RegExp(candidate.source, 'gi');
+          next.lastIndex = start;
+          const found = next.exec(section);
+          return found ? [found.index] : [];
+        })
+        .sort((a, b) => a - b)[0] ?? Math.min(start + 500, section.length);
+      const values = [
+        ...section
+          .slice(start, nextLabel)
+          .matchAll(/\b[0-9][0-9,]*\b(?!\s*%)/g),
+      ].map((value) => integer(value[0]));
+      return values.length === 3 ? [values] : [];
+    });
+    if (columns.length !== 1) {
+      throw new Error(`${context} ${cp}: semantic column ${key} must contain exactly three package values`);
+    }
+    pair[key] = columns[0][CVSR_PACKAGES.indexOf(cp)];
+  }
   if (pair.delivered === undefined || pair.total === undefined) return null;
   return validateCountPair(pair as CountPair, `${context} ${cp}`);
+}
+
+const UTILITY_STATUSES = [
+  ['notStarted', /NOT STARTED/i],
+  ['approved', /APPROVED TO START/i],
+  ['inProgress', /IN PROGRESS/i],
+  ['delivered', /RELOCATED/i],
+  ['total', /TOTAL/i],
+] as const;
+
+function utilityStatusRows(
+  section: string,
+  cp: CvsrPackage,
+  packageColumns: boolean,
+): Record<(typeof UTILITY_STATUSES)[number][0], number> {
+  const result = {} as Record<(typeof UTILITY_STATUSES)[number][0], number>;
+  for (const [key, label] of UTILITY_STATUSES) {
+    const statusLabel = key === 'total'
+      ? String.raw`(?:^|\n)\s*TOTAL(?:\s+[A-Za-z]+){0,3}`
+      : label.source;
+    const row = packageColumns
+      ? new RegExp(
+          `${statusLabel}\\s+([0-9,]+)\\s+([0-9,]+)\\s+([0-9,]+)\\s+([0-9,]+)(?:\\s+[0-9.]+%)?(?!\\s+[0-9,]+)`,
+          'gi',
+        )
+      : new RegExp(`${statusLabel}\\s+([0-9,]+)\\s+[0-9.]+%`, 'gi');
+    const matches = [...section.matchAll(row)];
+    if (key === 'approved' && matches.length === 0) {
+      result[key] = 0;
+      continue;
+    }
+    if (matches.length === 0) {
+      throw new Error(`utilities ${cp}: Summary by Utility Type is missing ${label.source}`);
+    }
+    const valueIndex = packageColumns ? CVSR_PACKAGES.indexOf(cp) + 1 : 1;
+    result[key] = matches.reduce((sum, match) => sum + integer(match[valueIndex]), 0);
+  }
+  return result;
+}
+
+export function parseUtilityTypeStatusPair(text: string, cp: CvsrPackage): CountPair | null {
+  if (!/Summary by Utility Type/i.test(text)) return null;
+
+  const combinedHeading = /(?:CP\s*1-4\s*[–—-]\s*Summary by|CP\s*1-4\s*[–—-]\s*Utility Relocation Summary[\s\S]{0,200}?Summary by) Utility Type/i.exec(text);
+  let section: string;
+  let packageColumns: boolean;
+  if (combinedHeading) {
+    const remainder = text.slice(combinedHeading.index, combinedHeading.index + 15000);
+    const end = /CP\s*1-4\s*[–—-]\s*(?:Real Property|Right-of-Way)/i.exec(
+      remainder.slice(combinedHeading[0].length),
+    );
+    section = end
+      ? remainder.slice(0, combinedHeading[0].length + end.index)
+      : remainder;
+    if (!new RegExp(EXPLICIT_PACKAGE_ORDER, 'i').test(section)) {
+      throw new Error(`utilities ${cp}: Summary by Utility Type is missing explicit CP 1, CP 2-3, CP 4 columns`);
+    }
+    packageColumns = true;
+  } else {
+    const packageHeading = new RegExp(
+      `CP\\s*${PACKAGE_LABELS[cp]}(?![-\\d])\\s*[–—-]\\s*Summary by Utility Type`,
+      'i',
+    ).exec(text);
+    if (!packageHeading) {
+      throw new Error(`utilities ${cp}: Summary by Utility Type is missing a package table`);
+    }
+    const remainder = text.slice(packageHeading.index, packageHeading.index + 12000);
+    const nextSection = /\nCP\s*(?:1|2[-–]?3|4)\s*[–—-]\s*(?!Summary by Utility Type)/i.exec(
+      remainder.slice(packageHeading[0].length),
+    );
+    section = nextSection
+      ? remainder.slice(0, packageHeading[0].length + nextSection.index)
+      : remainder;
+    packageColumns = false;
+  }
+
+  const statuses = utilityStatusRows(section, cp, packageColumns);
+  return validateCountPair(
+    {
+      delivered: statuses.delivered,
+      total: statuses.total,
+      remaining: statuses.notStarted + statuses.approved + statuses.inProgress,
+    },
+    `utilities ${cp} type/status detail`,
+  );
 }
 
 function constructionPackageSections(text: string, cp: CvsrPackage): string[] {
@@ -191,24 +315,34 @@ export function parseUtilityPair(text: string, cp: CvsrPackage): CountPair | nul
     (section) => [...section.matchAll(/Relocated:\s*([0-9,]+)[\s\S]{0,500}?Total:\s*([0-9,]+)/gi)],
   );
   const labelled = direct ?? packageMatches.at(-1);
-  if (labelled) {
-    return validateCountPair(
-      { delivered: integer(labelled[1]), total: integer(labelled[2]) },
-      `utilities ${cp}`,
+  const packageSummary = labelled
+    ? validateCountPair(
+        { delivered: integer(labelled[1]), total: integer(labelled[2]) },
+        `utilities ${cp}`,
+      )
+    : parseSemanticRow(
+        text,
+        cp,
+        /CP\s*1-4\s*[–—-]\s*Utility Relocations(?: Status| Summary)?/i,
+        [
+          ['total', /Total Relocations/i],
+          ['delivered', /Relocated to Date/i],
+          ['remaining', /Remaining(?: Utility)?(?: Relocations)?/i],
+        ],
+        'utilities',
+      );
+
+  const detail = parseUtilityTypeStatusPair(text, cp);
+  if (!detail) return packageSummary;
+  if (!packageSummary) {
+    throw new Error(`utilities ${cp}: package-level summary is missing for type/status reconciliation`);
+  }
+  if (detail.delivered !== packageSummary.delivered || detail.total !== packageSummary.total) {
+    throw new Error(
+      `utilities ${cp}: type/status detail ${detail.delivered}/${detail.total} does not match package summary ${packageSummary.delivered}/${packageSummary.total}`,
     );
   }
-
-  return parseSemanticRow(
-    text,
-    cp,
-    /CP\s*1-4\s*[–—-]\s*Utility Relocations(?: Status| Summary)?/i,
-    [
-      ['total', /Total Relocations/i],
-      ['delivered', /Relocated to Date/i],
-      ['remaining', /Remaining(?: Utility)?(?: Relocations)?/i],
-    ],
-    'utilities',
-  );
+  return packageSummary;
 }
 
 function packageProgressSection(text: string, cp: CvsrPackage): string {
@@ -277,23 +411,30 @@ function parseDeliveryTable(text: string, cp: CvsrPackage): CountPair | null {
 
 function parseParcelTable(text: string, cp: CvsrPackage): CountPair | null {
   const headings = text.matchAll(
-    /Total (?:Needed Parcels|Parcels Needed)[\s\S]{0,300}?Total Parcels Delivered(?: to Date)?[\s\S]{0,300}?Remaining Parcels(?: to be Delivered)?/gi,
+    /CP\s*(1-4|1|2[-–]?3|4)\s*[–—-]\s*(?:Right-of-Way\s*\(ROW\)\s*Summary|ROW Summary)/gi,
   );
   let invalid: Error | undefined;
   for (const heading of headings) {
-    const remainder = text.slice(heading.index + heading[0].length, heading.index + heading[0].length + 6000);
-    const railroad = /\bRailroad\b/i.exec(remainder);
+    const headingPackage = heading[1].replace('–', '-');
+    if (headingPackage !== '1-4' && headingPackage !== PACKAGE_LABELS[cp].replace('[-–]?', '-')) {
+      continue;
+    }
+    const remainder = text.slice(heading.index, heading.index + 12000);
+    const railroad = /\bROW\b[^\n]{0,100}\bRailroad\b|\bRailroad\b[^\n]{0,100}\bSummary\b/i.exec(remainder);
     const section = railroad ? remainder.slice(0, railroad.index) : remainder;
-    const row = new RegExp(
-      `CP\\s*${PACKAGE_LABELS[cp]}(?![-\\d])\\s+([0-9,]+)\\s+([0-9,]+)\\s+([0-9,]+)`,
-      'i',
-    ).exec(section);
-    if (!row) continue;
     try {
-      return validateCountPair(
-        { total: integer(row[1]), delivered: integer(row[2]), remaining: integer(row[3]) },
-        `parcels ${cp}`,
+      const pair = parseSemanticRow(
+        section,
+        cp,
+        /(?:Right-of-Way\s*\(ROW\)\s*Summary|ROW Summary)/i,
+        [
+          ['total', /(?:Estimated\s+)?Total\s+(?:Needed\s+Parcels|Parcels\s+Needed|Needed)\b/i],
+          ['delivered', /(?:Total\s+Parcels\s+)?Delivered(?:\s+to\s+Date)?\b/i],
+          ['remaining', /Remaining(?:\s+Parcels(?:\s+to\s+be\s+Delivered)?)?\b/i],
+        ],
+        'parcels',
       );
+      if (pair) return pair;
     } catch (error) {
       invalid = error instanceof Error ? error : new Error(String(error));
     }
@@ -305,11 +446,25 @@ function parseParcelTable(text: string, cp: CvsrPackage): CountPair | null {
 
 export function parseParcelPair(text: string, cp: CvsrPackage): CountPair | null {
   const section = packageProgressSection(text, cp);
-  const legacyMatches = [...section.matchAll(/Total Parcels:\s*([0-9,]+)[\s\S]{0,100}?Parcels Delivered\s*:\s*([0-9,]+)/gi)];
+  const legacyMatches = [
+    ...section.matchAll(
+      /(?:Total Parcels|Estimated Total Parcels Needed)\s*:\s*([0-9,]+)[\s\S]{0,150}?(?:Parcels Delivered|Total Parcels Delivered to Date)\s*:\s*([0-9,]+)/gi,
+    ),
+  ];
   const legacy = legacyMatches.at(-1);
   if (legacy) {
     return validateCountPair(
       { delivered: integer(legacy[2]), total: integer(legacy[1]) },
+      `parcels ${cp}`,
+    );
+  }
+  const deliveredFirst = new RegExp(
+    `Construction Package\\s*${PACKAGE_LABELS[cp]}(?![-\\d])[\\s\\S]{0,300}?Total Parcels Delivered to Date\\s*[–—:-]\\s*([0-9,]+)[\\s\\S]{0,150}?Estimated Total Parcels Needed\\s*[–—:-]\\s*([0-9,]+)`,
+    'i',
+  ).exec(text);
+  if (deliveredFirst) {
+    return validateCountPair(
+      { delivered: integer(deliveredFirst[1]), total: integer(deliveredFirst[2]) },
       `parcels ${cp}`,
     );
   }
@@ -319,6 +474,5 @@ export function parseParcelPair(text: string, cp: CvsrPackage): CountPair | null
   if (acquisition) return acquisition;
   const delivery = parseDeliveryTable(text, cp);
   if (delivery) return delivery;
-
   return parseParcelTable(text, cp);
 }

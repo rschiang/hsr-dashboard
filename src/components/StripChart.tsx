@@ -72,6 +72,7 @@ export function StripChart({
   onAxisModeChange,
   date,
   evidence,
+  selectedCompletionBySegment,
 }: {
   segments: Segment[];
   statuses: Record<string, AlignmentStatus>;
@@ -83,6 +84,7 @@ export function StripChart({
   onAxisModeChange: (mode: AxisMode) => void;
   date: string;
   evidence: Record<string, StructureEvidence | undefined>;
+  selectedCompletionBySegment: Record<string, number | null>;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const width = Math.max(540, useElementWidth(containerRef));
@@ -113,6 +115,7 @@ export function StripChart({
 
   const hovered = hoveredId ? segments.find((segment) => segment.id === hoveredId) : null;
   const tooltipEvidence = tooltip ? evidence[tooltip.segment.id] : undefined;
+  const tooltipCompletion = tooltip ? selectedCompletionBySegment[tooltip.segment.id] : null;
   const axisTicks = axisMode === 'distance'
     ? Array.from({ length: 18 }, (_, index) => index === 17 ? 171 : index * 10)
     : Array.from({ length: 6 }, (_, index) => index / 5);
@@ -209,7 +212,7 @@ export function StripChart({
             <span>{tooltip.segment.cp} · {STATUS_LABELS[statuses[tooltip.segment.id] ?? tooltip.segment.currentStatus]}</span>
             <span>Station {tooltip.segment.stationStart?.toLocaleString() ?? 'not published'}–{tooltip.segment.stationEnd?.toLocaleString() ?? 'not published'} ft <SourceLink sourceId={tooltip.segment.sourceId} /></span>
             <span>{tooltip.segment.iosMileStart.toFixed(2)}–{tooltip.segment.iosMileEnd.toFixed(2)} ios mi · {tooltip.segment.officialMpStart}–{tooltip.segment.officialMpEnd} <SourceLink sourceId="ts1_alignment" /></span>
-            <span>Current earthwork completion {tooltip.segment.completion === null ? 'not reported' : `${Math.round(tooltip.segment.completion * 100)}%`} <SourceLink sourceId="arcgis_progress" /></span>
+            <span>Earthwork completion at selected date {tooltipCompletion === null || tooltipCompletion === undefined ? 'not reported' : `${Math.round(tooltipCompletion * 100)}%`} <SourceLink sourceId="arcgis_progress" /></span>
             {tooltipEvidence && (
               <span>
                 Evidence: “{tooltipEvidence.quote}” — {evidenceDateLabel(tooltipEvidence)}.{' '}

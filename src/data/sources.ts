@@ -48,10 +48,10 @@ export const SOURCES = {
     accessed: '2026-08-09',
   },
   cvsr: {
-    title: 'Central Valley Status Report, April 2026',
-    date: '2026-04-01',
+    title: 'Finance & Audit Committee reports',
+    date: '2026-08-10',
     publisher: 'California High-Speed Rail Authority',
-    url: 'https://hsr.ca.gov/wp-content/uploads/2026/04/FA-Central-Valley-Status-Report-April-2026.pdf',
+    url: 'https://hsr.ca.gov/about/board-of-directors/finance-audit-committee/',
   },
   sb1029_2017: {
     title: 'SB 1029 Project Update Report, February 2017',
