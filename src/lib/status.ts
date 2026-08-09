@@ -1,4 +1,10 @@
-import type { AlignmentStatus, Segment, Snapshot } from '../data/types';
+import type {
+  AlignmentStatus,
+  ReplayProvenance,
+  Segment,
+  Snapshot,
+  StructureEvidence,
+} from '../data/types';
 
 export const PHASES = [
   'row_acquired',
@@ -15,6 +21,7 @@ export const ALIGNMENT_STATUSES: AlignmentStatus[] = [
   'no_data',
   'preconstruction',
   'under_construction',
+  'structure_complete',
   'guideway_complete',
   'track_laid',
   'systems_installed',
@@ -25,6 +32,7 @@ export const STATUS_COLORS: Record<AlignmentStatus, string> = {
   no_data: '#f0f0f0',
   preconstruction: '#e6ab02',
   under_construction: '#d95f02',
+  structure_complete: '#66a61e',
   guideway_complete: '#1b9e77',
   track_laid: '#1f78b4',
   systems_installed: '#6a3d9a',
@@ -35,6 +43,7 @@ export const STATUS_LABELS: Record<AlignmentStatus, string> = {
   no_data: 'No alignment-resolved data',
   preconstruction: 'Preconstruction',
   under_construction: 'Under construction',
+  structure_complete: 'Structure complete',
   guideway_complete: 'Guideway complete',
   track_laid: 'Track laid',
   systems_installed: 'Systems installed',
@@ -71,20 +80,83 @@ export function scheduledStatus(segment: Segment, date: string): AlignmentStatus
   return current === 'guideway_complete' ? 'guideway_complete' : current;
 }
 
+function evidenceDate(evidence: StructureEvidence): string {
+  return evidence.date.length === 7 ? `${evidence.date}-01` : evidence.date.slice(0, 10);
+}
+
+export function latestStructureEvidence(
+  segment: Segment,
+  date: string,
+): StructureEvidence | undefined {
+  const selectedDate = date.slice(0, 10);
+  return [...(segment.evidence ?? [])]
+    .filter((evidence) => evidenceDate(evidence) <= selectedDate)
+    .sort((a, b) => evidenceDate(b).localeCompare(evidenceDate(a)))[0];
+}
+
+export type ResolvedSegmentStatus = {
+  status: AlignmentStatus;
+  provenance: Exclude<ReplayProvenance, 'mixed'>;
+  evidence?: StructureEvidence;
+};
+
+export function resolveSegmentStatus(
+  segment: Segment,
+  date: string,
+  observation?: { completion: number | null },
+): ResolvedSegmentStatus {
+  if (observation !== undefined && observation.completion !== null) {
+    return {
+      status: statusFromCompletion(observation.completion, segment.start, date),
+      provenance: 'observed',
+    };
+  }
+
+  const evidence = latestStructureEvidence(segment, date);
+  if (evidence !== undefined) {
+    return {
+      status: evidence.claim === 'completed' ? 'structure_complete' : 'under_construction',
+      provenance: 'observed',
+      evidence,
+    };
+  }
+
+  if (observation !== undefined) {
+    return { status: 'no_data', provenance: 'observed' };
+  }
+  return { status: scheduledStatus(segment, date), provenance: 'scheduled' };
+}
+
 export function deriveStatuses(
   history: Snapshot[],
   segments: Segment[],
   date: string,
-): { statuses: Record<string, AlignmentStatus>; tier: 1 | 2 | 3 } {
+): {
+  statuses: Record<string, AlignmentStatus>;
+  evidence: Record<string, StructureEvidence | undefined>;
+  provenance: ReplayProvenance;
+  tier: 1 | 2 | 3;
+} {
   const observed = history
     .filter((snapshot) => snapshot.tier === 3 && snapshot.date <= date && snapshot.perSegment)
     .sort((a, b) => b.date.localeCompare(a.date))[0];
   const statuses: Record<string, AlignmentStatus> = {};
+  const evidence: Record<string, StructureEvidence | undefined> = {};
+  const provenance = new Set<Exclude<ReplayProvenance, 'mixed'>>();
   for (const segment of segments) {
-    const observedCompletion = observed?.perSegment?.[segment.id]?.completion;
-    if (observedCompletion === undefined) statuses[segment.id] = scheduledStatus(segment, date);
-    else if (observedCompletion === null && segment.structures.length > 0) statuses[segment.id] = segment.currentStatus;
-    else statuses[segment.id] = statusFromCompletion(observedCompletion, segment.start, date);
+    const observation = observed?.perSegment !== undefined
+      && Object.hasOwn(observed.perSegment, segment.id)
+      ? observed.perSegment[segment.id]
+      : undefined;
+    const resolved = resolveSegmentStatus(segment, date, observation);
+    statuses[segment.id] = resolved.status;
+    evidence[segment.id] = resolved.evidence;
+    provenance.add(resolved.provenance);
   }
-  return { statuses, tier: observed ? 3 : 1 };
+  return {
+    statuses,
+    evidence,
+    provenance: provenance.size > 1 ? 'mixed' : (provenance.values().next().value ?? 'scheduled'),
+    tier: observed ? 3 : 1,
+  };
 }

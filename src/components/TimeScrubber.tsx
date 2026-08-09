@@ -1,22 +1,22 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { SourceId } from '../data/sources';
-import { SourceLink } from './Citation';
+import type { CvsrGap } from '../data/types';
 
 export function TimeScrubber({
   dates,
   date,
   onDateChange,
-  tier,
+  provenance,
+  reportGap,
 }: {
   dates: string[];
   date: string;
   onDateChange: (date: string) => void;
-  tier: 1 | 2 | 3;
+  provenance: 'scheduled' | 'observed' | 'mixed';
+  reportGap?: CvsrGap;
 }) {
   const [playing, setPlaying] = useState(false);
   const frameRef = useRef<number | null>(null);
   const index = useMemo(() => Math.max(0, dates.indexOf(date)), [date, dates]);
-  const sourceId: SourceId = tier === 2 ? 'cvsr' : 'arcgis_progress';
 
   useEffect(() => {
     if (!playing || dates.length === 0) return;
@@ -39,7 +39,11 @@ export function TimeScrubber({
     };
   }, [date, dates, onDateChange, playing]);
 
-  const tierLabel = tier === 3 ? 'Observed segment snapshot' : tier === 2 ? 'Observed monthly aggregate' : 'Scheduled replay';
+  const provenanceLabel = provenance === 'mixed'
+    ? 'Mixed observed + scheduled'
+    : provenance === 'observed'
+      ? 'Observed replay'
+      : 'Scheduled replay';
   return (
     <div className="time-scrubber">
       <button type="button" className="play-button" onClick={() => setPlaying((value) => !value)} aria-label={playing ? 'Pause replay' : 'Play replay'}>
@@ -53,8 +57,19 @@ export function TimeScrubber({
         onChange={(event) => onDateChange(dates[Number(event.currentTarget.value)])}
         aria-label="Progress date"
       />
-      <time dateTime={date}>{date.slice(0, 7)} <SourceLink sourceId={sourceId} /></time>
-      <span className={`tier-badge tier-${tier}`}>{tierLabel}</span>
+      <time dateTime={date}>{date.slice(0, 7)}</time>
+      <span className={`tier-badge provenance-${provenance}`}>{provenanceLabel}</span>
+      {reportGap && (
+        <span className="report-gap-badge" title={reportGap.detail}>
+          Report gap
+          {reportGap.reportUrl && (
+            <>
+              {' · '}
+              <a href={reportGap.reportUrl} target="_blank" rel="noreferrer">report</a>
+            </>
+          )}
+        </span>
+      )}
     </div>
   );
 }

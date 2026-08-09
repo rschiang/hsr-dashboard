@@ -72,6 +72,7 @@ export function AlignmentMap({
             'match', ['feature-state', 'status'],
             'preconstruction', STATUS_COLORS.preconstruction,
             'under_construction', STATUS_COLORS.under_construction,
+            'structure_complete', STATUS_COLORS.structure_complete,
             'guideway_complete', STATUS_COLORS.guideway_complete,
             'track_laid', STATUS_COLORS.track_laid,
             'systems_installed', STATUS_COLORS.systems_installed,

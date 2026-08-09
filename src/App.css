@@ -115,6 +115,10 @@
   text-transform: uppercase;
 }
 .band-value b { color: var(--ink); margin-right: 5px; }
+.band-value.missing {
+  color: #7a3c13;
+  font-weight: 700;
+}
 
 .strip-section {
   position: relative;
@@ -204,7 +208,7 @@
 .time-scrubber {
   min-height: 52px;
   display: grid;
-  grid-template-columns: auto minmax(180px, 1fr) auto auto;
+  grid-template-columns: auto minmax(180px, 1fr) auto auto auto;
   align-items: center;
   gap: 13px;
   padding: 8px 26px;
@@ -239,9 +243,21 @@
   text-transform: uppercase;
   white-space: nowrap;
 }
-.tier-1 { color: #734f00; background: #f4df9d; }
-.tier-2,
-.tier-3 { color: #0b5d47; background: #bfe7db; }
+.provenance-scheduled { color: #734f00; background: #f4df9d; }
+.provenance-observed { color: #0b5d47; background: #bfe7db; }
+.provenance-mixed { color: #174e69; background: #c9e3ef; }
+.report-gap-badge {
+  padding: 4px 8px;
+  color: #7a2f12;
+  background: #f4c9b1;
+  border-radius: 999px;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.report-gap-badge a { color: inherit; }
 
 .map-section {
   min-height: 0;
@@ -351,6 +367,7 @@
   .strip-canvas { min-width: 720px; }
   .time-scrubber { grid-template-columns: auto minmax(140px, 1fr) auto; }
   .tier-badge { grid-column: 1 / -1; justify-self: start; }
+  .report-gap-badge { grid-column: 1 / -1; justify-self: start; }
   .map-section { height: 430px; }
   .legend-panel { height: auto; border-left: 0; border-top: 1px solid #cfc9ba; }
 }

@@ -19,14 +19,16 @@ A date scrubber replays the available history. The strip can use either physical
 
 ## What the dashboard shows
 
-- Construction phase by alignment segment: not started, preconstruction, under construction, guideway complete, track laid, systems installed, or no data.
+- Construction phase by alignment segment: not started, preconstruction, under construction, structure complete, guideway complete, track laid, systems installed, or no data.
 - Official IOS distance and subdivision mileposts (`C`, `S`, and `D`).
-- Construction-package boundaries, stations, named structures, station ranges, earthwork completion, and source links.
+- Construction-package boundaries, stations, named structures, station ranges, earthwork completion, dated structure evidence, and source links.
 - Package-level structures, guideway miles, ROW parcels, and utility relocations reported in historical CVSR PDFs.
 - Distance-proportional and difficulty-proportional strip widths.
 - Linked hover and selection between the strip chart and map.
 
 ROW parcels and utilities are only published at construction-package granularity. They are therefore shown as package summary bands and are never painted onto individual miles.
+
+Dated primary-source evidence can resolve a named structure to under construction or structure complete even when the ArcGIS progress layer publishes no numeric completion. The raw percentage remains unknown; categorical evidence never manufactures a percentage.
 
 ## Data and provenance
 
@@ -43,6 +45,7 @@ Primary inputs:
 - **2026 Final Business Plan:** extension costs used in difficulty-model calibration.
 
 The citation registry lives in [`src/data/sources.ts`](src/data/sources.ts). Numeric claims in the UI resolve through that registry.
+Reviewed dated structure claims live in [`src/data/structure-evidence.ts`](src/data/structure-evidence.ts). Stable ArcGIS GlobalIDs in its crosswalk—not name similarity or spatial proximity—attach named projects to progress segments.
 
 ### Replay tiers
 
@@ -115,13 +118,16 @@ npm run parse:cvsr   # parse local PDFs; performs no network requests
 npm run fetch        # rebuild public/data/history.json
 ```
 
-The parser keys snapshots by the report's **data month**, not its publication month, preserves changing denominators, and skips unsupported reports rather than guessing. Financial-only and individual-package reports may remain in the raw archive but are excluded from the combined monthly CVSR series unless they satisfy that series' contract.
+The parser keys snapshots by the report's **data month**, not its publication month, preserves changing denominators, and maps counts by semantic table labels rather than fixed column positions. It exits nonzero after writing diagnostics if a present report or required published metric cannot be parsed.
+
+`data/raw/cvsr/parsed-snapshots.json` and `public/data/history.json` carry an explicit inventory from March 2019 through April 2026. It distinguishes reports not downloaded, reports not located, metrics the source did not publish, and parser failures. Missing months are not filled from later or earlier reports; the dashboard labels the gap and links the exact report when known.
 
 ## Validation
 
 ```bash
-npm run build
+npm test
 npm run lint
+npm run build
 ```
 
 The data scripts also enforce corridor invariants, including TS1 section totals, station-equation anchors, centerline length and joins, segment coverage, and package-level progress cross-checks.
@@ -133,8 +139,11 @@ Vite builds the site under the `/hsr-dashboard/` base path. GitHub Actions publi
 ## Core integrity rules
 
 - The TS1 table defines the official axis; geometry never does.
-- Unknown values remain unknown; gaps become explicit `no-data` segments.
+- Unknown values remain unknown; gaps become explicit `no-data` segments or typed CVSR inventory gaps.
+- Dated structure evidence changes categorical status only; it never fills a missing numeric percentage.
+- Named-project attachment uses reviewed stable identifiers; spatial proximity alone is insufficient.
 - ROW and utility totals stay package-level unless a geolocated official source appears.
 - Historical schedule reconstruction and observed snapshots are never presented as the same evidence tier.
+- Missing CVSR months and metrics are never silently carried forward.
 - Every displayed official figure needs a resolvable primary-source citation.
 - CVSR bot protection is never bypassed.

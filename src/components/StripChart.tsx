@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { scaleLinear } from 'd3-scale';
-import type { AlignmentStatus, Segment } from '../data/types';
+import type { AlignmentStatus, Segment, StructureEvidence } from '../data/types';
 import { SOURCES } from '../data/sources';
 import { STATUS_COLORS, STATUS_LABELS } from '../lib/status';
 import { formatOfficialMp } from '../lib/mileposts';
@@ -37,6 +37,29 @@ function useElementWidth(ref: React.RefObject<HTMLDivElement | null>): number {
     () => 900,
   );
 }
+function evidenceDateLabel(evidence: StructureEvidence): string {
+  const normalized = evidence.date.length === 7 ? `${evidence.date}-01` : evidence.date;
+  const formatted = new Intl.DateTimeFormat('en-US', {
+    month: 'long',
+    year: 'numeric',
+    ...(evidence.datePrecision === 'day' ? { day: 'numeric' } : {}),
+    timeZone: 'UTC',
+  }).format(new Date(`${normalized}T00:00:00Z`));
+  if (evidence.datePrecision === 'month') return `during ${formatted}`;
+  if (evidence.datePrecision === 'day') return `on ${formatted}`;
+  return `by ${formatted}`;
+}
+
+function structureObservationLabel(
+  structure: Segment['structures'][number],
+  selectedDate: string,
+): string {
+  const observed = structure.observedAt.slice(0, 10);
+  if (observed <= selectedDate.slice(0, 10)) {
+    return `${structure.status}, observed as of ${observed}`;
+  }
+  return `Location marker; ${structure.status} observed as of ${observed}, after selected date`;
+}
 
 export function StripChart({
   segments,
@@ -47,6 +70,8 @@ export function StripChart({
   onSelect,
   axisMode,
   onAxisModeChange,
+  date,
+  evidence,
 }: {
   segments: Segment[];
   statuses: Record<string, AlignmentStatus>;
@@ -56,6 +81,8 @@ export function StripChart({
   onSelect: (id: string | null) => void;
   axisMode: AxisMode;
   onAxisModeChange: (mode: AxisMode) => void;
+  date: string;
+  evidence: Record<string, StructureEvidence | undefined>;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const width = Math.max(540, useElementWidth(containerRef));
@@ -85,6 +112,7 @@ export function StripChart({
   };
 
   const hovered = hoveredId ? segments.find((segment) => segment.id === hoveredId) : null;
+  const tooltipEvidence = tooltip ? evidence[tooltip.segment.id] : undefined;
   const axisTicks = axisMode === 'distance'
     ? Array.from({ length: 18 }, (_, index) => index === 17 ? 171 : index * 10)
     : Array.from({ length: 6 }, (_, index) => index / 5);
@@ -148,7 +176,7 @@ export function StripChart({
           })}
           {segments.flatMap((segment) => segment.structures.map((structure, index) => {
             const x = xForMile((segment.iosMileStart + segment.iosMileEnd) / 2);
-            return <line key={`${segment.id}:${structure.name}:${index}`} x1={x} x2={x} y1="43" y2="48" className="structure-tick"><title>{structure.name} — {structure.status}</title></line>;
+            return <line key={`${segment.id}:${structure.name}:${index}`} x1={x} x2={x} y1="43" y2="48" className="structure-tick"><title>{structure.name} — {structureObservationLabel(structure, date)}</title></line>;
           }))}
           {hovered && <line x1={xForMile((hovered.iosMileStart + hovered.iosMileEnd) / 2)} x2={xForMile((hovered.iosMileStart + hovered.iosMileEnd) / 2)} y1="22" y2="120" className="hover-marker" />}
           <line x1={plotLeft} x2={plotRight} y1="120" y2="120" className="axis-line" />
@@ -182,13 +210,25 @@ export function StripChart({
             <span>Station {tooltip.segment.stationStart?.toLocaleString() ?? 'not published'}–{tooltip.segment.stationEnd?.toLocaleString() ?? 'not published'} ft <SourceLink sourceId={tooltip.segment.sourceId} /></span>
             <span>{tooltip.segment.iosMileStart.toFixed(2)}–{tooltip.segment.iosMileEnd.toFixed(2)} ios mi · {tooltip.segment.officialMpStart}–{tooltip.segment.officialMpEnd} <SourceLink sourceId="ts1_alignment" /></span>
             <span>Current earthwork completion {tooltip.segment.completion === null ? 'not reported' : `${Math.round(tooltip.segment.completion * 100)}%`} <SourceLink sourceId="arcgis_progress" /></span>
+            {tooltipEvidence && (
+              <span>
+                Evidence: “{tooltipEvidence.quote}” — {evidenceDateLabel(tooltipEvidence)}.{' '}
+                <a href={tooltipEvidence.sourceUrl} target="_blank" rel="noreferrer">
+                  {tooltipEvidence.sourceTitle}†
+                </a>
+              </span>
+            )}
             <span>Difficulty share {(tooltip.segment.weightShare * 100).toFixed(2)}% <SourceLink sourceId="business_plan_2026" /></span>
-            {tooltip.segment.structures.map((structure) => <a key={structure.name} href={structure.url} target="_blank" rel="noreferrer">{structure.name} — {structure.status}†</a>)}
+            {tooltip.segment.structures.map((structure) => (
+              <a key={structure.globalId} href={structure.url} target="_blank" rel="noreferrer">
+                {structure.name} — {structureObservationLabel(structure, date)}†
+              </a>
+            ))}
           </div>
         )}
       </div>
       {axisMode === 'difficulty' && (
-        <p className="model-caption">Segment widths scaled by an unofficial difficulty model (earthwork quantities are official CAHSRA data; structure type factors are this dashboard’s own estimate, calibrated to published per-package contract values). The Authority’s own progress measures are miles of guideway and structure counts. <SourceLink sourceId="arcgis_progress" /> <SourceLink sourceId="cvsr" /> <SourceLink sourceId="business_plan_2026" /></p>
+        <p className="model-caption">Segment widths are scaled by an unofficial difficulty model. Numeric earthwork completion contributes continuously; categorical Structure complete contributes the full structure weight, while in-progress structures contribute no invented percentage. Earthwork quantities are official CAHSRA data; structure type factors are this dashboard’s estimate, calibrated to published per-package contract values. <SourceLink sourceId="arcgis_progress" /> <SourceLink sourceId="cvsr" /> <SourceLink sourceId="business_plan_2026" /></p>
       )}
     </section>
   );

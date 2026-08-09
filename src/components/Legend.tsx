@@ -7,6 +7,7 @@ const VISIBLE_STATUSES: AlignmentStatus[] = [
   'no_data',
   'preconstruction',
   'under_construction',
+  'structure_complete',
   'guideway_complete',
   'track_laid',
   'systems_installed',
@@ -20,7 +21,14 @@ export function Legend() {
         <h2>Construction phase</h2>
         <ul className="legend-items">
           {VISIBLE_STATUSES.map((status) => (
-            <li key={status} title={status === 'guideway_complete' ? OFFICIAL_DEFINITIONS.guideway : undefined}>
+            <li
+              key={status}
+              title={status === 'guideway_complete'
+                ? OFFICIAL_DEFINITIONS.guideway
+                : status === 'structure_complete'
+                  ? OFFICIAL_DEFINITIONS.structure
+                  : undefined}
+            >
               <span className={`legend-swatch ${status === 'no_data' ? 'hatched' : ''}`} style={{ backgroundColor: STATUS_COLORS[status] }} />
               <span>{STATUS_LABELS[status]}</span>
               {(status === 'track_laid' || status === 'systems_installed') && <span className="legend-zero">0% <SourceLink sourceId="cvsr" /></span>}

@@ -1,6 +1,6 @@
 import { execFileSync } from 'node:child_process';
 import { readFile, writeFile } from 'node:fs/promises';
-import type { HistoryArtifact, Segment, SegmentsArtifact, Snapshot } from '../src/data/types';
+import type { CvsrInventory, HistoryArtifact, Segment, SegmentsArtifact, Snapshot } from '../src/data/types';
 
 function monthSequence(start: string, end: string): string[] {
   const result: string[] = [];
@@ -39,13 +39,15 @@ const snapshots: Snapshot[] = scheduledDates.map((date) => ({
   perSegment: Object.fromEntries(artifact.segments.map((segment) => [segment.id, { completion: scheduledCompletion(segment, date) }])),
 }));
 
-try {
-  const parsed = JSON.parse(await readFile('data/raw/cvsr/parsed-snapshots.json', 'utf8')) as { snapshots?: Snapshot[] };
-  for (const snapshot of parsed.snapshots ?? []) {
-    if (snapshot.tier === 2) snapshots.push(snapshot);
-  }
-} catch {
-  console.warn('CVSR: no parsed snapshots; tier 2 omitted');
+const parsed = JSON.parse(await readFile('data/raw/cvsr/parsed-snapshots.json', 'utf8')) as {
+  snapshots?: Snapshot[];
+  cvsrInventory?: CvsrInventory;
+};
+if (!parsed.cvsrInventory) {
+  throw new Error('CVSR parsed snapshots are missing the required cvsrInventory');
+}
+for (const snapshot of parsed.snapshots ?? []) {
+  if (snapshot.tier === 2) snapshots.push(snapshot);
 }
 
 const tier3 = new Map<string, Snapshot>();
@@ -78,7 +80,11 @@ tier3.set(currentDate, observedSnapshot(currentDate, artifact.segments));
 snapshots.push(...tier3.values());
 snapshots.sort((a, b) => a.date.localeCompare(b.date) || a.tier - b.tier);
 
-const history: HistoryArtifact = { generatedAt: artifact.generatedAt, snapshots };
+const history: HistoryArtifact = {
+  generatedAt: artifact.generatedAt,
+  snapshots,
+  cvsrInventory: parsed.cvsrInventory,
+};
 await writeFile('public/data/history.json', `${JSON.stringify(history)}\n`);
 const counts = snapshots.reduce<Record<number, number>>((result, snapshot) => {
   result[snapshot.tier] = (result[snapshot.tier] ?? 0) + 1;

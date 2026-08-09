@@ -11,6 +11,7 @@
     "fetch": "tsx scripts/fetch-arcgis.ts && tsx scripts/build-centerline.ts && tsx scripts/build-segments.ts && tsx scripts/build-history.ts",
     "fetch:cvsr": "tsx scripts/fetch-cvsr.ts --manifest",
     "parse:cvsr": "tsx scripts/fetch-cvsr.ts --parse",
+    "test": "tsx --test src/lib/status.test.ts scripts/lib/cvsr-parser.test.ts",
     "lint": "oxlint src scripts vite.config.ts",
     "preview": "vite preview"
   },

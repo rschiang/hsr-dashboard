@@ -4,8 +4,10 @@ import lineSliceAlong from '@turf/line-slice-along';
 import nearestPointOnLine from '@turf/nearest-point-on-line';
 import { lineString, point, type Feature, type LineString, type Position } from '@turf/helpers';
 import type { ConstructionPackage, Segment, SegmentsArtifact } from '../src/data/types';
+import { STRUCTURE_CROSSWALK, STRUCTURE_EVIDENCE } from '../src/data/structure-evidence';
+import { SOURCES } from '../src/data/sources';
 import { formatOfficialMp, stationToIosMile } from '../src/lib/mileposts';
-import { statusFromCompletion } from '../src/lib/status';
+import { resolveSegmentStatus } from '../src/lib/status';
 import { assignWeights } from '../src/lib/weights';
 
 type Attributes = {
@@ -26,6 +28,7 @@ type StructureResponse = {
   features: Array<{
     attributes: {
       OBJECTID: number;
+      GlobalID: string;
       name: string;
       status: 'Completed' | 'In progress';
       projectPageURL: string;
@@ -83,6 +86,7 @@ function makeGap(cp: ConstructionPackage, start: number, end: number, index: num
     weightShare: 0,
     currentStatus: 'no_data',
     structures: [],
+    evidence: [],
     sourceId: 'arcgis_progress',
   };
 }
@@ -134,8 +138,9 @@ for (const cp of ['CP1', 'CP2-3'] as const) {
       finish: toIso(attributes.Finish),
       weight: 0,
       weightShare: 0,
-      currentStatus: statusFromCompletion(completion, toIso(attributes.Start), '2026-08-09'),
+      currentStatus: 'no_data',
       structures: [],
+      evidence: [],
       sourceId: 'arcgis_progress',
     });
   }
@@ -190,8 +195,9 @@ for (const { attributes } of cp4Features) {
     finish: completion === 1 ? '2024-01-31' : null,
     weight: 0,
     weightShare: 0,
-    currentStatus: statusFromCompletion(completion, toIso(attributes.Start), '2026-08-09'),
+    currentStatus: 'no_data',
     structures: [],
+    evidence: [],
     sourceId: 'arcgis_progress',
   });
 }
@@ -221,8 +227,9 @@ parsedCp4.push({
   finish: null,
   weight: 0,
   weightShare: 0,
-  currentStatus: statusFromCompletion(inferredCompletion, null, '2026-08-09'),
+  currentStatus: 'no_data',
   structures: [],
+  evidence: [],
   sourceId: 'arcgis_progress',
 });
 segments.push(...parsedCp4);
@@ -269,52 +276,101 @@ function iosMileToGeodesicDistance(iosMile: number): number {
   return cumulative[low] + fraction * (cumulative[high] - cumulative[low]);
 }
 
+const metadata = JSON.parse(await readFile('data/raw/arcgis/fetch-metadata.json', 'utf8')) as { fetchedAt: string };
 const structures = JSON.parse(await readFile('data/raw/arcgis/structures.json', 'utf8')) as StructureResponse;
+for (const [globalId, segmentId] of Object.entries(STRUCTURE_CROSSWALK)) {
+  const matchingFeatures = structures.features.filter(
+    (feature) => feature.attributes.GlobalID.toLowerCase() === globalId,
+  );
+  const matchingSegments = segments.filter((segment) => segment.id === segmentId);
+  if (matchingFeatures.length !== 1 || matchingSegments.length !== 1) {
+    throw new Error(
+      `Crosswalk ${globalId} → ${segmentId} resolved to ${matchingFeatures.length} source records and ${matchingSegments.length} segments`,
+    );
+  }
+}
+const evidenceIds = new Set<string>();
+for (const evidence of STRUCTURE_EVIDENCE) {
+  const matchingSegments = segments.filter((segment) => segment.id === evidence.segmentId);
+  if (matchingSegments.length !== 1 || evidenceIds.has(evidence.id)) {
+    throw new Error(
+      `Evidence ${evidence.id} resolved to ${matchingSegments.length} segments or has a duplicate ID`,
+    );
+  }
+  evidenceIds.add(evidence.id);
+  matchingSegments[0].evidence.push({ ...evidence });
+}
+
 let completedStructures = 0;
 let inProgressStructures = 0;
 for (const feature of structures.features) {
-  let candidates: Segment[];
-  let locationMethod: 'spatial' | 'package-only';
-  if (feature.geometry && Number.isFinite(feature.geometry.x) && Number.isFinite(feature.geometry.y)) {
-    const coordinate: Position = [feature.geometry.x, feature.geometry.y];
-    const snap = nearestPointOnLine(centerline, point(coordinate), { units: 'miles' });
-    const totalDistance = snap.properties.totalDistance;
-    if (typeof totalDistance !== 'number') throw new Error(`Structure ${feature.attributes.OBJECTID} has no totalDistance`);
-    const iosMile = geodesicDistanceToIosMile(totalDistance);
-    candidates = segments.filter((segment) => iosMile >= segment.iosMileStart - 0.001 && iosMile <= segment.iosMileEnd + 0.001);
-    if (candidates.length === 0) throw new Error(`No segment contains ${feature.attributes.name} at iosMile ${iosMile}`);
-    locationMethod = 'spatial';
+  const globalId = feature.attributes.GlobalID.toLowerCase();
+  const reviewedTargetId = STRUCTURE_CROSSWALK[globalId];
+  let target: Segment;
+  let locationMethod: 'crosswalk' | 'spatial' | 'package-only';
+  if (reviewedTargetId !== undefined) {
+    target = segments.find((segment) => segment.id === reviewedTargetId)!;
+    locationMethod = 'crosswalk';
   } else {
-    candidates = segments.filter((segment) => segment.cp === 'CP2-3' && 98 >= segment.iosMileStart && 98 <= segment.iosMileEnd);
-    locationMethod = 'package-only';
+    let candidates: Segment[];
+    if (feature.geometry && Number.isFinite(feature.geometry.x) && Number.isFinite(feature.geometry.y)) {
+      const coordinate: Position = [feature.geometry.x, feature.geometry.y];
+      const snap = nearestPointOnLine(centerline, point(coordinate), { units: 'miles' });
+      const totalDistance = snap.properties.totalDistance;
+      if (typeof totalDistance !== 'number') throw new Error(`Structure ${feature.attributes.OBJECTID} has no totalDistance`);
+      const iosMile = geodesicDistanceToIosMile(totalDistance);
+      candidates = segments.filter((segment) => iosMile >= segment.iosMileStart - 0.001 && iosMile <= segment.iosMileEnd + 0.001);
+      if (candidates.length === 0) throw new Error(`No segment contains ${feature.attributes.name} at iosMile ${iosMile}`);
+      locationMethod = 'spatial';
+    } else {
+      candidates = segments.filter((segment) => segment.cp === 'CP2-3' && 98 >= segment.iosMileStart && 98 <= segment.iosMileEnd);
+      locationMethod = 'package-only';
+    }
+    const normalizedName = feature.attributes.name.toLowerCase();
+    const aliases = [normalizedName, ...(STRUCTURE_ALIASES[normalizedName] ?? [])];
+    target = candidates.find((segment) => aliases.some((alias) => segment.label.toLowerCase().includes(alias)))
+      ?? candidates.filter((segment) => segment.kind === 'structure').sort((a, b) => (a.iosMileEnd - a.iosMileStart) - (b.iosMileEnd - b.iosMileStart))[0]
+      ?? candidates.sort((a, b) => (a.iosMileEnd - a.iosMileStart) - (b.iosMileEnd - b.iosMileStart))[0];
   }
-  const normalizedName = feature.attributes.name.toLowerCase();
-  const aliases = [normalizedName, ...(STRUCTURE_ALIASES[normalizedName] ?? [])];
-  const target = candidates.find((segment) => aliases.some((alias) => segment.label.toLowerCase().includes(alias)))
-    ?? candidates.filter((segment) => segment.kind === 'structure').sort((a, b) => (a.iosMileEnd - a.iosMileStart) - (b.iosMileEnd - b.iosMileStart))[0]
-    ?? candidates.sort((a, b) => (a.iosMileEnd - a.iosMileStart) - (b.iosMileEnd - b.iosMileStart))[0];
   target.structures.push({
     name: feature.attributes.name,
     status: feature.attributes.status,
     url: feature.attributes.projectPageURL,
     sourceId: 'arcgis_structures',
+    objectId: feature.attributes.OBJECTID,
+    globalId,
+    observedAt: metadata.fetchedAt,
     locationMethod,
   });
+  if (locationMethod === 'crosswalk') {
+    target.evidence.push({
+      id: `arcgis-structure-${globalId}-${metadata.fetchedAt.slice(0, 10)}`,
+      segmentId: target.id,
+      claim: feature.attributes.status === 'Completed' ? 'completed' : 'in_progress',
+      date: metadata.fetchedAt.slice(0, 10),
+      datePrecision: 'as_of',
+      label: feature.attributes.name,
+      sourceTitle: SOURCES.arcgis_structures.title,
+      sourceUrl: SOURCES.arcgis_structures.url,
+      sourceId: 'arcgis_structures',
+      quote: feature.attributes.status,
+    });
+  }
   if (feature.attributes.status === 'Completed') completedStructures += 1;
   else inProgressStructures += 1;
 }
 for (const segment of segments) {
-  if (segment.completion !== null || segment.structures.length === 0) continue;
-  segment.currentStatus = segment.structures.every((structure) => structure.status === 'Completed')
-    ? 'guideway_complete'
-    : 'preconstruction';
+  segment.currentStatus = resolveSegmentStatus(
+    segment,
+    metadata.fetchedAt,
+    { completion: segment.completion },
+  ).status;
 }
 if (completedStructures !== 59 || inProgressStructures !== 29) {
   throw new Error(`Structure status count changed: ${completedStructures} completed + ${inProgressStructures} in progress`);
 }
 
 const calibration = assignWeights(segments);
-const metadata = JSON.parse(await readFile('data/raw/arcgis/fetch-metadata.json', 'utf8')) as { fetchedAt: string };
 const artifact: SegmentsArtifact = {
   generatedAt: metadata.fetchedAt,
   model: 'Official earthwork quantities plus an unofficial structure heuristic calibrated to published package totals',

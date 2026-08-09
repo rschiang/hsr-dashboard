@@ -1,9 +1,9 @@
 {
   "snapshots": [
     {
-      "date": "2019-03",
+      "date": "2019-03-01",
+      "dataMonth": "2019-03",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_052119_FA_Central_Valley_Status_Update.pdf",
       "perPackage": {
         "CP1": {
@@ -11,28 +11,34 @@
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 815,
+          "parcelsTotal": 877
         },
         "CP2-3": {
           "structuresComplete": 0,
           "structuresTotal": 50,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 512,
+          "parcelsTotal": 749
         },
         "CP4": {
           "structuresComplete": 0,
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 163,
+          "parcelsTotal": 190
         }
       }
     },
     {
-      "date": "2019-04",
+      "date": "2019-04-01",
+      "dataMonth": "2019-04",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_061819_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
@@ -40,28 +46,34 @@
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 818,
+          "parcelsTotal": 881
         },
         "CP2-3": {
           "structuresComplete": 0,
           "structuresTotal": 50,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 514,
+          "parcelsTotal": 752
         },
         "CP4": {
           "structuresComplete": 0,
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 164,
+          "parcelsTotal": 194
         }
       }
     },
     {
-      "date": "2019-05",
+      "date": "2019-05-01",
+      "dataMonth": "2019-05",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_071619_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
@@ -69,28 +81,34 @@
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 818,
+          "parcelsTotal": 881
         },
         "CP2-3": {
           "structuresComplete": 0,
           "structuresTotal": 50,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 526,
+          "parcelsTotal": 752
         },
         "CP4": {
           "structuresComplete": 0,
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 164,
+          "parcelsTotal": 196
         }
       }
     },
     {
-      "date": "2019-06",
+      "date": "2019-06-01",
+      "dataMonth": "2019-06",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_082019_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
@@ -98,28 +116,34 @@
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 819,
+          "parcelsTotal": 892
         },
         "CP2-3": {
           "structuresComplete": 0,
           "structuresTotal": 50,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 533,
+          "parcelsTotal": 755
         },
         "CP4": {
           "structuresComplete": 0,
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 164,
+          "parcelsTotal": 208
         }
       }
     },
     {
-      "date": "2019-07",
+      "date": "2019-07-01",
+      "dataMonth": "2019-07",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_091719_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
@@ -127,28 +151,34 @@
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 823,
+          "parcelsTotal": 893
         },
         "CP2-3": {
           "structuresComplete": 0,
           "structuresTotal": 50,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 540,
+          "parcelsTotal": 756
         },
         "CP4": {
           "structuresComplete": 0,
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 165,
+          "parcelsTotal": 210
         }
       }
     },
     {
-      "date": "2019-08",
+      "date": "2019-08-01",
+      "dataMonth": "2019-08",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_101519_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
@@ -156,28 +186,34 @@
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 827,
+          "parcelsTotal": 932
         },
         "CP2-3": {
           "structuresComplete": 0,
           "structuresTotal": 50,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 547,
+          "parcelsTotal": 854
         },
         "CP4": {
           "structuresComplete": 0,
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 166,
+          "parcelsTotal": 223
         }
       }
     },
     {
-      "date": "2019-09",
+      "date": "2019-09-01",
+      "dataMonth": "2019-09",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_111919_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
@@ -185,28 +221,34 @@
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 827,
+          "parcelsTotal": 928
         },
         "CP2-3": {
           "structuresComplete": 0,
           "structuresTotal": 50,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 559,
+          "parcelsTotal": 850
         },
         "CP4": {
           "structuresComplete": 0,
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 166,
+          "parcelsTotal": 223
         }
       }
     },
     {
-      "date": "2019-10",
+      "date": "2019-10-01",
+      "dataMonth": "2019-10",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_121019_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
@@ -214,28 +256,34 @@
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 827,
+          "parcelsTotal": 928
         },
         "CP2-3": {
           "structuresComplete": 0,
           "structuresTotal": 49,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 565,
+          "parcelsTotal": 850
         },
         "CP4": {
           "structuresComplete": 0,
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 166,
+          "parcelsTotal": 223
         }
       }
     },
     {
-      "date": "2019-11",
+      "date": "2019-11-01",
+      "dataMonth": "2019-11",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_011420_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
@@ -243,28 +291,34 @@
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 827,
+          "parcelsTotal": 928
         },
         "CP2-3": {
           "structuresComplete": 0,
           "structuresTotal": 49,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 573,
+          "parcelsTotal": 850
         },
         "CP4": {
           "structuresComplete": 0,
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 172,
+          "parcelsTotal": 223
         }
       }
     },
     {
-      "date": "2019-12",
+      "date": "2019-12-01",
+      "dataMonth": "2019-12",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_021820_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
@@ -272,28 +326,34 @@
           "structuresTotal": 33,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 29.2,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 804,
+          "parcelsTotal": 908
         },
         "CP2-3": {
           "structuresComplete": 0,
           "structuresTotal": 49,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 582,
+          "parcelsTotal": 886
         },
         "CP4": {
           "structuresComplete": 0,
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 159,
+          "parcelsTotal": 248
         }
       }
     },
     {
-      "date": "2020-01",
+      "date": "2020-01-01",
+      "dataMonth": "2020-01",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_031720_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
@@ -301,28 +361,34 @@
           "structuresTotal": 33,
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 827,
+          "parcelsTotal": 919
         },
         "CP2-3": {
           "structuresComplete": 0,
           "structuresTotal": 49,
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 573,
+          "parcelsTotal": 956
         },
         "CP4": {
           "structuresComplete": 0,
           "structuresTotal": 11,
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
-          "sourceId": "cvsr"
+          "sourceId": "cvsr",
+          "parcelsDelivered": 172,
+          "parcelsTotal": 263
         }
       }
     },
     {
-      "date": "2020-02",
+      "date": "2020-02-01",
+      "dataMonth": "2020-02",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_042120_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
@@ -355,9 +421,9 @@
       }
     },
     {
-      "date": "2020-03",
+      "date": "2020-03-01",
+      "dataMonth": "2020-03",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_051420_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
@@ -390,9 +456,9 @@
       }
     },
     {
-      "date": "2020-04",
+      "date": "2020-04-01",
+      "dataMonth": "2020-04",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_062520_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
@@ -425,9 +491,9 @@
       }
     },
     {
-      "date": "2020-05",
+      "date": "2020-05-01",
+      "dataMonth": "2020-05",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_071620_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
@@ -460,9 +526,9 @@
       }
     },
     {
-      "date": "2020-06",
+      "date": "2020-06-01",
+      "dataMonth": "2020-06",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_081320_FA_Central_Valley_Status_Report.pdf",
       "perPackage": {
         "CP1": {
@@ -495,9 +561,9 @@
       }
     },
     {
-      "date": "2020-07",
+      "date": "2020-07-01",
+      "dataMonth": "2020-07",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_090920_FA_CVSR_2009_2007_Data.pdf",
       "perPackage": {
         "CP1": {
@@ -530,9 +596,9 @@
       }
     },
     {
-      "date": "2020-08",
+      "date": "2020-08-01",
+      "dataMonth": "2020-08",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_101520_FA_CVSR_2010_2008_Data.pdf",
       "perPackage": {
         "CP1": {
@@ -541,6 +607,8 @@
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 202,
+          "utilitiesTotal": 1202,
           "parcelsDelivered": 832,
           "parcelsTotal": 1037
         },
@@ -550,6 +618,8 @@
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 187,
+          "utilitiesTotal": 692,
           "parcelsDelivered": 673,
           "parcelsTotal": 1005
         },
@@ -559,21 +629,23 @@
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 23,
+          "utilitiesTotal": 173,
           "parcelsDelivered": 168,
           "parcelsTotal": 248
         }
       },
       "aggregate": {
-        "utilitiesRelocated": 202,
-        "utilitiesTotal": 1202,
+        "utilitiesRelocated": 412,
+        "utilitiesTotal": 2067,
         "parcelsDelivered": 1673,
         "parcelsTotal": 2290
       }
     },
     {
-      "date": "2020-09",
+      "date": "2020-09-01",
+      "dataMonth": "2020-09",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_111920_FA_CVSR_2011_2009_Data.pdf",
       "perPackage": {
         "CP1": {
@@ -582,6 +654,8 @@
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 202,
+          "utilitiesTotal": 1202,
           "parcelsDelivered": 833,
           "parcelsTotal": 1045
         },
@@ -591,6 +665,8 @@
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 187,
+          "utilitiesTotal": 692,
           "parcelsDelivered": 679,
           "parcelsTotal": 1015
         },
@@ -600,21 +676,23 @@
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
           "sourceId": "cvsr",
-          "parcelsDelivered": 170,
+          "utilitiesRelocated": 23,
+          "utilitiesTotal": 173,
+          "parcelsDelivered": 169,
           "parcelsTotal": 248
         }
       },
       "aggregate": {
-        "utilitiesRelocated": 202,
-        "utilitiesTotal": 1202,
+        "utilitiesRelocated": 412,
+        "utilitiesTotal": 2067,
         "parcelsDelivered": 1681,
         "parcelsTotal": 2308
       }
     },
     {
-      "date": "2020-10",
+      "date": "2020-10-01",
+      "dataMonth": "2020-10",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_121020_FA_CVSR_2012_2010_Data.pdf",
       "perPackage": {
         "CP1": {
@@ -623,6 +701,8 @@
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 209,
+          "utilitiesTotal": 1202,
           "parcelsDelivered": 834,
           "parcelsTotal": 1048
         },
@@ -632,6 +712,8 @@
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 241,
+          "utilitiesTotal": 694,
           "parcelsDelivered": 695,
           "parcelsTotal": 1002
         },
@@ -641,21 +723,23 @@
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 26,
+          "utilitiesTotal": 166,
           "parcelsDelivered": 172,
           "parcelsTotal": 245
         }
       },
       "aggregate": {
-        "utilitiesRelocated": 209,
-        "utilitiesTotal": 1202,
+        "utilitiesRelocated": 476,
+        "utilitiesTotal": 2062,
         "parcelsDelivered": 1701,
         "parcelsTotal": 2295
       }
     },
     {
-      "date": "2020-11",
+      "date": "2020-11-01",
+      "dataMonth": "2020-11",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_012121_FA_CVSR_2011_Data.pdf",
       "perPackage": {
         "CP1": {
@@ -664,6 +748,8 @@
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 214,
+          "utilitiesTotal": 1202,
           "parcelsDelivered": 855,
           "parcelsTotal": 1058
         },
@@ -673,6 +759,8 @@
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 245,
+          "utilitiesTotal": 694,
           "parcelsDelivered": 698,
           "parcelsTotal": 1002
         },
@@ -682,21 +770,23 @@
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 26,
+          "utilitiesTotal": 166,
           "parcelsDelivered": 173,
           "parcelsTotal": 244
         }
       },
       "aggregate": {
-        "utilitiesRelocated": 214,
-        "utilitiesTotal": 1202,
+        "utilitiesRelocated": 485,
+        "utilitiesTotal": 2062,
         "parcelsDelivered": 1726,
         "parcelsTotal": 2304
       }
     },
     {
-      "date": "2020-12",
+      "date": "2020-12-01",
+      "dataMonth": "2020-12",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_020921_FA_CVSR_2102_2012_Data.pdf",
       "perPackage": {
         "CP1": {
@@ -705,6 +795,8 @@
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 216,
+          "utilitiesTotal": 1202,
           "parcelsDelivered": 876,
           "parcelsTotal": 1048
         },
@@ -714,6 +806,8 @@
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 278,
+          "utilitiesTotal": 694,
           "parcelsDelivered": 720,
           "parcelsTotal": 998
         },
@@ -723,21 +817,23 @@
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 22,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 29,
+          "utilitiesTotal": 165,
           "parcelsDelivered": 175,
           "parcelsTotal": 244
         }
       },
       "aggregate": {
         "utilitiesRelocated": 523,
-        "utilitiesTotal": 2059,
+        "utilitiesTotal": 2061,
         "parcelsDelivered": 1771,
         "parcelsTotal": 2290
       }
     },
     {
-      "date": "2021-01",
+      "date": "2021-01-01",
+      "dataMonth": "2021-01",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_032521_FA_CVSR_2103_2101_Data.pdf",
       "perPackage": {
         "CP1": {
@@ -746,6 +842,8 @@
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 223,
+          "utilitiesTotal": 1202,
           "parcelsDelivered": 876,
           "parcelsTotal": 1049
         },
@@ -755,6 +853,8 @@
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 292,
+          "utilitiesTotal": 694,
           "parcelsDelivered": 724,
           "parcelsTotal": 999
         },
@@ -764,6 +864,8 @@
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 22,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 37,
+          "utilitiesTotal": 161,
           "parcelsDelivered": 176,
           "parcelsTotal": 239
         }
@@ -776,9 +878,9 @@
       }
     },
     {
-      "date": "2021-02",
+      "date": "2021-02-01",
+      "dataMonth": "2021-02",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "brdmtg_042221_FA_CVSR_2104_2102_Data.pdf",
       "perPackage": {
         "CP1": {
@@ -787,6 +889,8 @@
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 239,
+          "utilitiesTotal": 1210,
           "parcelsDelivered": 879,
           "parcelsTotal": 1049
         },
@@ -796,6 +900,8 @@
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 301,
+          "utilitiesTotal": 694,
           "parcelsDelivered": 734,
           "parcelsTotal": 998
         },
@@ -805,6 +911,8 @@
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 22,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 35,
+          "utilitiesTotal": 161,
           "parcelsDelivered": 179,
           "parcelsTotal": 238
         }
@@ -817,9 +925,9 @@
       }
     },
     {
-      "date": "2021-03",
+      "date": "2021-03-01",
+      "dataMonth": "2021-03",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "508_CVSR_2105_2103_Data-FINAL_V0_ADA.pdf",
       "perPackage": {
         "CP1": {
@@ -828,6 +936,8 @@
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 239,
+          "utilitiesTotal": 1202,
           "parcelsDelivered": 886,
           "parcelsTotal": 1066
         },
@@ -837,6 +947,8 @@
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 301,
+          "utilitiesTotal": 694,
           "parcelsDelivered": 745,
           "parcelsTotal": 1000
         },
@@ -846,6 +958,8 @@
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 22,
           "sourceId": "cvsr",
+          "utilitiesRelocated": 35,
+          "utilitiesTotal": 167,
           "parcelsDelivered": 181,
           "parcelsTotal": 238
         }
@@ -858,9 +972,9 @@
       }
     },
     {
-      "date": "2021-04",
+      "date": "2021-04-01",
+      "dataMonth": "2021-04",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR_2106_2104_Data-FINAL_V3.pdf",
       "perPackage": {
         "CP1": {
@@ -870,7 +984,9 @@
           "guidewayMilesTotal": 32,
           "sourceId": "cvsr",
           "utilitiesRelocated": 244,
-          "utilitiesTotal": 1203
+          "utilitiesTotal": 1203,
+          "parcelsDelivered": 901,
+          "parcelsTotal": 1069
         },
         "CP2-3": {
           "structuresComplete": 8,
@@ -879,7 +995,9 @@
           "guidewayMilesTotal": 65,
           "sourceId": "cvsr",
           "utilitiesRelocated": 301,
-          "utilitiesTotal": 694
+          "utilitiesTotal": 694,
+          "parcelsDelivered": 754,
+          "parcelsTotal": 1000
         },
         "CP4": {
           "structuresComplete": 0,
@@ -888,7 +1006,9 @@
           "guidewayMilesTotal": 22,
           "sourceId": "cvsr",
           "utilitiesRelocated": 40,
-          "utilitiesTotal": 168
+          "utilitiesTotal": 168,
+          "parcelsDelivered": 182,
+          "parcelsTotal": 237
         }
       },
       "aggregate": {
@@ -899,9 +1019,9 @@
       }
     },
     {
-      "date": "2021-05",
+      "date": "2021-05-01",
+      "dataMonth": "2021-05",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR_2107_2105_Data-FINAL_V0_A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -911,7 +1031,9 @@
           "guidewayMilesTotal": 32,
           "sourceId": "cvsr",
           "utilitiesRelocated": 244,
-          "utilitiesTotal": 1203
+          "utilitiesTotal": 1203,
+          "parcelsDelivered": 917,
+          "parcelsTotal": 1059
         },
         "CP2-3": {
           "structuresComplete": 8,
@@ -920,7 +1042,9 @@
           "guidewayMilesTotal": 65,
           "sourceId": "cvsr",
           "utilitiesRelocated": 325,
-          "utilitiesTotal": 694
+          "utilitiesTotal": 694,
+          "parcelsDelivered": 765,
+          "parcelsTotal": 996
         },
         "CP4": {
           "structuresComplete": 0,
@@ -929,7 +1053,9 @@
           "guidewayMilesTotal": 22,
           "sourceId": "cvsr",
           "utilitiesRelocated": 44,
-          "utilitiesTotal": 168
+          "utilitiesTotal": 168,
+          "parcelsDelivered": 185,
+          "parcelsTotal": 237
         }
       },
       "aggregate": {
@@ -940,9 +1066,9 @@
       }
     },
     {
-      "date": "2021-06",
+      "date": "2021-06-01",
+      "dataMonth": "2021-06",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR_2108_2106_Data-FINAL_V0_A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -952,7 +1078,9 @@
           "guidewayMilesTotal": 32,
           "sourceId": "cvsr",
           "utilitiesRelocated": 247,
-          "utilitiesTotal": 1202
+          "utilitiesTotal": 1202,
+          "parcelsDelivered": 928,
+          "parcelsTotal": 1059
         },
         "CP2-3": {
           "structuresComplete": 8,
@@ -961,7 +1089,9 @@
           "guidewayMilesTotal": 65,
           "sourceId": "cvsr",
           "utilitiesRelocated": 330,
-          "utilitiesTotal": 694
+          "utilitiesTotal": 694,
+          "parcelsDelivered": 781,
+          "parcelsTotal": 996
         },
         "CP4": {
           "structuresComplete": 0,
@@ -970,7 +1100,9 @@
           "guidewayMilesTotal": 22,
           "sourceId": "cvsr",
           "utilitiesRelocated": 44,
-          "utilitiesTotal": 168
+          "utilitiesTotal": 168,
+          "parcelsDelivered": 187,
+          "parcelsTotal": 237
         }
       },
       "aggregate": {
@@ -981,9 +1113,9 @@
       }
     },
     {
-      "date": "2021-07",
+      "date": "2021-07-01",
+      "dataMonth": "2021-07",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR_2109_2107_Data-FINAL_V0_ADA.pdf",
       "perPackage": {
         "CP1": {
@@ -993,7 +1125,9 @@
           "guidewayMilesTotal": 32,
           "sourceId": "cvsr",
           "utilitiesRelocated": 247,
-          "utilitiesTotal": 1202
+          "utilitiesTotal": 1202,
+          "parcelsDelivered": 937,
+          "parcelsTotal": 1059
         },
         "CP2-3": {
           "structuresComplete": 8,
@@ -1002,7 +1136,9 @@
           "guidewayMilesTotal": 65,
           "sourceId": "cvsr",
           "utilitiesRelocated": 351,
-          "utilitiesTotal": 694
+          "utilitiesTotal": 694,
+          "parcelsDelivered": 794,
+          "parcelsTotal": 996
         },
         "CP4": {
           "structuresComplete": 0,
@@ -1011,7 +1147,9 @@
           "guidewayMilesTotal": 22,
           "sourceId": "cvsr",
           "utilitiesRelocated": 52,
-          "utilitiesTotal": 168
+          "utilitiesTotal": 168,
+          "parcelsDelivered": 191,
+          "parcelsTotal": 237
         }
       },
       "aggregate": {
@@ -1022,9 +1160,9 @@
       }
     },
     {
-      "date": "2021-08",
+      "date": "2021-08-01",
+      "dataMonth": "2021-08",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR_2110_2108_Data-FINAL_V0_ADA.pdf",
       "perPackage": {
         "CP1": {
@@ -1034,7 +1172,9 @@
           "guidewayMilesTotal": 32,
           "sourceId": "cvsr",
           "utilitiesRelocated": 254,
-          "utilitiesTotal": 1202
+          "utilitiesTotal": 1202,
+          "parcelsDelivered": 948,
+          "parcelsTotal": 1065
         },
         "CP2-3": {
           "structuresComplete": 8,
@@ -1043,7 +1183,9 @@
           "guidewayMilesTotal": 65,
           "sourceId": "cvsr",
           "utilitiesRelocated": 349,
-          "utilitiesTotal": 694
+          "utilitiesTotal": 694,
+          "parcelsDelivered": 806,
+          "parcelsTotal": 996
         },
         "CP4": {
           "structuresComplete": 2,
@@ -1052,7 +1194,9 @@
           "guidewayMilesTotal": 22,
           "sourceId": "cvsr",
           "utilitiesRelocated": 54,
-          "utilitiesTotal": 166
+          "utilitiesTotal": 166,
+          "parcelsDelivered": 192,
+          "parcelsTotal": 237
         }
       },
       "aggregate": {
@@ -1063,9 +1207,9 @@
       }
     },
     {
-      "date": "2021-09",
+      "date": "2021-09-01",
+      "dataMonth": "2021-09",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR_2111_2109_Data-FINAL_V0_A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -1110,9 +1254,9 @@
       }
     },
     {
-      "date": "2021-10",
+      "date": "2021-10-01",
+      "dataMonth": "2021-10",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR_2112_2110_Data-FINAL_V0_ADA.pdf",
       "perPackage": {
         "CP1": {
@@ -1157,9 +1301,9 @@
       }
     },
     {
-      "date": "2021-11",
+      "date": "2021-11-01",
+      "dataMonth": "2021-11",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR_2201_2111_Data-FINAL_V0_A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -1204,9 +1348,9 @@
       }
     },
     {
-      "date": "2021-12",
+      "date": "2021-12-01",
+      "dataMonth": "2021-12",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR_2202_2112_Data-FINAL_V0_ADA.pdf",
       "perPackage": {
         "CP1": {
@@ -1251,9 +1395,9 @@
       }
     },
     {
-      "date": "2022-01",
+      "date": "2022-01-01",
+      "dataMonth": "2022-01",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR_2203_2201_Data-FINAL_V0_A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -1298,9 +1442,9 @@
       }
     },
     {
-      "date": "2022-02",
+      "date": "2022-02-01",
+      "dataMonth": "2022-02",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2204-2202-Data-FINAL-v0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -1345,9 +1489,9 @@
       }
     },
     {
-      "date": "2022-03",
+      "date": "2022-03-01",
+      "dataMonth": "2022-03",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2205-2203-Data-FINAL-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -1392,9 +1536,9 @@
       }
     },
     {
-      "date": "2022-04",
+      "date": "2022-04-01",
+      "dataMonth": "2022-04",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -1439,9 +1583,9 @@
       }
     },
     {
-      "date": "2022-05",
+      "date": "2022-05-01",
+      "dataMonth": "2022-05",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2207-2205-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -1486,9 +1630,9 @@
       }
     },
     {
-      "date": "2022-06",
+      "date": "2022-06-01",
+      "dataMonth": "2022-06",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR_2208_2206_Data-FINAL-V0-ADA.pdf",
       "perPackage": {
         "CP1": {
@@ -1533,9 +1677,9 @@
       }
     },
     {
-      "date": "2022-07",
+      "date": "2022-07-01",
+      "dataMonth": "2022-07",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2209-2207-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -1580,9 +1724,9 @@
       }
     },
     {
-      "date": "2022-08",
+      "date": "2022-08-01",
+      "dataMonth": "2022-08",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2210-2208-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -1627,9 +1771,9 @@
       }
     },
     {
-      "date": "2022-09",
+      "date": "2022-09-01",
+      "dataMonth": "2022-09",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2211-2209-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -1674,9 +1818,9 @@
       }
     },
     {
-      "date": "2022-10",
+      "date": "2022-10-01",
+      "dataMonth": "2022-10",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2212-2210-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -1721,9 +1865,9 @@
       }
     },
     {
-      "date": "2022-11",
+      "date": "2022-11-01",
+      "dataMonth": "2022-11",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR0-2301-2211-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -1768,9 +1912,9 @@
       }
     },
     {
-      "date": "2022-12",
+      "date": "2022-12-01",
+      "dataMonth": "2022-12",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR_2302_2212_Data-FINAL-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -1815,9 +1959,9 @@
       }
     },
     {
-      "date": "2023-01",
+      "date": "2023-01-01",
+      "dataMonth": "2023-01",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR_2303_2301_Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -1862,9 +2006,9 @@
       }
     },
     {
-      "date": "2023-02",
+      "date": "2023-02-01",
+      "dataMonth": "2023-02",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR_2304_2302_Data-FINAL-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -1909,9 +2053,9 @@
       }
     },
     {
-      "date": "2023-03",
+      "date": "2023-03-01",
+      "dataMonth": "2023-03",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2305-2303-Data-FINAL-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -1956,9 +2100,9 @@
       }
     },
     {
-      "date": "2023-04",
+      "date": "2023-04-01",
+      "dataMonth": "2023-04",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2306-2304-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2003,9 +2147,9 @@
       }
     },
     {
-      "date": "2023-06",
+      "date": "2023-06-01",
+      "dataMonth": "2023-06",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2308-2306-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2050,9 +2194,9 @@
       }
     },
     {
-      "date": "2023-07",
+      "date": "2023-07-01",
+      "dataMonth": "2023-07",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2309-2307-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2097,9 +2241,9 @@
       }
     },
     {
-      "date": "2023-08",
+      "date": "2023-08-01",
+      "dataMonth": "2023-08",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR_231102_2308_Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2144,9 +2288,9 @@
       }
     },
     {
-      "date": "2023-09",
+      "date": "2023-09-01",
+      "dataMonth": "2023-09",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR_231206_2309_Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2191,9 +2335,9 @@
       }
     },
     {
-      "date": "2023-11",
+      "date": "2023-11-01",
+      "dataMonth": "2023-11",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "20240818-CVSR_2401_2311_Data-FINAL-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2238,9 +2382,9 @@
       }
     },
     {
-      "date": "2023-12",
+      "date": "2023-12-01",
+      "dataMonth": "2023-12",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR_2402_2312_Data-FINAL.pdf",
       "perPackage": {
         "CP1": {
@@ -2285,9 +2429,9 @@
       }
     },
     {
-      "date": "2024-02",
+      "date": "2024-02-01",
+      "dataMonth": "2024-02",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2404-2402-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2332,9 +2476,9 @@
       }
     },
     {
-      "date": "2024-03",
+      "date": "2024-03-01",
+      "dataMonth": "2024-03",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2405-2403-Data-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2379,9 +2523,9 @@
       }
     },
     {
-      "date": "2024-04",
+      "date": "2024-04-01",
+      "dataMonth": "2024-04",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2024-06-Data-2024-04-FINAL-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2392,8 +2536,8 @@
           "sourceId": "cvsr",
           "utilitiesRelocated": 668,
           "utilitiesTotal": 992,
-          "parcelsDelivered": 2263,
-          "parcelsTotal": 2288
+          "parcelsDelivered": 1066,
+          "parcelsTotal": 1078
         },
         "CP2-3": {
           "structuresComplete": 16,
@@ -2402,7 +2546,9 @@
           "guidewayMilesTotal": 65,
           "sourceId": "cvsr",
           "utilitiesRelocated": 524,
-          "utilitiesTotal": 701
+          "utilitiesTotal": 701,
+          "parcelsDelivered": 974,
+          "parcelsTotal": 987
         },
         "CP4": {
           "structuresComplete": 11,
@@ -2412,8 +2558,8 @@
           "sourceId": "cvsr",
           "utilitiesRelocated": 132,
           "utilitiesTotal": 143,
-          "parcelsDelivered": 29,
-          "parcelsTotal": 29
+          "parcelsDelivered": 223,
+          "parcelsTotal": 223
         }
       },
       "aggregate": {
@@ -2424,9 +2570,9 @@
       }
     },
     {
-      "date": "2024-07",
+      "date": "2024-07-01",
+      "dataMonth": "2024-07",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2024-09-Data-2024-07-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2471,9 +2617,9 @@
       }
     },
     {
-      "date": "2024-08",
+      "date": "2024-08-01",
+      "dataMonth": "2024-08",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2024-10-Data-2024-08-Draft-3-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2518,9 +2664,9 @@
       }
     },
     {
-      "date": "2024-10",
+      "date": "2024-10-01",
+      "dataMonth": "2024-10",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-December-2024-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2565,9 +2711,9 @@
       }
     },
     {
-      "date": "2024-11",
+      "date": "2024-11-01",
+      "dataMonth": "2024-11",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2025-01-Data-2024-11-FINAL-V0-Remediation-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2612,9 +2758,9 @@
       }
     },
     {
-      "date": "2024-12",
+      "date": "2024-12-01",
+      "dataMonth": "2024-12",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2025-03-Data-2024-12-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2659,9 +2805,9 @@
       }
     },
     {
-      "date": "2025-02",
+      "date": "2025-02-01",
+      "dataMonth": "2025-02",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2025-05-01-Data-2025-02-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2706,9 +2852,9 @@
       }
     },
     {
-      "date": "2025-03",
+      "date": "2025-03-01",
+      "dataMonth": "2025-03",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2025-05-29-Data-2025-03-Final2-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2718,7 +2864,9 @@
           "guidewayMilesTotal": 32,
           "sourceId": "cvsr",
           "utilitiesRelocated": 811,
-          "utilitiesTotal": 992
+          "utilitiesTotal": 992,
+          "parcelsDelivered": 1070,
+          "parcelsTotal": 1085
         },
         "CP2-3": {
           "structuresComplete": 23,
@@ -2727,7 +2875,9 @@
           "guidewayMilesTotal": 65,
           "sourceId": "cvsr",
           "utilitiesRelocated": 604,
-          "utilitiesTotal": 701
+          "utilitiesTotal": 701,
+          "parcelsDelivered": 981,
+          "parcelsTotal": 989
         },
         "CP4": {
           "structuresComplete": 11,
@@ -2736,20 +2886,22 @@
           "guidewayMilesTotal": 22,
           "sourceId": "cvsr",
           "utilitiesRelocated": 133,
-          "utilitiesTotal": 133
+          "utilitiesTotal": 133,
+          "parcelsDelivered": 223,
+          "parcelsTotal": 223
         }
       },
       "aggregate": {
         "utilitiesRelocated": 1548,
         "utilitiesTotal": 1826,
         "parcelsDelivered": 2274,
-        "parcelsTotal": 2295
+        "parcelsTotal": 2297
       }
     },
     {
-      "date": "2025-05",
+      "date": "2025-05-01",
+      "dataMonth": "2025-05",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2025-07-Data-2025-05-FINAL-V2-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2794,9 +2946,9 @@
       }
     },
     {
-      "date": "2025-06",
+      "date": "2025-06-01",
+      "dataMonth": "2025-06",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2025-08-Data-2025-06-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2841,9 +2993,9 @@
       }
     },
     {
-      "date": "2025-07",
+      "date": "2025-07-01",
+      "dataMonth": "2025-07",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2025-10-Data-2025-07-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2888,9 +3040,9 @@
       }
     },
     {
-      "date": "2025-09",
+      "date": "2025-09-01",
+      "dataMonth": "2025-09",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "CVSR-2025-11-Data-2025-09-FINAL-V0-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2935,9 +3087,9 @@
       }
     },
     {
-      "date": "2025-11",
+      "date": "2025-11-01",
+      "dataMonth": "2025-11",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "FA-Central-Valley-Status-Report-January-2026-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -2982,9 +3134,9 @@
       }
     },
     {
-      "date": "2025-12",
+      "date": "2025-12-01",
+      "dataMonth": "2025-12",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "FA-Central-Valley-Status-Report-March-2026-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -3029,9 +3181,9 @@
       }
     },
     {
-      "date": "2026-02",
+      "date": "2026-02-01",
+      "dataMonth": "2026-02",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "FA-Central-Valley-Status-Report-April-2026.pdf",
       "perPackage": {
         "CP1": {
@@ -3076,9 +3228,9 @@
       }
     },
     {
-      "date": "2026-03",
+      "date": "2026-03-01",
+      "dataMonth": "2026-03",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "FA-Central-Valley-Status-Report-June-2026-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -3123,9 +3275,9 @@
       }
     },
     {
-      "date": "2026-04",
+      "date": "2026-04-01",
+      "dataMonth": "2026-04",
       "tier": 2,
-      "sourceId": "cvsr",
       "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
       "perPackage": {
         "CP1": {
@@ -3169,5 +3321,594 @@
         "parcelsTotal": 2288
       }
     }
-  ]
+  ],
+  "cvsrInventory": {
+    "coverageStart": "2019-03",
+    "coverageEnd": "2026-04",
+    "expectedMonths": [
+      "2019-03",
+      "2019-04",
+      "2019-05",
+      "2019-06",
+      "2019-07",
+      "2019-08",
+      "2019-09",
+      "2019-10",
+      "2019-11",
+      "2019-12",
+      "2020-01",
+      "2020-02",
+      "2020-03",
+      "2020-04",
+      "2020-05",
+      "2020-06",
+      "2020-07",
+      "2020-08",
+      "2020-09",
+      "2020-10",
+      "2020-11",
+      "2020-12",
+      "2021-01",
+      "2021-02",
+      "2021-03",
+      "2021-04",
+      "2021-05",
+      "2021-06",
+      "2021-07",
+      "2021-08",
+      "2021-09",
+      "2021-10",
+      "2021-11",
+      "2021-12",
+      "2022-01",
+      "2022-02",
+      "2022-03",
+      "2022-04",
+      "2022-05",
+      "2022-06",
+      "2022-07",
+      "2022-08",
+      "2022-09",
+      "2022-10",
+      "2022-11",
+      "2022-12",
+      "2023-01",
+      "2023-02",
+      "2023-03",
+      "2023-04",
+      "2023-05",
+      "2023-06",
+      "2023-07",
+      "2023-08",
+      "2023-09",
+      "2023-10",
+      "2023-11",
+      "2023-12",
+      "2024-01",
+      "2024-02",
+      "2024-03",
+      "2024-04",
+      "2024-05",
+      "2024-06",
+      "2024-07",
+      "2024-08",
+      "2024-09",
+      "2024-10",
+      "2024-11",
+      "2024-12",
+      "2025-01",
+      "2025-02",
+      "2025-03",
+      "2025-04",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-08",
+      "2025-09",
+      "2025-10",
+      "2025-11",
+      "2025-12",
+      "2026-01",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ],
+    "availableMonths": [
+      "2019-03",
+      "2019-04",
+      "2019-05",
+      "2019-06",
+      "2019-07",
+      "2019-08",
+      "2019-09",
+      "2019-10",
+      "2019-11",
+      "2019-12",
+      "2020-01",
+      "2020-02",
+      "2020-03",
+      "2020-04",
+      "2020-05",
+      "2020-06",
+      "2020-07",
+      "2020-08",
+      "2020-09",
+      "2020-10",
+      "2020-11",
+      "2020-12",
+      "2021-01",
+      "2021-02",
+      "2021-03",
+      "2021-04",
+      "2021-05",
+      "2021-06",
+      "2021-07",
+      "2021-08",
+      "2021-09",
+      "2021-10",
+      "2021-11",
+      "2021-12",
+      "2022-01",
+      "2022-02",
+      "2022-03",
+      "2022-04",
+      "2022-05",
+      "2022-06",
+      "2022-07",
+      "2022-08",
+      "2022-09",
+      "2022-10",
+      "2022-11",
+      "2022-12",
+      "2023-01",
+      "2023-02",
+      "2023-03",
+      "2023-04",
+      "2023-06",
+      "2023-07",
+      "2023-08",
+      "2023-09",
+      "2023-11",
+      "2023-12",
+      "2024-02",
+      "2024-03",
+      "2024-04",
+      "2024-07",
+      "2024-08",
+      "2024-10",
+      "2024-11",
+      "2024-12",
+      "2025-02",
+      "2025-03",
+      "2025-05",
+      "2025-06",
+      "2025-07",
+      "2025-09",
+      "2025-11",
+      "2025-12",
+      "2026-02",
+      "2026-03",
+      "2026-04"
+    ],
+    "gaps": [
+      {
+        "month": "2023-05",
+        "metric": "snapshot",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "report_not_located",
+        "reportFile": "CVSR-2307-2305-Data-FINAL-V0-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/07/CVSR-2307-2305-Data-FINAL-V0-A11Y.pdf",
+        "detail": "The apparent May report states that its data are through April 2023; no valid May-data report was located."
+      },
+      {
+        "month": "2023-10",
+        "metric": "snapshot",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "report_not_downloaded",
+        "reportFile": "CVSR-2312-2310-Data-FINAL-V0-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/01/CVSR-2312-2310-Data-FINAL-V0-A11Y.pdf",
+        "detail": "A valid Authority report URL is known, but the PDF is absent from the local inventory."
+      },
+      {
+        "month": "2024-01",
+        "metric": "snapshot",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "report_not_downloaded",
+        "reportFile": "CVSR_2403_2401_Data-FINAL-V0-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/03/CVSR_2403_2401_Data-FINAL-V0-A11Y.pdf",
+        "detail": "A valid Authority report URL is known, but the PDF is absent from the local inventory."
+      },
+      {
+        "month": "2024-05",
+        "metric": "snapshot",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "report_not_downloaded",
+        "reportFile": "Supplemental-CVSR-2024-08-Data-2024-05-FINAL-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/08/Supplemental-CVSR-2024-08-Data-2024-05-FINAL-A11Y.pdf",
+        "detail": "A valid Authority report URL is known, but the PDF is absent from the local inventory."
+      },
+      {
+        "month": "2024-06",
+        "metric": "snapshot",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "report_not_downloaded",
+        "reportFile": "CVSR-2024-08-Data-2024-06-FINAL-V0-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/08/CVSR-2024-08-Data-2024-06-FINAL-V0-A11Y.pdf",
+        "detail": "A valid Authority report URL is known, but the PDF is absent from the local inventory."
+      },
+      {
+        "month": "2024-09",
+        "metric": "snapshot",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "report_not_downloaded",
+        "reportFile": "CVSR-2024-11-Data-2024-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/12/CVSR-2024-11-Data-2024-A11Y.pdf",
+        "detail": "A valid Authority report URL is known, but the PDF is absent from the local inventory."
+      },
+      {
+        "month": "2025-01",
+        "metric": "snapshot",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "report_not_downloaded",
+        "reportFile": "CVSR-2025-03-20-Data-2025-01-FINAL-V0-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/03/CVSR-2025-03-20-Data-2025-01-FINAL-V0-A11Y.pdf",
+        "detail": "A valid Authority report URL is known, but the PDF is absent from the local inventory."
+      },
+      {
+        "month": "2025-04",
+        "metric": "snapshot",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "report_not_downloaded",
+        "reportFile": "CVSR-2025-06-Data-2025-04-FINAL-V0-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/06/CVSR-2025-06-Data-2025-04-FINAL-V0-A11Y.pdf",
+        "detail": "A valid Authority report URL is known, but the PDF is absent from the local inventory."
+      },
+      {
+        "month": "2025-08",
+        "metric": "snapshot",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "report_not_downloaded",
+        "reportFile": "CVSR-2025-10-Data-2025-08-Supplemental-FINAL-V0-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/10/CVSR-2025-10-Data-2025-08-Supplemental-FINAL-V0-A11Y.pdf",
+        "detail": "A valid Authority report URL is known, but the PDF is absent from the local inventory."
+      },
+      {
+        "month": "2025-10",
+        "metric": "snapshot",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "report_not_downloaded",
+        "reportFile": "CVSR-2025-12-Data-2025-10-FINAL-V0-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/12/CVSR-2025-12-Data-2025-10-FINAL-V0-A11Y.pdf",
+        "detail": "A valid Authority report URL is known, but the PDF is absent from the local inventory."
+      },
+      {
+        "month": "2026-01",
+        "metric": "snapshot",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "report_not_downloaded",
+        "reportFile": "FA-Central-Valley-Status-Report-Supplemental-March-2026-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/03/FA-Central-Valley-Status-Report-Supplemental-March-2026-A11Y.pdf",
+        "detail": "A valid Authority report URL is known, but the PDF is absent from the local inventory."
+      },
+      {
+        "month": "2019-03",
+        "metric": "utilities",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report does not publish package utility relocated and total counts in the later CVSR format."
+      },
+      {
+        "month": "2019-04",
+        "metric": "utilities",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report does not publish package utility relocated and total counts in the later CVSR format."
+      },
+      {
+        "month": "2019-05",
+        "metric": "utilities",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report does not publish package utility relocated and total counts in the later CVSR format."
+      },
+      {
+        "month": "2019-06",
+        "metric": "utilities",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report does not publish package utility relocated and total counts in the later CVSR format."
+      },
+      {
+        "month": "2019-07",
+        "metric": "utilities",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report does not publish package utility relocated and total counts in the later CVSR format."
+      },
+      {
+        "month": "2019-08",
+        "metric": "utilities",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report does not publish package utility relocated and total counts in the later CVSR format."
+      },
+      {
+        "month": "2019-09",
+        "metric": "utilities",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report does not publish package utility relocated and total counts in the later CVSR format."
+      },
+      {
+        "month": "2019-10",
+        "metric": "utilities",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report does not publish package utility relocated and total counts in the later CVSR format."
+      },
+      {
+        "month": "2019-11",
+        "metric": "utilities",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report does not publish package utility relocated and total counts in the later CVSR format."
+      },
+      {
+        "month": "2019-12",
+        "metric": "utilities",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report does not publish package utility relocated and total counts in the later CVSR format."
+      },
+      {
+        "month": "2020-01",
+        "metric": "utilities",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report does not publish package utility relocated and total counts in the later CVSR format."
+      },
+      {
+        "month": "2020-02",
+        "metric": "utilities",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report does not publish package utility relocated and total counts in the later CVSR format."
+      },
+      {
+        "month": "2020-03",
+        "metric": "utilities",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report does not publish package utility relocated and total counts in the later CVSR format."
+      },
+      {
+        "month": "2020-04",
+        "metric": "utilities",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report does not publish package utility relocated and total counts in the later CVSR format."
+      },
+      {
+        "month": "2020-05",
+        "metric": "utilities",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report does not publish package utility relocated and total counts in the later CVSR format."
+      },
+      {
+        "month": "2020-06",
+        "metric": "utilities",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report does not publish package utility relocated and total counts in the later CVSR format."
+      },
+      {
+        "month": "2020-07",
+        "metric": "utilities",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report does not publish package utility relocated and total counts in the later CVSR format."
+      }
+    ],
+    "rejectedReports": [
+      {
+        "reportFile": "brdmtg_011519_FA_Operations_Report.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "brdmtg_011618_FA_CP1_Monthly_Status_Report.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "brdmtg_011618_FA_CP4_Monthly_Status_Report.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "brdmtg_021919_FA_Operations_Report.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "brdmtg_022018_FA_CP1_Monthly_Status_Report.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "brdmtg_022018_FA_CP2_3_Monthly_Status_Report.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "brdmtg_022018_FA_CP4_Monthly_Status_Report.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "brdmtg_031919_FA_Operations_Report.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "brdmtg_032018_FA_Projects_and_Initiatives_Report.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "brdmtg_041619_FA_Operations_Report.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "brdmtg_041718_FA_Projects_and_Initiatives_Report.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "brdmtg_051518_FA_Projects_and_Initiatives_Report.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "brdmtg_061918_FA_Projects_and_Initiatives_Report.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "brdmtg_071718_FA_Projects_and_Initiatives_Report.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "brdmtg_081618_FA_Projects_and_Initiatives_Report.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "brdmtg_091318_FA_Projects_and_Initiatives_Report.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "brdmtg_101618_FA_Projects_and_Initiatives_Report.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "brdmtg_111518_FA_ProjectsandInitiativesReport.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "brdmtg_121318_FA_Projects_and_Initiatives_Report.pdf",
+        "reason": "Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report."
+      },
+      {
+        "reportFile": "CVSR-2307-2305-Data-FINAL-V0-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/07/CVSR-2307-2305-Data-FINAL-V0-A11Y.pdf",
+        "dataMonth": "2023-04",
+        "reason": "Rejected as May data: the document header says data through April 2023 and duplicates the April snapshot."
+      }
+    ]
+  },
+  "diagnostics": {
+    "parseFailures": [],
+    "fieldFailures": []
+  }
 }

@@ -35,7 +35,7 @@ const targets: Target[] = [
     path: 'Closures_and_Detours_Public/FeatureServer/0/query',
     params: {
       where: '1=1',
-      outFields: 'OBJECTID,name,location,description,constructionUpdate,status,projectPageURL,latitude,longitude',
+      outFields: 'OBJECTID,GlobalID,name,location,description,constructionUpdate,status,projectPageURL,latitude,longitude',
       returnGeometry: 'true',
       outSR: '4326',
       f: 'json',

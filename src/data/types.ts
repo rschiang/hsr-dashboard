@@ -6,6 +6,7 @@ export type AlignmentStatus =
   | 'no_data'
   | 'preconstruction'
   | 'under_construction'
+  | 'structure_complete'
   | 'guideway_complete'
   | 'track_laid'
   | 'systems_installed';
@@ -15,7 +16,24 @@ export type NamedStructure = {
   status: 'Completed' | 'In progress';
   url: string;
   sourceId: 'arcgis_structures';
-  locationMethod: 'spatial' | 'package-only';
+  objectId: number;
+  globalId: string;
+  observedAt: string;
+  locationMethod: 'crosswalk' | 'spatial' | 'package-only';
+};
+
+export type StructureEvidence = {
+  id: string;
+  segmentId: string;
+  claim: 'in_progress' | 'substantially_complete' | 'completed';
+  date: string;
+  datePrecision: 'day' | 'month' | 'as_of';
+  label: string;
+  sourceTitle: string;
+  sourceUrl: string;
+  reportFile?: string;
+  sourceId: SourceId;
+  quote: string;
 };
 
 export type Segment = {
@@ -39,6 +57,7 @@ export type Segment = {
   weightShare: number;
   currentStatus: AlignmentStatus;
   structures: NamedStructure[];
+  evidence: StructureEvidence[];
   sourceId: SourceId;
 };
 
@@ -69,9 +88,7 @@ export type PackageMetrics = {
   sourceId: SourceId;
 };
 
-export type Snapshot = {
-  date: string;
-  tier: 1 | 2 | 3;
+type SnapshotFields = {
   sourceId: SourceId;
   reportFile?: string;
   perSegment?: Record<string, { completion: number | null }>;
@@ -84,7 +101,54 @@ export type Snapshot = {
   };
 };
 
+export type Snapshot = SnapshotFields & ({
+  date: string;
+  tier: 1 | 3;
+  dataMonth?: never;
+  reportUrl?: never;
+} | {
+  date: string;
+  dataMonth: string;
+  tier: 2;
+  reportUrl?: string;
+});
+
+export type CvsrGapCause =
+  | 'report_not_downloaded'
+  | 'report_not_located'
+  | 'source_not_reported'
+  | 'parser_failure';
+
+export type CvsrGap = {
+  month: string;
+  metric: 'snapshot' | 'utilities' | 'parcels';
+  packages: Array<'CP1' | 'CP2-3' | 'CP4'>;
+  cause: CvsrGapCause;
+  reportFile?: string;
+  reportUrl?: string;
+  detail: string;
+};
+
+export type CvsrReportDiagnostic = {
+  reportFile?: string;
+  reportUrl?: string;
+  dataMonth?: string;
+  reason: string;
+};
+
+export type CvsrInventory = {
+  coverageStart: string;
+  coverageEnd: string;
+  expectedMonths: string[];
+  availableMonths: string[];
+  gaps: CvsrGap[];
+  rejectedReports: CvsrReportDiagnostic[];
+};
+
+export type ReplayProvenance = 'scheduled' | 'observed' | 'mixed';
+
 export type HistoryArtifact = {
   generatedAt: string;
   snapshots: Snapshot[];
+  cvsrInventory: CvsrInventory;
 };

@@ -1,6 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import './App.css';
-import type { HistoryArtifact, PackageMetrics, SegmentsArtifact, Snapshot } from './data/types';
+import type {
+  CvsrGap,
+  CvsrGapCause,
+  HistoryArtifact,
+  PackageMetrics,
+  SegmentsArtifact,
+  Snapshot,
+} from './data/types';
 import { deriveStatuses } from './lib/status';
 import { SourceLink } from './components/Citation';
 import { Legend } from './components/Legend';
@@ -64,7 +71,9 @@ function App() {
     [data],
   );
   const derived = useMemo(
-    () => data && date ? deriveStatuses(data.history.snapshots, data.segments.segments, date) : { statuses: {}, tier: 1 as const },
+    () => data && date
+      ? deriveStatuses(data.history.snapshots, data.segments.segments, date)
+      : { statuses: {}, evidence: {}, provenance: 'scheduled' as const, tier: 1 as const },
     [data, date],
   );
   const activeSnapshot = useMemo(() => {
@@ -75,8 +84,12 @@ function App() {
   }, [data, date]);
   const aggregateSnapshot = useMemo(() => {
     if (!data || !date) return undefined;
-    return data.history.snapshots.filter((snapshot) => snapshot.tier === 2 && snapshot.date <= date).at(-1);
+    return data.history.snapshots.find((snapshot) => snapshot.tier === 2 && snapshot.date === date);
   }, [data, date]);
+  const selectedCvsrGaps = useMemo(
+    () => data?.history.cvsrInventory.gaps.filter((gap) => gap.month === date.slice(0, 7)) ?? [],
+    [data, date],
+  );
 
   const handleHover = useCallback((id: string | null) => setHoveredId(id), []);
   const handleSelect = useCallback((id: string | null) => setSelectedId(id), []);
@@ -88,18 +101,31 @@ function App() {
     return <main className="load-state"><p className="eyebrow">Loading committed CAHSRA data</p><h1>Merced–Bakersfield progress</h1></main>;
   }
 
-  const completionFor = (id: string): number | null => activeSnapshot?.perSegment?.[id]?.completion
-    ?? data.segments.segments.find((segment) => segment.id === id)?.completion
-    ?? null;
+  const completionFor = (id: string): number | null => {
+    if (activeSnapshot?.perSegment !== undefined && Object.hasOwn(activeSnapshot.perSegment, id)) {
+      return activeSnapshot.perSegment[id].completion;
+    }
+    return data.segments.segments.find((segment) => segment.id === id)?.completion ?? null;
+  };
   const equivalentMiles = data.segments.segments
     .filter((segment) => segment.kind === 'guideway' && segment.cp !== 'M2M' && segment.cp !== 'LGA')
     .reduce((sum, segment) => sum + (segment.iosMileEnd - segment.iosMileStart) * (completionFor(segment.id) ?? 0), 0);
-  const weightedPercent = data.segments.segments.reduce(
-    (sum, segment) => sum + segment.weightShare * (completionFor(segment.id) ?? 0),
+  const weightedPercent = data.segments.segments.reduce((sum, segment) => {
+    const numericCompletion = completionFor(segment.id);
+    const modelledCompletion = numericCompletion
+      ?? (segment.kind === 'structure' && derived.statuses[segment.id] === 'structure_complete' ? 1 : 0);
+    return sum + segment.weightShare * modelledCompletion;
+  }, 0) * 100;
+  const aggregatePackages = Object.values(aggregateSnapshot?.perPackage ?? {});
+  const structuresComplete = aggregatePackages.reduce(
+    (sum, metrics) => sum + metrics.structuresComplete,
     0,
-  ) * 100;
-  const allStructures = data.segments.segments.flatMap((segment) => segment.structures);
-  const structuresComplete = allStructures.filter((structure) => structure.status === 'Completed').length;
+  );
+  const structuresTotal = aggregatePackages.reduce(
+    (sum, metrics) => sum + metrics.structuresTotal,
+    0,
+  );
+  const structureMonth = aggregateSnapshot?.dataMonth;
 
   return (
     <main className="app-shell">
@@ -116,17 +142,19 @@ function App() {
               <strong>{equivalentMiles.toFixed(1)} <small>/ 119 mi</small> <SourceLink sourceId="arcgis_progress" /></strong>
             </div>
             <div>
-              <span>Difficulty-weighted</span>
-              <strong>{weightedPercent.toFixed(1)}% <SourceLink sourceId="business_plan_2026" /></strong>
+              <span>Modelled difficulty progress</span>
+              <strong title="Numeric earthwork completion plus full structure weight only after direct evidence resolves to Structure complete">
+                {weightedPercent.toFixed(1)}% <SourceLink sourceId="business_plan_2026" />
+              </strong>
             </div>
-            <div title="Current observed structure-point layer; not rewound when no CVSR PDF snapshot is loaded">
+            <div title="CVSR package aggregates at the displayed report month; values are never carried forward across missing reports">
               <span>Structures observed</span>
-              <strong>{structuresComplete} <small>/ {allStructures.length}</small> <SourceLink sourceId="arcgis_structures" /></strong>
+              <strong>{structureMonth ? structuresComplete : '—'} <small>/ {structureMonth ? structuresTotal : '—'}</small> <SourceLink sourceId="cvsr" /></strong>
             </div>
           </div>
         </header>
 
-        <PackageBands snapshot={aggregateSnapshot} />
+        <PackageBands snapshot={aggregateSnapshot} gaps={selectedCvsrGaps} />
 
         <StripChart
           segments={data.segments.segments}
@@ -137,9 +165,17 @@ function App() {
           onSelect={handleSelect}
           axisMode={axisMode}
           onAxisModeChange={setAxisMode}
+          date={date}
+          evidence={derived.evidence}
         />
 
-        <TimeScrubber dates={dates} date={date} onDateChange={setDate} tier={derived.tier} />
+        <TimeScrubber
+          dates={dates}
+          date={date}
+          onDateChange={setDate}
+          provenance={derived.provenance}
+          reportGap={selectedCvsrGaps.find((gap) => gap.metric === 'snapshot')}
+        />
 
         <AlignmentMap
           data={data.geojson}
@@ -155,7 +191,23 @@ function App() {
   );
 }
 
-function PackageBands({ snapshot }: { snapshot: Snapshot | undefined }) {
+const GAP_LABELS: Record<CvsrGapCause, string> = {
+  report_not_downloaded: 'Report not downloaded',
+  report_not_located: 'No valid report located',
+  source_not_reported: 'Not published in this report',
+  parser_failure: 'Parser failed — report available',
+};
+
+function ReportLink({ gap }: { gap: CvsrGap }) {
+  if (!gap.reportUrl) return <SourceLink sourceId="cvsr" />;
+  return (
+    <sup className="source-link">
+      <a href={gap.reportUrl} target="_blank" rel="noreferrer" title={gap.detail}>report</a>
+    </sup>
+  );
+}
+
+function PackageBands({ snapshot, gaps }: { snapshot: Snapshot | undefined; gaps: CvsrGap[] }) {
   const packages = ['CP1', 'CP2-3', 'CP4'] as const;
   return (
     <section className="package-bands" aria-label="Construction-package aggregate status">
@@ -166,10 +218,21 @@ function PackageBands({ snapshot }: { snapshot: Snapshot | undefined }) {
             const packageMetric = snapshot?.perPackage?.[cp];
             const value = packageMetric?.[metric.value];
             const total = packageMetric?.[metric.total];
+            const metricName = metric.value.startsWith('utilities') ? 'utilities' : metric.value.startsWith('parcels') ? 'parcels' : undefined;
+            const gap = gaps.find(
+              (candidate) => (
+                candidate.metric === 'snapshot'
+                || candidate.metric === metricName
+              ) && candidate.packages.includes(cp),
+            );
             return (
-              <span className="band-value" key={cp}>
-                <b>{cp}</b> {value === undefined || total === undefined ? 'Not reported in this snapshot' : `${value.toLocaleString()} / ${total.toLocaleString()}`}
-                {value !== undefined && <SourceLink sourceId="cvsr" />}
+              <span className={`band-value${gap ? ' missing' : ''}`} key={cp} title={gap?.detail}>
+                <b>{cp}</b>{' '}
+                {value === undefined || total === undefined
+                  ? <>{gap ? GAP_LABELS[gap.cause] : 'No report for selected month'} {gap && <ReportLink gap={gap} />}</>
+                  : <>{value.toLocaleString()} / {total.toLocaleString()} {snapshot?.reportUrl
+                    ? <sup className="source-link"><a href={snapshot.reportUrl} target="_blank" rel="noreferrer">report</a></sup>
+                    : <SourceLink sourceId="cvsr" />}</>}
               </span>
             );
           })}
