@@ -32,7 +32,7 @@ Authority figures, not estimates, and they are not gaps.
 | `2019-05` | `brdmtg_071619_FA_Central_Valley_Status_Report.pdf` | progress | Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text. |
 | `2019-06` | `brdmtg_082019_FA_Central_Valley_Status_Report.pdf` | progress, parcels | Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text. |
 | `2019-07` | `brdmtg_091719_FA_Central_Valley_Status_Report.pdf` | progress, parcels | Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text. |
-| `2019-08` | `brdmtg_101519_FA_Central_Valley_Status_Report.pdf` | progress, parcels | Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text. |
+| `2019-08` | `brdmtg_101519_FA_Central_Valley_Status_Report.pdf` | progress | Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text. |
 | `2019-09` | `brdmtg_111919_FA_Central_Valley_Status_Report.pdf` | progress | Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text. |
 | `2019-10` | `brdmtg_121019_FA_Central_Valley_Status_Report.pdf` | progress | Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text. |
 | `2019-11` | `brdmtg_011420_FA_Central_Valley_Status_Report.pdf` | progress | Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text. |

@@ -19,7 +19,8 @@ export type NamedStructure = {
   objectId: number;
   globalId: string;
   observedAt: string;
-  locationMethod: 'crosswalk' | 'spatial' | 'package-only';
+  locationMethod: 'crosswalk' | 'spatial' | 'package-only' | 'reviewed-context';
+  contextScope?: 'enabling-works' | 'third-party';
 };
 
 export type StructureEvidence = {
@@ -34,6 +35,17 @@ export type StructureEvidence = {
   reportFile?: string;
   sourceId: SourceId;
   quote: string;
+};
+
+export type SegmentObservation = {
+  completion: number | null;
+  sourceId: 'arcgis_progress' | 'cvsr';
+  reportFile?: string;
+  reportUrl?: string;
+  dataMonth?: string;
+  scheduleStart?: string;
+  scheduleFinish?: string;
+  table?: 'underway' | 'completed';
 };
 
 export type Segment = {
@@ -58,6 +70,7 @@ export type Segment = {
   currentStatus: AlignmentStatus;
   structures: NamedStructure[];
   evidence: StructureEvidence[];
+  coveringCvsrRows?: string[];
   sourceId: SourceId;
 };
 
@@ -82,6 +95,14 @@ export type SegmentsArtifact = {
       cvsrMilesComplete: number;
       cvsrMilesTotal: number;
     }>;
+    unmatchedCvsrRows: Array<{ cp: CvsrPackageId; kind: 'structure' | 'guideway'; location: string }>;
+    disagreements: Array<{
+      segmentId: string;
+      arcgis: number;
+      cvsr: number;
+      cvsrMonth: string;
+      reportFile: string;
+    }>;
   };
   overlaps: Array<{ guidewayId: string; structureId: string; miles: number }>;
   segments: Segment[];
@@ -96,6 +117,19 @@ export type PackageMetrics = {
   utilitiesTotal?: number;
   parcelsDelivered?: number;
   parcelsTotal?: number;
+  parcelsAcquired?: number;
+  parcelsAcquisitionTotal?: number;
+  parcelAcquisitionAsOf?: string;
+  railroadParcelsAcquired?: number;
+  railroadParcelsTotal?: number;
+  acquisitionAudit?: {
+    totalNeeded: number;
+    priorAcquired: number;
+    modifications: number;
+    acquired: number;
+    remaining: number;
+    asOf: string;
+  };
   /** Fields hand-transcribed from a chart image because the PDF exposes no extractable text for them. */
   transcribedFields?: Array<'progress' | 'parcels'>;
   sourceId: SourceId;
@@ -104,7 +138,9 @@ export type PackageMetrics = {
 type SnapshotFields = {
   sourceId: SourceId;
   reportFile?: string;
-  perSegment?: Record<string, { completion: number | null }>;
+  perSegment?: Record<string, SegmentObservation>;
+  structureEvidence?: StructureEvidence[];
+  unmatchedCvsrRows?: Array<{ cp: CvsrPackageId; kind: 'structure' | 'guideway'; location: string }>;
   perPackage?: Partial<Record<'CP1' | 'CP2-3' | 'CP4', PackageMetrics>>;
   aggregate?: {
     utilitiesRelocated: number;
@@ -131,11 +167,12 @@ export type CvsrGapCause =
   | 'report_not_downloaded'
   | 'report_not_located'
   | 'source_not_reported'
+  | 'related_measure_only'
   | 'parser_failure';
 
 export type CvsrGap = {
   month: string;
-  metric: 'snapshot' | 'utilities' | 'parcels';
+  metric: 'snapshot' | 'utilities' | 'parcels' | 'parcel_delivery';
   packages: Array<'CP1' | 'CP2-3' | 'CP4'>;
   cause: CvsrGapCause;
   reportFile?: string;

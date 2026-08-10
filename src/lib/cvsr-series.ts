@@ -1,6 +1,18 @@
-import type { PackageMetrics, Snapshot } from '../data/types';
+import type { Snapshot } from '../data/types';
 
-export type NumericPackageMetric = Exclude<keyof PackageMetrics, 'sourceId' | 'transcribedFields'>;
+export type NumericPackageMetric =
+  | 'structuresComplete'
+  | 'structuresTotal'
+  | 'guidewayMilesComplete'
+  | 'guidewayMilesTotal'
+  | 'utilitiesRelocated'
+  | 'utilitiesTotal'
+  | 'parcelsDelivered'
+  | 'parcelsTotal'
+  | 'parcelsAcquired'
+  | 'parcelsAcquisitionTotal'
+  | 'railroadParcelsAcquired'
+  | 'railroadParcelsTotal';
 
 export type CvsrSeriesPoint = { month: string; value: number; total: number; ratio: number };
 

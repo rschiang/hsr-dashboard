@@ -36,7 +36,9 @@ const PACKAGE_BAND_METRICS: ReadonlyArray<{
 }> = [
   { label: 'Structures complete', value: 'structuresComplete', total: 'structuresTotal', transcribedAs: 'progress', revisedAs: 'progress' },
   { label: 'Guideway complete (mi)', value: 'guidewayMilesComplete', total: 'guidewayMilesTotal', transcribedAs: 'progress', revisedAs: 'progress' },
-  { label: 'ROW parcels delivered', value: 'parcelsDelivered', total: 'parcelsTotal', transcribedAs: 'parcels', revisedAs: 'parcels' },
+  { label: 'ROW parcels acquired', value: 'parcelsAcquired', total: 'parcelsAcquisitionTotal' },
+  { label: 'ROW delivered to DB', value: 'parcelsDelivered', total: 'parcelsTotal', transcribedAs: 'parcels', revisedAs: 'parcels' },
+  { label: 'Railroad ROW parcels', value: 'railroadParcelsAcquired', total: 'railroadParcelsTotal' },
   { label: 'Utilities relocated', value: 'utilitiesRelocated', total: 'utilitiesTotal', revisedAs: 'utilities' },
 ];
 
@@ -188,12 +190,6 @@ function App() {
       : { statuses: {}, evidence: {}, provenance: 'scheduled' as const },
     [data, date],
   );
-  const activeSnapshot = useMemo(() => {
-    if (!data || !date) return undefined;
-    return data.history.snapshots
-      .filter((snapshot) => snapshot.tier === 3 && snapshot.date <= date && snapshot.perSegment)
-      .at(-1);
-  }, [data, date]);
   const selectedMonth = date.slice(0, 7);
   const exactCvsrSnapshot = useMemo(() => {
     if (!data || !selectedMonth) return undefined;
@@ -226,8 +222,8 @@ function App() {
     [data],
   );
   const selectedCompletionBySegment = useMemo(
-    () => data ? selectedCompletions(data.segments.segments, activeSnapshot) : {},
-    [activeSnapshot, data],
+    () => data ? selectedCompletions(data.segments.segments, data.history.snapshots, date) : {},
+    [data, date],
   );
 
   const handleHover = useCallback((id: string | null) => setHoveredId(id), []);
@@ -258,6 +254,9 @@ function App() {
   const perMile = (value: number | undefined): string => value === undefined ? '—' : value.toFixed(1);
   const selectedSegment = selectedId
     ? data.segments.segments.find((segment) => segment.id === selectedId)
+    : undefined;
+  const selectedDisagreement = selectedId
+    ? data.segments.crossCheck?.disagreements.find((item) => item.segmentId === selectedId)
     : undefined;
 
   return (
@@ -316,6 +315,7 @@ function App() {
           date={date}
           evidence={derived.evidence}
           selectedCompletionBySegment={selectedCompletionBySegment}
+          disagreements={data.segments.crossCheck?.disagreements ?? []}
         />
 
         <SegmentDetail
@@ -323,6 +323,7 @@ function App() {
           status={selectedId ? derived.statuses[selectedId] : undefined}
           evidence={selectedId ? derived.evidence[selectedId] : undefined}
           completion={selectedId ? selectedCompletionBySegment[selectedId] ?? null : null}
+          disagreement={selectedDisagreement}
           date={date}
           onClear={handleClearSelection}
         />
@@ -353,6 +354,7 @@ const GAP_LABELS: Record<CvsrGapCause, string> = {
   report_not_downloaded: 'Report not downloaded',
   report_not_located: 'No valid report located',
   source_not_reported: 'Not published in source',
+  related_measure_only: 'Related measure only',
   parser_failure: 'Parser failed — report available',
 };
 
@@ -391,6 +393,7 @@ const GAP_METRIC_LABELS: Record<CvsrGap['metric'], string> = {
   snapshot: 'Monthly report',
   utilities: 'Utilities',
   parcels: 'Parcels',
+  parcel_delivery: 'Parcels delivered to DB',
 };
 
 function DataGapDisclosure({
@@ -490,7 +493,11 @@ function PackageBands({
             const packageMetric = beforeCoverage ? undefined : snapshot?.perPackage?.[cp];
             const value = packageMetric?.[metric.value];
             const total = packageMetric?.[metric.total];
-            const metricName = metric.value.startsWith('utilities') ? 'utilities' : metric.value.startsWith('parcels') ? 'parcels' : undefined;
+            const metricName = metric.value.startsWith('utilities')
+              ? 'utilities'
+              : metric.value === 'parcelsDelivered'
+                ? 'parcel_delivery'
+                : undefined;
             const gap = beforeCoverage ? undefined : gaps.find(
               (candidate) => (
                 candidate.metric === 'snapshot'
@@ -529,16 +536,25 @@ function PackageBands({
                 />
                 {beforeCoverage
                   ? <>—</>
-                  : value === undefined || total === undefined
-                    ? <>{gap ? GAP_LABELS[gap.cause] : 'No report for selected month'} {gap && <ReportLink gap={gap} />}</>
-                    : (
-                      <span
-                        className={valueClass === '' ? undefined : valueClass}
-                        title={valueTitle === '' ? undefined : valueTitle}
-                      >
-                        {value.toLocaleString()} / {total.toLocaleString()}
+                  : metric.value === 'parcelsAcquired' && packageMetric?.acquisitionAudit
+                    ? (
+                      <span title="The report does not publish an exact January package acquisition split.">
+                        March 9 audit: {packageMetric.acquisitionAudit.priorAcquired.toLocaleString()} prior acquired / {packageMetric.acquisitionAudit.totalNeeded.toLocaleString()} needed · as of {packageMetric.acquisitionAudit.asOf}
                       </span>
-                    )}
+                    )
+                    : value === undefined || total === undefined
+                      ? <>{metric.value === 'parcelsDelivered' && gap ? 'Delivered to DB — not reported' : gap ? GAP_LABELS[gap.cause] : 'No report for selected month'} {gap && <ReportLink gap={gap} />}</>
+                      : (
+                        <span
+                          className={valueClass === '' ? undefined : valueClass}
+                          title={valueTitle === '' ? undefined : valueTitle}
+                        >
+                          {metric.value === 'parcelsAcquired' ? 'Acquired ' : ''}{value.toLocaleString()} / {total.toLocaleString()}
+                          {metric.value === 'parcelsAcquired' && packageMetric?.parcelAcquisitionAsOf
+                            ? ` · as of ${packageMetric.parcelAcquisitionAsOf}`
+                            : ''}
+                        </span>
+                      )}
               </span>
             );
           })}

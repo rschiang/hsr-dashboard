@@ -4,6 +4,7 @@ import lineSliceAlong from '@turf/line-slice-along';
 import nearestPointOnLine from '@turf/nearest-point-on-line';
 import { lineString, point, type Feature, type LineString, type Position } from '@turf/helpers';
 import type { ConstructionPackage, CvsrPackageId, Segment, SegmentsArtifact, Snapshot } from '../src/data/types';
+import { CVSR_ROW_CROSSWALK } from '../src/data/cvsr-row-crosswalk';
 import { STRUCTURE_CROSSWALK, STRUCTURE_EVIDENCE } from '../src/data/structure-evidence';
 import { SOURCES } from '../src/data/sources';
 import { formatOfficialMp, stationToIosMile } from '../src/lib/mileposts';
@@ -51,6 +52,15 @@ const STRUCTURE_ALIASES: Record<string, string[]> = {
   'road 26 overcrossing': ['road 26 overhead'],
   'ventura avenue underpass': ['cesar chavez boulevard underpass', 'ventura street underpass'],
   'grade separation': ['overcrossing', 'overhead'],
+};
+
+/** Reviewed locations for projects that provide context but no HSR progress evidence. */
+export const CONTEXT_PROJECTS: Readonly<Record<string, {
+  segmentId: string;
+  scope: 'enabling-works' | 'third-party';
+}>> = {
+  '938432eb-f888-4450-ab52-e9a6b2141a4a': { segmentId: 'CP1:gap:1', scope: 'enabling-works' },
+  '84e93d1f-9100-4fff-8e61-f3bfec1425ab': { segmentId: 'CP1:gap:1', scope: 'third-party' },
 };
 
 function parseCompletion(value: string | null): number | null {
@@ -236,6 +246,15 @@ segments.push(...parsedCp4);
 segments.push({ ...makeGap('M2M', 0, 34, 0), label: 'Merced to Madera extension — civil construction not started', completion: 0, currentStatus: 'not_started' });
 segments.push({ ...makeGap('LGA', 152, 175, 0), label: 'Poplar Avenue to Bakersfield extension — civil construction not started', completion: 0, currentStatus: 'not_started' });
 segments.sort((a, b) => a.iosMileStart - b.iosMileStart || a.iosMileEnd - b.iosMileEnd);
+const northCp1Gap = segments.find((segment) => segment.id === 'CP1:gap:0');
+const herndonCp1Gap = segments.find((segment) => segment.id === 'CP1:gap:1');
+if (!northCp1Gap || !herndonCp1Gap) throw new Error('Expected both reviewed CP1 gaps');
+northCp1Gap.label = 'North of the first published ArcGIS CP1 row — TS1 places the CVY/CP1 equation at station 962039.57 (MP S 158); the layer’s first row starts at 964055';
+herndonCp1Gap.label = 'Herndon Avenue to Golden State Boulevard realignment — guideway not started';
+herndonCp1Gap.completion = 0;
+herndonCp1Gap.currentStatus = 'not_started';
+herndonCp1Gap.sourceId = 'cvsr';
+herndonCp1Gap.coveringCvsrRows = ['Viaduct 203 at SJR to Herndon Canal', 'Herndon Canal to Swift Ave'];
 
 const centerline = JSON.parse(await readFile('public/data/centerline.geojson', 'utf8')) as Feature<LineString>;
 const mileposts = JSON.parse(await readFile('public/data/mileposts.json', 'utf8')) as MilepostArtifact;
@@ -306,9 +325,13 @@ let inProgressStructures = 0;
 for (const feature of structures.features) {
   const globalId = feature.attributes.GlobalID.toLowerCase();
   const reviewedTargetId = STRUCTURE_CROSSWALK[globalId];
+  const contextProject = CONTEXT_PROJECTS[globalId];
   let target: Segment;
-  let locationMethod: 'crosswalk' | 'spatial' | 'package-only';
-  if (reviewedTargetId !== undefined) {
+  let locationMethod: 'crosswalk' | 'spatial' | 'package-only' | 'reviewed-context';
+  if (contextProject) {
+    target = segments.find((segment) => segment.id === contextProject.segmentId)!;
+    locationMethod = 'reviewed-context';
+  } else if (reviewedTargetId !== undefined) {
     target = segments.find((segment) => segment.id === reviewedTargetId)!;
     locationMethod = 'crosswalk';
   } else {
@@ -328,9 +351,12 @@ for (const feature of structures.features) {
     }
     const normalizedName = feature.attributes.name.toLowerCase();
     const aliases = [normalizedName, ...(STRUCTURE_ALIASES[normalizedName] ?? [])];
-    target = candidates.find((segment) => aliases.some((alias) => segment.label.toLowerCase().includes(alias)))
-      ?? candidates.filter((segment) => segment.kind === 'structure').sort((a, b) => (a.iosMileEnd - a.iosMileStart) - (b.iosMileEnd - b.iosMileStart))[0]
-      ?? candidates.sort((a, b) => (a.iosMileEnd - a.iosMileStart) - (b.iosMileEnd - b.iosMileStart))[0];
+    target = candidates.find((segment) => segment.kind !== 'no-data' && aliases.some((alias) => segment.label.toLowerCase().includes(alias)))
+      ?? candidates.filter((segment) => segment.kind === 'structure').sort((a, b) => (a.iosMileEnd - a.iosMileStart) - (b.iosMileEnd - b.iosMileStart))[0];
+    if (!target) {
+      target = candidates[0];
+      locationMethod = 'package-only';
+    }
   }
   target.structures.push({
     name: feature.attributes.name,
@@ -341,6 +367,7 @@ for (const feature of structures.features) {
     globalId,
     observedAt: metadata.fetchedAt,
     locationMethod,
+    ...(contextProject ? { contextScope: contextProject.scope } : {}),
   });
   if (locationMethod === 'crosswalk') {
     target.evidence.push({
@@ -356,8 +383,10 @@ for (const feature of structures.features) {
       quote: feature.attributes.status,
     });
   }
-  if (feature.attributes.status === 'Completed') completedStructures += 1;
-  else inProgressStructures += 1;
+  if (!contextProject) {
+    if (feature.attributes.status === 'Completed') completedStructures += 1;
+    else inProgressStructures += 1;
+  }
 }
 for (const segment of segments) {
   segment.currentStatus = resolveSegmentStatus(
@@ -366,8 +395,10 @@ for (const segment of segments) {
     { completion: segment.completion },
   ).status;
 }
-if (completedStructures !== 59 || inProgressStructures !== 29) {
-  throw new Error(`Structure status count changed: ${completedStructures} completed + ${inProgressStructures} in progress`);
+if (completedStructures !== 59 || inProgressStructures !== 27) {
+  throw new Error(
+    `Structure status count changed after excluding reviewed context projects ${Object.keys(CONTEXT_PROJECTS).join(', ')}: ${completedStructures} completed + ${inProgressStructures} in progress`,
+  );
 }
 
 const calibration = assignWeights(segments);
@@ -428,7 +459,8 @@ if (parsedSnapshotsRaw === null) {
   console.warn('data/raw/cvsr/parsed-snapshots.json absent; skipping the per-package CVSR cross-check');
 } else {
   const parsed = JSON.parse(parsedSnapshotsRaw) as { snapshots?: Snapshot[] };
-  const latest = (parsed.snapshots ?? [])
+  const allSnapshots = parsed.snapshots ?? [];
+  const latest = allSnapshots
     .filter((snapshot) => snapshot.tier === 2 && snapshot.perPackage !== undefined)
     .sort((a, b) => a.dataMonth!.localeCompare(b.dataMonth!))
     .at(-1);
@@ -451,8 +483,51 @@ if (parsedSnapshotsRaw === null) {
   if (Math.abs(equivalentTotal - cvsrTotalComplete) > 2) {
     throw new Error(`Earthwork-equivalent ${equivalentTotal.toFixed(2)} mi does not reconcile with CVSR ${latest.dataMonth} total ${cvsrTotalComplete.toFixed(2)} mi`);
   }
-  crossCheck = { cvsrDataMonth: latest.dataMonth!, perPackage };
-  console.log(`cross-check vs CVSR ${latest.dataMonth}: ${CVSR_PACKAGE_IDS.map((cp) => `${cp} ${equivalentByPackage[cp].toFixed(2)} vs ${perPackage[cp].cvsrMilesComplete}`).join('; ')}; total ${equivalentTotal.toFixed(2)} vs ${cvsrTotalComplete.toFixed(2)}`);
+
+  const unmatchedCvsrRows = latest.unmatchedCvsrRows ?? [];
+  const disagreements: NonNullable<SegmentsArtifact['crossCheck']>['disagreements'] = [];
+  const arcgisCompletion = new Map(segments.map((segment) => [segment.id, segment.completion]));
+  for (const evidence of allSnapshots.flatMap((snapshot) => snapshot.structureEvidence ?? [])) {
+    if (evidenceIds.has(evidence.id)) continue;
+    const segment = segments.find((candidate) => candidate.id === evidence.segmentId);
+    if (!segment) throw new Error(`CVSR evidence ${evidence.id} has no segment ${evidence.segmentId}`);
+    segment.evidence.push(evidence);
+    evidenceIds.add(evidence.id);
+  }
+  for (const [segmentId, observation] of Object.entries(latest.perSegment ?? {})) {
+    const segment = segments.find((candidate) => candidate.id === segmentId);
+    if (!segment) throw new Error(`CVSR observation has no segment ${segmentId}`);
+    const arcgis = arcgisCompletion.get(segmentId);
+    if (
+      typeof arcgis === 'number'
+      && typeof observation.completion === 'number'
+      && Math.abs(arcgis - observation.completion) > 0.005
+    ) {
+      disagreements.push({
+        segmentId,
+        arcgis,
+        cvsr: observation.completion,
+        cvsrMonth: latest.dataMonth!,
+        reportFile: observation.reportFile!,
+      });
+    }
+    segment.completion = observation.completion;
+    segment.sourceId = observation.sourceId;
+    segment.currentStatus = resolveSegmentStatus(segment, metadata.fetchedAt, observation).status;
+  }
+  const structureIds = new Set(segments.filter((segment) => segment.kind === 'structure').map((segment) => segment.id));
+  const crosswalkIds = new Set(Object.values(CVSR_ROW_CROSSWALK));
+  if (structureIds.size !== 35 || crosswalkIds.size !== 35 || [...structureIds].some((id) => !crosswalkIds.has(id))) {
+    throw new Error(`CVSR structure crosswalk does not cover all ${structureIds.size} structure segments`);
+  }
+  const matchedGuideways = Object.keys(latest.perSegment ?? {}).filter(
+    (id) => segments.find((segment) => segment.id === id)?.kind === 'guideway',
+  ).length;
+  if (matchedGuideways !== 49) throw new Error(`Expected 49 exact-label CVSR guideway matches, received ${matchedGuideways}`);
+  if (unmatchedCvsrRows.length !== 68) throw new Error(`Expected 68 unmatched CVSR rows, received ${unmatchedCvsrRows.length}`);
+  if (disagreements.length !== 6) throw new Error(`Expected 6 ArcGIS/CVSR disagreements, received ${disagreements.length}`);
+  crossCheck = { cvsrDataMonth: latest.dataMonth!, perPackage, unmatchedCvsrRows, disagreements };
+  console.log(`cross-check vs CVSR ${latest.dataMonth}: 35/35 structures, ${matchedGuideways} guideways, ${unmatchedCvsrRows.length} unmatched rows, ${disagreements.length} disagreements`);
 }
 
 const artifact: SegmentsArtifact = {

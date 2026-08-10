@@ -18,7 +18,16 @@ function observedSnapshot(date: string, segments: Segment[]): Snapshot {
     date: date.slice(0, 10),
     tier: 3,
     sourceId: 'arcgis_progress',
-    perSegment: Object.fromEntries(segments.map((segment) => [segment.id, { completion: segment.completion }])),
+    perSegment: Object.fromEntries(segments.map((segment) => [
+      segment.id,
+      {
+        completion: segment.completion,
+        sourceId: segment.sourceId === 'cvsr' ? 'cvsr' : 'arcgis_progress',
+        ...(segment.sourceId === 'cvsr' && (segment.currentStatus === 'structure_complete' || segment.currentStatus === 'guideway_complete')
+          ? { table: 'completed' as const }
+          : {}),
+      },
+    ])),
   };
 }
 

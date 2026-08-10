@@ -108,11 +108,49 @@ test('only segments present in the snapshot read from it', () => {
     date: '2022-06-01',
     tier: 3,
     sourceId: 'arcgis_progress',
-    perSegment: { 'CP1:200': { completion: 0.31 } },
+    perSegment: { 'CP1:200': { completion: 0.31, sourceId: 'arcgis_progress' } },
   };
 
   assert.deepEqual(selectedCompletions([observed, missing], snapshot), {
     'CP1:200': 0.31,
     'CP1:201': null,
   });
+});
+
+test('published completion without schedule fields is not hatched', () => {
+  assert.equal(
+    resolveSegmentStatus(segment({ kind: 'guideway', completion: 0.68 }), '2024-01-01').status,
+    'under_construction',
+  );
+  assert.equal(
+    resolveSegmentStatus(segment({ kind: 'guideway', completion: null }), '2024-01-01').status,
+    'no_data',
+  );
+});
+
+test('uses the latest per-segment observation across snapshot tiers', () => {
+  const subject = segment({ kind: 'structure' });
+  const history: Snapshot[] = [
+    {
+      date: '2026-03-01',
+      dataMonth: '2026-03',
+      tier: 2,
+      sourceId: 'cvsr',
+      perSegment: { [subject.id]: { completion: 0.4, sourceId: 'cvsr', table: 'underway' } },
+    },
+    {
+      date: '2026-04-01',
+      tier: 3,
+      sourceId: 'arcgis_progress',
+      perSegment: { 'CP1:other': { completion: 0.8, sourceId: 'arcgis_progress' } },
+    },
+  ];
+  assert.equal(deriveStatuses(history, [subject], '2026-04-01').statuses[subject.id], 'under_construction');
+});
+
+test('a completed CVSR table row resolves categorically even below 100 percent', () => {
+  assert.equal(
+    resolveSegmentStatus(segment(), '2026-04-01', { completion: 0.96, table: 'completed' }).status,
+    'structure_complete',
+  );
 });

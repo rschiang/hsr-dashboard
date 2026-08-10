@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState, useSyncExternalStore } from 'react';
+import { useMemo, useRef, useState, useSyncExternalStore, type SVGProps } from 'react';
 import { scaleLinear } from 'd3-scale';
 import type { AlignmentStatus, Segment, StructureEvidence } from '../data/types';
 import { SOURCES } from '../data/sources';
@@ -51,6 +51,7 @@ export function StripChart({
   date,
   evidence,
   selectedCompletionBySegment,
+  disagreements,
 }: {
   segments: Segment[];
   statuses: Record<string, AlignmentStatus>;
@@ -63,6 +64,7 @@ export function StripChart({
   date: string;
   evidence: Record<string, StructureEvidence | undefined>;
   selectedCompletionBySegment: Record<string, number | null>;
+  disagreements: Array<{ segmentId: string; cvsrMonth: string }>;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const width = Math.max(540, useElementWidth(containerRef));
@@ -98,9 +100,61 @@ export function StripChart({
   const hovered = hoveredId ? segments.find((segment) => segment.id === hoveredId) : null;
   const tooltipEvidence = tooltip ? evidence[tooltip.segment.id] : undefined;
   const tooltipCompletion = tooltip ? selectedCompletionBySegment[tooltip.segment.id] : null;
+  const tooltipDisagrees = tooltip
+    ? disagreements.some(
+        (item) => item.segmentId === tooltip.segment.id && date.slice(0, 7) >= item.cvsrMonth,
+      )
+    : false;
   const axisTicks = axisMode === 'distance'
     ? Array.from({ length: 18 }, (_, index) => index === 17 ? 171 : index * 10)
     : Array.from({ length: 6 }, (_, index) => index / 5);
+
+  const interactionProps = (segment: Segment, index: number): SVGProps<SVGRectElement> => ({
+    role: 'listitem',
+    tabIndex: focusedIndex === index ? 0 : -1,
+    'aria-label': `${segment.label}, ${segment.cp}, ${STATUS_LABELS[statuses[segment.id] ?? segment.currentStatus]}, ios mile ${segment.iosMileStart.toFixed(1)} to ${segment.iosMileEnd.toFixed(1)}`,
+    onPointerEnter: (event) => {
+      onHover(segment.id);
+      const bounds = event.currentTarget.ownerSVGElement!.getBoundingClientRect();
+      setTooltip({ segment, x: event.clientX - bounds.left, y: event.clientY - bounds.top });
+    },
+    onPointerMove: (event) => {
+      const bounds = event.currentTarget.ownerSVGElement!.getBoundingClientRect();
+      setTooltip({ segment, x: event.clientX - bounds.left, y: event.clientY - bounds.top });
+    },
+    onPointerLeave: () => { onHover(null); setTooltip(null); },
+    onClick: () => onSelect(segment.id),
+    onFocus: (event) => {
+      onHover(segment.id);
+      const bounds = event.currentTarget.ownerSVGElement!.getBoundingClientRect();
+      const rect = event.currentTarget.getBoundingClientRect();
+      setTooltip({
+        segment,
+        x: rect.left + rect.width / 2 - bounds.left,
+        y: rect.top + rect.height / 2 - bounds.top,
+      });
+    },
+    onBlur: () => { onHover(null); setTooltip(null); },
+    onKeyDown: (event) => {
+      const last = segments.length - 1;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft' || event.key === 'Home' || event.key === 'End') {
+        event.preventDefault();
+        const next = event.key === 'ArrowRight'
+          ? Math.min(last, index + 1)
+          : event.key === 'ArrowLeft'
+            ? Math.max(0, index - 1)
+            : event.key === 'Home' ? 0 : last;
+        setFocusedIndex(next);
+        rectRefs.current[next]?.focus();
+      } else if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        onSelect(segment.id);
+      } else if (event.key === 'Escape') {
+        onSelect(null);
+        setTooltip(null);
+      }
+    },
+  });
 
   return (
     <section className="strip-section" aria-labelledby="strip-heading">
@@ -138,67 +192,45 @@ export function StripChart({
               const position = weightedPositions.get(segment.id)!;
               const x = axisMode === 'distance' ? distanceScale(segment.iosMileStart) : difficultyScale(position.start);
               const end = axisMode === 'distance' ? distanceScale(segment.iosMileEnd) : difficultyScale(position.end);
+              const trueWidth = Math.max(0, end - x);
               const status = statuses[segment.id] ?? segment.currentStatus;
+              const fill = status === 'no_data' ? 'url(#no-data-hatch)' : STATUS_COLORS[status];
+              const className = `strip-segment ${hoveredId === segment.id ? 'hovered' : ''} ${selectedId === segment.id ? 'selected' : ''}`;
+              if (trueWidth < 1.5) {
+                return (
+                  <g key={segment.id}>
+                    <line
+                      x1={x}
+                      x2={end}
+                      y1="46"
+                      y2="46"
+                      stroke={status === 'no_data' ? STATUS_COLORS.no_data : STATUS_COLORS[status]}
+                      strokeWidth="4"
+                    />
+                    <rect
+                      ref={(node) => { rectRefs.current[index] = node; }}
+                      {...interactionProps(segment, index)}
+                      x={x - 3}
+                      y="42"
+                      width="6"
+                      height="8"
+                      fill="transparent"
+                      className={className}
+                    />
+                  </g>
+                );
+              }
               return (
                 <rect
                   key={segment.id}
                   ref={(node) => { rectRefs.current[index] = node; }}
-                  role="listitem"
-                  tabIndex={focusedIndex === index ? 0 : -1}
-                  aria-label={`${segment.label}, ${segment.cp}, ${STATUS_LABELS[status]}, ios mile ${segment.iosMileStart.toFixed(1)} to ${segment.iosMileEnd.toFixed(1)}`}
+                  {...interactionProps(segment, index)}
                   x={x}
                   y="48"
-                  width={Math.max(0.75, end - x)}
+                  width={trueWidth}
                   height="55"
-                  fill={status === 'no_data' ? 'url(#no-data-hatch)' : STATUS_COLORS[status]}
-                  className={`strip-segment ${hoveredId === segment.id ? 'hovered' : ''} ${selectedId === segment.id ? 'selected' : ''}`}
-                  onPointerEnter={(event) => {
-                    onHover(segment.id);
-                    const bounds = event.currentTarget.ownerSVGElement!.getBoundingClientRect();
-                    setTooltip({ segment, x: event.clientX - bounds.left, y: event.clientY - bounds.top });
-                  }}
-                  onPointerMove={(event) => {
-                    const bounds = event.currentTarget.ownerSVGElement!.getBoundingClientRect();
-                    setTooltip({ segment, x: event.clientX - bounds.left, y: event.clientY - bounds.top });
-                  }}
-                  onPointerLeave={() => { onHover(null); setTooltip(null); }}
-                  onClick={() => onSelect(segment.id)}
-                  onFocus={(event) => {
-                    onHover(segment.id);
-                    // Anchor the tooltip at the rect's centre in the same coordinate space the
-                    // pointer handlers use: CSS pixels relative to the SVG's bounding rect.
-                    const bounds = event.currentTarget.ownerSVGElement!.getBoundingClientRect();
-                    const rect = event.currentTarget.getBoundingClientRect();
-                    setTooltip({
-                      segment,
-                      x: rect.left + rect.width / 2 - bounds.left,
-                      y: rect.top + rect.height / 2 - bounds.top,
-                    });
-                  }}
-                  onBlur={() => { onHover(null); setTooltip(null); }}
-                  onKeyDown={(event) => {
-                    const last = segments.length - 1;
-                    if (event.key === 'ArrowRight' || event.key === 'ArrowLeft' || event.key === 'Home' || event.key === 'End') {
-                      event.preventDefault();
-                      const next = event.key === 'ArrowRight'
-                        ? Math.min(last, index + 1)
-                        : event.key === 'ArrowLeft'
-                          ? Math.max(0, index - 1)
-                          : event.key === 'Home' ? 0 : last;
-                      setFocusedIndex(next);
-                      rectRefs.current[next]?.focus();
-                      return;
-                    }
-                    if (event.key === 'Enter' || event.key === ' ') {
-                      event.preventDefault();
-                      onSelect(segment.id);
-                      return;
-                    }
-                    if (event.key === 'Escape') {
-                      onSelect(null);
-                      setTooltip(null);
-                    }
-                  }}
+                  fill={fill}
+                  className={className}
                 />
               );
             })}
@@ -248,7 +280,7 @@ export function StripChart({
             <span>{tooltip.segment.cp} · {STATUS_LABELS[statuses[tooltip.segment.id] ?? tooltip.segment.currentStatus]}</span>
             <span>Station {tooltip.segment.stationStart?.toLocaleString() ?? 'not published'}–{tooltip.segment.stationEnd?.toLocaleString() ?? 'not published'} ft <SourceLink sourceId={tooltip.segment.sourceId} /></span>
             <span>{tooltip.segment.iosMileStart.toFixed(2)}–{tooltip.segment.iosMileEnd.toFixed(2)} ios mi · {tooltip.segment.officialMpStart}–{tooltip.segment.officialMpEnd} <SourceLink sourceId="ts1_alignment" /></span>
-            <span>Earthwork completion at selected date {tooltipCompletion === null || tooltipCompletion === undefined ? 'not reported' : `${Math.round(tooltipCompletion * 100)}%`} <SourceLink sourceId="arcgis_progress" /></span>
+            <span>Earthwork completion at selected date {tooltipCompletion === null || tooltipCompletion === undefined ? 'not reported' : `${Math.round(tooltipCompletion * 100)}%`}{tooltipDisagrees ? ' · sources disagree' : ''} <SourceLink sourceId={tooltip.segment.sourceId === 'cvsr' ? 'cvsr' : 'arcgis_progress'} /></span>
             {/* Plain text only: `.segment-tooltip` is `pointer-events: none`, so anchors here
                 are unclickable by mouse and unreachable by keyboard. The SegmentDetail panel
                 below the strip carries the working evidence and structure links. */}
@@ -260,7 +292,7 @@ export function StripChart({
         )}
       </div>
       {axisMode === 'difficulty' && (
-        <p className="model-caption">Segment widths are scaled by an unofficial difficulty model. Numeric earthwork completion contributes continuously; categorical Structure complete contributes the full structure weight, while in-progress structures contribute no invented percentage. Earthwork quantities are official CAHSRA data. Package totals come from published per-package contract values plus the 2026 Business Plan Table B.1 extension totals; both the structure type factors and the structure/guideway split are this dashboard’s editorial judgment with no published basis. Spans with no alignment-resolved data carry no modelled effort and render as hairlines. CP1 publishes structure rows inside their guideway rows, so about 1.6 mi of corridor appears in both. <SourceLink sourceId="arcgis_progress" /> <SourceLink sourceId="cvsr" /> <SourceLink sourceId="business_plan_2026" /></p>
+        <p className="model-caption">Segment widths are scaled by an unofficial difficulty model. Numeric earthwork completion contributes continuously; categorical Structure complete contributes the full structure weight, while in-progress structures contribute no invented percentage. CVSR row tables take precedence where published because they are dated reports; ArcGIS fills the remaining rows. Structures shorter than the pixel grid are drawn as notches above the band at their true position and are not drawn to scale. Package totals come from published per-package contract values plus the 2026 Business Plan Table B.1 extension totals; both the structure type factors and the structure/guideway split are this dashboard’s editorial judgment with no published basis. CP1 publishes structure rows inside their guideway rows, so about 1.6 mi of corridor appears in both. <SourceLink sourceId="arcgis_progress" /> <SourceLink sourceId="cvsr" /> <SourceLink sourceId="business_plan_2026" /></p>
       )}
     </section>
   );

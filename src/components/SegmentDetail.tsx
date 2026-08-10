@@ -13,6 +13,7 @@ export function SegmentDetail({
   status,
   evidence,
   completion,
+  disagreement,
   date,
   onClear,
 }: {
@@ -20,6 +21,7 @@ export function SegmentDetail({
   status: AlignmentStatus | undefined;
   evidence: StructureEvidence | undefined;
   completion: number | null;
+  disagreement?: { arcgis: number; cvsr: number; cvsrMonth: string; reportFile: string };
   date: string;
   onClear: () => void;
 }) {
@@ -51,11 +53,22 @@ export function SegmentDetail({
               {' '}<SourceLink sourceId="ts1_alignment" />
             </dd>
 
-            <dt>Earthwork at selected date</dt>
-            <dd>
-              {completion === null ? 'not reported' : `${Math.round(completion * 100)}%`}
-              {' '}<SourceLink sourceId="arcgis_progress" />
-            </dd>
+            {disagreement && date.slice(0, 7) >= disagreement.cvsrMonth ? (
+              <>
+                <dt>Earthwork · ArcGIS</dt>
+                <dd>{Math.round(disagreement.arcgis * 100)}% <SourceLink sourceId="arcgis_progress" /></dd>
+                <dt>Earthwork · CVSR</dt>
+                <dd>{Math.round(disagreement.cvsr * 100)}% · April 2026 data <SourceLink sourceId="cvsr" /></dd>
+              </>
+            ) : (
+              <>
+                <dt>Earthwork at selected date</dt>
+                <dd>
+                  {completion === null ? 'not reported' : `${Math.round(completion * 100)}%`}
+                  {' '}<SourceLink sourceId={segment.sourceId === 'cvsr' ? 'cvsr' : 'arcgis_progress'} />
+                </dd>
+              </>
+            )}
 
             <dt>Difficulty share</dt>
             <dd>{(segment.weightShare * 100).toFixed(2)}% <SourceLink sourceId="business_plan_2026" /></dd>

@@ -5,8 +5,12 @@ import { buildCvsrInventory } from './cvsr-inventory';
 import {
   normalizeDataMonth,
   parseDataMonth,
+  parseParcelAcquisitionAudit,
+  parseParcelAcquisitionPair,
   parseParcelPair,
+  parseRailroadParcelPair,
   parseReportMonth,
+  parseRowProgress,
   parseUtilityPair,
   parseUtilityTypeStatusPair,
   validateCountPair,
@@ -54,6 +58,65 @@ test('returns null rather than guessing a publication month', () => {
   assert.equal(parseReportMonth('Central Valley Status Report'), null);
   assert.equal(parseReportMonth('Spring 2024 Report (data through March 2024)'), null);
   assert.equal(parseReportMonth(''), null);
+});
+
+test('parses row progress decimals, dash variants, Open, and completed rows without monthly values', () => {
+  const rows = parseRowProgress(`
+    CP 1 – Construction Progress
+    Structures - Underway # # #
+    Kings River to Dover Ave Sep-20 May-26 98.0% 0%
+    Herndon HST Bridge Aug-26 Feb-27 0% –
+    Fresno Underpass Apr-26 Feb-27 0% -
+    Report Notes
+    CP 1 – Construction Progress
+    Structures - Completed
+    Golden State Blvd Jan-20 Apr-22 Open
+    Location Start Finish Complete %
+  `);
+  assert.deepEqual(rows.map(({ completion, monthlyProgress }) => [completion, monthlyProgress]), [
+    [0.98, 0],
+    [0, null],
+    [0, null],
+    [null, null],
+  ]);
+});
+
+test('carries the package across a bare continued row table heading', () => {
+  const rows = parseRowProgress(`
+    CP 2-3 – Construction Progress
+    Structures - Underway
+    Conejo Ave Apr-20 Apr-26 96% 2%
+    Report Notes
+    Structures - Underway (cont'd) # # #
+    Alpaugh Bridge Oct-24 Jul-26 32% 2%
+  `);
+  assert.equal(rows.length, 2);
+  assert.ok(rows.every((row) => row.cp === 'CP2-3' && row.kind === 'structure'));
+});
+
+test('uses the reviewed footnote set instead of guessing numeric location suffixes', () => {
+  const [row] = parseRowProgress(`
+    April 2026 Data
+    CP 2-3 – Construction Progress
+    Structures - Completed
+    Ave 241 Jun-23 Aug-24 90%
+  `);
+  assert.equal(row.location, 'Ave 24');
+  assert.equal(row.footnote, 'substantially_complete');
+});
+
+test('rejects header and legend lines that do not match the row grammar', () => {
+  const rows = parseRowProgress(`
+    CP 1 – Construction Progress
+    Guideways - Underway
+    Location Start Finish Complete %
+    2026 2027
+    Q1 Q2 Q3 Q4
+    ■ Not Started ■ Completed ■ Underway
+    Herndon Canal to Swift Ave Jun-26 Sep-26 0% –
+  `);
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].location, 'Herndon Canal to Swift Ave');
 });
 
 test('maps utility values by semantic headers, including reordered columns', () => {
@@ -132,6 +195,7 @@ test('reconciles utility type/status details with the package summary', () => {
   assert.deepEqual(parseUtilityTypeStatusPair(text, 'CP1'), {
     delivered: 80,
     total: 100,
+
     remaining: 20,
   });
   assert.deepEqual(parseUtilityPair(text, 'CP2-3'), { delivered: 190, total: 200 });
@@ -143,6 +207,91 @@ test('reconciles utility type/status details with the package summary', () => {
     () => parseUtilityPair(mismatch, 'CP1'),
     /type\/status detail 79\/100 does not match package summary 80\/100/,
   );
+});
+test('derives the audited 2019 acquisition layout and preserves the December re-baseline', () => {
+  const september = `
+    CP 1-4 – ROW Parcels to be Acquired and Remaining
+    Total Needed Total Acquired Remaining Optimized Parcels Acquired in September Total Remaining
+    CP 1 932 827 105 4 0 101
+    CP 2-3 854 547 307 4 12 291
+    CP 4 223 166 57 0 0 57
+    Notes:
+  `;
+  assert.deepEqual(parseParcelAcquisitionPair(september, 'CP1', '2019-09'), {
+    delivered: 827,
+    total: 928,
+    remaining: 101,
+    asOf: '2019-09-30',
+  });
+  const december = september.replace('932 827 105 4 0 101', '928 827 101 20 -23 104');
+  assert.deepEqual(parseParcelAcquisitionPair(december, 'CP1', '2019-12'), {
+    delivered: 804,
+    total: 908,
+    remaining: 104,
+    asOf: '2019-12-31',
+  });
+});
+
+test('keeps the exceptional January acquisition table as a March 9 audit', () => {
+  const text = `
+    CP 1-4 ROW Parcel Acquisition Summary
+    November 30, 2019 March 9, 2020
+    CP 1 919 827 101 -2 7 92
+    CP 2-3 956 573 277 118 12 383
+    CP 4 263 172 51 40 0 91
+    CP 1-4 ROW Railroad Parcels to be Acquired and Remaining
+  `;
+  assert.equal(parseParcelAcquisitionPair(text, 'CP1', '2020-01'), null);
+  assert.deepEqual(parseParcelAcquisitionAudit(text, 'CP1'), {
+    totalNeeded: 919,
+    priorAcquired: 827,
+    modifications: -2,
+    acquired: 7,
+    remaining: 92,
+    asOf: '2020-03-09',
+  });
+});
+
+test('parses acquisition independently from delivery and railroad parcels', () => {
+  const text = `
+    CP 1-4 – ROW Parcel Acquisition Summary
+    March 9, 2020
+    CP 1 919 147 1066 827 1 828
+    CP 2-3 956 55 1011 573 31 604
+    CP 4 263 -10 253 172 -12 160
+    CP 1-4 – ROW Acquired but Not Delivered to Design-Builder (DB)
+    CP 1-4 – Real Property/Right-of-Way (ROW) Railroad
+    Railroad Parcels to be Delivered Delivered to Date Total Railroad Parcels
+    CP 1 9 80 89
+    CP 2-3 3 55 58
+    CP 4 0 29 29
+    Report Notes
+  `;
+  assert.deepEqual(parseParcelAcquisitionPair(text, 'CP1', '2020-02'), {
+    delivered: 828,
+    total: 1066,
+    asOf: '2020-03-09',
+  });
+  assert.equal(parseParcelPair(text, 'CP1'), null);
+  assert.deepEqual(parseRailroadParcelPair(text, 'CP2-3'), {
+    delivered: 55,
+    total: 58,
+    remaining: 3,
+  });
+});
+
+test('derives 2019-08 delivery with the reviewed CP4 base-column exception', () => {
+  const text = `
+    CP 1-4 – ROW Parcels Acquired by Month
+    Additional parcels in August
+    CP1 893 54 839 827 12 93 105
+    CP2-3 756 42 714 547 167 140 307
+    CP4 210 10 200 166 44 13 57
+    Central Valley Status Report
+  `;
+  assert.deepEqual(parseParcelPair(text, 'CP1'), { delivered: 827, total: 932, remaining: 105 });
+  assert.deepEqual(parseParcelPair(text, 'CP2-3'), { delivered: 547, total: 854, remaining: 307 });
+  assert.deepEqual(parseParcelPair(text, 'CP4'), { delivered: 166, total: 223, remaining: 57 });
 });
 
 test('parses current parcel delivery tables by labelled column meaning', () => {
@@ -379,7 +528,7 @@ test('classifies the audited utility omission boundary without inventing later g
   assert.deepEqual(utilityGaps[0].packages, ['CP1', 'CP2-3', 'CP4']);
 });
 
-test('records the acquisition-only months as a source omission, not a parser failure', () => {
+test('records acquisition-only months as a related delivery measure, not a parser failure', () => {
   const inventory = buildCvsrInventory({
     snapshots: [],
     localFiles: new Set(),
@@ -391,9 +540,9 @@ test('records the acquisition-only months as a source omission, not a parser fai
     coverageStart: '2019-03',
     coverageEnd: '2020-08',
   });
-  const parcelGaps = inventory.gaps.filter((gap) => gap.metric === 'parcels');
+  const parcelGaps = inventory.gaps.filter((gap) => gap.metric === 'parcel_delivery');
   assert.deepEqual(parcelGaps.map((gap) => gap.month), ['2019-09', '2019-10', '2019-11', '2019-12', '2020-01']);
-  assert.equal(parcelGaps.every((gap) => gap.cause === 'source_not_reported'), true);
+  assert.equal(parcelGaps.every((gap) => gap.cause === 'related_measure_only'), true);
   assert.deepEqual(parcelGaps[0].packages, ['CP1', 'CP2-3', 'CP4']);
 });
 

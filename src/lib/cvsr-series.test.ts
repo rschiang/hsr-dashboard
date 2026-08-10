@@ -66,7 +66,7 @@ test('tier-3 observations never contribute points', () => {
     date: '2023-04-01',
     tier: 3,
     sourceId: 'arcgis_progress',
-    perSegment: { 'CP1:1': { completion: 1 } },
+    perSegment: { 'CP1:1': { completion: 1, sourceId: 'arcgis_progress' } },
   };
 
   assert.deepEqual(

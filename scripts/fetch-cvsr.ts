@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { basename } from 'node:path';
 import { PDFParse } from 'pdf-parse';
+import { CVSR_ROW_CROSSWALK } from '../src/data/cvsr-row-crosswalk';
 import type {
   CvsrInventory,
   CvsrReportDiagnostic,
@@ -12,9 +13,13 @@ import {
   CVSR_PACKAGES,
   normalizeCvsrText,
   parseDataMonth,
+  parseParcelAcquisitionAudit,
+  parseParcelAcquisitionPair,
   parseParcelPair,
   parseProgressMetrics,
+  parseRailroadParcelPair,
   parseReportMonth,
+  parseRowProgress,
   parseUtilityPair,
   type CvsrPackage,
 } from './lib/cvsr-parser';
@@ -217,11 +222,6 @@ const LEGACY_PARCELS: Readonly<Record<string, Record<CvsrPackage, {
     'CP2-3': { delivered: 540, total: 756 },
     CP4: { delivered: 165, total: 210 },
   },
-  'brdmtg_101519_FA_Central_Valley_Status_Report.pdf': {
-    CP1: { delivered: 827, total: 932 },
-    'CP2-3': { delivered: 547, total: 854 },
-    CP4: { delivered: 166, total: 223 },
-  },
 };
 
 
@@ -355,7 +355,11 @@ function reportMetadata(file: string): ReviewedCvsrReport | undefined {
 }
 
 
-async function parsePdf(path: string, reportUrls: ReportUrlRegistry): Promise<Snapshot> {
+async function parsePdf(
+  path: string,
+  reportUrls: ReportUrlRegistry,
+  guidewayByLabel: ReadonlyMap<string, string>,
+): Promise<Snapshot> {
   const parser = new PDFParse({ data: await readFile(path) });
   let text: string;
   try {
@@ -367,6 +371,7 @@ async function parsePdf(path: string, reportUrls: ReportUrlRegistry): Promise<Sn
   const reportFile = basename(path);
   const dataMonth = parseDataMonth(text, reportFile, LEGACY_DATES);
   const report = reportMetadata(reportFile);
+  const reportUrl = report?.reportUrl ?? reportUrls[reportFile]?.url;
   const manualProgress = LEGACY_PROGRESS[reportFile];
   const perPackage = (manualProgress
     ? Object.fromEntries(
@@ -376,6 +381,71 @@ async function parsePdf(path: string, reportUrls: ReportUrlRegistry): Promise<Sn
         ]),
       )
     : parseProgressMetrics(text, dataMonth)) as Record<CvsrPackage, PackageMetrics>;
+  const rowProgress = parseRowProgress(text, reportFile);
+  const perSegment: NonNullable<Snapshot['perSegment']> = {};
+  const unmatchedRows: typeof rowProgress = [];
+  for (const row of rowProgress) {
+    const segmentId = row.kind === 'structure'
+      ? CVSR_ROW_CROSSWALK[row.location]
+      : row.location === 'Herndon Canal to Swift Ave'
+        ? 'CP1:gap:1'
+        : guidewayByLabel.get(row.location);
+    if (!segmentId) {
+      unmatchedRows.push(row);
+      continue;
+    }
+    if (perSegment[segmentId]) {
+      throw new Error(`${reportFile}: multiple CVSR rows resolve to ${segmentId}`);
+    }
+    perSegment[segmentId] = {
+      completion: row.completion,
+      sourceId: 'cvsr',
+      reportFile,
+      ...(reportUrl ? { reportUrl } : {}),
+      dataMonth,
+      scheduleStart: row.start,
+      scheduleFinish: row.finish,
+      table: row.table,
+    };
+  }
+  if (dataMonth === '2026-04' && rowProgress.length > 0) {
+    const resolvedStructures = rowProgress.filter(
+      (row) => row.kind === 'structure' && CVSR_ROW_CROSSWALK[row.location],
+    ).length;
+    if (resolvedStructures !== 35) {
+      throw new Error(`${reportFile}: resolved ${resolvedStructures} of 35 structure rows`);
+    }
+  }
+  const structureEvidence = rowProgress.flatMap((row) => {
+    const segmentId = row.kind === 'structure'
+      ? CVSR_ROW_CROSSWALK[row.location]
+      : row.location === 'Herndon Canal to Swift Ave'
+        ? 'CP1:gap:1'
+        : guidewayByLabel.get(row.location);
+    if (
+      !segmentId
+      || row.table !== 'completed'
+      || row.finish > dataMonth
+      || (row.completion !== 1 && row.footnote !== 'substantially_complete')
+      || row.footnote === 'partially_open'
+      || !reportUrl
+    ) return [];
+    const slug = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    const quote = row.quote;
+    return [{
+      id: `cvsr-row-${slug(reportFile.replace(/\.pdf$/i, ''))}-${slug(row.location)}`,
+      segmentId,
+      claim: row.footnote === 'substantially_complete' ? 'substantially_complete' as const : 'completed' as const,
+      date: row.finish,
+      datePrecision: 'month' as const,
+      label: row.location,
+      sourceTitle: 'Central Valley Status Report',
+      sourceUrl: reportUrl,
+      reportFile,
+      sourceId: 'cvsr' as const,
+      quote,
+    }];
+  });
 
   for (const cp of CVSR_PACKAGES) {
     if (dataMonth >= '2020-08') {
@@ -391,6 +461,19 @@ async function parsePdf(path: string, reportUrls: ReportUrlRegistry): Promise<Sn
       perPackage[cp].parcelsDelivered = parcels.delivered;
       perPackage[cp].parcelsTotal = parcels.total;
       if (transcribedParcels) (perPackage[cp].transcribedFields ??= []).push('parcels');
+    }
+    const acquisition = parseParcelAcquisitionPair(text, cp, dataMonth);
+    if (acquisition) {
+      perPackage[cp].parcelsAcquired = acquisition.delivered;
+      perPackage[cp].parcelsAcquisitionTotal = acquisition.total;
+      perPackage[cp].parcelAcquisitionAsOf = acquisition.asOf;
+    }
+    const acquisitionAudit = parseParcelAcquisitionAudit(text, cp);
+    if (acquisitionAudit) perPackage[cp].acquisitionAudit = acquisitionAudit;
+    const railroad = parseRailroadParcelPair(text, cp);
+    if (railroad) {
+      perPackage[cp].railroadParcelsAcquired = railroad.delivered;
+      perPackage[cp].railroadParcelsTotal = railroad.total;
     }
   }
 
@@ -420,17 +503,20 @@ async function parsePdf(path: string, reportUrls: ReportUrlRegistry): Promise<Sn
     tier: 2,
     sourceId: 'cvsr',
     reportFile,
-    // Reviewed metadata wins over the resolver registry: the archived May 2023
-    // capture must keep its Wayback URL and its overwritten original.
     ...(report
       ? {
           reportUrl: report.reportUrl,
           ...(report.originalReportUrl ? { originalReportUrl: report.originalReportUrl } : {}),
         }
-      : reportUrls[reportFile]
-        ? { reportUrl: reportUrls[reportFile].url }
+      : reportUrl
+        ? { reportUrl }
         : {}),
     perPackage,
+    ...(Object.keys(perSegment).length > 0 ? { perSegment } : {}),
+    ...(structureEvidence.length > 0 ? { structureEvidence } : {}),
+    ...(unmatchedRows.length > 0
+      ? { unmatchedCvsrRows: unmatchedRows.map(({ cp, kind, location }) => ({ cp, kind, location })) }
+      : {}),
     aggregate,
   };
 }
@@ -438,6 +524,16 @@ async function parsePdf(path: string, reportUrls: ReportUrlRegistry): Promise<Sn
 async function parseLocalPdfs(): Promise<void> {
   await mkdir(DIRECTORY, { recursive: true });
   const reportUrls = await loadReportUrls();
+  const arcgis = JSON.parse(await readFile('data/raw/arcgis/progress.json', 'utf8')) as {
+    features: Array<{ attributes: { OBJECTID: number; Section: string; Limits: string | null; StructureType: string | null } }>;
+  };
+  const guidewayByLabel = new Map<string, string>();
+  for (const { attributes } of arcgis.features) {
+    if (attributes.StructureType?.trim().toLowerCase() !== 'guideway' || !attributes.Limits) continue;
+    const label = attributes.Limits.trim();
+    if (guidewayByLabel.has(label)) throw new Error(`Duplicate ArcGIS guideway label: ${label}`);
+    guidewayByLabel.set(label, `${attributes.Section}:${attributes.OBJECTID}`);
+  }
   const files = (await readdir(DIRECTORY)).filter((file) => file.toLowerCase().endsWith('.pdf')).sort();
   const candidates = files.filter((file) => CVSR_CANDIDATE.test(file));
   const alternativeFiles = files.filter((file) => !candidates.includes(file));
@@ -450,7 +546,7 @@ async function parseLocalPdfs(): Promise<void> {
   const parseFailures: CvsrParseFailure[] = [];
   for (const file of candidates) {
     try {
-      const snapshot = await parsePdf(`${DIRECTORY}/${file}`, reportUrls);
+      const snapshot = await parsePdf(`${DIRECTORY}/${file}`, reportUrls, guidewayByLabel);
       const existing = snapshotsByDate.get(snapshot.date);
       if (existing) {
         const existingPayload = JSON.stringify({ perPackage: existing.perPackage, aggregate: existing.aggregate });

@@ -22,13 +22,13 @@ A date scrubber replays the available history. The strip can use either physical
 - Construction phase by alignment segment: not started, preconstruction, under construction, structure complete, guideway complete, track laid, systems installed, or no data.
 - Official IOS distance and subdivision mileposts (`C`, `S`, and `D`).
 - Construction-package boundaries, stations, named structures, station ranges, earthwork completion, dated structure evidence, and source links.
-- Package-level structures, guideway miles, ROW parcels, and utility relocations reported in historical CVSR PDFs.
+- Package-level structures, guideway miles, parcel acquisition, delivery to the design-builder, railroad parcel acquisition, and utility relocations reported in historical CVSR PDFs.
 - Distance-proportional and difficulty-proportional strip widths.
 - Linked hover and selection between the strip chart and map.
 
-ROW parcels and utilities are only published at construction-package granularity. They are therefore shown as package summary bands and are never painted onto individual miles.
+ROW and utilities remain at construction-package granularity and are never painted onto individual miles. Since the March-2026-data report, the CVSR also publishes per-row structure and guideway progress; the dashboard reads those rows as segment-level numeric observations.
 
-Dated primary-source evidence can resolve a named structure to under construction or structure complete even when the ArcGIS progress layer publishes no numeric completion. The raw percentage remains unknown; categorical evidence never manufactures a percentage.
+CVSR row tables are numeric Authority observations and can supply a published percentage. News releases and narrative CVSR quotes remain categorical evidence: they can resolve a named structure to under construction or structure complete but never manufacture a missing percentage.
 
 ## Data and provenance
 
@@ -41,7 +41,7 @@ Primary inputs:
 - **CAHSRA ArcGIS alignment layer:** M-aware route geometry.
 - **BuildHSR Guideways Construction Progress:** station-resolved guideway and structure progress.
 - **Closures and Detours Public:** named structure locations and current statuses.
-- **Central Valley Status Reports:** historical package-level structures, guideway, utilities, and ROW metrics.
+- **Central Valley Status Reports:** historical package metrics and, from March 2026 data onward, per-row structure and guideway observations.
 - **2026 Final Business Plan:** extension costs used in difficulty-model calibration.
 
 The citation registry lives in [`src/data/sources.ts`](src/data/sources.ts). Numeric claims in the UI resolve through that registry.
@@ -52,10 +52,12 @@ Reviewed dated structure claims live in [`src/data/structure-evidence.ts`](src/d
 | Tier | Meaning | Resolution |
 |---|---|---|
 | 1 | Scheduled reconstruction from published segment start/finish dates, clamped to current observed completion | Per segment |
-| 2 | Observed historical metrics parsed from monthly Central Valley Status Reports | Per construction package |
+| 2 | Observed metrics parsed from monthly Central Valley Status Reports | Package metrics for all 86 months; per-segment observations for the two reports that publish row tables |
 | 3 | Observed ArcGIS snapshots accumulated by committed pipeline runs | Per segment |
 
 CAHSRA does not provide archived snapshots of the relevant ArcGIS layers. Tier 1 is therefore a scheduled reconstruction, not an assertion of historical observed status. The UI labels the active tier.
+
+ROW uses three non-interchangeable series. **Parcel acquisition** means legally possessed by the Authority and retains the source table’s as-of date. **Delivery to the design-builder** is the separately certified delivery measure. **Railroad parcel acquisition/delivery** is published in a separate railroad ROW table. The dashboard never substitutes one series for another.
 
 ### Difficulty weighting
 
@@ -132,6 +134,15 @@ npm run build
 
 The data scripts also enforce corridor invariants, including TS1 section totals, station-equation anchors, centerline length and joins, segment coverage, and package-level progress cross-checks.
 
+## Known gaps
+
+- `CP1:gap:0` (0.388 mi) has no ArcGIS row and no CVSR stationing. It remains hatched with the TS1/ArcGIS datum reason.
+- Segment-level CVSR history begins with March 2026 data; the earlier 84 CVSR months remain package-level.
+- Parcels delivered to the design-builder are not published for 2019-09 through 2020-01. Acquisition is shown separately; the January-data report exposes only a March 9 audit, not an exact January package split.
+- Package utility relocation counts are not published for 2019-03 through 2020-07.
+- ArcGIS structure-row `Completion` is null; current percentages come from cited CVSR row observations.
+- CP1 guideway decompositions do not have a one-to-one CVSR/ArcGIS crosswalk. Unmatched CVSR rows remain recorded in the generated artifact.
+
 ## Static deployment
 
 Vite builds the site under the `/hsr-dashboard/` base path. GitHub Actions publishes `dist/` to GitHub Pages. A scheduled workflow refreshes the public ArcGIS data and commits changed generated artifacts, allowing observed tier-3 history to accumulate over time.
@@ -140,9 +151,9 @@ Vite builds the site under the `/hsr-dashboard/` base path. GitHub Actions publi
 
 - The TS1 table defines the official axis; geometry never does.
 - Unknown values remain unknown; gaps become explicit `no-data` segments or typed CVSR inventory gaps.
-- Dated structure evidence changes categorical status only; it never fills a missing numeric percentage.
+- Narrative dated structure evidence changes categorical status only; it never fills a missing numeric percentage. CVSR row tables are numeric observations and may supply percentages.
 - Named-project attachment uses reviewed stable identifiers; spatial proximity alone is insufficient.
-- ROW and utility totals stay package-level unless a geolocated official source appears.
+- ROW acquisition, delivery-to-DB, railroad ROW, and utility totals stay package-level unless a geolocated official source appears.
 - Historical schedule reconstruction and observed snapshots are never presented as the same evidence tier.
 - Missing CVSR months and metrics are never silently carried forward.
 - Every displayed official figure needs a resolvable primary-source citation.

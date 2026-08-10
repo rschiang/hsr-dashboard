@@ -147,17 +147,17 @@ export function buildCvsrInventory({
       metric: 'utilities',
       packages: [...CVSR_PACKAGES],
       cause: 'source_not_reported',
-      detail: 'The report does not publish package utility relocated and total counts in the later CVSR format.',
+      detail: 'Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones.',
     });
   }
 
   for (const month of PARCEL_OMISSION_MONTHS) {
     gaps.push({
       month,
-      metric: 'parcels',
+      metric: 'parcel_delivery',
       packages: [...CVSR_PACKAGES],
-      cause: 'source_not_reported',
-      detail: 'The report publishes ROW parcel acquisition counts only; it does not publish cumulative parcels delivered to the design-builder.',
+      cause: 'related_measure_only',
+      detail: 'The report publishes package parcel acquisition, needed and remaining counts; it does not publish parcels certified and delivered to the design-builder. The acquisition series is displayed separately.',
     });
   }
 

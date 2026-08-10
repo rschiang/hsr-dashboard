@@ -3,7 +3,158 @@ import type { PackageMetrics } from '../../src/data/types';
 export const CVSR_PACKAGES = ['CP1', 'CP2-3', 'CP4'] as const;
 export type CvsrPackage = (typeof CVSR_PACKAGES)[number];
 export type CountPair = { delivered: number; total: number; remaining?: number };
+export type DatedCountPair = CountPair & { asOf: string };
+export type ParcelAcquisitionAudit = {
+  totalNeeded: number;
+  priorAcquired: number;
+  modifications: number;
+  acquired: number;
+  remaining: number;
+  asOf: string;
+};
 type ProgressCount = { complete: number; total: number };
+
+export type CvsrRowKind = 'structure' | 'guideway';
+export type CvsrRowTable = 'underway' | 'completed';
+export type CvsrRowProgress = {
+  cp: CvsrPackage;
+  kind: CvsrRowKind;
+  table: CvsrRowTable;
+  location: string;
+  footnote: 'substantially_complete' | 'partially_open' | null;
+  start: string;
+  finish: string;
+  completion: number | null;
+  monthlyProgress: number | null;
+  quote: string;
+};
+
+const FOOTNOTED_ROWS: Readonly<Record<string, readonly string[]>> = {
+  'FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf': [
+    'Excelsior Ave1',
+    'AAAT1',
+    'Ave 241',
+    'Ave 1561',
+    'Lansing1',
+    'Cross Creek1',
+    'SR 43 Jersey1',
+    'Belmont Avenue 1',
+  ],
+};
+
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] as const;
+
+function rowMonth(value: string): string {
+  const [name, year] = value.split('-');
+  const month = MONTHS.indexOf(name as (typeof MONTHS)[number]) + 1;
+  if (month === 0) throw new Error(`invalid CVSR row month: ${value}`);
+  return `20${year}-${String(month).padStart(2, '0')}`;
+}
+
+function rowReportFile(text: string, reportFile?: string): string | undefined {
+  if (reportFile) return reportFile;
+  return /April 2026 Data/i.test(text)
+    ? 'FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf'
+    : undefined;
+}
+
+/**
+ * Parses the Authority's row-level construction-progress tables. Package and
+ * table headings are stateful because continued pages do not always repeat the
+ * package heading in extracted text.
+ */
+export function parseRowProgress(text: string, reportFile?: string): CvsrRowProgress[] {
+  const normalized = normalizeCvsrText(text);
+  const lines = normalized.split(/\r?\n/).map((line) => line.trim());
+  const rows: CvsrRowProgress[] = [];
+  const summaries = new Map<string, { completed: number; underway: number }>();
+  let cp: CvsrPackage | undefined;
+  let kind: CvsrRowKind | undefined;
+  let table: CvsrRowTable | undefined;
+  const reviewedFile = rowReportFile(normalized, reportFile);
+  const footnoted = new Set(reviewedFile ? FOOTNOTED_ROWS[reviewedFile] ?? [] : []);
+  const rowPattern =
+    /^(?<location>\S.*?)\s+(?<start>[A-Z][a-z]{2}-\d{2})\s+(?<finish>[A-Z][a-z]{2}-\d{2})\s+(?<pct>\d+(?:\.\d+)?%|Open)(?:\s+(?<monthly>\d+(?:\.\d+)?%|[\u2013-]))?$/;
+
+  for (let index = 0; index < lines.length; index += 1) {
+    const line = lines[index];
+    const packageHeading = /^CP\s*(1|2[-–]3|4)\s*[–—-]\s*Construction Progress\b/i.exec(line);
+    if (packageHeading) {
+      cp = packageHeading[1] === '1' ? 'CP1' : packageHeading[1] === '4' ? 'CP4' : 'CP2-3';
+      table = undefined;
+      kind = undefined;
+      continue;
+    }
+
+    const tableHeading = /^(Structures|Guideways)\s*-\s*(Underway|Completed)(?:\s+\(cont['’]d\))?/i.exec(
+      line.replace(/\s+(?:#\s*)+$/, ''),
+    );
+    if (tableHeading) {
+      if (!cp) throw new Error(`CVSR row table has no construction package: ${line}`);
+      kind = tableHeading[1].toLowerCase().startsWith('structure') ? 'structure' : 'guideway';
+      table = tableHeading[2].toLowerCase() as CvsrRowTable;
+      continue;
+    }
+
+    if (/^(?:Report Notes|Footnotes|--\s*\d+\s+of\s+\d+\s*--)$/i.test(line)) {
+      table = undefined;
+      kind = undefined;
+      continue;
+    }
+
+    if (cp && /\b(?:Structures|Guideways)\s+Complete\b.*\bUnderway\b.*\bNot Started\b/i.test(line)) {
+      const summaryKind: CvsrRowKind = /Structures/i.test(line) ? 'structure' : 'guideway';
+      for (let lookahead = index + 1; lookahead <= Math.min(index + 3, lines.length - 1); lookahead += 1) {
+        const counts = lines[lookahead].match(/\d+/g)?.map(Number);
+        if (counts?.length === 3) {
+          summaries.set(`${cp}:${summaryKind}`, { completed: counts[0], underway: counts[1] });
+          break;
+        }
+      }
+    }
+
+    if (!cp || !kind || !table) continue;
+    const match = rowPattern.exec(line);
+    if (!match?.groups) continue;
+    let location = match.groups.location;
+    let footnote: CvsrRowProgress['footnote'] = null;
+    if (footnoted.has(location)) {
+      location = location.replace(/\s*1$/, '');
+      footnote = cp === 'CP1' ? 'partially_open' : 'substantially_complete';
+    }
+    const percent = match.groups.pct;
+    const monthly = match.groups.monthly;
+    rows.push({
+      cp,
+      quote: line.replace(/\s+(?:\u2013|-)$/, ''),
+      kind,
+      table,
+      location,
+      footnote,
+      start: rowMonth(match.groups.start),
+      finish: rowMonth(match.groups.finish),
+      completion: percent === 'Open' ? null : Number.parseFloat(percent) / 100,
+      monthlyProgress: !monthly || monthly === '-' || monthly === '\u2013'
+        ? null
+        : Number.parseFloat(monthly) / 100,
+    });
+  }
+
+  if (/(?:Structures|Guideways)\s*-\s*(?:Underway|Completed)/i.test(normalized) && rows.length === 0) {
+    throw new Error(`${reviewedFile ?? 'CVSR report'} contains row progress tables but yielded zero rows`);
+  }
+  for (const [key, summary] of summaries) {
+    const [summaryCp, summaryKind] = key.split(':') as [CvsrPackage, CvsrRowKind];
+    const completed = rows.filter((row) => row.cp === summaryCp && row.kind === summaryKind && row.table === 'completed').length;
+    const underway = rows.filter((row) => row.cp === summaryCp && row.kind === summaryKind && row.table === 'underway').length;
+    if (completed !== summary.completed || underway !== summary.underway) {
+      throw new Error(
+        `${summaryCp} ${summaryKind} row counts ${completed} completed/${underway} underway do not match summary ${summary.completed}/${summary.underway}`,
+      );
+    }
+  }
+  return rows;
+}
 
 const PACKAGE_LABELS: Record<CvsrPackage, string> = {
   CP1: '1',
@@ -350,6 +501,7 @@ export function parseUtilityPair(text: string, cp: CvsrPackage): CountPair | nul
   const detail = parseUtilityTypeStatusPair(text, cp);
   if (!detail) return packageSummary;
   if (!packageSummary) {
+
     throw new Error(`utilities ${cp}: package-level summary is missing for type/status reconciliation`);
   }
   if (detail.delivered !== packageSummary.delivered || detail.total !== packageSummary.total) {
@@ -452,6 +604,21 @@ function parseParcelTable(text: string, cp: CvsrPackage): CountPair | null {
  * pipeline records as a typed field gap.
  */
 export function parseParcelPair(text: string, cp: CvsrPackage): CountPair | null {
+  const august2019 = sectionBetween(
+    text,
+    /ROW Parcels Acquired by Month/i,
+    /Central Valley Status Report/i,
+  );
+  const augustValues = cpTableRow(august2019, cp);
+  if (augustValues && augustValues.length >= 7 && /Additional\s+parcels\s+in\s+August/i.test(august2019)) {
+    const [publishedTotal, , excludingRailroads, , , additional, currentRemaining] = augustValues.slice(-7);
+    const base = cp === 'CP4' ? publishedTotal : excludingRailroads;
+    const total = base + additional;
+    return validateCountPair(
+      { delivered: total - currentRemaining, total, remaining: currentRemaining },
+      `2019-08 parcels ${cp}`,
+    );
+  }
   // An unusable ROW Summary is only fatal when nothing else names the metric,
   // so hold the rejection until the remaining strategies have been tried.
   let invalidTable: Error | undefined;
@@ -489,4 +656,105 @@ export function parseParcelPair(text: string, cp: CvsrPackage): CountPair | null
   }
   if (invalidTable) throw invalidTable;
   return null;
+}
+function cpTableRow(section: string, cp: CvsrPackage): number[] | null {
+  const label = cp === 'CP1' ? String.raw`CP\s*1(?![-\d])` : cp === 'CP2-3' ? String.raw`CP\s*2[-–]3` : String.raw`CP\s*4(?![-\d])`;
+  const line = section.split(/\r?\n/).find((candidate) => new RegExp(`^\\s*${label}\\s+`, 'i').test(candidate));
+  if (!line) return null;
+  return [...line.matchAll(/-?[0-9][0-9,]*/g)].map((match) => integer(match[0]));
+}
+
+function monthEnd(dataMonth: string): string {
+  const [year, month] = dataMonth.split('-').map(Number);
+  return new Date(Date.UTC(year, month, 0)).toISOString().slice(0, 10);
+}
+
+export function parseParcelAcquisitionAudit(text: string, cp: CvsrPackage): ParcelAcquisitionAudit | null {
+  const section = sectionBetween(
+    text,
+    /CP\s*1-4\s+ROW Parcel Acquisition Summary/i,
+    /CP\s*1-4\s+ROW Railroad|CP\s*1-4\s+[–—-]\s+ROW Acquired/i,
+  );
+  if (!/November 30,\s*2019[\s\S]*March 9,\s*2020/i.test(section)) return null;
+  const values = cpTableRow(section, cp);
+  if (!values || values.length < 6) return null;
+  const [totalNeeded, priorAcquired, , modifications, acquired, remaining] = values.slice(-6);
+  if (totalNeeded !== priorAcquired + remaining) {
+    throw new Error(`2020-01 parcel acquisition audit ${cp} does not satisfy A = B + F`);
+  }
+  return {
+    totalNeeded,
+    priorAcquired,
+    modifications,
+    acquired,
+    remaining,
+    asOf: '2020-03-09',
+  };
+}
+
+export function parseParcelAcquisitionPair(
+  text: string,
+  cp: CvsrPackage,
+  dataMonth: string,
+): DatedCountPair | null {
+  const legacy = sectionBetween(
+    text,
+    /ROW Parcels to be Acquired and Remaining/i,
+    /(?:Notes:|ROW Railroad|Land Conveyance)/i,
+  );
+  if (legacy) {
+    const values = cpTableRow(legacy, cp);
+    if (values && values.length >= 6) {
+      const [priorTotal, priorAcquired, , optimized, acquiredThisMonth, remaining] = values.slice(-6);
+      const pair = validateCountPair(
+        {
+          total: priorTotal - optimized,
+          delivered: priorAcquired + acquiredThisMonth,
+          remaining,
+        },
+        `parcel acquisition ${dataMonth} ${cp}`,
+      );
+      return { ...pair, asOf: monthEnd(dataMonth) };
+    }
+  }
+
+  if (parseParcelAcquisitionAudit(text, cp)) return null;
+  const current = sectionBetween(
+    text,
+    /ROW Parcel Acquisition Summary/i,
+    /ROW Acquired but Not Delivered|Parcel Delivery to DB|ROW Railroad/i,
+  );
+  if (!current) return null;
+  const values = cpTableRow(current, cp);
+  if (!values || values.length < 6) return null;
+  const [, , total, , , acquired] = values.slice(-6);
+  return {
+    ...validateCountPair({ delivered: acquired, total }, `parcel acquisition ${dataMonth} ${cp}`),
+    asOf: /March 9,\s*2020/i.test(current) ? '2020-03-09' : monthEnd(dataMonth),
+  };
+}
+
+export function parseRailroadParcelPair(text: string, cp: CvsrPackage): CountPair | null {
+  const section = sectionBetween(
+    text,
+    /(?:Real Property\/Right-of-Way \(ROW\) Railroad|ROW Railroad (?:Parcels|Summary))/i,
+    /(?:Actual vs\. Forecast|ROW Railroad Delivery|Report Notes)/i,
+  );
+  if (!section) return null;
+  const values = cpTableRow(section, cp);
+  if (!values || values.length < 3) return null;
+  const [first, second, third] = values.slice(-3);
+  const header = section.slice(0, section.search(/\n\s*CP\s*(?:1|2[-–]3|4)\b/i));
+  const remainingIndex = header.search(/Railroad Parcels to be (?:Delivered|Acquired)/i);
+  const totalIndex = header.search(/Total (?:Needed )?Railroad Parcels/i);
+  const remainingFirst = /To Be Delivered vs\. Delivered/i.test(section)
+    || (remainingIndex >= 0 && totalIndex >= 0 && remainingIndex < totalIndex);
+  const total = remainingFirst ? third : first;
+  const delivered = second;
+  const remaining = remainingFirst ? first : third;
+  try {
+    return validateCountPair({ delivered, total, remaining }, `railroad parcels ${cp}`);
+  } catch {
+    return null;
+  }
 }
