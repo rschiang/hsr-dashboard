@@ -193,6 +193,151 @@ test('parses ROW Summary labels and excludes the following railroad section', ()
   );
 });
 
+// Verbatim section order of the June 2020 report: the narrative ROW heading and
+// two acquisition tables precede the authoritative cumulative-delivery table.
+const JUNE_2020 = `
+    CP 1-4 – Right-of-Way (ROW) Summary
+    ROW established metrics to track the following:
+    • Acquisition Tracking
+    CP 1-4 – ROW Parcel Acquisition Summary
+    Construction Package
+    May 31, 2020 Total Needed
+    Modifications
+    June 30, 2020 Total Needed
+    May 31, 2020 Total Acquired
+    June 30, 2020 Acquired
+    June 30, 2020 Total Acquired
+    CP 1 1,080 -7 1,073 830 1 831
+    CP 2-3 995 19 1,014 622 48 670
+    CP 4 266 0 266 163 0 163
+    Total 2,341 12 2,353 1,615 49 1,664
+    CP 1-4 – ROW Acquired but Not Delivered to Design-Builder (DB)
+    Construction Package
+    June 30, 2020 Total Acquired
+    June 30, 2020 Delivered to DB
+    June 30, 2020 Total Delivered to DB
+    June 30, 2020 Total Acquired, Remaining to Deliver to DB
+    CP 1 831 1 830 1
+    CP 2-3 670 20 629 41
+    CP 4 163 4 163 0
+    Total 1,664 25 1,622 42
+    CP 1-4 – ROW Summary
+    Construction Package Total Needed Parcels
+    June 30, 2020
+    Total Parcels Delivered to Date
+    June 30, 2020
+    Remaining Parcels to be Delivered
+    June 30, 2020
+    CP 1 1,073 830 243
+    CP 2-3 1,014 629 385
+    CP 4 266 163 103
+    Total 2,353 1,622 731
+    CP 1-4 – Parcel Delivery to DB Summary
+  `;
+
+const JULY_2020 = `
+    CP 1-4 – Right-of-Way (ROW) Summary
+    ROW established metrics to track the following:
+    • Acquisition Tracking
+    CP 1-4 – ROW Acquired but Not Delivered to Design-Builder (DB)
+    Construction Package
+    July 31, 2020 Total Acquired
+    July 31, 2020 Delivered to DB
+    July 31, 2020 Total Delivered to DB
+    July 31, 2020 Total Acquired, Remaining to Deliver to DB
+    CP 4 163 0 163 0
+    Total 1,672 8 1,640 32
+    CP 1-4 – ROW Summary
+    Construction Package Total Needed Parcels
+    July 31, 2020
+    Total Parcels Delivered to Date
+    July 31, 2020
+    Remaining Parcels to be Delivered
+    July 31, 2020
+    CP 1 1,072 832 240
+    CP 2-3 1,011 645 366
+    CP 4 239 163 76
+    Total 2,322 1,640 682
+    CP 1-4 – Parcel Delivery to DB Summary
+  `;
+
+test('reads cumulative delivery from the ROW Summary, not the acquisition tables', () => {
+  assert.deepEqual(parseParcelPair(JUNE_2020, 'CP1'), { total: 1073, delivered: 830, remaining: 243 });
+  assert.deepEqual(parseParcelPair(JUNE_2020, 'CP2-3'), { total: 1014, delivered: 629, remaining: 385 });
+  assert.deepEqual(parseParcelPair(JUNE_2020, 'CP4'), { total: 266, delivered: 163, remaining: 103 });
+  assert.deepEqual(parseParcelPair(JULY_2020, 'CP4'), { total: 239, delivered: 163, remaining: 76 });
+});
+
+test('keeps a published total that falls when the Authority rescopes a package', () => {
+  // CP4 drops from 266 to 239 needed parcels between June and July 2020. The
+  // parser reports what each report published; it never clamps a series.
+  assert.equal(parseParcelPair(JUNE_2020, 'CP4')?.total, 266);
+  assert.equal(parseParcelPair(JULY_2020, 'CP4')?.total, 239);
+});
+
+test('never reads a CP 1-4 aggregate row as a package pair', () => {
+  const april2021 = `
+    - Construction Package 4 – Relocated: 40 (24%); In Progress: 24 (14%); Approved to Start: 35 (21%); Not Started: 69 (41%); Total: 168.
+    CP Real Property/Right-of-Way (ROW) (Page 9 through 11)
+    • Total Parcels Delivered to Date – 1,837 parcels compared to an Estimated Total Parcels Needed – 2,306 parcels.
+    • Total Acquired Parcels – 26 parcels.
+    CP 1-4 – Right-of-Way (ROW) Summary
+    Construction Package Total Needed Parcels
+    April 30, 2021
+    Total Parcels Delivered to Date
+    April 30, 2021
+    Remaining Parcels to be Delivered
+    April 30, 2021
+    CP 1 1,069 901 168
+    CP 2-3 1,000 754 246
+    CP 4 237 182 55
+    Total 2,306 1,837 469
+    CP 1-4 – Parcel Delivery to DB Summary
+  `;
+  assert.deepEqual(parseParcelPair(april2021, 'CP1'), { total: 1069, delivered: 901, remaining: 168 });
+  assert.deepEqual(parseParcelPair(april2021, 'CP2-3'), { total: 1000, delivered: 754, remaining: 246 });
+  assert.deepEqual(parseParcelPair(april2021, 'CP4'), { total: 237, delivered: 182, remaining: 55 });
+});
+
+test('stops a package ROW Summary at the next package heading', () => {
+  const text = `
+    CP 1 – ROW Summary
+    Construction Package Total Needed Parcels
+    Total Parcels Delivered to Date
+    Remaining Parcels to be Delivered
+    CP 1 1,073 830 243
+    CP 1 – Parcel Delivery to DB Summary
+    Notes: actual cumulative line reflects delivered parcels forecast in future months.
+    CP 4 – ROW Summary
+    Construction Package Total Needed Parcels
+    Total Parcels Delivered to Date
+    Remaining Parcels to be Delivered
+    CP 4 266 163 103
+    CP 4 – Parcel Delivery to DB Summary
+  `;
+  assert.deepEqual(parseParcelPair(text, 'CP1'), { total: 1073, delivered: 830, remaining: 243 });
+  assert.deepEqual(parseParcelPair(text, 'CP4'), { total: 266, delivered: 163, remaining: 103 });
+});
+
+test('returns null when a report publishes acquisition but no cumulative delivery', () => {
+  const acquisitionOnly = `
+    CP 1-4 ROW Parcels to be Acquired and Remaining
+    Construction Package
+    Total Needed Parcels as of August 31
+    Total Acquired to Date as of August 31
+    Remaining Parcels to be Acquired as of August 31
+    Optimized Parcels
+    Parcels Acquired in September
+    Total Parcels Remaining as of September 30
+    CP 1 932 827 105 4 0 101
+    CP 2-3 854 547 307 4 12 291
+    CP 4 223 166 57 0 0 57
+  `;
+  assert.equal(parseParcelPair(acquisitionOnly, 'CP1'), null);
+  assert.equal(parseParcelPair(acquisitionOnly, 'CP2-3'), null);
+  assert.equal(parseParcelPair(acquisitionOnly, 'CP4'), null);
+});
+
 test('rejects swapped semantic columns and does not guess an unknown layout', () => {
   const swapped = `
     CP 1-4 – Utility Relocations Summary
@@ -222,6 +367,7 @@ test('classifies the audited utility omission boundary without inventing later g
     rejectedReports: [],
     parseFailures: [],
     fieldFailures: [],
+    revisions: [],
     coverageStart: '2019-03',
     coverageEnd: '2020-08',
   });
@@ -231,6 +377,54 @@ test('classifies the audited utility omission boundary without inventing later g
   assert.equal(utilityGaps.at(-1)?.month, '2020-07');
   assert.equal(utilityGaps.some((gap) => gap.month === '2020-08'), false);
   assert.deepEqual(utilityGaps[0].packages, ['CP1', 'CP2-3', 'CP4']);
+});
+
+test('records the acquisition-only months as a source omission, not a parser failure', () => {
+  const inventory = buildCvsrInventory({
+    snapshots: [],
+    localFiles: new Set(),
+    reviewedReports: [],
+    rejectedReports: [],
+    parseFailures: [],
+    fieldFailures: [],
+    revisions: [],
+    coverageStart: '2019-03',
+    coverageEnd: '2020-08',
+  });
+  const parcelGaps = inventory.gaps.filter((gap) => gap.metric === 'parcels');
+  assert.deepEqual(parcelGaps.map((gap) => gap.month), ['2019-09', '2019-10', '2019-11', '2019-12', '2020-01']);
+  assert.equal(parcelGaps.every((gap) => gap.cause === 'source_not_reported'), true);
+  assert.deepEqual(parcelGaps[0].packages, ['CP1', 'CP2-3', 'CP4']);
+});
+
+test('flattens a reviewed restatement to one annotated month without creating a gap', () => {
+  const inventory = buildCvsrInventory({
+    snapshots: [],
+    localFiles: new Set(),
+    reviewedReports: [],
+    rejectedReports: [],
+    parseFailures: [],
+    fieldFailures: [],
+    revisions: [{
+      months: ['2022-02', '2022-01'],
+      metric: 'progress',
+      packages: ['CP4'],
+      correctedIn: '2022-04',
+      reportFile: 'CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf',
+      detail: 'A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress.',
+    }],
+    coverageStart: '2022-01',
+    coverageEnd: '2022-02',
+  });
+  assert.deepEqual(
+    inventory.revisions.map((entry) => [entry.month, entry.metric, entry.packages.join(',')]),
+    [['2022-01', 'progress', 'CP4'], ['2022-02', 'progress', 'CP4']],
+  );
+  // A restated value is still a published value, so it never becomes a gap.
+  assert.equal(
+    inventory.gaps.some((gap) => gap.metric !== 'snapshot' && gap.month.startsWith('2022-')),
+    false,
+  );
 });
 
 test('assigns one snapshot gap cause using parser, download, then location precedence', () => {
@@ -250,6 +444,7 @@ test('assigns one snapshot gap cause using parser, download, then location prece
     rejectedReports: [],
     parseFailures: [{ file: 'june.pdf', dataMonth: '2023-06', reason: 'bad table' }],
     fieldFailures: [],
+    revisions: [],
     coverageStart: '2023-05',
     coverageEnd: '2023-08',
   });

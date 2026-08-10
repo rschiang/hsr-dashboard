@@ -32,11 +32,12 @@ const PACKAGE_BAND_METRICS: ReadonlyArray<{
   value: NumericPackageMetric;
   total: NumericPackageMetric;
   transcribedAs?: 'progress' | 'parcels';
+  revisedAs?: 'progress' | 'parcels' | 'utilities';
 }> = [
-  { label: 'Structures complete', value: 'structuresComplete', total: 'structuresTotal', transcribedAs: 'progress' },
-  { label: 'Guideway complete (mi)', value: 'guidewayMilesComplete', total: 'guidewayMilesTotal', transcribedAs: 'progress' },
-  { label: 'ROW parcels delivered', value: 'parcelsDelivered', total: 'parcelsTotal', transcribedAs: 'parcels' },
-  { label: 'Utilities relocated', value: 'utilitiesRelocated', total: 'utilitiesTotal' },
+  { label: 'Structures complete', value: 'structuresComplete', total: 'structuresTotal', transcribedAs: 'progress', revisedAs: 'progress' },
+  { label: 'Guideway complete (mi)', value: 'guidewayMilesComplete', total: 'guidewayMilesTotal', transcribedAs: 'progress', revisedAs: 'progress' },
+  { label: 'ROW parcels delivered', value: 'parcelsDelivered', total: 'parcelsTotal', transcribedAs: 'parcels', revisedAs: 'parcels' },
+  { label: 'Utilities relocated', value: 'utilitiesRelocated', total: 'utilitiesTotal', revisedAs: 'utilities' },
 ];
 
 type CvsrGapGroup = CvsrGap & { endMonth: string };
@@ -45,6 +46,15 @@ type TranscriptionGroup = {
   month: string;
   endMonth: string;
   reportFile: string;
+  detail: string;
+};
+type RevisionGroup = {
+  key: string;
+  metric: CvsrInventory['revisions'][number]['metric'];
+  packages: string;
+  month: string;
+  endMonth: string;
+  correctedIn: string;
   detail: string;
 };
 
@@ -86,6 +96,29 @@ function groupTranscriptions(entries: CvsrInventory['transcriptions']): Transcri
       previous.endMonth = entry.month;
     } else {
       groups.push({ fields, month: entry.month, endMonth: entry.month, reportFile: entry.reportFile, detail: entry.detail });
+    }
+  }
+  return groups;
+}
+
+function groupRevisions(entries: CvsrInventory['revisions']): RevisionGroup[] {
+  const sorted = [...entries].sort((left, right) => left.month.localeCompare(right.month));
+  const groups: RevisionGroup[] = [];
+  for (const entry of sorted) {
+    const key = `${entry.metric}|${entry.packages.join(', ')}|${entry.correctedIn}`;
+    const previous = groups.at(-1);
+    if (previous && previous.key === key && nextMonth(previous.endMonth) === entry.month) {
+      previous.endMonth = entry.month;
+    } else {
+      groups.push({
+        key,
+        metric: entry.metric,
+        packages: entry.packages.join(', '),
+        month: entry.month,
+        endMonth: entry.month,
+        correctedIn: entry.correctedIn,
+        detail: entry.detail,
+      });
     }
   }
   return groups;
@@ -188,6 +221,10 @@ function App() {
     () => groupTranscriptions(data?.history.cvsrInventory.transcriptions ?? []),
     [data],
   );
+  const groupedRevisions = useMemo(
+    () => groupRevisions(data?.history.cvsrInventory.revisions ?? []),
+    [data],
+  );
   const selectedCompletionBySegment = useMemo(
     () => data ? selectedCompletions(data.segments.segments, activeSnapshot) : {},
     [activeSnapshot, data],
@@ -205,19 +242,6 @@ function App() {
   }
 
   const inventory = data.history.cvsrInventory;
-  // Earthwork-equivalent and difficulty-weighted are two readings of the same
-  // ArcGIS Completion values, so both are defined exactly when an observation
-  // exists — never modelled forward or backward. The CVSR cells are defined for
-  // every month inside the published coverage window.
-  const equivalentMiles = activeSnapshot === undefined ? undefined : data.segments.segments
-    .filter((segment) => segment.kind === 'guideway' && segment.cp !== 'M2M' && segment.cp !== 'LGA')
-    .reduce((sum, segment) => sum + (segment.iosMileEnd - segment.iosMileStart) * (selectedCompletionBySegment[segment.id] ?? 0), 0);
-  const weightedPercent = activeSnapshot === undefined ? undefined : data.segments.segments.reduce((sum, segment) => {
-    const numericCompletion = selectedCompletionBySegment[segment.id] ?? null;
-    const modelledCompletion = numericCompletion
-      ?? (segment.kind === 'structure' && derived.statuses[segment.id] === 'structure_complete' ? 1 : 0);
-    return sum + segment.weightShare * modelledCompletion;
-  }, 0) * 100;
 
   const cvsrGuidewayComplete = sumPackages(displayCvsrSnapshot, 'guidewayMilesComplete');
   const cvsrTotalMiles = sumPackages(displayCvsrSnapshot, 'guidewayMilesTotal');
@@ -231,7 +255,6 @@ function App() {
       : displayCvsrSnapshot
         ? `Last observed ${displayCvsrSnapshot.dataMonth}`
         : 'Before the published series';
-  const arcgisNote = activeSnapshot ? `ArcGIS observed ${activeSnapshot.date}` : 'No ArcGIS observation at this date';
   const perMile = (value: number | undefined): string => value === undefined ? '—' : value.toFixed(1);
   const selectedSegment = selectedId
     ? data.segments.segments.find((segment) => segment.id === selectedId)
@@ -256,25 +279,11 @@ function App() {
               </em>
             </div>
             <div>
-              <span>Earthwork-equivalent</span>
-              <strong>{perMile(equivalentMiles)} <small>/ {perMile(cvsrTotalMiles)} mi</small></strong>
-              <em className="metric-note">{arcgisNote} <SourceLink sourceId="arcgis_progress" /></em>
-            </div>
-            <div>
               <span>Structures complete</span>
               <strong>{structuresComplete ?? '—'} <small>/ {structuresTotal ?? '—'}</small></strong>
               <em className="metric-note">
                 {cvsrNote}{' '}
                 {displayCvsrSnapshot ? <SnapshotReportLink snapshot={displayCvsrSnapshot} /> : <SourceLink sourceId="cvsr" />}
-              </em>
-            </div>
-            <div>
-              <span>Difficulty-weighted</span>
-              <strong title="Numeric earthwork completion plus full structure weight only after direct evidence resolves to Structure complete">
-                {weightedPercent === undefined ? '—' : `${weightedPercent.toFixed(1)}%`}
-              </strong>
-              <em className="metric-note">
-                {weightedPercent === undefined ? arcgisNote : `Modelled · ${arcgisNote}`} <SourceLink sourceId="business_plan_2026" />
               </em>
             </div>
           </div>
@@ -289,14 +298,11 @@ function App() {
           exact={exactCvsrSnapshot !== undefined}
         />
 
-        <CrossCheck
-          equivalentMiles={equivalentMiles}
-          arcgisDate={activeSnapshot?.date}
-          cvsrMilesComplete={cvsrGuidewayComplete}
-          cvsrDataMonth={displayCvsrSnapshot?.dataMonth}
+        <DataGapDisclosure
+          groups={groupedCvsrGaps}
+          transcriptions={groupedTranscriptions}
+          revisions={groupedRevisions}
         />
-
-        <DataGapDisclosure groups={groupedCvsrGaps} transcriptions={groupedTranscriptions} />
 
         <StripChart
           segments={data.segments.segments}
@@ -381,39 +387,6 @@ function SnapshotReportLink({ snapshot }: { snapshot: Snapshot }) {
   );
 }
 
-function CrossCheck({
-  equivalentMiles,
-  arcgisDate,
-  cvsrMilesComplete,
-  cvsrDataMonth,
-}: {
-  equivalentMiles: number | undefined;
-  arcgisDate: string | undefined;
-  cvsrMilesComplete: number | undefined;
-  cvsrDataMonth: string | undefined;
-}) {
-  const clause = 'Independent measures of the same thing: ArcGIS publishes an earthwork-volume ratio per segment; the CVSR publishes miles with earthworks complete and rough grading. They are not required to agree exactly, and the ArcGIS fetch is later than the CVSR data month.';
-  const both = equivalentMiles !== undefined && arcgisDate !== undefined
-    && cvsrMilesComplete !== undefined && cvsrDataMonth !== undefined;
-  const delta = both ? equivalentMiles - cvsrMilesComplete : 0;
-  return (
-    <section className="cross-check" aria-label="Dashboard versus Authority reconciliation">
-      <b>Cross-check</b>{' · '}
-      {both
-        ? (
-          <>
-            Earthwork-equivalent {equivalentMiles.toFixed(1)} mi (ArcGIS {arcgisDate}) vs CVSR guideway complete{' '}
-            {cvsrMilesComplete.toFixed(1)} mi ({cvsrDataMonth}) · Δ {delta >= 0 ? '+' : '−'}{Math.abs(delta).toFixed(1)} mi
-          </>
-        )
-        : equivalentMiles === undefined
-          ? <>No ArcGIS observation at this date{cvsrDataMonth ? ` · CVSR guideway complete ${cvsrMilesComplete?.toFixed(1)} mi (${cvsrDataMonth})` : ''} · nothing to reconcile</>
-          : <>No published CVSR at this date · earthwork-equivalent {equivalentMiles.toFixed(1)} mi (ArcGIS {arcgisDate}) · nothing to reconcile</>}
-      <span className="cross-check-note">{clause}</span>
-    </section>
-  );
-}
-
 const GAP_METRIC_LABELS: Record<CvsrGap['metric'], string> = {
   snapshot: 'Monthly report',
   utilities: 'Utilities',
@@ -423,13 +396,15 @@ const GAP_METRIC_LABELS: Record<CvsrGap['metric'], string> = {
 function DataGapDisclosure({
   groups,
   transcriptions,
+  revisions,
 }: {
   groups: CvsrGapGroup[];
   transcriptions: TranscriptionGroup[];
+  revisions: RevisionGroup[];
 }) {
   return (
     <details className="data-gaps">
-      <summary>Data gaps &amp; transcriptions</summary>
+      <summary>Data gaps, transcriptions &amp; revisions</summary>
       <ul>
         {groups.map((group) => (
           <li
@@ -444,6 +419,12 @@ function DataGapDisclosure({
           <li key={`transcription:${group.fields}:${group.month}:${group.endMonth}`} title={group.detail}>
             <b>Transcribed ({group.fields})</b>:{' '}
             {group.month}{group.endMonth === group.month ? '' : `–${group.endMonth}`} — read by hand from a chart image in the source PDF
+          </li>
+        ))}
+        {revisions.map((group) => (
+          <li key={`revision:${group.key}:${group.month}:${group.endMonth}`} title={group.detail}>
+            <b>Restated ({group.metric}, {group.packages})</b>:{' '}
+            {group.month}{group.endMonth === group.month ? '' : `–${group.endMonth}`} — superseded by the {group.correctedIn} report
           </li>
         ))}
       </ul>
@@ -519,6 +500,25 @@ function PackageBands({
             const points = series[`${metric.value}:${cp}`];
             const transcribed = metric.transcribedAs !== undefined
               && packageMetric?.transcribedFields?.includes(metric.transcribedAs) === true;
+            const revisedAs = metric.revisedAs;
+            // The superseded month keeps the number its own report published;
+            // the marker says the Authority later restated it.
+            const revision = revisedAs === undefined ? undefined : inventory.revisions.find(
+              (entry) => entry.month === selectedMonth
+                && entry.metric === revisedAs
+                && entry.packages.includes(cp),
+            );
+            const valueClass = [transcribed ? 'transcribed' : '', revision ? 'revised' : '']
+              .filter(Boolean)
+              .join(' ');
+            const valueTitle = [
+              transcribed && snapshot?.reportFile
+                ? `Transcribed by hand from a chart image in ${snapshot.reportFile}; not extractable as PDF text.`
+                : undefined,
+              revision
+                ? `Superseded: the Authority restated this value in the ${revision.correctedIn} report. ${revision.detail}`
+                : undefined,
+            ].filter((entry): entry is string => entry !== undefined).join(' ');
             return (
               <span className={`band-value${gap ? ' missing' : ''}`} key={cp} title={gap?.detail}>
                 <b>{cp}</b>
@@ -533,10 +533,8 @@ function PackageBands({
                     ? <>{gap ? GAP_LABELS[gap.cause] : 'No report for selected month'} {gap && <ReportLink gap={gap} />}</>
                     : (
                       <span
-                        className={transcribed ? 'transcribed' : undefined}
-                        title={transcribed && snapshot?.reportFile
-                          ? `Transcribed by hand from a chart image in ${snapshot.reportFile}; not extractable as PDF text.`
-                          : undefined}
+                        className={valueClass === '' ? undefined : valueClass}
+                        title={valueTitle === '' ? undefined : valueTitle}
                       >
                         {value.toLocaleString()} / {total.toLocaleString()}
                       </span>

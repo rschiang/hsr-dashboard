@@ -20,9 +20,11 @@ import {
 } from './lib/cvsr-parser';
 import {
   buildCvsrInventory,
+  PARCEL_OMISSION_MONTHS,
   type CvsrFieldFailure,
   type CvsrParseFailure,
   type ReviewedCvsrReport,
+  type ReviewedCvsrRevision,
 } from './lib/cvsr-inventory';
 
 const DIRECTORY = 'data/raw/cvsr';
@@ -222,6 +224,19 @@ const LEGACY_PARCELS: Readonly<Record<string, Record<CvsrPackage, {
   },
 };
 
+
+// Reviewed restatement register. The Authority published the correction as
+// prose, not as a parsable table, so it is a reviewed constant exactly like the
+// legacy transcription registers. The superseded months keep their published
+// values; only the annotation is added.
+const REVIEWED_REVISIONS: readonly ReviewedCvsrRevision[] = [{
+  months: ['2021-08', '2021-09', '2021-10', '2021-11', '2021-12', '2022-01', '2022-02', '2022-03'],
+  metric: 'progress',
+  packages: ['CP4'],
+  correctedIn: '2022-04',
+  reportFile: 'CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf',
+  detail: 'A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress. This has been corrected for the April 2022 Data report.',
+}];
 
 // Transcribed from each report's package Construction Progress charts. These
 // vector charts expose the completed/underway split visually but not in PDF text.
@@ -478,7 +493,7 @@ async function parseLocalPdfs(): Promise<void> {
   for (const snapshot of snapshots) {
     for (const cp of CVSR_PACKAGES) {
       const metrics = snapshot.perPackage?.[cp];
-      if (metrics?.parcelsTotal === undefined) {
+      if (metrics?.parcelsTotal === undefined && !PARCEL_OMISSION_MONTHS.includes(snapshot.dataMonth)) {
         fieldFailures.push({ month: snapshot.dataMonth, cp, metric: 'parcels' });
       }
       if (snapshot.dataMonth >= '2020-08' && metrics?.utilitiesTotal === undefined) {
@@ -501,6 +516,7 @@ async function parseLocalPdfs(): Promise<void> {
     rejectedReports,
     parseFailures,
     fieldFailures,
+    revisions: REVIEWED_REVISIONS,
     coverageStart: '2019-03',
     coverageEnd: '2026-04',
     unresolvedReportUrls: candidates.filter(

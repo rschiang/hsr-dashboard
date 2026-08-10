@@ -301,9 +301,7 @@
           "transcribedFields": [
             "progress"
           ],
-          "sourceId": "cvsr",
-          "parcelsDelivered": 827,
-          "parcelsTotal": 928
+          "sourceId": "cvsr"
         },
         "CP2-3": {
           "structuresComplete": 0,
@@ -313,9 +311,7 @@
           "transcribedFields": [
             "progress"
           ],
-          "sourceId": "cvsr",
-          "parcelsDelivered": 559,
-          "parcelsTotal": 850
+          "sourceId": "cvsr"
         },
         "CP4": {
           "structuresComplete": 0,
@@ -325,9 +321,7 @@
           "transcribedFields": [
             "progress"
           ],
-          "sourceId": "cvsr",
-          "parcelsDelivered": 166,
-          "parcelsTotal": 223
+          "sourceId": "cvsr"
         }
       }
     },
@@ -347,9 +341,7 @@
           "transcribedFields": [
             "progress"
           ],
-          "sourceId": "cvsr",
-          "parcelsDelivered": 827,
-          "parcelsTotal": 928
+          "sourceId": "cvsr"
         },
         "CP2-3": {
           "structuresComplete": 0,
@@ -359,9 +351,7 @@
           "transcribedFields": [
             "progress"
           ],
-          "sourceId": "cvsr",
-          "parcelsDelivered": 565,
-          "parcelsTotal": 850
+          "sourceId": "cvsr"
         },
         "CP4": {
           "structuresComplete": 0,
@@ -371,9 +361,7 @@
           "transcribedFields": [
             "progress"
           ],
-          "sourceId": "cvsr",
-          "parcelsDelivered": 166,
-          "parcelsTotal": 223
+          "sourceId": "cvsr"
         }
       }
     },
@@ -393,9 +381,7 @@
           "transcribedFields": [
             "progress"
           ],
-          "sourceId": "cvsr",
-          "parcelsDelivered": 827,
-          "parcelsTotal": 928
+          "sourceId": "cvsr"
         },
         "CP2-3": {
           "structuresComplete": 0,
@@ -405,9 +391,7 @@
           "transcribedFields": [
             "progress"
           ],
-          "sourceId": "cvsr",
-          "parcelsDelivered": 573,
-          "parcelsTotal": 850
+          "sourceId": "cvsr"
         },
         "CP4": {
           "structuresComplete": 0,
@@ -417,9 +401,7 @@
           "transcribedFields": [
             "progress"
           ],
-          "sourceId": "cvsr",
-          "parcelsDelivered": 172,
-          "parcelsTotal": 223
+          "sourceId": "cvsr"
         }
       }
     },
@@ -439,9 +421,7 @@
           "transcribedFields": [
             "progress"
           ],
-          "sourceId": "cvsr",
-          "parcelsDelivered": 804,
-          "parcelsTotal": 908
+          "sourceId": "cvsr"
         },
         "CP2-3": {
           "structuresComplete": 0,
@@ -451,9 +431,7 @@
           "transcribedFields": [
             "progress"
           ],
-          "sourceId": "cvsr",
-          "parcelsDelivered": 582,
-          "parcelsTotal": 886
+          "sourceId": "cvsr"
         },
         "CP4": {
           "structuresComplete": 0,
@@ -463,9 +441,7 @@
           "transcribedFields": [
             "progress"
           ],
-          "sourceId": "cvsr",
-          "parcelsDelivered": 159,
-          "parcelsTotal": 248
+          "sourceId": "cvsr"
         }
       }
     },
@@ -485,9 +461,7 @@
           "transcribedFields": [
             "progress"
           ],
-          "sourceId": "cvsr",
-          "parcelsDelivered": 827,
-          "parcelsTotal": 919
+          "sourceId": "cvsr"
         },
         "CP2-3": {
           "structuresComplete": 0,
@@ -497,9 +471,7 @@
           "transcribedFields": [
             "progress"
           ],
-          "sourceId": "cvsr",
-          "parcelsDelivered": 573,
-          "parcelsTotal": 956
+          "sourceId": "cvsr"
         },
         "CP4": {
           "structuresComplete": 0,
@@ -509,9 +481,7 @@
           "transcribedFields": [
             "progress"
           ],
-          "sourceId": "cvsr",
-          "parcelsDelivered": 172,
-          "parcelsTotal": 263
+          "sourceId": "cvsr"
         }
       }
     },
@@ -716,8 +686,8 @@
             "progress"
           ],
           "sourceId": "cvsr",
-          "parcelsDelivered": 1,
-          "parcelsTotal": 831
+          "parcelsDelivered": 830,
+          "parcelsTotal": 1073
         },
         "CP2-3": {
           "structuresComplete": 0,
@@ -786,8 +756,8 @@
             "progress"
           ],
           "sourceId": "cvsr",
-          "parcelsDelivered": 0,
-          "parcelsTotal": 163
+          "parcelsDelivered": 163,
+          "parcelsTotal": 239
         }
       }
     },
@@ -1011,15 +981,15 @@
           "sourceId": "cvsr",
           "utilitiesRelocated": 26,
           "utilitiesTotal": 166,
-          "parcelsDelivered": 1,
-          "parcelsTotal": 174
+          "parcelsDelivered": 173,
+          "parcelsTotal": 244
         }
       },
       "aggregate": {
         "utilitiesRelocated": 485,
         "utilitiesTotal": 2062,
-        "parcelsDelivered": 1554,
-        "parcelsTotal": 2234
+        "parcelsDelivered": 1726,
+        "parcelsTotal": 2304
       }
     },
     {
@@ -1157,15 +1127,15 @@
           "sourceId": "cvsr",
           "utilitiesRelocated": 35,
           "utilitiesTotal": 161,
-          "parcelsDelivered": 3,
-          "parcelsTotal": 182
+          "parcelsDelivered": 179,
+          "parcelsTotal": 238
         }
       },
       "aggregate": {
         "utilitiesRelocated": 575,
         "utilitiesTotal": 2065,
-        "parcelsDelivered": 1616,
-        "parcelsTotal": 2229
+        "parcelsDelivered": 1792,
+        "parcelsTotal": 2285
       }
     },
     {
@@ -1255,15 +1225,15 @@
           "sourceId": "cvsr",
           "utilitiesRelocated": 40,
           "utilitiesTotal": 168,
-          "parcelsDelivered": 1837,
-          "parcelsTotal": 2306
+          "parcelsDelivered": 182,
+          "parcelsTotal": 237
         }
       },
       "aggregate": {
         "utilitiesRelocated": 585,
         "utilitiesTotal": 2065,
-        "parcelsDelivered": 3492,
-        "parcelsTotal": 4375
+        "parcelsDelivered": 1837,
+        "parcelsTotal": 2306
       }
     },
     {
@@ -1304,15 +1274,15 @@
           "sourceId": "cvsr",
           "utilitiesRelocated": 44,
           "utilitiesTotal": 168,
-          "parcelsDelivered": 1867,
-          "parcelsTotal": 2292
+          "parcelsDelivered": 185,
+          "parcelsTotal": 237
         }
       },
       "aggregate": {
         "utilitiesRelocated": 613,
         "utilitiesTotal": 2065,
-        "parcelsDelivered": 3549,
-        "parcelsTotal": 4347
+        "parcelsDelivered": 1867,
+        "parcelsTotal": 2292
       }
     },
     {
@@ -1353,15 +1323,15 @@
           "sourceId": "cvsr",
           "utilitiesRelocated": 44,
           "utilitiesTotal": 168,
-          "parcelsDelivered": 1896,
-          "parcelsTotal": 2292
+          "parcelsDelivered": 187,
+          "parcelsTotal": 237
         }
       },
       "aggregate": {
         "utilitiesRelocated": 621,
         "utilitiesTotal": 2064,
-        "parcelsDelivered": 3605,
-        "parcelsTotal": 4347
+        "parcelsDelivered": 1896,
+        "parcelsTotal": 2292
       }
     },
     {
@@ -1402,15 +1372,15 @@
           "sourceId": "cvsr",
           "utilitiesRelocated": 52,
           "utilitiesTotal": 168,
-          "parcelsDelivered": 1922,
-          "parcelsTotal": 2292
+          "parcelsDelivered": 191,
+          "parcelsTotal": 237
         }
       },
       "aggregate": {
         "utilitiesRelocated": 650,
         "utilitiesTotal": 2064,
-        "parcelsDelivered": 3653,
-        "parcelsTotal": 4347
+        "parcelsDelivered": 1922,
+        "parcelsTotal": 2292
       }
     },
     {
@@ -4573,6 +4543,61 @@
         ],
         "cause": "source_not_reported",
         "detail": "The report does not publish package utility relocated and total counts in the later CVSR format."
+      },
+      {
+        "month": "2019-09",
+        "metric": "parcels",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report publishes ROW parcel acquisition counts only; it does not publish cumulative parcels delivered to the design-builder."
+      },
+      {
+        "month": "2019-10",
+        "metric": "parcels",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report publishes ROW parcel acquisition counts only; it does not publish cumulative parcels delivered to the design-builder."
+      },
+      {
+        "month": "2019-11",
+        "metric": "parcels",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report publishes ROW parcel acquisition counts only; it does not publish cumulative parcels delivered to the design-builder."
+      },
+      {
+        "month": "2019-12",
+        "metric": "parcels",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report publishes ROW parcel acquisition counts only; it does not publish cumulative parcels delivered to the design-builder."
+      },
+      {
+        "month": "2020-01",
+        "metric": "parcels",
+        "packages": [
+          "CP1",
+          "CP2-3",
+          "CP4"
+        ],
+        "cause": "source_not_reported",
+        "detail": "The report publishes ROW parcel acquisition counts only; it does not publish cumulative parcels delivered to the design-builder."
       }
     ],
     "rejectedReports": [
@@ -4830,6 +4855,88 @@
           "progress"
         ],
         "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      }
+    ],
+    "revisions": [
+      {
+        "month": "2021-08",
+        "metric": "progress",
+        "packages": [
+          "CP4"
+        ],
+        "correctedIn": "2022-04",
+        "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
+        "detail": "A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress. This has been corrected for the April 2022 Data report."
+      },
+      {
+        "month": "2021-09",
+        "metric": "progress",
+        "packages": [
+          "CP4"
+        ],
+        "correctedIn": "2022-04",
+        "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
+        "detail": "A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress. This has been corrected for the April 2022 Data report."
+      },
+      {
+        "month": "2021-10",
+        "metric": "progress",
+        "packages": [
+          "CP4"
+        ],
+        "correctedIn": "2022-04",
+        "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
+        "detail": "A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress. This has been corrected for the April 2022 Data report."
+      },
+      {
+        "month": "2021-11",
+        "metric": "progress",
+        "packages": [
+          "CP4"
+        ],
+        "correctedIn": "2022-04",
+        "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
+        "detail": "A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress. This has been corrected for the April 2022 Data report."
+      },
+      {
+        "month": "2021-12",
+        "metric": "progress",
+        "packages": [
+          "CP4"
+        ],
+        "correctedIn": "2022-04",
+        "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
+        "detail": "A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress. This has been corrected for the April 2022 Data report."
+      },
+      {
+        "month": "2022-01",
+        "metric": "progress",
+        "packages": [
+          "CP4"
+        ],
+        "correctedIn": "2022-04",
+        "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
+        "detail": "A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress. This has been corrected for the April 2022 Data report."
+      },
+      {
+        "month": "2022-02",
+        "metric": "progress",
+        "packages": [
+          "CP4"
+        ],
+        "correctedIn": "2022-04",
+        "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
+        "detail": "A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress. This has been corrected for the April 2022 Data report."
+      },
+      {
+        "month": "2022-03",
+        "metric": "progress",
+        "packages": [
+          "CP4"
+        ],
+        "correctedIn": "2022-04",
+        "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
+        "detail": "A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress. This has been corrected for the April 2022 Data report."
       }
     ],
     "unresolvedReportUrls": [

@@ -375,44 +375,26 @@ function packageProgressSection(text: string, cp: CvsrPackage): string {
   }
   return text.slice(first);
 }
-function parseAcquisitionTable(text: string, cp: CvsrPackage): CountPair | null {
-  const heading = /CP\s*1-4\s*(?:[–—-]\s*)?ROW Parcels to be Acquired and Remaining/i.exec(text);
-  if (!heading) return null;
-  const section = text.slice(heading.index, heading.index + 12000);
-  const row = new RegExp(
-    `CP\\s*${PACKAGE_LABELS[cp]}(?![-\\d])\\s+([0-9,]+)\\s+([0-9,]+)\\s+([0-9,]+)\\s+([0-9,]+)\\s+([0-9,]+)\\s+([0-9,]+)`,
-    'i',
-  ).exec(section);
-  if (!row) return null;
-  const total = integer(row[1]) - integer(row[4]);
-  const delivered = integer(row[2]) + integer(row[5]);
-  return validateCountPair(
-    { total, delivered, remaining: integer(row[6]) },
-    `parcels ${cp}`,
-  );
-}
-function parseAcquisitionSummary(text: string, cp: CvsrPackage): CountPair | null {
-  const heading = /CP\s*1-4\s*ROW Parcel Acquisition Summary/i.exec(text);
-  if (!heading) return null;
-  const section = text.slice(heading.index, heading.index + 12000);
-  const row = new RegExp(
-    `CP\\s*${PACKAGE_LABELS[cp]}(?![-\\d])\\s+(-?[0-9,]+)\\s+(-?[0-9,]+)\\s+(-?[0-9,]+)\\s+(-?[0-9,]+)\\s+(-?[0-9,]+)\\s+(-?[0-9,]+)`,
-    'i',
-  ).exec(section);
-  if (!row) return null;
-  const total = integer(row[1]);
-  const remaining = integer(row[6]);
-  return validateCountPair(
-    { total, delivered: total - remaining, remaining },
-    `parcels ${cp}`,
-  );
-}
 
+/**
+ * A construction-package section runs from its own heading to the next `CP … –`
+ * heading. Without that bound a candidate section reads its row out of the
+ * following acquisition, railroad, or package section instead of its own.
+ */
+function boundedCpSection(text: string, heading: RegExpExecArray, maxLength: number): string {
+  const boundary = /(?:^|\r?\n)[ \t]*CP\s*(?:1-4|1|2[-–]?3|4)\s*[–—-]/g;
+  boundary.lastIndex = heading.index + heading[0].length;
+  const next = boundary.exec(text);
+  return text.slice(
+    heading.index,
+    Math.min(next?.index ?? text.length, heading.index + maxLength),
+  );
+}
 
 function parseDeliveryTable(text: string, cp: CvsrPackage): CountPair | null {
   const heading = /CP\s*1-4\s*[–—-]\s*Real Property\/Right-of-Way\s*\(ROW\)[\s\S]{0,100}?(?:To Be Delivered vs\. Delivered|Parcels Delivered to DB)/i.exec(text);
   if (!heading) return null;
-  const section = text.slice(heading.index, heading.index + 8000);
+  const section = boundedCpSection(text, heading, 8000);
   const row = new RegExp(
     `CP\\s*${PACKAGE_LABELS[cp]}(?![-\\d])\\s+([0-9,]+)\\s+([0-9,]+)\\s+([0-9,]+)`,
     'i',
@@ -434,7 +416,7 @@ function parseParcelTable(text: string, cp: CvsrPackage): CountPair | null {
     if (headingPackage !== '1-4' && headingPackage !== PACKAGE_LABELS[cp].replace('[-–]?', '-')) {
       continue;
     }
-    const remainder = text.slice(heading.index, heading.index + 12000);
+    const remainder = boundedCpSection(text, heading, 12000);
     const railroad = /\bROW\b[^\n]{0,100}\bRailroad\b|\bRailroad\b[^\n]{0,100}\bSummary\b/i.exec(remainder);
     const section = railroad ? remainder.slice(0, railroad.index) : remainder;
     try {
@@ -459,7 +441,29 @@ function parseParcelTable(text: string, cp: CvsrPackage): CountPair | null {
 }
 
 
+/**
+ * Cumulative parcels delivered to the design-builder, by construction package.
+ *
+ * Precedence is by how directly a source section names that measure. The
+ * package ROW Summary table is the authority; the delivery table is the same
+ * measure in the later layout; the narrative forms are the pre-table wording.
+ * Acquisition counts are a different measure and are never substituted — a
+ * report that publishes no cumulative delivery yields `null`, which the
+ * pipeline records as a typed field gap.
+ */
 export function parseParcelPair(text: string, cp: CvsrPackage): CountPair | null {
+  // An unusable ROW Summary is only fatal when nothing else names the metric,
+  // so hold the rejection until the remaining strategies have been tried.
+  let invalidTable: Error | undefined;
+  try {
+    const table = parseParcelTable(text, cp);
+    if (table) return table;
+  } catch (error) {
+    invalidTable = error instanceof Error ? error : new Error(String(error));
+  }
+  const delivery = parseDeliveryTable(text, cp);
+  if (delivery) return delivery;
+
   const section = packageProgressSection(text, cp);
   const legacyMatches = [
     ...section.matchAll(
@@ -483,11 +487,6 @@ export function parseParcelPair(text: string, cp: CvsrPackage): CountPair | null
       `parcels ${cp}`,
     );
   }
-  const acquisition = parseAcquisitionTable(text, cp);
-  const summary = parseAcquisitionSummary(text, cp);
-  if (summary) return summary;
-  if (acquisition) return acquisition;
-  const delivery = parseDeliveryTable(text, cp);
-  if (delivery) return delivery;
-  return parseParcelTable(text, cp);
+  if (invalidTable) throw invalidTable;
+  return null;
 }

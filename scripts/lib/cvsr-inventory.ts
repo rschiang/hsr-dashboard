@@ -29,6 +29,20 @@ export type CvsrFieldFailure = {
 export const TRANSCRIPTION_DETAIL =
   'Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text.';
 
+/**
+ * A published package value the Authority later restated. The superseded month
+ * keeps the number its own report published; only the annotation is added.
+ */
+export type ReviewedCvsrRevision = {
+  /** Every month whose published value the correction supersedes. */
+  months: readonly string[];
+  metric: CvsrInventory['revisions'][number]['metric'];
+  packages: readonly CvsrPackage[];
+  correctedIn: string;
+  reportFile: string;
+  detail: string;
+};
+
 type BuildCvsrInventoryInput = {
   snapshots: Snapshot[];
   localFiles: ReadonlySet<string>;
@@ -36,6 +50,7 @@ type BuildCvsrInventoryInput = {
   rejectedReports: CvsrReportDiagnostic[];
   parseFailures: readonly CvsrParseFailure[];
   fieldFailures: readonly CvsrFieldFailure[];
+  revisions: readonly ReviewedCvsrRevision[];
   coverageStart: string;
   coverageEnd: string;
   /** Local CVSR candidate filenames with no byte-verified direct PDF URL. */
@@ -53,6 +68,14 @@ function monthRange(start: string, end: string): string[] {
   return months;
 }
 
+/**
+ * Audited window in which the reports publish ROW parcel *acquisition* counts
+ * but no cumulative parcels-delivered-to-design-builder figure. Acquisition is
+ * a different measure, so these months are a source omission, never a parser
+ * failure and never a substituted value.
+ */
+export const PARCEL_OMISSION_MONTHS: readonly string[] = monthRange('2019-09', '2020-01');
+
 export function buildCvsrInventory({
   snapshots,
   localFiles,
@@ -60,6 +83,7 @@ export function buildCvsrInventory({
   rejectedReports,
   parseFailures,
   fieldFailures,
+  revisions,
   coverageStart,
   coverageEnd,
   unresolvedReportUrls = [],
@@ -127,6 +151,16 @@ export function buildCvsrInventory({
     });
   }
 
+  for (const month of PARCEL_OMISSION_MONTHS) {
+    gaps.push({
+      month,
+      metric: 'parcels',
+      packages: [...CVSR_PACKAGES],
+      cause: 'source_not_reported',
+      detail: 'The report publishes ROW parcel acquisition counts only; it does not publish cumulative parcels delivered to the design-builder.',
+    });
+  }
+
   for (const failure of fieldFailures) {
     const existing = gaps.find(
       (gap) => gap.month === failure.month
@@ -167,6 +201,19 @@ export function buildCvsrInventory({
       }];
     });
 
+  // Restatements are published values too: the superseded month keeps the number
+  // its own report printed, so a revision never enters `gaps` either.
+  const flatRevisions = revisions
+    .flatMap((entry) => entry.months.map((month) => ({
+      month,
+      metric: entry.metric,
+      packages: [...entry.packages],
+      correctedIn: entry.correctedIn,
+      reportFile: entry.reportFile,
+      detail: entry.detail,
+    })))
+    .sort((a, b) => a.month.localeCompare(b.month) || a.metric.localeCompare(b.metric));
+
   return {
     coverageStart,
     coverageEnd,
@@ -175,6 +222,7 @@ export function buildCvsrInventory({
     gaps,
     rejectedReports,
     transcriptions,
+    revisions: flatRevisions,
     unresolvedReportUrls: [...unresolvedReportUrls].sort(),
   };
 }

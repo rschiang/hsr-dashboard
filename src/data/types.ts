@@ -164,6 +164,15 @@ export type CvsrInventory = {
     fields: Array<'progress' | 'parcels'>;
     detail: string;
   }>;
+  /** Package values the Authority later restated. The superseded month keeps its published value. */
+  revisions: Array<{
+    month: string;
+    metric: 'progress' | 'parcels' | 'utilities';
+    packages: Array<'CP1' | 'CP2-3' | 'CP4'>;
+    correctedIn: string;
+    reportFile: string;
+    detail: string;
+  }>;
   /** Local report filenames with no byte-verified direct PDF URL. */
   unresolvedReportUrls: string[];
 };
