@@ -18,7 +18,7 @@ export type CvsrSeriesPoint = { month: string; value: number; total: number; rat
 
 /**
  * One entry per requested month, in order. A month yields a point only when a
- * tier-2 CVSR snapshot reports that exact data month and both fields are finite
+ * tier-1 CVSR snapshot reports that exact data month and both fields are finite
  * numbers with a positive total; otherwise `null`. Nothing is interpolated and
  * nothing is carried forward — the `null` runs are the visible evidence of the
  * months the Authority did not publish the metric.
@@ -32,7 +32,7 @@ export function buildCvsrSeries(
 ): Array<CvsrSeriesPoint | null> {
   const byMonth = new Map<string, Snapshot>();
   for (const snapshot of snapshots) {
-    if (snapshot.tier === 2) byMonth.set(snapshot.dataMonth, snapshot);
+    if (snapshot.tier === 1) byMonth.set(snapshot.dataMonth, snapshot);
   }
   return months.map((month) => {
     const metrics = byMonth.get(month)?.perPackage?.[cp];

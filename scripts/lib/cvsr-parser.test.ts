@@ -580,7 +580,7 @@ test('assigns one snapshot gap cause using parser, download, then location prece
   const snapshot: Snapshot = {
     date: '2023-05-01',
     dataMonth: '2023-05',
-    tier: 2,
+    tier: 1,
     sourceId: 'cvsr',
   };
   const inventory = buildCvsrInventory({

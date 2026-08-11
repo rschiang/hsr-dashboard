@@ -32,18 +32,13 @@
 .sources-list li { scroll-margin-top: 24px; }
 .sources-list li:target { background: #fdf1e5; }
 
-.snapshot-report-link {
-  color: #8f3d00;
-  font-weight: 800;
-  text-transform: none;
-}
 .rail-report-status {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: 4px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--line);
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 11px;
   font-weight: 700;
@@ -199,18 +194,6 @@
   text-transform: uppercase;
 }
 
-.tier-badge {
-  padding: 4px 8px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-.provenance-scheduled { color: #734f00; background: #f4df9d; }
-.provenance-observed { color: #0b5d47; background: #bfe7db; }
-.provenance-mixed { color: #174e69; background: #c9e3ef; }
 .report-gap-badge {
   padding: 4px 8px;
   color: #7a2f12;

@@ -76,34 +76,39 @@ function App() {
       .catch((error) => setLoadError(String(error)));
   }, []);
 
-  // Scrubbable dates are the full month sequence plus every real ArcGIS
-  // observation. Tier-2 CVSR months already sit on the month sequence.
+  // Tier 2 applies to the last tick only. Every live poll is already eligible there
+  // (deriveStatuses takes the newest observation per segment), so the axis needs one
+  // tick, not one per poll.
+  const currentPoll = useMemo(
+    () => data?.history.snapshots
+      .filter((snapshot) => snapshot.tier === 2)
+      .sort((left, right) => left.date.localeCompare(right.date))
+      .at(-1),
+    [data],
+  );
   const dates = useMemo(
     () => data
-      ? [...new Set([
-          ...data.history.replayMonths,
-          ...data.history.snapshots.filter((snapshot) => snapshot.tier === 3).map((snapshot) => snapshot.date),
-        ])].sort()
+      ? (currentPoll ? [...data.history.replayMonths, currentPoll.date] : data.history.replayMonths)
       : [],
-    [data],
+    [currentPoll, data],
   );
   const derived = useMemo(
     () => data && date
       ? deriveStatuses(data.history.snapshots, data.segments.segments, date)
-      : { statuses: {}, evidence: {}, provenance: 'scheduled' as const },
+      : { statuses: {}, evidence: {} },
     [data, date],
   );
   const selectedMonth = date.slice(0, 7);
   const exactCvsrSnapshot = useMemo(() => {
     if (!data || !selectedMonth) return undefined;
     return data.history.snapshots.find(
-      (snapshot) => snapshot.tier === 2 && snapshot.dataMonth === selectedMonth,
+      (snapshot) => snapshot.tier === 1 && snapshot.dataMonth === selectedMonth,
     );
   }, [data, selectedMonth]);
   const lastCvsrSnapshot = useMemo(() => {
     if (!data || !selectedMonth) return undefined;
     return data.history.snapshots
-      .filter((snapshot) => snapshot.tier === 2 && snapshot.dataMonth < selectedMonth)
+      .filter((snapshot) => snapshot.tier === 1 && snapshot.dataMonth < selectedMonth)
       .sort((left, right) => left.dataMonth.localeCompare(right.dataMonth))
       .at(-1);
   }, [data, selectedMonth]);
@@ -152,7 +157,10 @@ function App() {
           <h1>Tracking On</h1>
           <p className="topbar-meta">
             <span>CA HSR Construction Dashboard</span>
-            <span>Last updated {new Date(data.segments.generatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</span>
+            <span>
+              Last updated {new Date(data.segments.generatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}
+              {' '}(CVSR up to {new Date(`${inventory.coverageEnd}-01T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', year: 'numeric', timeZone: 'UTC' })})
+            </span>
             <a href="https://github.com/rschiang/hsr-dashboard" target="_blank" rel="noreferrer" aria-label="Source code on GitHub">
               <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" /></svg>
             </a>
@@ -191,6 +199,7 @@ function App() {
               selectedMonth={selectedMonth}
               gaps={selectedCvsrGaps}
               exact={exactCvsrSnapshot !== undefined}
+              arcgisObserved={currentPoll && date === currentPoll.date ? currentPoll.date : undefined}
             />
             <Legend />
           </aside>
@@ -203,7 +212,6 @@ function App() {
               dates={dates}
               date={date}
               onDateChange={setDate}
-              provenance={derived.provenance}
               reportGap={selectedCvsrGaps.find((gap) => gap.metric === 'snapshot')}
             />
             <div className="axis-toggle" role="group" aria-label="Segment width scale">
@@ -241,15 +249,13 @@ function ReportLink({ gap }: { gap: CvsrGap }) {
 }
 
 function SnapshotReportLink({ snapshot }: { snapshot: Snapshot }) {
-  if (snapshot.tier !== 2 || !snapshot.reportUrl) {
-    // No byte-verified direct PDF for this month: identify the series and name
-    // the exact report file in the tooltip rather than linking a guess.
-    return <SourceLink sourceId="cvsr" title={snapshot.reportFile} />;
-  }
+  // No byte-verified direct PDF for this month: the status line names the month and
+  // the report file in its tooltip, which is all the attribution the source supports.
+  if (snapshot.tier !== 1 || !snapshot.reportUrl) return null;
   const archived = snapshot.originalReportUrl !== undefined;
   return (
     <a
-      className="snapshot-report-link"
+      className="fn-ref"
       href={snapshot.reportUrl}
       target="_blank"
       rel="noreferrer"
@@ -257,7 +263,7 @@ function SnapshotReportLink({ snapshot }: { snapshot: Snapshot }) {
         ? `${snapshot.reportFile} · original overwritten Authority URL: ${snapshot.originalReportUrl}`
         : snapshot.reportFile}
     >
-      {archived ? 'archived Authority report (PDF)' : 'Authority report (PDF)'}
+      <sup>↗</sup>
     </a>
   );
 }
@@ -300,6 +306,7 @@ function MetricRail({
   selectedMonth,
   gaps,
   exact,
+  arcgisObserved,
 }: {
   snapshot: Snapshot | undefined;
   snapshots: Snapshot[];
@@ -307,6 +314,8 @@ function MetricRail({
   selectedMonth: string;
   gaps: CvsrGap[];
   exact: boolean;
+  /** Poll date when the selected tick is the ArcGIS-overlaid present, else undefined. */
+  arcgisObserved?: string;
 }) {
   const beforeCoverage = selectedMonth < inventory.coverageStart;
   const afterCoverage = selectedMonth > inventory.coverageEnd;
@@ -333,17 +342,6 @@ function MetricRail({
 
   return (
     <>
-      <div className={`rail-report-status${exact || beforeCoverage || afterCoverage ? '' : ' stale'}`}>
-        {beforeCoverage
-          ? <>Before the published CVSR series (starts {inventory.coverageStart}) <SourceLink sourceId="cvsr" /></>
-          : afterCoverage && snapshot
-            ? <>Latest published CVSR: data through {inventory.coverageEnd} · <SnapshotReportLink snapshot={snapshot} />{snapshot.reportUrl && <> <SourceLink sourceId="cvsr" /></>}</>
-            : exact && snapshot
-              ? <>Data through {selectedMonth} · <SnapshotReportLink snapshot={snapshot} />{snapshot.reportUrl && <> <SourceLink sourceId="cvsr" /></>}</>
-              : snapshot
-                ? <>{snapshotGap ? GAP_LABELS[snapshotGap.cause] : 'No CVSR snapshot for selected month'} · Last observed {snapshot.dataMonth} · <SnapshotReportLink snapshot={snapshot} />{snapshot.reportUrl && <> <SourceLink sourceId="cvsr" /></>}</>
-                : <>{snapshotGap ? GAP_LABELS[snapshotGap.cause] : 'No CVSR snapshot for selected month'} <SourceLink sourceId="cvsr" /></>}
-      </div>
       <MetricBlock
         label="Track installed"
         value="0"
@@ -394,6 +392,17 @@ function MetricRail({
           />
         );
       })}
+      <div className={`rail-report-status${exact || beforeCoverage || afterCoverage ? '' : ' stale'}`}>
+        {beforeCoverage
+          ? <>Before the published CVSR series (starts {inventory.coverageStart})</>
+          : afterCoverage && snapshot
+            ? <>CVSR data through {inventory.coverageEnd}<SnapshotReportLink snapshot={snapshot} />{arcgisObserved && <> · ArcGIS observed {arcgisObserved}</>}</>
+            : exact && snapshot
+              ? <>CVSR data through {selectedMonth}<SnapshotReportLink snapshot={snapshot} /></>
+              : snapshot
+                ? <>{snapshotGap ? GAP_LABELS[snapshotGap.cause] : 'No CVSR snapshot for selected month'} · last CVSR {snapshot.dataMonth}<SnapshotReportLink snapshot={snapshot} /></>
+                : <>{snapshotGap ? GAP_LABELS[snapshotGap.cause] : 'No CVSR snapshot for selected month'}</>}
+      </div>
     </>
   );
 }

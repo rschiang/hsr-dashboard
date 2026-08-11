@@ -3,7 +3,7 @@
     {
       "date": "2019-03-01",
       "dataMonth": "2019-03",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_052119_FA_Central_Valley_Status_Update.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_052119_FA_Central_Valley_Status_Update.pdf",
@@ -49,7 +49,7 @@
     {
       "date": "2019-04-01",
       "dataMonth": "2019-04",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_061819_FA_Central_Valley_Status_Report.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_061819_FA_Central_Valley_Status_Report.pdf",
@@ -95,7 +95,7 @@
     {
       "date": "2019-05-01",
       "dataMonth": "2019-05",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_071619_FA_Central_Valley_Status_Report.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_071619_FA_Central_Valley_Status_Report.pdf",
@@ -141,7 +141,7 @@
     {
       "date": "2019-06-01",
       "dataMonth": "2019-06",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_082019_FA_Central_Valley_Status_Report.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_082019_FA_Central_Valley_Status_Report.pdf",
@@ -190,7 +190,7 @@
     {
       "date": "2019-07-01",
       "dataMonth": "2019-07",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_091719_FA_Central_Valley_Status_Report.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_091719_FA_Central_Valley_Status_Report.pdf",
@@ -239,7 +239,7 @@
     {
       "date": "2019-08-01",
       "dataMonth": "2019-08",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_101519_FA_Central_Valley_Status_Report.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_101519_FA_Central_Valley_Status_Report.pdf",
@@ -285,7 +285,7 @@
     {
       "date": "2019-09-01",
       "dataMonth": "2019-09",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_111919_FA_Central_Valley_Status_Report.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_111919_FA_Central_Valley_Status_Report.pdf",
@@ -334,7 +334,7 @@
     {
       "date": "2019-10-01",
       "dataMonth": "2019-10",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_121019_FA_Central_Valley_Status_Report.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2019/brdmtg_121019_FA_Central_Valley_Status_Report.pdf",
@@ -383,7 +383,7 @@
     {
       "date": "2019-11-01",
       "dataMonth": "2019-11",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_011420_FA_Central_Valley_Status_Report.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_011420_FA_Central_Valley_Status_Report.pdf",
@@ -432,7 +432,7 @@
     {
       "date": "2019-12-01",
       "dataMonth": "2019-12",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_021820_FA_Central_Valley_Status_Report.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_021820_FA_Central_Valley_Status_Report.pdf",
@@ -481,7 +481,7 @@
     {
       "date": "2020-01-01",
       "dataMonth": "2020-01",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_031720_FA_Central_Valley_Status_Report.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_031720_FA_Central_Valley_Status_Report.pdf",
@@ -551,7 +551,7 @@
     {
       "date": "2020-02-01",
       "dataMonth": "2020-02",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_042120_FA_Central_Valley_Status_Report.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_042120_FA_Central_Valley_Status_Report.pdf",
@@ -612,7 +612,7 @@
     {
       "date": "2020-03-01",
       "dataMonth": "2020-03",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_051420_FA_Central_Valley_Status_Report.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_051420_FA_Central_Valley_Status_Report.pdf",
@@ -673,7 +673,7 @@
     {
       "date": "2020-04-01",
       "dataMonth": "2020-04",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_062520_FA_Central_Valley_Status_Report.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_062520_FA_Central_Valley_Status_Report.pdf",
@@ -734,7 +734,7 @@
     {
       "date": "2020-05-01",
       "dataMonth": "2020-05",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_071620_FA_Central_Valley_Status_Report.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_071620_FA_Central_Valley_Status_Report.pdf",
@@ -795,7 +795,7 @@
     {
       "date": "2020-06-01",
       "dataMonth": "2020-06",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_081320_FA_Central_Valley_Status_Report.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_081320_FA_Central_Valley_Status_Report.pdf",
@@ -856,7 +856,7 @@
     {
       "date": "2020-07-01",
       "dataMonth": "2020-07",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_090920_FA_CVSR_2009_2007_Data.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_090920_FA_CVSR_2009_2007_Data.pdf",
@@ -917,7 +917,7 @@
     {
       "date": "2020-08-01",
       "dataMonth": "2020-08",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_101520_FA_CVSR_2010_2008_Data.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_101520_FA_CVSR_2010_2008_Data.pdf",
@@ -990,7 +990,7 @@
     {
       "date": "2020-09-01",
       "dataMonth": "2020-09",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_111920_FA_CVSR_2011_2009_Data.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_111920_FA_CVSR_2011_2009_Data.pdf",
@@ -1063,7 +1063,7 @@
     {
       "date": "2020-10-01",
       "dataMonth": "2020-10",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_121020_FA_CVSR_2012_2010_Data.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_121020_FA_CVSR_2012_2010_Data.pdf",
@@ -1136,7 +1136,7 @@
     {
       "date": "2020-11-01",
       "dataMonth": "2020-11",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_012121_FA_CVSR_2011_Data.pdf",
       "perPackage": {
@@ -1208,7 +1208,7 @@
     {
       "date": "2020-12-01",
       "dataMonth": "2020-12",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_020921_FA_CVSR_2102_2012_Data.pdf",
       "perPackage": {
@@ -1271,7 +1271,7 @@
     {
       "date": "2021-01-01",
       "dataMonth": "2021-01",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_032521_FA_CVSR_2103_2101_Data.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/04/brdmtg_032521_FA_CVSR_2103_2101_Data.pdf",
@@ -1335,7 +1335,7 @@
     {
       "date": "2021-02-01",
       "dataMonth": "2021-02",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_042221_FA_CVSR_2104_2102_Data.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/04/brdmtg_042221_FA_CVSR_2104_2102_Data.pdf",
@@ -1399,7 +1399,7 @@
     {
       "date": "2021-03-01",
       "dataMonth": "2021-03",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "508_CVSR_2105_2103_Data-FINAL_V0_ADA.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/05/508_CVSR_2105_2103_Data-FINAL_V0_ADA.pdf",
@@ -1463,7 +1463,7 @@
     {
       "date": "2021-04-01",
       "dataMonth": "2021-04",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2106_2104_Data-FINAL_V3.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/06/CVSR_2106_2104_Data-FINAL_V3.pdf",
@@ -1512,7 +1512,7 @@
     {
       "date": "2021-05-01",
       "dataMonth": "2021-05",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2107_2105_Data-FINAL_V0_A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/07/CVSR_2107_2105_Data-FINAL_V0_A11Y.pdf",
@@ -1561,7 +1561,7 @@
     {
       "date": "2021-06-01",
       "dataMonth": "2021-06",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2108_2106_Data-FINAL_V0_A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/08/CVSR_2108_2106_Data-FINAL_V0_A11Y.pdf",
@@ -1610,7 +1610,7 @@
     {
       "date": "2021-07-01",
       "dataMonth": "2021-07",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2109_2107_Data-FINAL_V0_ADA.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/09/CVSR_2109_2107_Data-FINAL_V0_ADA.pdf",
@@ -1659,7 +1659,7 @@
     {
       "date": "2021-08-01",
       "dataMonth": "2021-08",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2110_2108_Data-FINAL_V0_ADA.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/10/CVSR_2110_2108_Data-FINAL_V0_ADA.pdf",
@@ -1708,7 +1708,7 @@
     {
       "date": "2021-09-01",
       "dataMonth": "2021-09",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2111_2109_Data-FINAL_V0_A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/11/CVSR_2111_2109_Data-FINAL_V0_A11Y.pdf",
@@ -1763,7 +1763,7 @@
     {
       "date": "2021-10-01",
       "dataMonth": "2021-10",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2112_2110_Data-FINAL_V0_ADA.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/12/CVSR_2112_2110_Data-FINAL_V0_ADA.pdf",
@@ -1818,7 +1818,7 @@
     {
       "date": "2021-11-01",
       "dataMonth": "2021-11",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2201_2111_Data-FINAL_V0_A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/01/CVSR_2201_2111_Data-FINAL_V0_A11Y.pdf",
@@ -1873,7 +1873,7 @@
     {
       "date": "2021-12-01",
       "dataMonth": "2021-12",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2202_2112_Data-FINAL_V0_ADA.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/02/CVSR_2202_2112_Data-FINAL_V0_ADA.pdf",
@@ -1928,7 +1928,7 @@
     {
       "date": "2022-01-01",
       "dataMonth": "2022-01",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2203_2201_Data-FINAL_V0_A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/03/CVSR_2203_2201_Data-FINAL_V0_A11Y.pdf",
@@ -1983,7 +1983,7 @@
     {
       "date": "2022-02-01",
       "dataMonth": "2022-02",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2204-2202-Data-FINAL-v0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/04/CVSR-2204-2202-Data-FINAL-v0-A11Y.pdf",
@@ -2038,7 +2038,7 @@
     {
       "date": "2022-03-01",
       "dataMonth": "2022-03",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2205-2203-Data-FINAL-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/05/CVSR-2205-2203-Data-FINAL-A11Y.pdf",
@@ -2093,7 +2093,7 @@
     {
       "date": "2022-04-01",
       "dataMonth": "2022-04",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/06/CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
@@ -2148,7 +2148,7 @@
     {
       "date": "2022-05-01",
       "dataMonth": "2022-05",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2207-2205-Data-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/07/CVSR-2207-2205-Data-FINAL-V0-A11Y.pdf",
@@ -2203,7 +2203,7 @@
     {
       "date": "2022-06-01",
       "dataMonth": "2022-06",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2208_2206_Data-FINAL-V0-ADA.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/08/CVSR_2208_2206_Data-FINAL-V0-ADA.pdf",
@@ -2258,7 +2258,7 @@
     {
       "date": "2022-07-01",
       "dataMonth": "2022-07",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2209-2207-Data-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/09/CVSR-2209-2207-Data-FINAL-V0-A11Y.pdf",
@@ -2313,7 +2313,7 @@
     {
       "date": "2022-08-01",
       "dataMonth": "2022-08",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2210-2208-Data-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/10/CVSR-2210-2208-Data-FINAL-V0-A11Y.pdf",
@@ -2368,7 +2368,7 @@
     {
       "date": "2022-09-01",
       "dataMonth": "2022-09",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2211-2209-Data-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/11/CVSR-2211-2209-Data-FINAL-V0-A11Y.pdf",
@@ -2423,7 +2423,7 @@
     {
       "date": "2022-10-01",
       "dataMonth": "2022-10",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2212-2210-Data-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/12/CVSR-2212-2210-Data-FINAL-V0-A11Y.pdf",
@@ -2478,7 +2478,7 @@
     {
       "date": "2022-11-01",
       "dataMonth": "2022-11",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR0-2301-2211-Data-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/01/CVSR0-2301-2211-Data-FINAL-V0-A11Y.pdf",
@@ -2533,7 +2533,7 @@
     {
       "date": "2022-12-01",
       "dataMonth": "2022-12",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2302_2212_Data-FINAL-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/02/CVSR_2302_2212_Data-FINAL-A11Y.pdf",
@@ -2588,7 +2588,7 @@
     {
       "date": "2023-01-01",
       "dataMonth": "2023-01",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2303_2301_Data-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/03/CVSR_2303_2301_Data-FINAL-V0-A11Y.pdf",
@@ -2643,7 +2643,7 @@
     {
       "date": "2023-02-01",
       "dataMonth": "2023-02",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2304_2302_Data-FINAL-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/04/CVSR_2304_2302_Data-FINAL-A11Y.pdf",
@@ -2698,7 +2698,7 @@
     {
       "date": "2023-03-01",
       "dataMonth": "2023-03",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2305-2303-Data-FINAL-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/05/CVSR-2305-2303-Data-FINAL-A11Y.pdf",
@@ -2753,7 +2753,7 @@
     {
       "date": "2023-04-01",
       "dataMonth": "2023-04",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2306-2304-Data-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/06/CVSR-2306-2304-Data-FINAL-V0-A11Y.pdf",
@@ -2808,7 +2808,7 @@
     {
       "date": "2023-05-01",
       "dataMonth": "2023-05",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2307-2305-Data-FINAL-V0-A11Y.archive-20230725.pdf",
       "reportUrl": "https://web.archive.org/web/20230725134531id_/https://hsr.ca.gov/wp-content/uploads/2023/07/CVSR-2307-2305-Data-FINAL-V0-A11Y.pdf",
@@ -2864,7 +2864,7 @@
     {
       "date": "2023-06-01",
       "dataMonth": "2023-06",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2308-2306-Data-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/08/CVSR-2308-2306-Data-FINAL-V0-A11Y.pdf",
@@ -2919,7 +2919,7 @@
     {
       "date": "2023-07-01",
       "dataMonth": "2023-07",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2309-2307-Data-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/09/CVSR-2309-2307-Data-FINAL-V0-A11Y.pdf",
@@ -2974,7 +2974,7 @@
     {
       "date": "2023-08-01",
       "dataMonth": "2023-08",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR_231102_2308_Data-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/10/CVSR_231102_2308_Data-FINAL-V0-A11Y.pdf",
@@ -3029,7 +3029,7 @@
     {
       "date": "2023-09-01",
       "dataMonth": "2023-09",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR_231206_2309_Data-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/11/CVSR_231206_2309_Data-FINAL-V0-A11Y.pdf",
@@ -3084,7 +3084,7 @@
     {
       "date": "2023-10-01",
       "dataMonth": "2023-10",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2312-2310-Data-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/01/CVSR-2312-2310-Data-FINAL-V0-A11Y.pdf",
@@ -3139,7 +3139,7 @@
     {
       "date": "2023-11-01",
       "dataMonth": "2023-11",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "20240818-CVSR_2401_2311_Data-FINAL-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/01/20240818-CVSR_2401_2311_Data-FINAL-A11Y.pdf",
@@ -3194,7 +3194,7 @@
     {
       "date": "2023-12-01",
       "dataMonth": "2023-12",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2402_2312_Data-FINAL.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/02/CVSR_2402_2312_Data-FINAL.pdf",
@@ -3249,7 +3249,7 @@
     {
       "date": "2024-01-01",
       "dataMonth": "2024-01",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR_2403_2401_Data-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/03/CVSR_2403_2401_Data-FINAL-V0-A11Y.pdf",
@@ -3304,7 +3304,7 @@
     {
       "date": "2024-02-01",
       "dataMonth": "2024-02",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2404-2402-Data-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/04/CVSR-2404-2402-Data-FINAL-V0-A11Y.pdf",
@@ -3359,7 +3359,7 @@
     {
       "date": "2024-03-01",
       "dataMonth": "2024-03",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2405-2403-Data-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/05/CVSR-2405-2403-Data-FINAL-V0-A11Y.pdf",
@@ -3414,7 +3414,7 @@
     {
       "date": "2024-04-01",
       "dataMonth": "2024-04",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2024-06-Data-2024-04-FINAL-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/06/CVSR-2024-06-Data-2024-04-FINAL-A11Y.pdf",
@@ -3463,7 +3463,7 @@
     {
       "date": "2024-05-01",
       "dataMonth": "2024-05",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "Supplemental-CVSR-2024-08-Data-2024-05-FINAL-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/08/Supplemental-CVSR-2024-08-Data-2024-05-FINAL-A11Y.pdf",
@@ -3518,7 +3518,7 @@
     {
       "date": "2024-06-01",
       "dataMonth": "2024-06",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2024-08-Data-2024-06-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/08/CVSR-2024-08-Data-2024-06-FINAL-V0-A11Y.pdf",
@@ -3573,7 +3573,7 @@
     {
       "date": "2024-07-01",
       "dataMonth": "2024-07",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2024-09-Data-2024-07-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/09/CVSR-2024-09-Data-2024-07-FINAL-V0-A11Y.pdf",
@@ -3628,7 +3628,7 @@
     {
       "date": "2024-08-01",
       "dataMonth": "2024-08",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2024-10-Data-2024-08-Draft-3-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/11/CVSR-2024-10-Data-2024-08-Draft-3-A11Y.pdf",
@@ -3683,7 +3683,7 @@
     {
       "date": "2024-09-01",
       "dataMonth": "2024-09",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2024-11-Data-2024-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2024/12/CVSR-2024-11-Data-2024-A11Y.pdf",
@@ -3738,7 +3738,7 @@
     {
       "date": "2024-10-01",
       "dataMonth": "2024-10",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-December-2024-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/01/CVSR-December-2024-A11Y.pdf",
@@ -3793,7 +3793,7 @@
     {
       "date": "2024-11-01",
       "dataMonth": "2024-11",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-01-Data-2024-11-FINAL-V0-Remediation-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/01/CVSR-2025-01-Data-2024-11-FINAL-V0-Remediation-A11Y.pdf",
@@ -3848,7 +3848,7 @@
     {
       "date": "2024-12-01",
       "dataMonth": "2024-12",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-03-Data-2024-12-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/02/CVSR-2025-03-Data-2024-12-FINAL-V0-A11Y.pdf",
@@ -3903,7 +3903,7 @@
     {
       "date": "2025-01-01",
       "dataMonth": "2025-01",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-03-20-Data-2025-01-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/03/CVSR-2025-03-20-Data-2025-01-FINAL-V0-A11Y.pdf",
@@ -3958,7 +3958,7 @@
     {
       "date": "2025-02-01",
       "dataMonth": "2025-02",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-05-01-Data-2025-02-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/04/CVSR-2025-05-01-Data-2025-02-FINAL-V0-A11Y.pdf",
@@ -4013,7 +4013,7 @@
     {
       "date": "2025-03-01",
       "dataMonth": "2025-03",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-05-29-Data-2025-03-Final2-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/05/CVSR-2025-05-29-Data-2025-03-Final2-A11Y.pdf",
@@ -4062,7 +4062,7 @@
     {
       "date": "2025-04-01",
       "dataMonth": "2025-04",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-06-Data-2025-04-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/06/CVSR-2025-06-Data-2025-04-FINAL-V0-A11Y.pdf",
@@ -4117,7 +4117,7 @@
     {
       "date": "2025-05-01",
       "dataMonth": "2025-05",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-07-Data-2025-05-FINAL-V2-A11Y.pdf",
       "perPackage": {
@@ -4171,7 +4171,7 @@
     {
       "date": "2025-06-01",
       "dataMonth": "2025-06",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-08-Data-2025-06-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/08/CVSR-2025-08-Data-2025-06-FINAL-V0-A11Y.pdf",
@@ -4226,7 +4226,7 @@
     {
       "date": "2025-07-01",
       "dataMonth": "2025-07",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-10-Data-2025-07-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/10/CVSR-2025-10-Data-2025-07-FINAL-V0-A11Y.pdf",
@@ -4281,7 +4281,7 @@
     {
       "date": "2025-08-01",
       "dataMonth": "2025-08",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-10-Data-2025-08-Supplemental-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/10/CVSR-2025-10-Data-2025-08-Supplemental-FINAL-V0-A11Y.pdf",
@@ -4336,7 +4336,7 @@
     {
       "date": "2025-09-01",
       "dataMonth": "2025-09",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-11-Data-2025-09-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/11/CVSR-2025-11-Data-2025-09-FINAL-V0-A11Y.pdf",
@@ -4391,7 +4391,7 @@
     {
       "date": "2025-10-01",
       "dataMonth": "2025-10",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-12-Data-2025-10-FINAL-V0-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2025/12/CVSR-2025-12-Data-2025-10-FINAL-V0-A11Y.pdf",
@@ -4446,7 +4446,7 @@
     {
       "date": "2025-11-01",
       "dataMonth": "2025-11",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "FA-Central-Valley-Status-Report-January-2026-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/01/FA-Central-Valley-Status-Report-January-2026-A11Y.pdf",
@@ -4501,7 +4501,7 @@
     {
       "date": "2025-12-01",
       "dataMonth": "2025-12",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "FA-Central-Valley-Status-Report-March-2026-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/02/FA-Central-Valley-Status-Report-March-2026-A11Y.pdf",
@@ -4556,7 +4556,7 @@
     {
       "date": "2026-01-01",
       "dataMonth": "2026-01",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "FA-Central-Valley-Status-Report-Supplemental-March-2026-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/03/FA-Central-Valley-Status-Report-Supplemental-March-2026-A11Y.pdf",
@@ -4611,7 +4611,7 @@
     {
       "date": "2026-02-01",
       "dataMonth": "2026-02",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "FA-Central-Valley-Status-Report-April-2026.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/04/FA-Central-Valley-Status-Report-April-2026.pdf",
@@ -4666,7 +4666,7 @@
     {
       "date": "2026-03-01",
       "dataMonth": "2026-03",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "FA-Central-Valley-Status-Report-June-2026-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/05/FA-Central-Valley-Status-Report-June-2026-A11Y.pdf",
@@ -5749,7 +5749,7 @@
     {
       "date": "2026-04-01",
       "dataMonth": "2026-04",
-      "tier": 2,
+      "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
       "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",

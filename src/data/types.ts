@@ -152,15 +152,23 @@ type SnapshotFields = {
 
 export type Snapshot = SnapshotFields & ({
   date: string;
-  tier: 3;
-  dataMonth?: never;
-  reportUrl?: never;
-} | {
-  date: string;
   dataMonth: string;
-  tier: 2;
+  tier: 1;
   reportUrl?: string;
   originalReportUrl?: string;
+} | {
+  /** The poll day, `polledAt` truncated; the key every replay comparison uses. */
+  date: string;
+  tier: 2;
+  /**
+   * When the ArcGIS feature services were polled. They expose only their current
+   * state, so a tier-2 snapshot claims nothing beyond "this is what the server
+   * returned at this instant". Polls are sparse and irregular, and no value is
+   * ever carried forward between them.
+   */
+  polledAt: string;
+  dataMonth?: never;
+  reportUrl?: never;
 });
 
 export type CvsrGapCause =
@@ -214,11 +222,14 @@ export type CvsrInventory = {
   unresolvedReportUrls: string[];
 };
 
-export type ReplayProvenance = 'scheduled' | 'observed' | 'mixed';
-
 export type HistoryArtifact = {
   generatedAt: string;
-  /** Every scrubbable month as YYYY-MM-01, independent of whether any snapshot exists for it. */
+  /**
+   * Every scrubbable month as YYYY-MM-01, from the start of the replay through
+   * the last month CVSR published. Months past that carry no evidence at all, so
+   * they are omitted rather than redrawing the previous month; they reappear on
+   * their own once a later report is fetched.
+   */
   replayMonths: string[];
   snapshots: Snapshot[];
   cvsrInventory: CvsrInventory;

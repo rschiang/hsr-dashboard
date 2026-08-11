@@ -500,7 +500,7 @@ async function parsePdf(
   return {
     date: `${dataMonth}-01`,
     dataMonth,
-    tier: 2,
+    tier: 1,
     sourceId: 'cvsr',
     reportFile,
     ...(report

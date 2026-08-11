@@ -461,10 +461,10 @@ if (parsedSnapshotsRaw === null) {
   const parsed = JSON.parse(parsedSnapshotsRaw) as { snapshots?: Snapshot[] };
   const allSnapshots = parsed.snapshots ?? [];
   const latest = allSnapshots
-    .filter((snapshot) => snapshot.tier === 2 && snapshot.perPackage !== undefined)
+    .filter((snapshot) => snapshot.tier === 1 && snapshot.perPackage !== undefined)
     .sort((a, b) => a.dataMonth!.localeCompare(b.dataMonth!))
     .at(-1);
-  if (!latest) throw new Error('parsed-snapshots.json holds no tier-2 CVSR snapshot with package metrics');
+  if (!latest) throw new Error('parsed-snapshots.json holds no tier-1 CVSR snapshot with package metrics');
   const perPackage = {} as NonNullable<SegmentsArtifact['crossCheck']>['perPackage'];
   for (const cp of CVSR_PACKAGE_IDS) {
     const metrics = latest.perPackage?.[cp];

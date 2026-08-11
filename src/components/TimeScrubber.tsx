@@ -5,13 +5,11 @@ export function TimeScrubber({
   dates,
   date,
   onDateChange,
-  provenance,
   reportGap,
 }: {
   dates: string[];
   date: string;
   onDateChange: (date: string) => void;
-  provenance: 'scheduled' | 'observed' | 'mixed';
   reportGap?: CvsrGap;
 }) {
   const [playing, setPlaying] = useState(false);
@@ -39,11 +37,6 @@ export function TimeScrubber({
     };
   }, [date, dates, onDateChange, playing]);
 
-  const provenanceLabel = provenance === 'mixed'
-    ? 'Mixed observed + scheduled'
-    : provenance === 'observed'
-      ? 'Observed replay'
-      : 'Scheduled replay';
   return (
     <div className="time-scrubber">
       <div className="scrubber-row">
@@ -58,12 +51,12 @@ export function TimeScrubber({
           onChange={(event) => onDateChange(dates[Number(event.currentTarget.value)])}
           aria-label="Progress date"
         />
-        <time dateTime={date}>{date.slice(0, 7)}</time>
+        {/* The last tick is not a month: it is the present, CVSR base plus any later ArcGIS poll. */}
+        <time dateTime={date}>{index === dates.length - 1 ? 'Current' : date.slice(0, 7)}</time>
       </div>
       {/* Everything whose width changes with the selected month lives on its own
           row: a badge resizing must never resize the track under the pointer. */}
       <div className="scrubber-status">
-        <span className={`tier-badge provenance-${provenance}`}>{provenanceLabel}</span>
         {reportGap && (
           <span className="report-gap-badge" title={reportGap.detail}>
             Report gap

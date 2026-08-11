@@ -1,6 +1,5 @@
 import type {
   AlignmentStatus,
-  ReplayProvenance,
   Segment,
   SegmentObservation,
   Snapshot,
@@ -99,7 +98,6 @@ export function latestStructureEvidence(
 
 export type ResolvedSegmentStatus = {
   status: AlignmentStatus;
-  provenance: Exclude<ReplayProvenance, 'mixed'>;
   evidence?: StructureEvidence;
 };
 
@@ -111,30 +109,25 @@ export function resolveSegmentStatus(
   if (observation?.table === 'completed') {
     return {
       status: segment.kind === 'structure' ? 'structure_complete' : 'guideway_complete',
-      provenance: 'observed',
       evidence: latestStructureEvidence(segment, date),
     };
   }
   if (observation !== undefined && observation.completion !== null) {
-    return {
-      status: statusFromCompletion(observation.completion, segment.start, date),
-      provenance: 'observed',
-    };
+    return { status: statusFromCompletion(observation.completion, segment.start, date) };
   }
 
   const evidence = latestStructureEvidence(segment, date);
   if (evidence !== undefined) {
     return {
       status: evidence.claim === 'completed' ? 'structure_complete' : 'under_construction',
-      provenance: 'observed',
       evidence,
     };
   }
 
   if (observation !== undefined) {
-    return { status: 'no_data', provenance: 'observed' };
+    return { status: 'no_data' };
   }
-  return { status: scheduledStatus(segment, date), provenance: 'scheduled' };
+  return { status: scheduledStatus(segment, date) };
 }
 
 export function deriveStatuses(
@@ -144,14 +137,12 @@ export function deriveStatuses(
 ): {
   statuses: Record<string, AlignmentStatus>;
   evidence: Record<string, StructureEvidence | undefined>;
-  provenance: ReplayProvenance;
 } {
   const eligible = history
     .filter((snapshot) => snapshot.date <= date && snapshot.perSegment)
     .sort((a, b) => b.date.localeCompare(a.date));
   const statuses: Record<string, AlignmentStatus> = {};
   const evidence: Record<string, StructureEvidence | undefined> = {};
-  const provenance = new Set<Exclude<ReplayProvenance, 'mixed'>>();
   for (const segment of segments) {
     const observed = eligible.find(
       (snapshot) => snapshot.perSegment !== undefined && Object.hasOwn(snapshot.perSegment, segment.id),
@@ -160,13 +151,8 @@ export function deriveStatuses(
     const resolved = resolveSegmentStatus(segment, date, observation);
     statuses[segment.id] = resolved.status;
     evidence[segment.id] = resolved.evidence;
-    provenance.add(resolved.provenance);
   }
-  return {
-    statuses,
-    evidence,
-    provenance: provenance.size > 1 ? 'mixed' : (provenance.values().next().value ?? 'scheduled'),
-  };
+  return { statuses, evidence };
 }
 
 /**

@@ -1,4 +1,3 @@
-import { execFileSync } from 'node:child_process';
 import { readFile, writeFile } from 'node:fs/promises';
 import type { CvsrInventory, HistoryArtifact, Segment, SegmentsArtifact, Snapshot } from '../src/data/types';
 
@@ -13,10 +12,16 @@ function monthSequence(start: string, end: string): string[] {
   return result;
 }
 
-function observedSnapshot(date: string, segments: Segment[]): Snapshot {
+/**
+ * The one observation a fetch can honestly produce. The ArcGIS feature services
+ * expose only their present state, so each poll yields exactly one snapshot and
+ * nothing reconstructs a poll that was never taken.
+ */
+function observedSnapshot(polledAt: string, segments: Segment[]): Snapshot {
   return {
-    date: date.slice(0, 10),
-    tier: 3,
+    date: polledAt.slice(0, 10),
+    tier: 2,
+    polledAt,
     sourceId: 'arcgis_progress',
     perSegment: Object.fromEntries(segments.map((segment) => [
       segment.id,
@@ -32,9 +37,6 @@ function observedSnapshot(date: string, segments: Segment[]): Snapshot {
 }
 
 const artifact = JSON.parse(await readFile('public/data/segments.json', 'utf8')) as SegmentsArtifact;
-// Every scrubbable month. Replay colours before the first observation come from
-// published Start/Finish dates via scheduledStatus; no completion number is invented.
-const replayMonths = monthSequence('2018-11-01', artifact.generatedAt.slice(0, 10));
 const snapshots: Snapshot[] = [];
 
 const parsed = JSON.parse(await readFile('data/raw/cvsr/parsed-snapshots.json', 'utf8')) as {
@@ -45,38 +47,29 @@ if (!parsed.cvsrInventory) {
   throw new Error('CVSR parsed snapshots are missing the required cvsrInventory');
 }
 for (const snapshot of parsed.snapshots ?? []) {
-  if (snapshot.tier === 2) snapshots.push(snapshot);
+  if (snapshot.tier === 1) snapshots.push(snapshot);
+}
+snapshots.sort((a, b) => a.date.localeCompare(b.date));
+const lastPublishedMonth = snapshots.at(-1)?.date;
+if (lastPublishedMonth === undefined) {
+  throw new Error('No tier 1 CVSR snapshots: the replay axis has no published month to end on');
 }
 
-const tier3 = new Map<string, Snapshot>();
-try {
-  const log = execFileSync('git', ['log', '--format=%H|%cI', '--', 'public/data/segments.json'], {
-    encoding: 'utf8',
-    stdio: ['ignore', 'pipe', 'ignore'],
-  }).trim();
-  for (const line of log.split('\n').filter(Boolean)) {
-    const separator = line.indexOf('|');
-    const hash = line.slice(0, separator);
-    const committedAt = line.slice(separator + 1, separator + 11);
-    try {
-      const content = execFileSync('git', ['show', `${hash}:public/data/segments.json`], {
-        encoding: 'utf8',
-        stdio: ['ignore', 'pipe', 'ignore'],
-        maxBuffer: 20 * 1024 * 1024,
-      });
-      const committed = JSON.parse(content) as SegmentsArtifact;
-      tier3.set(committedAt, observedSnapshot(committedAt, committed.segments));
-    } catch (error) {
-      console.warn(`git snapshot ${hash.slice(0, 8)} skipped: ${String(error)}`);
-    }
-  }
-} catch {
-  console.warn('Git history unavailable; tier 3 starts with the current fetched artifact');
-}
-const currentDate = artifact.generatedAt.slice(0, 10);
-tier3.set(currentDate, observedSnapshot(currentDate, artifact.segments));
-snapshots.push(...tier3.values());
+// A poll is the leading edge only until CVSR publishes a report covering its month.
+// After that the report is the controlling verdict and the poll has no UI role, so it
+// never reaches the browser artifact — which keeps the supersession rule out of
+// deriveStatuses and selectedCompletions entirely.
+const poll = observedSnapshot(artifact.generatedAt, artifact.segments);
+const pollSuperseded = poll.date.slice(0, 7) <= lastPublishedMonth.slice(0, 7);
+if (!pollSuperseded) snapshots.push(poll);
 snapshots.sort((a, b) => a.date.localeCompare(b.date) || a.tier - b.tier);
+
+// The replay ends on the last month CVSR actually published. A month past it has
+// neither a report nor a poll behind it, so a tick there could only redraw the
+// month before — carry-forward wearing a date. Replay colours before the first
+// observation come from published Start/Finish dates via scheduledStatus; no
+// completion number is invented.
+const replayMonths = monthSequence('2018-11-01', lastPublishedMonth);
 
 const history: HistoryArtifact = {
   generatedAt: artifact.generatedAt,
@@ -89,4 +82,4 @@ const counts = snapshots.reduce<Record<number, number>>((result, snapshot) => {
   result[snapshot.tier] = (result[snapshot.tier] ?? 0) + 1;
   return result;
 }, {});
-console.log(`history: months=${replayMonths.length}, tier 2=${counts[2] ?? 0}, tier 3=${counts[3] ?? 0}`);
+console.log(`history: months=${replayMonths.length} (through ${lastPublishedMonth.slice(0, 7)}), tier 1=${counts[1] ?? 0}, tier 2=${counts[2] ?? 0}${pollSuperseded ? ` (poll ${poll.date} superseded, dropped)` : ''}`);

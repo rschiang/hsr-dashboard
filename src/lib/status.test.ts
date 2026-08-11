@@ -70,10 +70,9 @@ test('numeric observations take precedence over categorical evidence', () => {
 
   assert.equal(resolved.status, 'under_construction');
   assert.equal(resolved.evidence, undefined);
-  assert.equal(resolved.provenance, 'observed');
 });
 
-test('null observations allow dated evidence and produce mixed replay provenance', () => {
+test('null observations allow dated evidence to resolve status', () => {
   const evidenced = segment({ evidence: [progressEvidence] });
   const scheduled = segment({
     id: 'CP1:177',
@@ -87,7 +86,6 @@ test('null observations allow dated evidence and produce mixed replay provenance
 
   assert.equal(result.statuses['CP1:176'], 'under_construction');
   assert.equal(result.statuses['CP1:177'], 'not_started');
-  assert.equal(result.provenance, 'mixed');
 });
 
 
@@ -106,7 +104,8 @@ test('only segments present in the snapshot read from it', () => {
   const missing = segment({ id: 'CP1:201', kind: 'guideway', completion: 0.4 });
   const snapshot: Snapshot = {
     date: '2022-06-01',
-    tier: 3,
+    tier: 2,
+    polledAt: '2022-06-01T09:00:00.000Z',
     sourceId: 'arcgis_progress',
     perSegment: { 'CP1:200': { completion: 0.31, sourceId: 'arcgis_progress' } },
   };
@@ -134,13 +133,14 @@ test('uses the latest per-segment observation across snapshot tiers', () => {
     {
       date: '2026-03-01',
       dataMonth: '2026-03',
-      tier: 2,
+      tier: 1,
       sourceId: 'cvsr',
       perSegment: { [subject.id]: { completion: 0.4, sourceId: 'cvsr', table: 'underway' } },
     },
     {
       date: '2026-04-01',
-      tier: 3,
+      tier: 2,
+      polledAt: '2026-04-01T09:00:00.000Z',
       sourceId: 'arcgis_progress',
       perSegment: { 'CP1:other': { completion: 0.8, sourceId: 'arcgis_progress' } },
     },

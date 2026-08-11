@@ -18,7 +18,7 @@ function snapshot(dataMonth: string, cp1: PackageMetrics): Snapshot {
   return {
     date: `${dataMonth}-01`,
     dataMonth,
-    tier: 2,
+    tier: 1,
     sourceId: 'cvsr',
     perPackage: { CP1: cp1 },
   };
@@ -61,10 +61,11 @@ test('a zero total yields null rather than a divide-by-zero ratio', () => {
   assert.deepEqual(series, [null]);
 });
 
-test('tier-3 observations never contribute points', () => {
+test('tier-2 ArcGIS observations never contribute points', () => {
   const observed: Snapshot = {
     date: '2023-04-01',
-    tier: 3,
+    tier: 2,
+    polledAt: '2023-04-01T09:00:00.000Z',
     sourceId: 'arcgis_progress',
     perSegment: { 'CP1:1': { completion: 1, sourceId: 'arcgis_progress' } },
   };

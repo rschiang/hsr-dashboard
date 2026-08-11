@@ -51,11 +51,12 @@ Reviewed dated structure claims live in [`src/data/structure-evidence.ts`](src/d
 
 | Tier | Meaning | Resolution |
 |---|---|---|
-| 1 | Scheduled reconstruction from published segment start/finish dates, clamped to current observed completion | Per segment |
-| 2 | Observed metrics parsed from monthly Central Valley Status Reports | Package metrics for all 86 months; per-segment observations for the two reports that publish row tables |
-| 3 | Observed ArcGIS snapshots accumulated by committed pipeline runs | Per segment |
+| 1 | Observed metrics parsed from monthly Central Valley Status Reports | Package metrics for all 86 months; per-segment observations for the two reports that publish row tables |
+| 2 | One BuildHSR ArcGIS poll: what the layers returned at a single recorded instant | Per segment, applied to the last scrubber tick only |
 
-CAHSRA does not provide archived snapshots of the relevant ArcGIS layers. Tier 1 is therefore a scheduled reconstruction, not an assertion of historical observed status. The UI labels the active tier.
+**CVSR is the replay spine.** This is a ten-year program and monthly granularity sits comfortably against it. The status reports are the stable record: a published data month, a fixed PDF that can be re-read years later, and a correction trail when the Authority restates a figure. ArcGIS is realtime and therefore volatile — it can regress or blank out between reads, and none of it is archived. Tier 2 overlays the last tick during the two to three months before a report lands; once a report covering that month is published the poll is superseded and dropped, and tier 1 controls.
+
+Months with no observation behind them are filled by a schedule reconstruction from published segment start/finish dates, clamped to current observed completion (`scheduledStatus`). It is a computed fallback, not a stored tier — no `Snapshot` carries it.
 
 ROW uses three non-interchangeable series. **Parcel acquisition** means legally possessed by the Authority and retains the source table’s as-of date. **Delivery to the design-builder** is the separately certified delivery measure. **Railroad parcel acquisition/delivery** is published in a separate railroad ROW table. The dashboard never substitutes one series for another.
 
@@ -145,7 +146,7 @@ The data scripts also enforce corridor invariants, including TS1 section totals,
 
 ## Static deployment
 
-Vite builds the site under the `/hsr-dashboard/` base path. GitHub Actions publishes `dist/` to GitHub Pages. A scheduled workflow refreshes the public ArcGIS data and commits changed generated artifacts, allowing observed tier-3 history to accumulate over time.
+Vite builds the site under the `/hsr-dashboard/` base path. GitHub Actions publishes `dist/` to GitHub Pages. A scheduled workflow refreshes the public ArcGIS data and commits changed generated artifacts, so the tier-2 poll always reflects the most recent successful fetch.
 
 ## Core integrity rules
 
