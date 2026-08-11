@@ -10,11 +10,12 @@ const BASELINE = 40;
 const AMPLITUDE = 34;
 
 /**
- * One sparkline over N published CVSR series. Every break in a line is a month
- * the Authority did not publish the metric: contiguous runs are drawn as
- * separate paths and never bridged, so the gaps stay visible rather than being
- * smoothed into a trend that was never reported. A series with no published
- * month at all is a dashed baseline, not an invented flat line.
+ * One sparkline over N published CVSR series. Published months are drawn as solid
+ * runs; every month the Authority did not publish is bridged with a light-grey
+ * dashed segment, so an estimated span can never be mistaken for a reported one.
+ * A leading run of unpublished months is bridged flat at the first published value;
+ * a trailing one is not bridged at all, because nothing later justifies it. A series
+ * with no published month is a grey dashed baseline, not an invented flat line.
  */
 export function Sparkline({
   series,
@@ -63,30 +64,58 @@ export function Sparkline({
           return (
             <line
               key={id}
+              className="sparkline-gap"
               x1={PLOT_LEFT}
               x2={WIDTH - PLOT_LEFT}
               y1={BASELINE}
               y2={BASELINE}
-              stroke={color}
-              strokeWidth="1"
-              strokeDasharray="2 3"
               vectorEffect="non-scaling-stroke"
             />
           );
         }
-        return runs.map((entries) => (
-          entries.length === 1
-            ? <circle key={`${id}:${entries[0].index}`} cx={xAt(entries[0].index)} cy={yAt(entries[0].point)} r="1" fill={color} />
-            : (
-              <path
-                key={`${id}:${entries[0].index}`}
-                className="sparkline-run"
-                stroke={color}
+
+        // Months the Authority never published are bridged, not plotted: a light-grey
+        // dashed segment marks the span as an estimate the source does not support.
+        const bridges: Array<{ key: string; x1: number; y1: number; x2: number; y2: number }> = [];
+        const head = runs[0][0];
+        if (head.index > 0) {
+          // Nothing precedes the first published month, so the first value is the estimate.
+          bridges.push({ key: 'lead', x1: xAt(0), y1: yAt(head.point), x2: xAt(head.index), y2: yAt(head.point) });
+        }
+        for (let position = 1; position < runs.length; position += 1) {
+          const from = runs[position - 1].at(-1)!;
+          const to = runs[position][0];
+          bridges.push({ key: `gap:${from.index}`, x1: xAt(from.index), y1: yAt(from.point), x2: xAt(to.index), y2: yAt(to.point) });
+        }
+
+        return (
+          <g key={id}>
+            {bridges.map((bridge) => (
+              <line
+                key={bridge.key}
+                className="sparkline-gap"
+                x1={bridge.x1.toFixed(2)}
+                y1={bridge.y1.toFixed(2)}
+                x2={bridge.x2.toFixed(2)}
+                y2={bridge.y2.toFixed(2)}
                 vectorEffect="non-scaling-stroke"
-                d={entries.map(({ index, point }, position) => `${position === 0 ? 'M' : 'L'} ${xAt(index).toFixed(2)} ${yAt(point).toFixed(2)}`).join(' ')}
               />
-            )
-        ));
+            ))}
+            {runs.map((entries) => (
+              entries.length === 1
+                ? <circle key={entries[0].index} cx={xAt(entries[0].index)} cy={yAt(entries[0].point)} r="1" fill={color} />
+                : (
+                  <path
+                    key={entries[0].index}
+                    className="sparkline-run"
+                    stroke={color}
+                    vectorEffect="non-scaling-stroke"
+                    d={entries.map(({ index, point }, position) => `${position === 0 ? 'M' : 'L'} ${xAt(index).toFixed(2)} ${yAt(point).toFixed(2)}`).join(' ')}
+                  />
+                )
+            ))}
+          </g>
+        );
       })}
       {markerX !== null && (
         <line

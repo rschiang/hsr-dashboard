@@ -183,7 +183,6 @@ function App() {
                   segment={selectedSegment}
                   status={derived.statuses[selectedSegment.id]}
                   evidence={derived.evidence[selectedSegment.id]}
-                  completion={selectedCompletionBySegment[selectedSegment.id] ?? null}
                   disagreement={selectedDisagreement}
                   date={date}
                   onClear={handleClearSelection}
@@ -212,7 +211,6 @@ function App() {
               dates={dates}
               date={date}
               onDateChange={setDate}
-              reportGap={selectedCvsrGaps.find((gap) => gap.metric === 'snapshot')}
             />
             <div className="axis-toggle" role="group" aria-label="Segment width scale">
               <button type="button" className={axisMode === 'distance' ? 'active' : ''} onClick={() => setAxisMode('distance')}>Distance</button>

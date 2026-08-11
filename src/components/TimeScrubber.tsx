@@ -1,16 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import type { CvsrGap } from '../data/types';
 
 export function TimeScrubber({
   dates,
   date,
   onDateChange,
-  reportGap,
 }: {
   dates: string[];
   date: string;
   onDateChange: (date: string) => void;
-  reportGap?: CvsrGap;
 }) {
   const [playing, setPlaying] = useState(false);
   const frameRef = useRef<number | null>(null);
@@ -37,10 +34,21 @@ export function TimeScrubber({
     };
   }, [date, dates, onDateChange, playing]);
 
+  const togglePlay = () => {
+    if (playing) {
+      setPlaying(false);
+      return;
+    }
+    // The last tick is the present: replaying from there would advance zero frames,
+    // so a Play press there means "start over".
+    if (dates.length > 0 && index >= dates.length - 1) onDateChange(dates[0]);
+    setPlaying(true);
+  };
+
   return (
     <div className="time-scrubber">
       <div className="scrubber-row">
-        <button type="button" className="play-button" onClick={() => setPlaying((value) => !value)} aria-label={playing ? 'Pause replay' : 'Play replay'}>
+        <button type="button" className="play-button" onClick={togglePlay} aria-label={playing ? 'Pause replay' : 'Play replay'}>
           {playing ? 'Pause' : 'Play'}
         </button>
         <input
@@ -53,21 +61,6 @@ export function TimeScrubber({
         />
         {/* The last tick is not a month: it is the present, CVSR base plus any later ArcGIS poll. */}
         <time dateTime={date}>{index === dates.length - 1 ? 'Current' : date.slice(0, 7)}</time>
-      </div>
-      {/* Everything whose width changes with the selected month lives on its own
-          row: a badge resizing must never resize the track under the pointer. */}
-      <div className="scrubber-status">
-        {reportGap && (
-          <span className="report-gap-badge" title={reportGap.detail}>
-            Report gap
-            {reportGap.reportUrl && (
-              <>
-                {' · '}
-                <a href={reportGap.reportUrl} target="_blank" rel="noreferrer">report</a>
-              </>
-            )}
-          </span>
-        )}
       </div>
     </div>
   );

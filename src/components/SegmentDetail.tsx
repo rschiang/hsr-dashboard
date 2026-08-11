@@ -12,7 +12,6 @@ export function SegmentDetail({
   segment,
   status,
   evidence,
-  completion,
   disagreement,
   date,
   onClear,
@@ -20,7 +19,6 @@ export function SegmentDetail({
   segment: Segment;
   status: AlignmentStatus | undefined;
   evidence: StructureEvidence | undefined;
-  completion: number | null;
   disagreement?: { arcgis: number; cvsr: number; cvsrMonth: string; reportFile: string };
   date: string;
   onClear: () => void;
@@ -50,20 +48,12 @@ export function SegmentDetail({
           {' '}<SourceLink sourceId="ts1_alignment" />
         </dd>
 
-        {disagreement && date.slice(0, 7) >= disagreement.cvsrMonth ? (
+        {disagreement && date.slice(0, 7) >= disagreement.cvsrMonth && (
           <>
             <dt>Earthwork · ArcGIS</dt>
             <dd>{Math.round(disagreement.arcgis * 100)}% <SourceLink sourceId="arcgis_progress" /></dd>
             <dt>Earthwork · CVSR</dt>
             <dd>{Math.round(disagreement.cvsr * 100)}% · April 2026 data <SourceLink sourceId="cvsr" /></dd>
-          </>
-        ) : (
-          <>
-            <dt>Earthwork at selected date</dt>
-            <dd>
-              {completion === null ? 'not reported' : `${Math.round(completion * 100)}%`}
-              {' '}<SourceLink sourceId={segment.sourceId === 'cvsr' ? 'cvsr' : 'arcgis_progress'} />
-            </dd>
           </>
         )}
 
@@ -84,13 +74,14 @@ export function SegmentDetail({
           <>
             <dt>Named structures</dt>
             <dd>
-              {segment.structures.map((structure, index) => (
-                <span key={structure.globalId}>
-                  {index > 0 && ' · '}
-                  <a href={structure.url} target="_blank" rel="noreferrer">{structure.name}</a>
-                  {' — '}{structureObservationLabel(structure, date)}
-                </span>
-              ))}
+              <ul className="detail-structures">
+                {segment.structures.map((structure) => (
+                  <li key={structure.globalId}>
+                    <a href={structure.url} target="_blank" rel="noreferrer">{structure.name}</a>
+                    {' — '}{structureObservationLabel(structure, date)}
+                  </li>
+                ))}
+              </ul>
             </dd>
           </>
         )}

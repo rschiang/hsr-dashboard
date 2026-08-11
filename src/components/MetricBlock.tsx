@@ -29,7 +29,10 @@ export function MetricBlock({
   return (
     <section className="metric-block">
       <div className="metric-head">
-        <h3>{label}</h3>
+        <div className="metric-head-label">
+          <h3>{label}</h3>
+          {status && <p className="metric-status">{status}</p>}
+        </div>
         {chip && <span className="metric-chip">{chip}</span>}
         {packages && (
           <ul className="metric-packages">
@@ -45,7 +48,6 @@ export function MetricBlock({
         )}
       </div>
       <p className="metric-value">{value}{unit && <span className="metric-unit">{unit}</span>}</p>
-      {status && <p className="metric-status">{status}</p>}
       <Sparkline series={series} selectedIndex={selectedIndex} label={ariaLabel} />
     </section>
   );
