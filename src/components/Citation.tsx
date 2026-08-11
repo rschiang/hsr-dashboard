@@ -1,18 +1,21 @@
 import { SOURCES, type SourceId } from '../data/sources';
 
-export function SourceLink({ sourceId, label = 'source', title }: { sourceId: SourceId; label?: string; title?: string }) {
+const SOURCE_IDS = Object.keys(SOURCES) as SourceId[];
+
+function sourceNumber(sourceId: SourceId): number {
+  return SOURCE_IDS.indexOf(sourceId) + 1;
+}
+
+export function SourceLink({ sourceId, title }: { sourceId: SourceId; title?: string }) {
   const source = SOURCES[sourceId];
   return (
-    <sup className="source-link">
-      <a
-        href={source.url}
-        target="_blank"
-        rel="noreferrer"
-        title={title ?? `${source.publisher}, ${source.title} (${source.date})`}
-      >
-        {label}
-      </a>
-    </sup>
+    <a
+      className="fn-ref"
+      href={`#fn-${sourceId}`}
+      title={title ?? `${source.publisher}, ${source.title} (${source.date})`}
+    >
+      <sup>{sourceNumber(sourceId)}</sup>
+    </a>
   );
 }
 
@@ -21,12 +24,15 @@ export function SourcesList() {
     <section className="sources-list" aria-labelledby="sources-heading">
       <h2 id="sources-heading">Sources</h2>
       <ol>
-        {Object.entries(SOURCES).map(([id, source]) => (
-          <li key={id}>
-            <a href={source.url} target="_blank" rel="noreferrer">{source.title}</a>
-            <span>{source.publisher} · {source.date}{'accessed' in source ? ` · accessed ${source.accessed}` : ''}</span>
-          </li>
-        ))}
+        {SOURCE_IDS.map((id) => {
+          const source = SOURCES[id];
+          return (
+            <li key={id} id={`fn-${id}`}>
+              <a href={source.url} target="_blank" rel="noreferrer">{source.title}</a>
+              <span>{source.publisher} · {source.date}{'accessed' in source ? ` · accessed ${source.accessed}` : ''}</span>
+            </li>
+          );
+        })}
       </ol>
     </section>
   );

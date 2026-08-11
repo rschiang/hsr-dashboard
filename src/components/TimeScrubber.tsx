@@ -46,30 +46,36 @@ export function TimeScrubber({
       : 'Scheduled replay';
   return (
     <div className="time-scrubber">
-      <button type="button" className="play-button" onClick={() => setPlaying((value) => !value)} aria-label={playing ? 'Pause replay' : 'Play replay'}>
-        {playing ? 'Pause' : 'Play'}
-      </button>
-      <input
-        type="range"
-        min={0}
-        max={Math.max(0, dates.length - 1)}
-        value={index}
-        onChange={(event) => onDateChange(dates[Number(event.currentTarget.value)])}
-        aria-label="Progress date"
-      />
-      <time dateTime={date}>{date.slice(0, 7)}</time>
-      <span className={`tier-badge provenance-${provenance}`}>{provenanceLabel}</span>
-      {reportGap && (
-        <span className="report-gap-badge" title={reportGap.detail}>
-          Report gap
-          {reportGap.reportUrl && (
-            <>
-              {' · '}
-              <a href={reportGap.reportUrl} target="_blank" rel="noreferrer">report</a>
-            </>
-          )}
-        </span>
-      )}
+      <div className="scrubber-row">
+        <button type="button" className="play-button" onClick={() => setPlaying((value) => !value)} aria-label={playing ? 'Pause replay' : 'Play replay'}>
+          {playing ? 'Pause' : 'Play'}
+        </button>
+        <input
+          type="range"
+          min={0}
+          max={Math.max(0, dates.length - 1)}
+          value={index}
+          onChange={(event) => onDateChange(dates[Number(event.currentTarget.value)])}
+          aria-label="Progress date"
+        />
+        <time dateTime={date}>{date.slice(0, 7)}</time>
+      </div>
+      {/* Everything whose width changes with the selected month lives on its own
+          row: a badge resizing must never resize the track under the pointer. */}
+      <div className="scrubber-status">
+        <span className={`tier-badge provenance-${provenance}`}>{provenanceLabel}</span>
+        {reportGap && (
+          <span className="report-gap-badge" title={reportGap.detail}>
+            Report gap
+            {reportGap.reportUrl && (
+              <>
+                {' · '}
+                <a href={reportGap.reportUrl} target="_blank" rel="noreferrer">report</a>
+              </>
+            )}
+          </span>
+        )}
+      </div>
     </div>
   );
 }

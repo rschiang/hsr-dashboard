@@ -54,13 +54,47 @@ export function AlignmentMap({
           '\u00a9 <a href="https://www.openmaptiles.org/" target="_blank" rel="noreferrer">OpenMapTiles</a>',
           'Data from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>',
           '<a href="https://maplibre.org/" target="_blank" rel="noreferrer">MapLibre</a>',
+          'Hillshade: <a href="https://registry.opendata.aws/terrain-tiles/" target="_blank" rel="noreferrer">AWS Terrain Tiles</a>',
         ],
       },
     });
-    map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'top-left');
+    map.addControl(new maplibregl.NavigationControl({ visualizePitch: true }), 'bottom-left');
     mapRef.current = map;
 
     map.on('load', () => {
+      map.addSource('terrain-dem', {
+        type: 'raster-dem',
+        tiles: ['https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'],
+        tileSize: 256,
+        maxzoom: 13,
+        encoding: 'terrarium',
+      });
+      const firstSymbol = map.getStyle().layers?.find((layer) => layer.type === 'symbol')?.id;
+      map.addLayer({
+        id: 'terrain-hillshade',
+        type: 'hillshade',
+        source: 'terrain-dem',
+        paint: {
+          'hillshade-exaggeration': 0.45,
+          'hillshade-shadow-color': '#6d7276',
+          'hillshade-highlight-color': '#ffffff',
+          'hillshade-accent-color': '#9aa0a4',
+        },
+      }, firstSymbol);
+      // Positron is already near-gray; this only flattens water and vegetation so the
+      // hillshade is the only relief cue. It runs before the alignment layers exist, so
+      // it can never repaint them. If OpenFreeMap renames its layers the loop matches
+      // nothing and the map degrades to plain positron plus hillshade.
+      const GRAY_PREFIXES = ['landcover', 'landuse', 'park', 'wood', 'grass', 'sand', 'beach', 'pier', 'aeroway'];
+      for (const layer of map.getStyle().layers ?? []) {
+        const gray = layer.id.startsWith('waterway') ? '#dfe1e2'
+          : layer.id.startsWith('water') ? '#e4e6e7'
+            : GRAY_PREFIXES.some((prefix) => layer.id.startsWith(prefix)) ? '#efeeec'
+              : null;
+        if (gray === null) continue;
+        if (layer.type === 'fill') map.setPaintProperty(layer.id, 'fill-color', gray);
+        else if (layer.type === 'line') map.setPaintProperty(layer.id, 'line-color', gray);
+      }
       map.addSource('alignment', { type: 'geojson', data, promoteId: 'id' });
       map.addLayer({
         id: 'alignment-casing',
@@ -150,17 +184,11 @@ export function AlignmentMap({
 
   return (
     <section className="map-section" aria-labelledby="map-heading">
-      <div className="map-title">
-        <div>
-          <p className="eyebrow">Geographic context</p>
-          <h2 id="map-heading">Central Valley alignment</h2>
-        </div>
-        <span>Hover to link · click to focus</span>
-      </div>
+      <h2 id="map-heading" className="sr-only">Central Valley alignment</h2>
       <div
         ref={containerRef}
         className="map-container"
-        aria-label="Alignment map; the strip chart above carries the same data in keyboard-accessible form"
+        aria-label="Alignment map; the strip chart below carries the same data in keyboard-accessible form"
       />
     </section>
   );

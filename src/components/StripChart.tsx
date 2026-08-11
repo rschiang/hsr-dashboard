@@ -1,9 +1,8 @@
 import { useMemo, useRef, useState, useSyncExternalStore, type SVGProps } from 'react';
 import { scaleLinear } from 'd3-scale';
 import type { AlignmentStatus, Segment, StructureEvidence } from '../data/types';
-import { SOURCES } from '../data/sources';
 import { STATUS_COLORS, STATUS_LABELS } from '../lib/status';
-import { formatOfficialMp } from '../lib/mileposts';
+import { iosMileToOfficialMp } from '../lib/mileposts';
 import { evidenceDateLabel, structureObservationLabel } from '../lib/observation-labels';
 import { SourceLink } from './Citation';
 
@@ -23,8 +22,23 @@ const CP_BOUNDARIES = [
   { label: 'CP2–3', mile: 65 },
   { label: 'CP4', mile: 131 },
   { label: 'LGA', mile: 152 },
-  { label: 'Oswell', mile: 175 },
 ] as const;
+
+const TICK_TOP = 28;        // named-structure ticks
+const TICK_BOTTOM = 36;
+const BAND_TOP = 38;
+const BAND_H = 50;
+const AXIS_Y = 88;          // BAND_TOP + BAND_H
+const LABEL_Y = 106;        // shared baseline for milepost AND station labels
+const CHART_H = 112;
+
+const MILE_TICKS = [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 175];
+// The two endpoints claim space first so the axis reads its full extent before
+// the interior ticks compete for what is left.
+const TICK_ORDER = [0, 175, ...MILE_TICKS.slice(1, -1)];
+const CHAR_W = 6.2;
+
+type AxisLabel = { x: number; text: string; anchor: 'start' | 'middle' | 'end'; box: [number, number] };
 
 function useElementWidth(ref: React.RefObject<HTMLDivElement | null>): number {
   return useSyncExternalStore(
@@ -47,7 +61,6 @@ export function StripChart({
   onHover,
   onSelect,
   axisMode,
-  onAxisModeChange,
   date,
   evidence,
   selectedCompletionBySegment,
@@ -60,7 +73,6 @@ export function StripChart({
   onHover: (id: string | null) => void;
   onSelect: (id: string | null) => void;
   axisMode: AxisMode;
-  onAxisModeChange: (mode: AxisMode) => void;
   date: string;
   evidence: Record<string, StructureEvidence | undefined>;
   selectedCompletionBySegment: Record<string, number | null>;
@@ -73,8 +85,8 @@ export function StripChart({
   // time; arrows/Home/End move focus within the list.
   const [focusedIndex, setFocusedIndex] = useState(0);
   const rectRefs = useRef<Array<SVGRectElement | null>>([]);
-  const plotLeft = 22;
-  const plotRight = width - 22;
+  const plotLeft = 0;
+  const plotRight = width;
   const distanceScale = useMemo(() => scaleLinear().domain([0, 175]).range([plotLeft, plotRight]), [plotRight]);
   const difficultyScale = useMemo(() => scaleLinear().domain([0, 1]).range([plotLeft, plotRight]), [plotRight]);
   const weightedPositions = useMemo(() => {
@@ -105,9 +117,41 @@ export function StripChart({
         (item) => item.segmentId === tooltip.segment.id && date.slice(0, 7) >= item.cvsrMonth,
       )
     : false;
-  const axisTicks = axisMode === 'distance'
-    ? Array.from({ length: 18 }, (_, index) => index === 17 ? 171 : index * 10)
-    : Array.from({ length: 6 }, (_, index) => index / 5);
+
+  // One label row, two ranks. Stations outrank mileposts: a milepost label is
+  // dropped when it would collide, but its tick mark is always drawn, so the
+  // ruler keeps its full scale even where a station name owns the space.
+  const place = (x: number, text: string): AxisLabel => {
+    const w = text.length * CHAR_W + 8;
+    if (x <= 24) return { x: 2, text, anchor: 'start', box: [2, 2 + w] };
+    if (x >= width - 24) return { x: width - 2, text, anchor: 'end', box: [width - 2 - w, width - 2] };
+    return { x, text, anchor: 'middle', box: [x - w / 2, x + w / 2] };
+  };
+  const overlaps = (a: [number, number], b: [number, number]) => a[0] < b[1] + 6 && b[0] < a[1] + 6;
+
+  const stationLabels = STATIONS.map((station) => ({ station, label: place(xForMile(station.mile), station.name) }));
+  const reserved: Array<[number, number]> = stationLabels.map(({ label }) => label.box);
+  const keptMileposts = new Map<number, AxisLabel>();
+  for (const mile of TICK_ORDER) {
+    // Reserve against the widest form the label can take; suppression below can
+    // only shorten it, so a kept label never grows into a neighbour.
+    const { subdivision, mp } = iosMileToOfficialMp(mile);
+    const label = place(xForMile(mile), `${subdivision} ${mp}`);
+    if (reserved.some((box) => overlaps(label.box, box))) continue;
+    reserved.push(label.box);
+    keptMileposts.set(mile, label);
+  }
+  // Subdivision letters are assigned after suppression, so a dropped tick can
+  // never swallow the C→S or S→D change.
+  const milepostLabels: AxisLabel[] = [];
+  let priorSubdivision = '';
+  for (const mile of MILE_TICKS) {
+    const label = keptMileposts.get(mile);
+    if (label === undefined) continue;
+    const { subdivision, mp } = iosMileToOfficialMp(mile);
+    milepostLabels.push({ ...label, text: subdivision === priorSubdivision ? `${mp}` : `${subdivision} ${mp}` });
+    priorSubdivision = subdivision;
+  }
 
   const interactionProps = (segment: Segment, index: number): SVGProps<SVGRectElement> => ({
     role: 'listitem',
@@ -123,7 +167,7 @@ export function StripChart({
       setTooltip({ segment, x: event.clientX - bounds.left, y: event.clientY - bounds.top });
     },
     onPointerLeave: () => { onHover(null); setTooltip(null); },
-    onClick: () => onSelect(segment.id),
+    onClick: () => onSelect(selectedId === segment.id ? null : segment.id),
     onFocus: (event) => {
       onHover(segment.id);
       const bounds = event.currentTarget.ownerSVGElement!.getBoundingClientRect();
@@ -148,7 +192,7 @@ export function StripChart({
         rectRefs.current[next]?.focus();
       } else if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
-        onSelect(segment.id);
+        onSelect(selectedId === segment.id ? null : segment.id);
       } else if (event.key === 'Escape') {
         onSelect(null);
         setTooltip(null);
@@ -157,143 +201,114 @@ export function StripChart({
   });
 
   return (
-    <section className="strip-section" aria-labelledby="strip-heading">
-      <div className="strip-toolbar">
-        <div>
-          <p className="eyebrow">Primary view · official station axis</p>
-          <h2 id="strip-heading">Every mile, by construction phase</h2>
-        </div>
-        <div className="axis-toggle" role="group" aria-label="Segment width scale">
-          <button type="button" className={axisMode === 'distance' ? 'active' : ''} onClick={() => onAxisModeChange('distance')}>Distance</button>
-          <button type="button" className={axisMode === 'difficulty' ? 'active' : ''} onClick={() => onAxisModeChange('difficulty')}>Difficulty</button>
-        </div>
-      </div>
-      <div className="strip-canvas" ref={containerRef}>
-        {/* role="group", not role="img": role="img" makes the subtree a leaf for assistive
-            tech, which would hide the focusable segment list below. */}
-        <svg viewBox={`0 0 ${width} 190`} role="group" aria-label="Construction status strip from Merced to Oswell Street">
-          <defs>
-            <pattern id="no-data-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-              <rect width="6" height="6" fill={STATUS_COLORS.no_data} />
-              <line x1="0" y1="0" x2="0" y2="6" stroke="#b7b7b7" strokeWidth="2" />
-            </pattern>
-          </defs>
-          {CP_BOUNDARIES.map((boundary) => {
-            const x = xForMile(boundary.mile);
-            return (
-              <g key={boundary.label}>
-                <line x1={x} x2={x} y1="28" y2="112" className="cp-rule" />
-                <text x={x + 4} y="38" className="cp-label">{boundary.label}</text>
-              </g>
-            );
-          })}
-          <g role="list">
-            {segments.map((segment, index) => {
-              const position = weightedPositions.get(segment.id)!;
-              const x = axisMode === 'distance' ? distanceScale(segment.iosMileStart) : difficultyScale(position.start);
-              const end = axisMode === 'distance' ? distanceScale(segment.iosMileEnd) : difficultyScale(position.end);
-              const trueWidth = Math.max(0, end - x);
-              const status = statuses[segment.id] ?? segment.currentStatus;
-              const fill = status === 'no_data' ? 'url(#no-data-hatch)' : STATUS_COLORS[status];
-              const className = `strip-segment ${hoveredId === segment.id ? 'hovered' : ''} ${selectedId === segment.id ? 'selected' : ''}`;
-              if (trueWidth < 1.5) {
-                return (
-                  <g key={segment.id}>
-                    <line
-                      x1={x}
-                      x2={end}
-                      y1="46"
-                      y2="46"
-                      stroke={status === 'no_data' ? STATUS_COLORS.no_data : STATUS_COLORS[status]}
-                      strokeWidth="4"
-                    />
-                    <rect
-                      ref={(node) => { rectRefs.current[index] = node; }}
-                      {...interactionProps(segment, index)}
-                      x={x - 3}
-                      y="42"
-                      width="6"
-                      height="8"
-                      fill="transparent"
-                      className={className}
-                    />
-                  </g>
-                );
-              }
+    <div className="strip-canvas" ref={containerRef}>
+      {/* role="group", not role="img": role="img" makes the subtree a leaf for assistive
+          tech, which would hide the focusable segment list below. */}
+      <svg viewBox={`0 0 ${width} ${CHART_H}`} role="group" aria-label="Construction status strip from Merced to Oswell Street">
+        <defs>
+          <pattern id="no-data-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="6" height="6" fill={STATUS_COLORS.no_data} />
+            <line x1="0" y1="0" x2="0" y2="6" stroke="#b7b7b7" strokeWidth="2" />
+          </pattern>
+        </defs>
+        {CP_BOUNDARIES.map((boundary) => {
+          const x = xForMile(boundary.mile);
+          return (
+            <g key={boundary.label}>
+              <line x1={x} x2={x} y1={4} y2={AXIS_Y} className="cp-rule" />
+              <text x={x + 7} y={18} className="cp-label">{boundary.label}</text>
+            </g>
+          );
+        })}
+        <g role="list">
+          {segments.map((segment, index) => {
+            const position = weightedPositions.get(segment.id)!;
+            const x = axisMode === 'distance' ? distanceScale(segment.iosMileStart) : difficultyScale(position.start);
+            const end = axisMode === 'distance' ? distanceScale(segment.iosMileEnd) : difficultyScale(position.end);
+            const trueWidth = Math.max(0, end - x);
+            const status = statuses[segment.id] ?? segment.currentStatus;
+            const fill = status === 'no_data' ? 'url(#no-data-hatch)' : STATUS_COLORS[status];
+            const className = `strip-segment ${hoveredId === segment.id ? 'hovered' : ''} ${selectedId === segment.id ? 'selected' : ''}`;
+            if (trueWidth < 1.5) {
               return (
-                <rect
-                  key={segment.id}
-                  ref={(node) => { rectRefs.current[index] = node; }}
-                  {...interactionProps(segment, index)}
-                  x={x}
-                  y="48"
-                  width={trueWidth}
-                  height="55"
-                  fill={fill}
-                  className={className}
-                />
+                <g key={segment.id}>
+                  <line
+                    x1={x}
+                    x2={x}
+                    y1={BAND_TOP}
+                    y2={AXIS_Y}
+                    stroke={STATUS_COLORS[status]}
+                    strokeWidth="3"
+                  />
+                  <rect
+                    ref={(node) => { rectRefs.current[index] = node; }}
+                    {...interactionProps(segment, index)}
+                    x={x - 3}
+                    y={BAND_TOP}
+                    width="6"
+                    height={BAND_H}
+                    fill="transparent"
+                    className={className}
+                  />
+                </g>
               );
-            })}
-          </g>
-          {segments.flatMap((segment) => segment.structures.map((structure, index) => {
-            const x = xForMile((segment.iosMileStart + segment.iosMileEnd) / 2);
-            return <line key={`${segment.id}:${structure.name}:${index}`} x1={x} x2={x} y1="43" y2="48" className="structure-tick"><title>{structure.name} — {structureObservationLabel(structure, date)}</title></line>;
-          }))}
-          {hovered && <line x1={xForMile((hovered.iosMileStart + hovered.iosMileEnd) / 2)} x2={xForMile((hovered.iosMileStart + hovered.iosMileEnd) / 2)} y1="22" y2="120" className="hover-marker" />}
-          <line x1={plotLeft} x2={plotRight} y1="120" y2="120" className="axis-line" />
-          {axisTicks.map((tick, index) => {
-            const x = axisMode === 'distance' ? distanceScale(tick) : difficultyScale(tick);
-            const label = axisMode === 'distance' ? `${tick} / ${formatOfficialMp(tick)}` : `${Math.round(tick * 100)}%`;
-            // Keep all 18 distance ticks, but at the 11 px type floor their labels collide
-            // below ~62 px of pitch; thin to every second tick, always keeping 0 and 171.
-            // The 171 tick sits one step after 160, so when thinning we drop the
-            // penultimate label rather than let the forced endpoint collide with it.
-            const showLabel = axisMode !== 'distance'
-              || (plotRight - plotLeft) / 18 >= 62
-              || index === axisTicks.length - 1
-              || (index % 2 === 0 && index !== axisTicks.length - 2);
+            }
             return (
-              <g key={tick}>
-                <line x1={x} x2={x} y1="120" y2="126" className="axis-line" />
-                {showLabel && (
-                  <a href={axisMode === 'distance' ? SOURCES.ts1_alignment.url : SOURCES.business_plan_2026.url} target="_blank" rel="noreferrer">
-                    <text x={x} y="140" className="axis-label" textAnchor="middle">{label}†</text>
-                  </a>
-                )}
-              </g>
+              <rect
+                key={segment.id}
+                ref={(node) => { rectRefs.current[index] = node; }}
+                {...interactionProps(segment, index)}
+                x={x}
+                y={BAND_TOP}
+                width={trueWidth}
+                height={BAND_H}
+                fill={fill}
+                className={className}
+              />
             );
           })}
-          {STATIONS.map((station) => {
-            const x = xForMile(station.mile);
-            return (
-              <g key={station.name}>
-                <path d={`M ${x - 4} 107 L ${x + 4} 107 L ${x} 114 Z`} className="station-marker" />
-                <a href={SOURCES.arcgis_stations.url} target="_blank" rel="noreferrer"><text x={x} y="162" className="station-label" textAnchor="middle">{station.name}†<title>{station.note}</title></text></a>
-              </g>
-            );
-          })}
-          <text x={plotLeft} y="182" className="axis-caption">{axisMode === 'distance' ? 'iosMile / published subdivision milepost' : 'cumulative share of modelled engineering effort'}</text>
-        </svg>
-        {tooltip && (
-          <div className="segment-tooltip" style={{ left: Math.min(width - 300, Math.max(8, tooltip.x + 12)), top: Math.max(4, tooltip.y - 126) }}>
-            <strong>{tooltip.segment.label}</strong>
-            <span>{tooltip.segment.cp} · {STATUS_LABELS[statuses[tooltip.segment.id] ?? tooltip.segment.currentStatus]}</span>
-            <span>Station {tooltip.segment.stationStart?.toLocaleString() ?? 'not published'}–{tooltip.segment.stationEnd?.toLocaleString() ?? 'not published'} ft <SourceLink sourceId={tooltip.segment.sourceId} /></span>
-            <span>{tooltip.segment.iosMileStart.toFixed(2)}–{tooltip.segment.iosMileEnd.toFixed(2)} ios mi · {tooltip.segment.officialMpStart}–{tooltip.segment.officialMpEnd} <SourceLink sourceId="ts1_alignment" /></span>
-            <span>Earthwork completion at selected date {tooltipCompletion === null || tooltipCompletion === undefined ? 'not reported' : `${Math.round(tooltipCompletion * 100)}%`}{tooltipDisagrees ? ' · sources disagree' : ''} <SourceLink sourceId={tooltip.segment.sourceId === 'cvsr' ? 'cvsr' : 'arcgis_progress'} /></span>
-            {/* Plain text only: `.segment-tooltip` is `pointer-events: none`, so anchors here
-                are unclickable by mouse and unreachable by keyboard. The SegmentDetail panel
-                below the strip carries the working evidence and structure links. */}
-            {tooltipEvidence && (
-              <span>Evidence: “{tooltipEvidence.quote}” — {evidenceDateLabel(tooltipEvidence)}. {tooltipEvidence.sourceTitle}</span>
-            )}
-            <span>Difficulty share {(tooltip.segment.weightShare * 100).toFixed(2)}% <SourceLink sourceId="business_plan_2026" /></span>
-          </div>
-        )}
-      </div>
-      {axisMode === 'difficulty' && (
-        <p className="model-caption">Segment widths are scaled by an unofficial difficulty model. Numeric earthwork completion contributes continuously; categorical Structure complete contributes the full structure weight, while in-progress structures contribute no invented percentage. CVSR row tables take precedence where published because they are dated reports; ArcGIS fills the remaining rows. Structures shorter than the pixel grid are drawn as notches above the band at their true position and are not drawn to scale. Package totals come from published per-package contract values plus the 2026 Business Plan Table B.1 extension totals; both the structure type factors and the structure/guideway split are this dashboard’s editorial judgment with no published basis. CP1 publishes structure rows inside their guideway rows, so about 1.6 mi of corridor appears in both. <SourceLink sourceId="arcgis_progress" /> <SourceLink sourceId="cvsr" /> <SourceLink sourceId="business_plan_2026" /></p>
+        </g>
+        {segments.flatMap((segment) => segment.structures.map((structure, index) => {
+          const x = xForMile((segment.iosMileStart + segment.iosMileEnd) / 2);
+          return <line key={`${segment.id}:${structure.name}:${index}`} x1={x} x2={x} y1={TICK_TOP} y2={TICK_BOTTOM} className="structure-tick"><title>{structure.name} — {structureObservationLabel(structure, date)}</title></line>;
+        }))}
+        {hovered && <line x1={xForMile((hovered.iosMileStart + hovered.iosMileEnd) / 2)} x2={xForMile((hovered.iosMileStart + hovered.iosMileEnd) / 2)} y1={2} y2={AXIS_Y} className="hover-marker" />}
+        <line x1={0} x2={width} y1={AXIS_Y} y2={AXIS_Y} className="axis-line" />
+        {MILE_TICKS.map((mile) => {
+          const x = xForMile(mile);
+          return <line key={mile} x1={x} x2={x} y1={AXIS_Y} y2={AXIS_Y + 5} className="axis-line" />;
+        })}
+        {milepostLabels.map((label) => (
+          <text key={label.text} x={label.x} y={LABEL_Y} textAnchor={label.anchor} className="axis-label">{label.text}</text>
+        ))}
+        {stationLabels.map(({ station, label }) => {
+          const x = xForMile(station.mile);
+          return (
+            <g key={station.name}>
+              <path d={`M ${x - 4} ${AXIS_Y} L ${x + 4} ${AXIS_Y} L ${x} ${AXIS_Y + 7} Z`} className="station-marker" />
+              <text x={label.x} y={LABEL_Y} textAnchor={label.anchor} className="station-label">
+                {station.name}<title>{station.note}</title>
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+      {tooltip && (
+        <div className="segment-tooltip" style={{ left: Math.min(width - 312, Math.max(8, tooltip.x + 12)), bottom: CHART_H + 6 }}>
+          <strong>{tooltip.segment.label}</strong>
+          <span>{tooltip.segment.cp} · {STATUS_LABELS[statuses[tooltip.segment.id] ?? tooltip.segment.currentStatus]}</span>
+          <span>Station {tooltip.segment.stationStart?.toLocaleString() ?? 'not published'}–{tooltip.segment.stationEnd?.toLocaleString() ?? 'not published'} ft <SourceLink sourceId={tooltip.segment.sourceId} /></span>
+          <span>{tooltip.segment.iosMileStart.toFixed(2)}–{tooltip.segment.iosMileEnd.toFixed(2)} ios mi · {tooltip.segment.officialMpStart}–{tooltip.segment.officialMpEnd} <SourceLink sourceId="ts1_alignment" /></span>
+          <span>Earthwork completion at selected date {tooltipCompletion === null || tooltipCompletion === undefined ? 'not reported' : `${Math.round(tooltipCompletion * 100)}%`}{tooltipDisagrees ? ' · sources disagree' : ''} <SourceLink sourceId={tooltip.segment.sourceId === 'cvsr' ? 'cvsr' : 'arcgis_progress'} /></span>
+          {/* Plain text only: `.segment-tooltip` is `pointer-events: none`, so anchors here
+              are unclickable by mouse and unreachable by keyboard. The SegmentDetail panel
+              below the fold carries the working evidence and structure links. */}
+          {tooltipEvidence && (
+            <span>Evidence: “{tooltipEvidence.quote}” — {evidenceDateLabel(tooltipEvidence)}. {tooltipEvidence.sourceTitle}</span>
+          )}
+          <span>Difficulty share {(tooltip.segment.weightShare * 100).toFixed(2)}% <SourceLink sourceId="business_plan_2026" /></span>
+        </div>
       )}
-    </section>
+    </div>
   );
 }

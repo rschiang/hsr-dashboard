@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import './App.css';
 import type {
   CvsrGap,
-  CvsrGapCause,
   CvsrInventory,
   CvsrPackageId,
   HistoryArtifact,
@@ -10,10 +9,13 @@ import type {
   Snapshot,
 } from './data/types';
 import { deriveStatuses, selectedCompletions } from './lib/status';
-import { buildCvsrSeries, sparklineLabel, type CvsrSeriesPoint, type NumericPackageMetric } from './lib/cvsr-series';
-import { SourceLink } from './components/Citation';
+import { buildCvsrSeries, sparklineLabel, type NumericPackageMetric } from './lib/cvsr-series';
+import { GAP_LABELS, groupCvsrGaps, groupRevisions } from './lib/cvsr-gaps';
+import { SourceLink, SourcesList } from './components/Citation';
+import { NotesList } from './components/Notes';
 import { Legend } from './components/Legend';
-import { Sparkline } from './components/Sparkline';
+import { type SparklineSeries } from './components/Sparkline';
+import { MetricBlock } from './components/MetricBlock';
 import { SegmentDetail } from './components/SegmentDetail';
 import { StripChart, type AxisMode } from './components/StripChart';
 import { TimeScrubber } from './components/TimeScrubber';
@@ -26,105 +28,6 @@ type LoadedData = {
 };
 
 const CVSR_PACKAGES = ['CP1', 'CP2-3', 'CP4'] as const satisfies readonly CvsrPackageId[];
-
-const PACKAGE_BAND_METRICS: ReadonlyArray<{
-  label: string;
-  value: NumericPackageMetric;
-  total: NumericPackageMetric;
-  transcribedAs?: 'progress' | 'parcels';
-  revisedAs?: 'progress' | 'parcels' | 'utilities';
-}> = [
-  { label: 'Structures complete', value: 'structuresComplete', total: 'structuresTotal', transcribedAs: 'progress', revisedAs: 'progress' },
-  { label: 'Guideway complete (mi)', value: 'guidewayMilesComplete', total: 'guidewayMilesTotal', transcribedAs: 'progress', revisedAs: 'progress' },
-  { label: 'ROW parcels acquired', value: 'parcelsAcquired', total: 'parcelsAcquisitionTotal' },
-  { label: 'ROW delivered to DB', value: 'parcelsDelivered', total: 'parcelsTotal', transcribedAs: 'parcels', revisedAs: 'parcels' },
-  { label: 'Railroad ROW parcels', value: 'railroadParcelsAcquired', total: 'railroadParcelsTotal' },
-  { label: 'Utilities relocated', value: 'utilitiesRelocated', total: 'utilitiesTotal', revisedAs: 'utilities' },
-];
-
-type CvsrGapGroup = CvsrGap & { endMonth: string };
-type TranscriptionGroup = {
-  fields: string;
-  month: string;
-  endMonth: string;
-  reportFile: string;
-  detail: string;
-};
-type RevisionGroup = {
-  key: string;
-  metric: CvsrInventory['revisions'][number]['metric'];
-  packages: string;
-  month: string;
-  endMonth: string;
-  correctedIn: string;
-  detail: string;
-};
-
-function nextMonth(month: string): string {
-  const date = new Date(`${month}-01T00:00:00Z`);
-  date.setUTCMonth(date.getUTCMonth() + 1);
-  return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}`;
-}
-
-function groupCvsrGaps(gaps: CvsrGap[]): CvsrGapGroup[] {
-  const keyFor = (gap: CvsrGap) => [
-    gap.metric,
-    gap.cause,
-    [...gap.packages].sort().join(','),
-    gap.detail,
-  ].join('|');
-  const sorted = [...gaps].sort((left, right) => (
-    keyFor(left).localeCompare(keyFor(right)) || left.month.localeCompare(right.month)
-  ));
-  const groups: CvsrGapGroup[] = [];
-  for (const gap of sorted) {
-    const previous = groups.at(-1);
-    if (previous && keyFor(previous) === keyFor(gap) && nextMonth(previous.endMonth) === gap.month) {
-      previous.endMonth = gap.month;
-    } else {
-      groups.push({ ...gap, packages: [...gap.packages], endMonth: gap.month });
-    }
-  }
-  return groups;
-}
-
-function groupTranscriptions(entries: CvsrInventory['transcriptions']): TranscriptionGroup[] {
-  const sorted = [...entries].sort((left, right) => left.month.localeCompare(right.month));
-  const groups: TranscriptionGroup[] = [];
-  for (const entry of sorted) {
-    const fields = entry.fields.join(' + ');
-    const previous = groups.at(-1);
-    if (previous && previous.fields === fields && nextMonth(previous.endMonth) === entry.month) {
-      previous.endMonth = entry.month;
-    } else {
-      groups.push({ fields, month: entry.month, endMonth: entry.month, reportFile: entry.reportFile, detail: entry.detail });
-    }
-  }
-  return groups;
-}
-
-function groupRevisions(entries: CvsrInventory['revisions']): RevisionGroup[] {
-  const sorted = [...entries].sort((left, right) => left.month.localeCompare(right.month));
-  const groups: RevisionGroup[] = [];
-  for (const entry of sorted) {
-    const key = `${entry.metric}|${entry.packages.join(', ')}|${entry.correctedIn}`;
-    const previous = groups.at(-1);
-    if (previous && previous.key === key && nextMonth(previous.endMonth) === entry.month) {
-      previous.endMonth = entry.month;
-    } else {
-      groups.push({
-        key,
-        metric: entry.metric,
-        packages: entry.packages.join(', '),
-        month: entry.month,
-        endMonth: entry.month,
-        correctedIn: entry.correctedIn,
-        detail: entry.detail,
-      });
-    }
-  }
-  return groups;
-}
 
 function sumPackages(
   snapshot: Snapshot | undefined,
@@ -213,10 +116,6 @@ function App() {
     () => groupCvsrGaps(data?.history.cvsrInventory.gaps ?? []),
     [data],
   );
-  const groupedTranscriptions = useMemo(
-    () => groupTranscriptions(data?.history.cvsrInventory.transcriptions ?? []),
-    [data],
-  );
   const groupedRevisions = useMemo(
     () => groupRevisions(data?.history.cvsrInventory.revisions ?? []),
     [data],
@@ -231,27 +130,14 @@ function App() {
   const handleClearSelection = useCallback(() => setSelectedId(null), []);
 
   if (loadError) {
-    return <main className="load-state"><p className="eyebrow">Data load failed</p><h1>Dashboard unavailable</h1><code>{loadError}</code></main>;
+    return <main className="load-state"><p className="eyebrow">Data load failed</p><h1>Tracking On</h1><code>{loadError}</code></main>;
   }
   if (!data || !date) {
-    return <main className="load-state"><p className="eyebrow">Loading committed CAHSRA data</p><h1>Merced–Bakersfield progress</h1></main>;
+    return <main className="load-state"><p className="eyebrow">Loading committed CAHSRA data</p><h1>Tracking On</h1></main>;
   }
 
   const inventory = data.history.cvsrInventory;
 
-  const cvsrGuidewayComplete = sumPackages(displayCvsrSnapshot, 'guidewayMilesComplete');
-  const cvsrTotalMiles = sumPackages(displayCvsrSnapshot, 'guidewayMilesTotal');
-  const structuresComplete = sumPackages(displayCvsrSnapshot, 'structuresComplete');
-  const structuresTotal = sumPackages(displayCvsrSnapshot, 'structuresTotal');
-  const beforeCoverage = selectedMonth < inventory.coverageStart;
-  const cvsrNote = beforeCoverage
-    ? 'Before the published series'
-    : exactCvsrSnapshot
-      ? `Data through ${selectedMonth}`
-      : displayCvsrSnapshot
-        ? `Last observed ${displayCvsrSnapshot.dataMonth}`
-        : 'Before the published series';
-  const perMile = (value: number | undefined): string => value === undefined ? '—' : value.toFixed(1);
   const selectedSegment = selectedId
     ? data.segments.segments.find((segment) => segment.id === selectedId)
     : undefined;
@@ -260,111 +146,98 @@ function App() {
     : undefined;
 
   return (
-    <main className="app-shell">
-      <div className="dashboard-column">
-        <header className="summary-header">
-          <div className="title-block">
-            <p className="eyebrow">California High-Speed Rail · Initial Operating Segment</p>
-            <h1>Merced <span>→</span> Bakersfield</h1>
-            <p>171-mile operating span; alignment continues to Oswell Street at iosMile 175. <SourceLink sourceId="ts1_alignment" /></p>
-          </div>
-          <div className="headline-metrics">
-            <div>
-              <span>Guideway complete</span>
-              <strong>{perMile(cvsrGuidewayComplete)} <small>/ {perMile(cvsrTotalMiles)} mi</small></strong>
-              <em className="metric-note">
-                {cvsrNote}{' '}
-                {displayCvsrSnapshot ? <SnapshotReportLink snapshot={displayCvsrSnapshot} /> : <SourceLink sourceId="cvsr" />}
-              </em>
-            </div>
-            <div>
-              <span>Structures complete</span>
-              <strong>{structuresComplete ?? '—'} <small>/ {structuresTotal ?? '—'}</small></strong>
-              <em className="metric-note">
-                {cvsrNote}{' '}
-                {displayCvsrSnapshot ? <SnapshotReportLink snapshot={displayCvsrSnapshot} /> : <SourceLink sourceId="cvsr" />}
-              </em>
-            </div>
-          </div>
+    <main className="page">
+      <div className="screen">
+        <header className="topbar">
+          <h1>Tracking On</h1>
+          <p className="topbar-meta">
+            <span>CA HSR Construction Dashboard</span>
+            <span>Last updated {new Date(data.segments.generatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}</span>
+            <a href="https://github.com/rschiang/hsr-dashboard" target="_blank" rel="noreferrer" aria-label="Source code on GitHub">
+              <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" /></svg>
+            </a>
+          </p>
         </header>
 
-        <PackageBands
-          snapshot={displayCvsrSnapshot}
-          snapshots={data.history.snapshots}
-          inventory={inventory}
-          gaps={selectedCvsrGaps}
-          selectedMonth={selectedMonth}
-          exact={exactCvsrSnapshot !== undefined}
-        />
+        <div className="viewport-grid">
+          <div className="map-pane">
+            <AlignmentMap
+              data={data.geojson}
+              statuses={derived.statuses}
+              hoveredId={hoveredId}
+              selectedId={selectedId}
+              onHover={handleHover}
+              onSelect={handleSelect}
+            />
+            <div className="map-overlay" aria-live="polite">
+              {selectedSegment && (
+                <SegmentDetail
+                  segment={selectedSegment}
+                  status={derived.statuses[selectedSegment.id]}
+                  evidence={derived.evidence[selectedSegment.id]}
+                  completion={selectedCompletionBySegment[selectedSegment.id] ?? null}
+                  disagreement={selectedDisagreement}
+                  date={date}
+                  onClear={handleClearSelection}
+                />
+              )}
+            </div>
+          </div>
+          <aside className="metric-rail" aria-label="Program metrics">
+            <MetricRail
+              snapshot={displayCvsrSnapshot}
+              snapshots={data.history.snapshots}
+              inventory={inventory}
+              selectedMonth={selectedMonth}
+              gaps={selectedCvsrGaps}
+              exact={exactCvsrSnapshot !== undefined}
+            />
+            <Legend />
+          </aside>
+        </div>
 
-        <DataGapDisclosure
-          groups={groupedCvsrGaps}
-          transcriptions={groupedTranscriptions}
-          revisions={groupedRevisions}
-        />
-
-        <StripChart
-          segments={data.segments.segments}
-          statuses={derived.statuses}
-          hoveredId={hoveredId}
-          selectedId={selectedId}
-          onHover={handleHover}
-          onSelect={handleSelect}
-          axisMode={axisMode}
-          onAxisModeChange={setAxisMode}
-          date={date}
-          evidence={derived.evidence}
-          selectedCompletionBySegment={selectedCompletionBySegment}
-          disagreements={data.segments.crossCheck?.disagreements ?? []}
-        />
-
-        <SegmentDetail
-          segment={selectedSegment}
-          status={selectedId ? derived.statuses[selectedId] : undefined}
-          evidence={selectedId ? derived.evidence[selectedId] : undefined}
-          completion={selectedId ? selectedCompletionBySegment[selectedId] ?? null : null}
-          disagreement={selectedDisagreement}
-          date={date}
-          onClear={handleClearSelection}
-        />
-
-        <TimeScrubber
-          dates={dates}
-          date={date}
-          onDateChange={setDate}
-          provenance={derived.provenance}
-          reportGap={selectedCvsrGaps.find((gap) => gap.metric === 'snapshot')}
-        />
-
-        <AlignmentMap
-          data={data.geojson}
-          statuses={derived.statuses}
-          hoveredId={hoveredId}
-          selectedId={selectedId}
-          onHover={handleHover}
-          onSelect={handleSelect}
-        />
+        <section className="strip-band" aria-labelledby="strip-heading">
+          <h2 id="strip-heading" className="sr-only">Construction status by mile</h2>
+          <div className="strip-controls">
+            <TimeScrubber
+              dates={dates}
+              date={date}
+              onDateChange={setDate}
+              provenance={derived.provenance}
+              reportGap={selectedCvsrGaps.find((gap) => gap.metric === 'snapshot')}
+            />
+            <div className="axis-toggle" role="group" aria-label="Segment width scale">
+              <button type="button" className={axisMode === 'distance' ? 'active' : ''} onClick={() => setAxisMode('distance')}>Distance</button>
+              <button type="button" className={axisMode === 'difficulty' ? 'active' : ''} onClick={() => setAxisMode('difficulty')}>Difficulty</button>
+            </div>
+          </div>
+          <StripChart
+            segments={data.segments.segments}
+            statuses={derived.statuses}
+            hoveredId={hoveredId}
+            selectedId={selectedId}
+            onHover={handleHover}
+            onSelect={handleSelect}
+            axisMode={axisMode}
+            date={date}
+            evidence={derived.evidence}
+            selectedCompletionBySegment={selectedCompletionBySegment}
+            disagreements={data.segments.crossCheck?.disagreements ?? []}
+          />
+        </section>
       </div>
-      <Legend />
+
+      <section className="below-fold">
+        <NotesList gaps={groupedCvsrGaps} revisions={groupedRevisions} />
+        <SourcesList />
+      </section>
     </main>
   );
 }
 
-const GAP_LABELS: Record<CvsrGapCause, string> = {
-  report_not_downloaded: 'Report not downloaded',
-  report_not_located: 'No valid report located',
-  source_not_reported: 'Not published in source',
-  related_measure_only: 'Related measure only',
-  parser_failure: 'Parser failed — report available',
-};
-
 function ReportLink({ gap }: { gap: CvsrGap }) {
   if (!gap.reportUrl) return <SourceLink sourceId="cvsr" />;
-  return (
-    <sup className="source-link">
-      <a href={gap.reportUrl} target="_blank" rel="noreferrer" title={gap.detail}>report</a>
-    </sup>
-  );
+  return <a className="fn-ref" href={gap.reportUrl} target="_blank" rel="noreferrer" title={gap.detail}><sup>↗</sup></a>;
 }
 
 function SnapshotReportLink({ snapshot }: { snapshot: Snapshot }) {
@@ -389,93 +262,78 @@ function SnapshotReportLink({ snapshot }: { snapshot: Snapshot }) {
   );
 }
 
-const GAP_METRIC_LABELS: Record<CvsrGap['metric'], string> = {
-  snapshot: 'Monthly report',
-  utilities: 'Utilities',
-  parcels: 'Parcels',
-  parcel_delivery: 'Parcels delivered to DB',
+const CP_COLORS: Record<(typeof CVSR_PACKAGES)[number], string> = {
+  CP1: 'var(--cp1)',
+  'CP2-3': 'var(--cp2-3)',
+  CP4: 'var(--cp4)',
 };
 
-function DataGapDisclosure({
-  groups,
-  transcriptions,
-  revisions,
-}: {
-  groups: CvsrGapGroup[];
-  transcriptions: TranscriptionGroup[];
-  revisions: RevisionGroup[];
-}) {
-  return (
-    <details className="data-gaps">
-      <summary>Data gaps, transcriptions &amp; revisions</summary>
-      <ul>
-        {groups.map((group) => (
-          <li
-            key={`${group.metric}:${group.cause}:${group.month}:${group.endMonth}:${group.packages.join(',')}`}
-            title={group.detail}
-          >
-            <b>{GAP_METRIC_LABELS[group.metric]} ({group.packages.join(', ')})</b>:{' '}
-            {group.month}{group.endMonth === group.month ? '' : `–${group.endMonth}`} — {GAP_LABELS[group.cause]}
-          </li>
-        ))}
-        {transcriptions.map((group) => (
-          <li key={`transcription:${group.fields}:${group.month}:${group.endMonth}`} title={group.detail}>
-            <b>Transcribed ({group.fields})</b>:{' '}
-            {group.month}{group.endMonth === group.month ? '' : `–${group.endMonth}`} — read by hand from a chart image in the source PDF
-          </li>
-        ))}
-        {revisions.map((group) => (
-          <li key={`revision:${group.key}:${group.month}:${group.endMonth}`} title={group.detail}>
-            <b>Restated ({group.metric}, {group.packages})</b>:{' '}
-            {group.month}{group.endMonth === group.month ? '' : `–${group.endMonth}`} — superseded by the {group.correctedIn} report
-          </li>
-        ))}
-      </ul>
-    </details>
-  );
-}
+const RAIL_METRICS: ReadonlyArray<{
+  label: string;
+  value: NumericPackageMetric;
+  total: NumericPackageMetric;
+  unit?: string;
+  /** CVSR revision family this metric belongs to; marks restated package cells. */
+  revisedAs?: 'progress' | 'parcels' | 'utilities';
+  /** CVSR gap metric that explains a blank month for this block. */
+  gapMetric?: CvsrGap['metric'];
+  format: (value: number, total: number) => string;
+}> = [
+  { label: 'Guideway complete', value: 'guidewayMilesComplete', total: 'guidewayMilesTotal', unit: 'mi', revisedAs: 'progress', format: (value, total) => `${value.toFixed(1)} / ${total.toFixed(0)}` },
+  { label: 'Structures complete', value: 'structuresComplete', total: 'structuresTotal', revisedAs: 'progress', format: (value, total) => `${value} / ${total}` },
+  { label: 'Right-of-way delivered', value: 'parcelsDelivered', total: 'parcelsTotal', revisedAs: 'parcels', gapMetric: 'parcel_delivery', format: (value, total) => `${value.toLocaleString()} / ${total.toLocaleString()}` },
+  { label: 'Utilities relocated', value: 'utilitiesRelocated', total: 'utilitiesTotal', revisedAs: 'utilities', gapMetric: 'utilities', format: (value, total) => `${value.toLocaleString()} / ${total.toLocaleString()}` },
+];
 
-function PackageBands({
+const TRACK_ARIA_LABEL = 'Track installed: zero miles. The 2026 Final Business Plan reports Track and Systems design and construction for the 119-mile Central Valley Segment as not started, and the Authority publishes no monthly track-installation series.';
+
+/**
+ * The rail carries the aggregate for each published CVSR metric over the three
+ * construction packages that reported it. An aggregate is shown only when every
+ * package published both halves of the ratio — `sumPackages` returns `undefined`
+ * otherwise, and a partial sum would read as a program total it is not.
+ */
+function MetricRail({
   snapshot,
   snapshots,
   inventory,
-  gaps,
   selectedMonth,
+  gaps,
   exact,
 }: {
   snapshot: Snapshot | undefined;
   snapshots: Snapshot[];
   inventory: CvsrInventory;
-  gaps: CvsrGap[];
   selectedMonth: string;
+  gaps: CvsrGap[];
   exact: boolean;
 }) {
-  const snapshotGap = gaps.find((gap) => gap.metric === 'snapshot');
   const beforeCoverage = selectedMonth < inventory.coverageStart;
   const afterCoverage = selectedMonth > inventory.coverageEnd;
-  const selectedIndex = inventory.expectedMonths.indexOf(selectedMonth);
+  const snapshotGap = gaps.find((gap) => gap.metric === 'snapshot');
+  const monthIndex = inventory.expectedMonths.indexOf(selectedMonth);
+  const selectedIndex = monthIndex < 0 ? null : monthIndex;
   const series = useMemo(() => {
-    const result: Record<string, Array<CvsrSeriesPoint | null>> = {};
-    for (const metric of PACKAGE_BAND_METRICS) {
-      for (const cp of CVSR_PACKAGES) {
-        result[`${metric.value}:${cp}`] = buildCvsrSeries(
-          snapshots,
-          inventory.expectedMonths,
-          cp,
-          metric.value,
-          metric.total,
-        );
-      }
+    const result: Record<string, SparklineSeries[]> = {};
+    for (const metric of RAIL_METRICS) {
+      result[metric.value] = CVSR_PACKAGES.map((cp) => ({
+        id: cp,
+        points: buildCvsrSeries(snapshots, inventory.expectedMonths, cp, metric.value, metric.total),
+        color: CP_COLORS[cp],
+      }));
     }
     return result;
   }, [inventory.expectedMonths, snapshots]);
+  // No monthly track-installation series exists to plot: one all-null series is
+  // the dashed floor the Sparkline draws instead of inventing a trend.
+  const trackSeries = useMemo<SparklineSeries[]>(
+    () => [{ id: 'track', points: inventory.expectedMonths.map(() => null), color: 'var(--cp1)' }],
+    [inventory.expectedMonths],
+  );
 
-  // One exact report link plus the `Data through {month}` label attributes every
-  // figure in this panel; the registry link on the heading identifies the series.
-  // Repeating the same CVSR superscript on all sixteen cells was wallpaper.
   return (
-    <section className="package-bands" aria-label="Construction-package aggregate status">
-      <div className={`package-report-status${exact || beforeCoverage || afterCoverage ? '' : ' stale'}`}>
+    <>
+      <div className={`rail-report-status${exact || beforeCoverage || afterCoverage ? '' : ' stale'}`}>
         {beforeCoverage
           ? <>Before the published CVSR series (starts {inventory.coverageStart}) <SourceLink sourceId="cvsr" /></>
           : afterCoverage && snapshot
@@ -486,81 +344,57 @@ function PackageBands({
                 ? <>{snapshotGap ? GAP_LABELS[snapshotGap.cause] : 'No CVSR snapshot for selected month'} · Last observed {snapshot.dataMonth} · <SnapshotReportLink snapshot={snapshot} />{snapshot.reportUrl && <> <SourceLink sourceId="cvsr" /></>}</>
                 : <>{snapshotGap ? GAP_LABELS[snapshotGap.cause] : 'No CVSR snapshot for selected month'} <SourceLink sourceId="cvsr" /></>}
       </div>
-      {PACKAGE_BAND_METRICS.map((metric) => (
-        <div className="package-band" key={metric.value}>
-          <span className="band-title">{metric.label}</span>
-          {CVSR_PACKAGES.map((cp) => {
-            const packageMetric = beforeCoverage ? undefined : snapshot?.perPackage?.[cp];
-            const value = packageMetric?.[metric.value];
-            const total = packageMetric?.[metric.total];
-            const metricName = metric.value.startsWith('utilities')
-              ? 'utilities'
-              : metric.value === 'parcelsDelivered'
-                ? 'parcel_delivery'
-                : undefined;
-            const gap = beforeCoverage ? undefined : gaps.find(
-              (candidate) => (
-                candidate.metric === 'snapshot'
-                || candidate.metric === metricName
-              ) && candidate.packages.includes(cp),
-            );
-            const points = series[`${metric.value}:${cp}`];
-            const transcribed = metric.transcribedAs !== undefined
-              && packageMetric?.transcribedFields?.includes(metric.transcribedAs) === true;
-            const revisedAs = metric.revisedAs;
-            // The superseded month keeps the number its own report published;
-            // the marker says the Authority later restated it.
-            const revision = revisedAs === undefined ? undefined : inventory.revisions.find(
-              (entry) => entry.month === selectedMonth
-                && entry.metric === revisedAs
-                && entry.packages.includes(cp),
-            );
-            const valueClass = [transcribed ? 'transcribed' : '', revision ? 'revised' : '']
-              .filter(Boolean)
-              .join(' ');
-            const valueTitle = [
-              transcribed && snapshot?.reportFile
-                ? `Transcribed by hand from a chart image in ${snapshot.reportFile}; not extractable as PDF text.`
-                : undefined,
-              revision
-                ? `Superseded: the Authority restated this value in the ${revision.correctedIn} report. ${revision.detail}`
-                : undefined,
-            ].filter((entry): entry is string => entry !== undefined).join(' ');
-            return (
-              <span className={`band-value${gap ? ' missing' : ''}`} key={cp} title={gap?.detail}>
-                <b>{cp}</b>
-                <Sparkline
-                  points={points}
-                  selectedIndex={selectedIndex < 0 ? null : selectedIndex}
-                  label={sparklineLabel(metric.label, cp, points)}
-                />
-                {beforeCoverage
-                  ? <>—</>
-                  : metric.value === 'parcelsAcquired' && packageMetric?.acquisitionAudit
-                    ? (
-                      <span title="The report does not publish an exact January package acquisition split.">
-                        March 9 audit: {packageMetric.acquisitionAudit.priorAcquired.toLocaleString()} prior acquired / {packageMetric.acquisitionAudit.totalNeeded.toLocaleString()} needed · as of {packageMetric.acquisitionAudit.asOf}
-                      </span>
-                    )
-                    : value === undefined || total === undefined
-                      ? <>{metric.value === 'parcelsDelivered' && gap ? 'Delivered to DB — not reported' : gap ? GAP_LABELS[gap.cause] : 'No report for selected month'} {gap && <ReportLink gap={gap} />}</>
-                      : (
-                        <span
-                          className={valueClass === '' ? undefined : valueClass}
-                          title={valueTitle === '' ? undefined : valueTitle}
-                        >
-                          {metric.value === 'parcelsAcquired' ? 'Acquired ' : ''}{value.toLocaleString()} / {total.toLocaleString()}
-                          {metric.value === 'parcelsAcquired' && packageMetric?.parcelAcquisitionAsOf
-                            ? ` · as of ${packageMetric.parcelAcquisitionAsOf}`
-                            : ''}
-                        </span>
-                      )}
-              </span>
-            );
-          })}
-        </div>
-      ))}
-    </section>
+      <MetricBlock
+        label="Track installed"
+        value="0"
+        unit="mi"
+        chip={<>Upcoming 2026 <SourceLink sourceId="business_plan_2026_schedule" /></>}
+        series={trackSeries}
+        selectedIndex={null}
+        ariaLabel={TRACK_ARIA_LABEL}
+      />
+      {RAIL_METRICS.map((metric) => {
+        const value = beforeCoverage ? undefined : sumPackages(snapshot, metric.value);
+        const total = beforeCoverage ? undefined : sumPackages(snapshot, metric.total);
+        const metricSeries = series[metric.value];
+        const gap = beforeCoverage || metric.gapMetric === undefined
+          ? undefined
+          : gaps.find((candidate) => candidate.metric === metric.gapMetric || candidate.metric === 'snapshot');
+        return (
+          <MetricBlock
+            key={metric.value}
+            label={metric.label}
+            value={value === undefined || total === undefined ? '—' : metric.format(value, total)}
+            unit={metric.unit}
+            packages={CVSR_PACKAGES.map((cp) => {
+              const packageMetric = beforeCoverage ? undefined : snapshot?.perPackage?.[cp];
+              const packageValue = packageMetric?.[metric.value];
+              const packageTotal = packageMetric?.[metric.total];
+              // The superseded month keeps the number its own report published; the marker
+              // says the Authority later restated it.
+              const revision = beforeCoverage || metric.revisedAs === undefined ? undefined : inventory.revisions.find(
+                (entry) => entry.month === selectedMonth
+                  && entry.metric === metric.revisedAs
+                  && entry.packages.includes(cp),
+              );
+              return {
+                cp,
+                percent: packageValue === undefined || packageTotal === undefined || packageTotal <= 0
+                  ? '—'
+                  : `${Math.round((packageValue / packageTotal) * 100)}%`,
+                revisedTitle: revision === undefined
+                  ? undefined
+                  : `Superseded: the Authority restated this value in the ${revision.correctedIn} report. ${revision.detail}`,
+              };
+            })}
+            status={gap && <><span title={gap.detail}>{GAP_LABELS[gap.cause]}</span> <ReportLink gap={gap} /></>}
+            series={metricSeries}
+            selectedIndex={selectedIndex}
+            ariaLabel={metricSeries.map((entry) => sparklineLabel(metric.label, entry.id, entry.points)).join('; ')}
+          />
+        );
+      })}
+    </>
   );
 }
 

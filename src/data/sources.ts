@@ -125,6 +125,12 @@ export const SOURCES = {
     publisher: 'California High-Speed Rail Authority',
     url: 'https://hsr.ca.gov/wp-content/uploads/2026/06/2026-Final-Business-Plan-060126-A11Y.pdf',
   },
+  business_plan_2026_schedule: {
+    title: '2026 Final Business Plan, Exhibit D.0: Merced – Bakersfield Timeline for Major Scope Items',
+    date: '2026-06-01',
+    publisher: 'California High-Speed Rail Authority',
+    url: 'https://hsr.ca.gov/wp-content/uploads/2026/06/2026-Final-Business-Plan-060126-A11Y.pdf',
+  },
 } as const satisfies Record<string, Source>;
 
 export type SourceId = keyof typeof SOURCES;
