@@ -1,6 +1,7 @@
 import type { AlignmentStatus, Segment, StructureEvidence } from '../data/types';
 import { STATUS_LABELS } from '../lib/status';
 import { evidenceDateLabel, structureObservationLabel } from '../lib/observation-labels';
+import { Abbr } from './Abbr';
 import { SourceLink } from './Citation';
 
 /**
@@ -34,7 +35,7 @@ export function SegmentDetail({
       </div>
       <dl>
         <dt>Package · status</dt>
-        <dd>{segment.cp} · {STATUS_LABELS[status ?? segment.currentStatus]}</dd>
+        <dd><Abbr>{segment.cp}</Abbr> · {STATUS_LABELS[status ?? segment.currentStatus]}</dd>
 
         <dt>Station</dt>
         <dd>

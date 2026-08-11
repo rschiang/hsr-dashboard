@@ -17,11 +17,11 @@ const STATIONS = [
 ] as const;
 
 const CP_BOUNDARIES = [
-  { label: 'M2M / CVY', mile: 0 },
-  { label: 'CP1', mile: 34 },
-  { label: 'CP2–3', mile: 65 },
-  { label: 'CP4', mile: 131 },
-  { label: 'LGA', mile: 152 },
+  { label: 'M2M / CVY', mile: 0, color: 'var(--m2m)', title: 'M2M — Merced to Madera extension · CVY — Central Valley Wye' },
+  { label: 'CP1', mile: 34, color: 'var(--cp1)', title: 'CP1 — Construction Package 1' },
+  { label: 'CP2–3', mile: 65, color: 'var(--cp2-3)', title: 'CP2–3 — Construction Packages 2 and 3' },
+  { label: 'CP4', mile: 131, color: 'var(--cp4)', title: 'CP4 — Construction Package 4' },
+  { label: 'LGA', mile: 152, color: 'var(--lga)', title: 'LGA — Locally Generated Alternative (Fresno–Bakersfield)' },
 ] as const;
 
 const TICK_TOP = 28;        // named-structure ticks
@@ -216,7 +216,7 @@ export function StripChart({
           return (
             <g key={boundary.label}>
               <line x1={x} x2={x} y1={4} y2={AXIS_Y} className="cp-rule" />
-              <text x={x + 7} y={18} className="cp-label">{boundary.label}</text>
+              <text x={x + 7} y={18} className="cp-label" fill={boundary.color}><title>{boundary.title}</title>{boundary.label}</text>
             </g>
           );
         })}

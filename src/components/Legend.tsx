@@ -16,19 +16,19 @@ export function Legend() {
   return (
     <aside className="legend-panel" aria-label="Alignment status legend">
       <ul className="legend-items">
-        {VISIBLE_STATUSES.map((status) => (
-          <li
-            key={status}
-            title={status === 'guideway_complete'
-              ? OFFICIAL_DEFINITIONS.guideway
-              : status === 'structure_complete'
-                ? OFFICIAL_DEFINITIONS.structure
-                : undefined}
-          >
-            <span className={`legend-swatch ${status === 'no_data' ? 'hatched' : ''}`} style={{ backgroundColor: STATUS_COLORS[status] }} />
-            <span>{STATUS_LABELS[status]}</span>
-          </li>
-        ))}
+        {VISIBLE_STATUSES.map((status) => {
+          const definition = status === 'guideway_complete'
+            ? OFFICIAL_DEFINITIONS.guideway
+            : status === 'structure_complete'
+              ? OFFICIAL_DEFINITIONS.structure
+              : undefined;
+          return (
+            <li key={status} title={definition ? `${STATUS_LABELS[status]} — ${definition}` : STATUS_LABELS[status]}>
+              <span className={`legend-swatch ${status === 'no_data' ? 'hatched' : ''}`} style={{ backgroundColor: STATUS_COLORS[status] }} />
+              <span className="sr-only">{STATUS_LABELS[status]}</span>
+            </li>
+          );
+        })}
       </ul>
     </aside>
   );

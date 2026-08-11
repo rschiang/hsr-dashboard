@@ -6,9 +6,11 @@
   --panel: #fbfaf8;
   --line: #e3e1dc;
   --accent: #d95f02;
-  --cp1: #14181c;
-  --cp2-3: #1f5fa8;
-  --cp4: #1b9e77;
+  --m2m: #ff6a1c;
+  --cp1: #769826;
+  --cp2-3: #427ab5;
+  --cp4: #f62477;
+  --lga: #a8a492;
   --sans: 'Public Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   color: var(--ink);
   background: var(--paper);

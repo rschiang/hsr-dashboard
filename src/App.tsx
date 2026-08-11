@@ -11,6 +11,7 @@ import type {
 import { deriveStatuses, selectedCompletions } from './lib/status';
 import { buildCvsrSeries, sparklineLabel, type NumericPackageMetric } from './lib/cvsr-series';
 import { GAP_LABELS, groupCvsrGaps, groupRevisions } from './lib/cvsr-gaps';
+import { Abbr, type Abbreviation } from './components/Abbr';
 import { SourceLink, SourcesList } from './components/Citation';
 import { NotesList } from './components/Notes';
 import { Legend } from './components/Legend';
@@ -28,6 +29,9 @@ type LoadedData = {
 };
 
 const CVSR_PACKAGES = ['CP1', 'CP2-3', 'CP4'] as const satisfies readonly CvsrPackageId[];
+// TypeScript rejects a bare text child against a union-typed `children` (TS2745),
+// so the rail's report abbreviation travels as a checked constant.
+const CVSR: Abbreviation = 'CVSR';
 
 function sumPackages(
   snapshot: Snapshot | undefined,
@@ -51,6 +55,7 @@ function App() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [axisMode, setAxisMode] = useState<AxisMode>('distance');
+  const [satellite, setSatellite] = useState(false);
 
   useEffect(() => {
     const base = import.meta.env.BASE_URL;
@@ -155,7 +160,7 @@ function App() {
       <div className="screen">
         <header className="topbar">
           <h1>Tracking On</h1>
-          <p className="topbar-meta">
+          <div className="topbar-meta">
             <span>CA HSR Construction Dashboard</span>
             <span>
               Last updated {new Date(data.segments.generatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}
@@ -164,7 +169,8 @@ function App() {
             <a href="https://github.com/rschiang/hsr-dashboard" target="_blank" rel="noreferrer" aria-label="Source code on GitHub">
               <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" /></svg>
             </a>
-          </p>
+            <Legend />
+          </div>
         </header>
 
         <div className="viewport-grid">
@@ -176,7 +182,14 @@ function App() {
               selectedId={selectedId}
               onHover={handleHover}
               onSelect={handleSelect}
+              satellite={satellite}
             />
+            <div className="map-layer-switch">
+              <div className="axis-toggle" role="group" aria-label="Basemap">
+                <button type="button" className={satellite ? '' : 'active'} onClick={() => setSatellite(false)}>Map</button>
+                <button type="button" className={satellite ? 'active' : ''} onClick={() => setSatellite(true)}>Satellite</button>
+              </div>
+            </div>
             <div className="map-overlay" aria-live="polite">
               {selectedSegment && (
                 <SegmentDetail
@@ -200,7 +213,6 @@ function App() {
               exact={exactCvsrSnapshot !== undefined}
               arcgisObserved={currentPoll && date === currentPoll.date ? currentPoll.date : undefined}
             />
-            <Legend />
           </aside>
         </div>
 
@@ -237,6 +249,13 @@ function App() {
         <NotesList gaps={groupedCvsrGaps} revisions={groupedRevisions} />
         <SourcesList />
       </section>
+
+      <footer className="page-footer">
+        <p>
+          Visualized with large language model, may contain errors. Released to the public under{' '}
+          <a href="https://github.com/rschiang/hsr-dashboard/blob/main/LICENSE.md" target="_blank" rel="noreferrer">The Unlicense</a>.
+        </p>
+      </footer>
     </main>
   );
 }
@@ -392,13 +411,13 @@ function MetricRail({
       })}
       <div className={`rail-report-status${exact || beforeCoverage || afterCoverage ? '' : ' stale'}`}>
         {beforeCoverage
-          ? <>Before the published CVSR series (starts {inventory.coverageStart})</>
+          ? <>Before the published <Abbr>{CVSR}</Abbr> series (starts {inventory.coverageStart})</>
           : afterCoverage && snapshot
-            ? <>CVSR data through {inventory.coverageEnd}<SnapshotReportLink snapshot={snapshot} />{arcgisObserved && <> · ArcGIS observed {arcgisObserved}</>}</>
+            ? <><Abbr>{CVSR}</Abbr> data through {inventory.coverageEnd}<SnapshotReportLink snapshot={snapshot} />{arcgisObserved && <> · ArcGIS observed {arcgisObserved}</>}</>
             : exact && snapshot
-              ? <>CVSR data through {selectedMonth}<SnapshotReportLink snapshot={snapshot} /></>
+              ? <><Abbr>{CVSR}</Abbr> data through {selectedMonth}<SnapshotReportLink snapshot={snapshot} /></>
               : snapshot
-                ? <>{snapshotGap ? GAP_LABELS[snapshotGap.cause] : 'No CVSR snapshot for selected month'} · last CVSR {snapshot.dataMonth}<SnapshotReportLink snapshot={snapshot} /></>
+                ? <>{snapshotGap ? GAP_LABELS[snapshotGap.cause] : 'No CVSR snapshot for selected month'} · last <Abbr>{CVSR}</Abbr> {snapshot.dataMonth}<SnapshotReportLink snapshot={snapshot} /></>
                 : <>{snapshotGap ? GAP_LABELS[snapshotGap.cause] : 'No CVSR snapshot for selected month'}</>}
       </div>
     </>

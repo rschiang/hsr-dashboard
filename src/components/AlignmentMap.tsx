@@ -19,6 +19,7 @@ export function AlignmentMap({
   statuses,
   hoveredId,
   selectedId,
+  satellite,
   onHover,
   onSelect,
 }: {
@@ -26,6 +27,7 @@ export function AlignmentMap({
   statuses: Record<string, AlignmentStatus>;
   hoveredId: string | null;
   selectedId: string | null;
+  satellite: boolean;
   onHover: (id: string | null) => void;
   onSelect: (id: string | null) => void;
 }) {
@@ -36,6 +38,8 @@ export function AlignmentMap({
   const priorSelectedRef = useRef<string | null>(null);
   const statusesRef = useRef(statuses);
   statusesRef.current = statuses;
+  const satelliteRef = useRef(satellite);
+  satelliteRef.current = satellite;
 
   useEffect(() => {
     if (!containerRef.current || mapRef.current) return;
@@ -55,6 +59,7 @@ export function AlignmentMap({
           'Data from <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap</a>',
           '<a href="https://maplibre.org/" target="_blank" rel="noreferrer">MapLibre</a>',
           'Hillshade: <a href="https://registry.opendata.aws/terrain-tiles/" target="_blank" rel="noreferrer">AWS Terrain Tiles</a>',
+          'Imagery: <a href="https://www.usgs.gov/programs/national-geospatial-program/national-map" target="_blank" rel="noreferrer">USGS National Map</a>',
         ],
       },
     });
@@ -80,6 +85,20 @@ export function AlignmentMap({
           'hillshade-highlight-color': '#ffffff',
           'hillshade-accent-color': '#9aa0a4',
         },
+      }, firstSymbol);
+      map.addSource('usgs-imagery', {
+        type: 'raster',
+        tiles: ['https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}'],
+        tileSize: 256,
+        maxzoom: 16,
+      });
+      map.addLayer({
+        id: 'usgs-imagery',
+        type: 'raster',
+        source: 'usgs-imagery',
+        // Hidden until asked for: the raster must never fetch tiles on first paint.
+        layout: { visibility: satelliteRef.current ? 'visible' : 'none' },
+        paint: { 'raster-opacity': 1 },
       }, firstSymbol);
       // Positron is already near-gray; this only flattens water and vegetation so the
       // hillshade is the only relief cue. It runs before the alignment layers exist, so
@@ -159,6 +178,12 @@ export function AlignmentMap({
     if (!map || !readyRef.current) return;
     for (const [id, status] of Object.entries(statuses)) map.setFeatureState({ source: 'alignment', id }, { status });
   }, [statuses]);
+
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !readyRef.current) return;
+    map.setLayoutProperty('usgs-imagery', 'visibility', satellite ? 'visible' : 'none');
+  }, [satellite]);
 
   useEffect(() => {
     const map = mapRef.current;

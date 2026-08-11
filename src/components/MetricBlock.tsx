@@ -1,3 +1,5 @@
+import type { CvsrPackageId } from '../data/types';
+import { Abbr } from './Abbr';
 import { Sparkline, type SparklineSeries } from './Sparkline';
 
 /**
@@ -20,7 +22,7 @@ export function MetricBlock({
   value: string;
   unit?: string;
   chip?: React.ReactNode;
-  packages?: Array<{ cp: string; percent: string; revisedTitle?: string }>;
+  packages?: Array<{ cp: CvsrPackageId; percent: string; revisedTitle?: string }>;
   series: SparklineSeries[];
   selectedIndex: number | null;
   ariaLabel: string;
@@ -38,7 +40,7 @@ export function MetricBlock({
           <ul className="metric-packages">
             {packages.map(({ cp, percent, revisedTitle }) => (
               <li key={cp}>
-                <b>{cp}</b>:{' '}
+                <b><Abbr>{cp}</Abbr></b>:{' '}
                 {revisedTitle === undefined
                   ? percent
                   : <span className="revised" title={revisedTitle}>{percent}</span>}
