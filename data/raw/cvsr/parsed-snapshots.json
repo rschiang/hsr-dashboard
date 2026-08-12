@@ -492,9 +492,12 @@
           "guidewayMilesComplete": 2,
           "guidewayMilesTotal": 32,
           "transcribedFields": [
-            "progress"
+            "progress",
+            "parcels"
           ],
           "sourceId": "cvsr",
+          "parcelsDelivered": 785,
+          "transcriptionDetail": "Reviewed transcription from a later report: January 2020 cumulative parcels delivered to the design-builder are published only as chart images in the April 2020 report (data through February 2020) — program total 1,498 on page 13, CP 1 785 on page 25, CP 2-3 557 on page 34, CP 4 156 on page 43. https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_042120_FA_Central_Valley_Status_Report.pdf. That report publishes no January total-needed count, so no denominator is recorded.",
           "acquisitionAudit": {
             "totalNeeded": 919,
             "priorAcquired": 827,
@@ -512,9 +515,12 @@
           "guidewayMilesComplete": 19,
           "guidewayMilesTotal": 65,
           "transcribedFields": [
-            "progress"
+            "progress",
+            "parcels"
           ],
           "sourceId": "cvsr",
+          "parcelsDelivered": 557,
+          "transcriptionDetail": "Reviewed transcription from a later report: January 2020 cumulative parcels delivered to the design-builder are published only as chart images in the April 2020 report (data through February 2020) — program total 1,498 on page 13, CP 1 785 on page 25, CP 2-3 557 on page 34, CP 4 156 on page 43. https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_042120_FA_Central_Valley_Status_Report.pdf. That report publishes no January total-needed count, so no denominator is recorded.",
           "acquisitionAudit": {
             "totalNeeded": 956,
             "priorAcquired": 573,
@@ -532,9 +538,12 @@
           "guidewayMilesComplete": 0,
           "guidewayMilesTotal": 21,
           "transcribedFields": [
-            "progress"
+            "progress",
+            "parcels"
           ],
           "sourceId": "cvsr",
+          "parcelsDelivered": 156,
+          "transcriptionDetail": "Reviewed transcription from a later report: January 2020 cumulative parcels delivered to the design-builder are published only as chart images in the April 2020 report (data through February 2020) — program total 1,498 on page 13, CP 1 785 on page 25, CP 2-3 557 on page 34, CP 4 156 on page 43. https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_042120_FA_Central_Valley_Status_Report.pdf. That report publishes no January total-needed count, so no denominator is recorded.",
           "acquisitionAudit": {
             "totalNeeded": 263,
             "priorAcquired": 172,
@@ -979,12 +988,6 @@
           "railroadParcelsAcquired": 27,
           "railroadParcelsTotal": 30
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 412,
-        "utilitiesTotal": 2067,
-        "parcelsDelivered": 1673,
-        "parcelsTotal": 2290
       }
     },
     {
@@ -1052,12 +1055,6 @@
           "railroadParcelsAcquired": 27,
           "railroadParcelsTotal": 30
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 412,
-        "utilitiesTotal": 2067,
-        "parcelsDelivered": 1681,
-        "parcelsTotal": 2308
       }
     },
     {
@@ -1125,12 +1122,6 @@
           "railroadParcelsAcquired": 27,
           "railroadParcelsTotal": 30
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 476,
-        "utilitiesTotal": 2062,
-        "parcelsDelivered": 1701,
-        "parcelsTotal": 2295
       }
     },
     {
@@ -1197,12 +1188,6 @@
           "railroadParcelsAcquired": 27,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 485,
-        "utilitiesTotal": 2062,
-        "parcelsDelivered": 1726,
-        "parcelsTotal": 2304
       }
     },
     {
@@ -1260,12 +1245,6 @@
           "railroadParcelsAcquired": 27,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 523,
-        "utilitiesTotal": 2061,
-        "parcelsDelivered": 1771,
-        "parcelsTotal": 2290
       }
     },
     {
@@ -1324,12 +1303,6 @@
           "railroadParcelsAcquired": 27,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 552,
-        "utilitiesTotal": 2057,
-        "parcelsDelivered": 1776,
-        "parcelsTotal": 2287
       }
     },
     {
@@ -1388,12 +1361,6 @@
           "railroadParcelsAcquired": 27,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 575,
-        "utilitiesTotal": 2065,
-        "parcelsDelivered": 1792,
-        "parcelsTotal": 2285
       }
     },
     {
@@ -1452,12 +1419,6 @@
           "railroadParcelsAcquired": 27,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 575,
-        "utilitiesTotal": 2063,
-        "parcelsDelivered": 1812,
-        "parcelsTotal": 2304
       }
     },
     {
@@ -1501,12 +1462,6 @@
           "parcelsDelivered": 182,
           "parcelsTotal": 237
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 585,
-        "utilitiesTotal": 2065,
-        "parcelsDelivered": 1837,
-        "parcelsTotal": 2306
       }
     },
     {
@@ -1550,12 +1505,6 @@
           "parcelsDelivered": 185,
           "parcelsTotal": 237
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 613,
-        "utilitiesTotal": 2065,
-        "parcelsDelivered": 1867,
-        "parcelsTotal": 2292
       }
     },
     {
@@ -1599,12 +1548,6 @@
           "parcelsDelivered": 187,
           "parcelsTotal": 237
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 621,
-        "utilitiesTotal": 2064,
-        "parcelsDelivered": 1896,
-        "parcelsTotal": 2292
       }
     },
     {
@@ -1648,12 +1591,6 @@
           "parcelsDelivered": 191,
           "parcelsTotal": 237
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 650,
-        "utilitiesTotal": 2064,
-        "parcelsDelivered": 1922,
-        "parcelsTotal": 2292
       }
     },
     {
@@ -1697,12 +1634,6 @@
           "parcelsDelivered": 192,
           "parcelsTotal": 237
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 657,
-        "utilitiesTotal": 2062,
-        "parcelsDelivered": 1946,
-        "parcelsTotal": 2298
       }
     },
     {
@@ -1752,12 +1683,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 679,
-        "utilitiesTotal": 2061,
-        "parcelsDelivered": 1979,
-        "parcelsTotal": 2291
       }
     },
     {
@@ -1807,12 +1732,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 726,
-        "utilitiesTotal": 1838,
-        "parcelsDelivered": 1999,
-        "parcelsTotal": 2267
       }
     },
     {
@@ -1862,12 +1781,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 747,
-        "utilitiesTotal": 1848,
-        "parcelsDelivered": 2011,
-        "parcelsTotal": 2274
       }
     },
     {
@@ -1917,12 +1830,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 761,
-        "utilitiesTotal": 1847,
-        "parcelsDelivered": 2041,
-        "parcelsTotal": 2285
       }
     },
     {
@@ -1972,12 +1879,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 768,
-        "utilitiesTotal": 1851,
-        "parcelsDelivered": 2049,
-        "parcelsTotal": 2286
       }
     },
     {
@@ -2027,12 +1928,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 786,
-        "utilitiesTotal": 1850,
-        "parcelsDelivered": 2069,
-        "parcelsTotal": 2291
       }
     },
     {
@@ -2082,12 +1977,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 796,
-        "utilitiesTotal": 1850,
-        "parcelsDelivered": 2077,
-        "parcelsTotal": 2304
       }
     },
     {
@@ -2137,12 +2026,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 824,
-        "utilitiesTotal": 1851,
-        "parcelsDelivered": 2093,
-        "parcelsTotal": 2305
       }
     },
     {
@@ -2192,12 +2075,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 843,
-        "utilitiesTotal": 1851,
-        "parcelsDelivered": 2104,
-        "parcelsTotal": 2309
       }
     },
     {
@@ -2247,12 +2124,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 862,
-        "utilitiesTotal": 1862,
-        "parcelsDelivered": 2112,
-        "parcelsTotal": 2309
       }
     },
     {
@@ -2302,12 +2173,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 870,
-        "utilitiesTotal": 1863,
-        "parcelsDelivered": 2115,
-        "parcelsTotal": 2309
       }
     },
     {
@@ -2357,12 +2222,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 880,
-        "utilitiesTotal": 1863,
-        "parcelsDelivered": 2125,
-        "parcelsTotal": 2321
       }
     },
     {
@@ -2412,12 +2271,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 895,
-        "utilitiesTotal": 1852,
-        "parcelsDelivered": 2141,
-        "parcelsTotal": 2301
       }
     },
     {
@@ -2467,12 +2320,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 928,
-        "utilitiesTotal": 1850,
-        "parcelsDelivered": 2157,
-        "parcelsTotal": 2305
       }
     },
     {
@@ -2522,12 +2369,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 954,
-        "utilitiesTotal": 1846,
-        "parcelsDelivered": 2167,
-        "parcelsTotal": 2305
       }
     },
     {
@@ -2577,12 +2418,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 977,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2208,
-        "parcelsTotal": 2300
       }
     },
     {
@@ -2632,12 +2467,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 978,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2213,
-        "parcelsTotal": 2299
       }
     },
     {
@@ -2687,12 +2516,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1009,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2214,
-        "parcelsTotal": 2300
       }
     },
     {
@@ -2742,12 +2565,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1018,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2222,
-        "parcelsTotal": 2300
       }
     },
     {
@@ -2797,12 +2614,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1034,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2222,
-        "parcelsTotal": 2293
       }
     },
     {
@@ -2853,12 +2664,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1045,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2225,
-        "parcelsTotal": 2293
       }
     },
     {
@@ -2908,12 +2713,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1070,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2230,
-        "parcelsTotal": 2292
       }
     },
     {
@@ -2963,12 +2762,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1091,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2232,
-        "parcelsTotal": 2293
       }
     },
     {
@@ -3018,12 +2811,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1112,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2242,
-        "parcelsTotal": 2296
       }
     },
     {
@@ -3073,12 +2860,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1160,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2246,
-        "parcelsTotal": 2296
       }
     },
     {
@@ -3128,12 +2909,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1179,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2258,
-        "parcelsTotal": 2295
       }
     },
     {
@@ -3183,12 +2958,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1225,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2259,
-        "parcelsTotal": 2294
       }
     },
     {
@@ -3238,12 +3007,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1232,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2260,
-        "parcelsTotal": 2294
       }
     },
     {
@@ -3293,12 +3056,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1250,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2260,
-        "parcelsTotal": 2294
       }
     },
     {
@@ -3348,12 +3105,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1284,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2261,
-        "parcelsTotal": 2287
       }
     },
     {
@@ -3403,12 +3154,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1314,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2262,
-        "parcelsTotal": 2288
       }
     },
     {
@@ -3452,12 +3197,6 @@
           "parcelsDelivered": 223,
           "parcelsTotal": 223
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1324,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2263,
-        "parcelsTotal": 2288
       }
     },
     {
@@ -3507,12 +3246,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1333,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2264,
-        "parcelsTotal": 2289
       }
     },
     {
@@ -3562,12 +3295,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1386,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2264,
-        "parcelsTotal": 2289
       }
     },
     {
@@ -3617,12 +3344,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1395,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2265,
-        "parcelsTotal": 2290
       }
     },
     {
@@ -3672,12 +3393,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1412,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2270,
-        "parcelsTotal": 2289
       }
     },
     {
@@ -3727,12 +3442,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1451,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2270,
-        "parcelsTotal": 2288
       }
     },
     {
@@ -3782,12 +3491,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1485,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2271,
-        "parcelsTotal": 2288
       }
     },
     {
@@ -3837,12 +3540,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1502,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2272,
-        "parcelsTotal": 2290
       }
     },
     {
@@ -3892,12 +3589,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1523,
-        "utilitiesTotal": 1836,
-        "parcelsDelivered": 2273,
-        "parcelsTotal": 2290
       }
     },
     {
@@ -3947,12 +3638,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1529,
-        "utilitiesTotal": 1826,
-        "parcelsDelivered": 2273,
-        "parcelsTotal": 2290
       }
     },
     {
@@ -4002,12 +3687,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1541,
-        "utilitiesTotal": 1826,
-        "parcelsDelivered": 2273,
-        "parcelsTotal": 2294
       }
     },
     {
@@ -4051,12 +3730,6 @@
           "parcelsDelivered": 223,
           "parcelsTotal": 223
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1548,
-        "utilitiesTotal": 1826,
-        "parcelsDelivered": 2274,
-        "parcelsTotal": 2297
       }
     },
     {
@@ -4106,12 +3779,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1558,
-        "utilitiesTotal": 1826,
-        "parcelsDelivered": 2274,
-        "parcelsTotal": 2294
       }
     },
     {
@@ -4160,12 +3827,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1572,
-        "utilitiesTotal": 1826,
-        "parcelsDelivered": 2275,
-        "parcelsTotal": 2291
       }
     },
     {
@@ -4215,12 +3876,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1587,
-        "utilitiesTotal": 1826,
-        "parcelsDelivered": 2276,
-        "parcelsTotal": 2294
       }
     },
     {
@@ -4270,12 +3925,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1604,
-        "utilitiesTotal": 1826,
-        "parcelsDelivered": 2276,
-        "parcelsTotal": 2294
       }
     },
     {
@@ -4325,12 +3974,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1617,
-        "utilitiesTotal": 1826,
-        "parcelsDelivered": 2276,
-        "parcelsTotal": 2294
       }
     },
     {
@@ -4380,12 +4023,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1628,
-        "utilitiesTotal": 1826,
-        "parcelsDelivered": 2278,
-        "parcelsTotal": 2294
       }
     },
     {
@@ -4435,12 +4072,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1634,
-        "utilitiesTotal": 1826,
-        "parcelsDelivered": 2282,
-        "parcelsTotal": 2294
       }
     },
     {
@@ -4490,12 +4121,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1645,
-        "utilitiesTotal": 1826,
-        "parcelsDelivered": 2282,
-        "parcelsTotal": 2292
       }
     },
     {
@@ -4545,12 +4170,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1678,
-        "utilitiesTotal": 1826,
-        "parcelsDelivered": 2284,
-        "parcelsTotal": 2292
       }
     },
     {
@@ -4600,12 +4219,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1692,
-        "utilitiesTotal": 1826,
-        "parcelsDelivered": 2287,
-        "parcelsTotal": 2291
       }
     },
     {
@@ -4655,12 +4268,6 @@
           "railroadParcelsAcquired": 29,
           "railroadParcelsTotal": 29
         }
-      },
-      "aggregate": {
-        "utilitiesRelocated": 1699,
-        "utilitiesTotal": 1826,
-        "parcelsDelivered": 2287,
-        "parcelsTotal": 2291
       }
     },
     {
@@ -5738,13 +5345,7 @@
           "kind": "structure",
           "location": "Hanford Armona"
         }
-      ],
-      "aggregate": {
-        "utilitiesRelocated": 1712,
-        "utilitiesTotal": 1826,
-        "parcelsDelivered": 2287,
-        "parcelsTotal": 2291
-      }
+      ]
     },
     {
       "date": "2026-04-01",
@@ -7419,9 +7020,1762 @@
           "location": "SR 43 Jersey"
         }
       ],
-      "aggregate": {
-        "utilitiesRelocated": 1720,
-        "utilitiesTotal": 1826,
+      "program": {
+        "parcelsDelivered": 2288,
+        "parcelsTotal": 2288
+      }
+    },
+    {
+      "date": "2026-05-01",
+      "dataMonth": "2026-05",
+      "tier": 1,
+      "sourceId": "cvsr",
+      "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+      "perPackage": {
+        "CP1": {
+          "structuresComplete": 24,
+          "structuresTotal": 33,
+          "guidewayMilesComplete": 11,
+          "guidewayMilesTotal": 32,
+          "sourceId": "cvsr",
+          "utilitiesRelocated": 918,
+          "utilitiesTotal": 992,
+          "railroadParcelsAcquired": 80,
+          "railroadParcelsTotal": 89,
+          "parcelsDelivered": 1080,
+          "parcelsTotal": 1080,
+          "derivedFields": [
+            "parcels"
+          ],
+          "derivationDetail": "Determined, not reprinted: the July 2026 report retires the per-package right-of-way table and states \"All required parcels have been delivered — 2,288 of 2,288\". The April 2026 report (data through April 2026, page 10) publishes that same total as CP 1 1,080 of 1,080, CP 2-3 985 of 985 and CP 4 223 of 223, with zero parcels to be delivered in every package. https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf"
+        },
+        "CP2-3": {
+          "structuresComplete": 30,
+          "structuresTotal": 48,
+          "guidewayMilesComplete": 57,
+          "guidewayMilesTotal": 65,
+          "sourceId": "cvsr",
+          "utilitiesRelocated": 670,
+          "utilitiesTotal": 701,
+          "railroadParcelsAcquired": 55,
+          "railroadParcelsTotal": 58,
+          "parcelsDelivered": 985,
+          "parcelsTotal": 985,
+          "derivedFields": [
+            "parcels"
+          ],
+          "derivationDetail": "Determined, not reprinted: the July 2026 report retires the per-package right-of-way table and states \"All required parcels have been delivered — 2,288 of 2,288\". The April 2026 report (data through April 2026, page 10) publishes that same total as CP 1 1,080 of 1,080, CP 2-3 985 of 985 and CP 4 223 of 223, with zero parcels to be delivered in every package. https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf"
+        },
+        "CP4": {
+          "structuresComplete": 11,
+          "structuresTotal": 11,
+          "guidewayMilesComplete": 21.1,
+          "guidewayMilesTotal": 22,
+          "sourceId": "cvsr",
+          "utilitiesRelocated": 133,
+          "utilitiesTotal": 133,
+          "railroadParcelsAcquired": 29,
+          "railroadParcelsTotal": 29,
+          "parcelsDelivered": 223,
+          "parcelsTotal": 223,
+          "derivedFields": [
+            "parcels"
+          ],
+          "derivationDetail": "Determined, not reprinted: the July 2026 report retires the per-package right-of-way table and states \"All required parcels have been delivered — 2,288 of 2,288\". The April 2026 report (data through April 2026, page 10) publishes that same total as CP 1 1,080 of 1,080, CP 2-3 985 of 985 and CP 4 223 of 223, with zero parcels to be delivered in every package. https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf"
+        }
+      },
+      "perSegment": {
+        "CP1:195": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2026-08",
+          "scheduleFinish": "2027-02",
+          "table": "underway"
+        },
+        "CP1:197": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2026-04",
+          "scheduleFinish": "2027-04",
+          "table": "underway"
+        },
+        "CP1:189": {
+          "completion": 0.44,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2025-07",
+          "scheduleFinish": "2027-05",
+          "table": "underway"
+        },
+        "CP1:192": {
+          "completion": 0.79,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2016-02",
+          "scheduleFinish": "2027-10",
+          "table": "underway"
+        },
+        "CP1:199": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2016-12",
+          "scheduleFinish": "2017-12",
+          "table": "completed"
+        },
+        "CP1:176": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2017-05",
+          "scheduleFinish": "2018-09",
+          "table": "completed"
+        },
+        "CP1:187": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2015-06",
+          "scheduleFinish": "2019-06",
+          "table": "completed"
+        },
+        "CP1:174": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2016-04",
+          "scheduleFinish": "2019-06",
+          "table": "completed"
+        },
+        "CP1:184": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-01",
+          "scheduleFinish": "2022-04",
+          "table": "completed"
+        },
+        "CP1:178": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2015-06",
+          "scheduleFinish": "2023-04",
+          "table": "completed"
+        },
+        "CP1:190": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2017-10",
+          "scheduleFinish": "2025-07",
+          "table": "completed"
+        },
+        "CP1:183": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2021-06",
+          "scheduleFinish": "2026-03",
+          "table": "completed"
+        },
+        "CP1:gap:1": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2026-06",
+          "scheduleFinish": "2026-08",
+          "table": "underway"
+        },
+        "CP2-3:131": {
+          "completion": 0.98,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-11",
+          "scheduleFinish": "2026-05",
+          "table": "underway"
+        },
+        "CP2-3:151": {
+          "completion": 0.83,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2025-06",
+          "scheduleFinish": "2026-05",
+          "table": "underway"
+        },
+        "CP2-3:129": {
+          "completion": 0.97,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-04",
+          "scheduleFinish": "2026-06",
+          "table": "underway"
+        },
+        "CP2-3:117": {
+          "completion": 0.78,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2023-11",
+          "scheduleFinish": "2026-06",
+          "table": "underway"
+        },
+        "CP2-3:160": {
+          "completion": 0.92,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-11",
+          "scheduleFinish": "2026-06",
+          "table": "underway"
+        },
+        "CP2-3:128": {
+          "completion": 0.94,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2019-11",
+          "scheduleFinish": "2026-06",
+          "table": "underway"
+        },
+        "CP2-3:150": {
+          "completion": 0.82,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2023-11",
+          "scheduleFinish": "2026-06",
+          "table": "underway"
+        },
+        "CP2-3:170": {
+          "completion": 0.89,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2022-10",
+          "scheduleFinish": "2026-06",
+          "table": "underway"
+        },
+        "CP2-3:114": {
+          "completion": 0.3,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-06",
+          "scheduleFinish": "2026-07",
+          "table": "underway"
+        },
+        "CP2-3:137": {
+          "completion": 0.6,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2023-08",
+          "scheduleFinish": "2026-08",
+          "table": "underway"
+        },
+        "CP2-3:110": {
+          "completion": 0.4,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2024-10",
+          "scheduleFinish": "2026-08",
+          "table": "underway"
+        },
+        "CP2-3:118": {
+          "completion": 0.29,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2025-06",
+          "scheduleFinish": "2026-10",
+          "table": "underway"
+        },
+        "CP2-3:127": {
+          "completion": 0.47,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2024-09",
+          "scheduleFinish": "2026-10",
+          "table": "underway"
+        },
+        "CP2-3:123": {
+          "completion": 0.75,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-11",
+          "scheduleFinish": "2027-03",
+          "table": "underway"
+        },
+        "CP2-3:143": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-04",
+          "scheduleFinish": "2023-07",
+          "table": "completed"
+        },
+        "CP2-3:112": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-06",
+          "scheduleFinish": "2023-07",
+          "table": "completed"
+        },
+        "CP2-3:119": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2019-08",
+          "scheduleFinish": "2023-09",
+          "table": "completed"
+        },
+        "CP2-3:139": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2023-03",
+          "scheduleFinish": "2024-12",
+          "table": "completed"
+        },
+        "CP2-3:132": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2025-05",
+          "scheduleFinish": "2026-04",
+          "table": "completed"
+        },
+        "CP2-3:138": {
+          "completion": 0.96,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2023-06",
+          "scheduleFinish": "2024-08",
+          "table": "completed"
+        },
+        "CP2-3:169": {
+          "completion": 0.97,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2022-08",
+          "scheduleFinish": "2024-10",
+          "table": "completed"
+        },
+        "CP2-3:144": {
+          "completion": 0.99,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2023-03",
+          "scheduleFinish": "2025-10",
+          "table": "completed"
+        },
+        "CP2-3:130": {
+          "completion": 0.97,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2021-04",
+          "scheduleFinish": "2026-04",
+          "table": "completed"
+        },
+        "CP2-3:140": {
+          "completion": 0.93,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2018-08",
+          "scheduleFinish": "2026-06",
+          "table": "underway"
+        },
+        "CP2-3:152": {
+          "completion": 0.9,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2018-02",
+          "scheduleFinish": "2026-06",
+          "table": "underway"
+        },
+        "CP2-3:115": {
+          "completion": 0.94,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-09",
+          "scheduleFinish": "2026-06",
+          "table": "underway"
+        },
+        "CP2-3:136": {
+          "completion": 0.78,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2024-03",
+          "scheduleFinish": "2026-06",
+          "table": "underway"
+        },
+        "CP2-3:159": {
+          "completion": 0.46,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-10",
+          "scheduleFinish": "2026-06",
+          "table": "underway"
+        },
+        "CP2-3:134": {
+          "completion": 0.92,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2025-11",
+          "scheduleFinish": "2026-07",
+          "table": "underway"
+        },
+        "CP2-3:167": {
+          "completion": 0.9,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2024-07",
+          "scheduleFinish": "2026-07",
+          "table": "underway"
+        },
+        "CP2-3:153": {
+          "completion": 0.75,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2024-01",
+          "scheduleFinish": "2026-07",
+          "table": "underway"
+        },
+        "CP2-3:145": {
+          "completion": 0.96,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2018-01",
+          "scheduleFinish": "2026-09",
+          "table": "underway"
+        },
+        "CP2-3:113": {
+          "completion": 0.66,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2018-01",
+          "scheduleFinish": "2026-09",
+          "table": "underway"
+        },
+        "CP2-3:105": {
+          "completion": 0.85,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2022-09",
+          "scheduleFinish": "2026-10",
+          "table": "underway"
+        },
+        "CP2-3:121": {
+          "completion": 0.02,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2025-06",
+          "scheduleFinish": "2026-11",
+          "table": "underway"
+        },
+        "CP2-3:111": {
+          "completion": 0.7,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2024-10",
+          "scheduleFinish": "2026-11",
+          "table": "underway"
+        },
+        "CP2-3:120": {
+          "completion": 0.43,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2025-04",
+          "scheduleFinish": "2026-11",
+          "table": "underway"
+        },
+        "CP2-3:133": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2019-08",
+          "scheduleFinish": "2024-12",
+          "table": "completed"
+        },
+        "CP2-3:101": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-09",
+          "scheduleFinish": "2024-12",
+          "table": "completed"
+        },
+        "CP2-3:125": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-09",
+          "scheduleFinish": "2024-12",
+          "table": "completed"
+        },
+        "CP2-3:161": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-08",
+          "scheduleFinish": "2025-12",
+          "table": "completed"
+        },
+        "CP2-3:135": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2022-05",
+          "scheduleFinish": "2025-12",
+          "table": "completed"
+        },
+        "CP2-3:116": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2018-01",
+          "scheduleFinish": "2026-02",
+          "table": "completed"
+        },
+        "CP2-3:126": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2018-01",
+          "scheduleFinish": "2026-02",
+          "table": "completed"
+        },
+        "CP2-3:172": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-01",
+          "scheduleFinish": "2026-02",
+          "table": "completed"
+        },
+        "CP2-3:147": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2018-02",
+          "scheduleFinish": "2026-02",
+          "table": "completed"
+        },
+        "CP2-3:158": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2018-01",
+          "scheduleFinish": "2026-02",
+          "table": "completed"
+        },
+        "CP2-3:154": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2018-10",
+          "scheduleFinish": "2026-04",
+          "table": "completed"
+        },
+        "CP2-3:104": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2026-04",
+          "table": "completed"
+        },
+        "CP2-3:157": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2018-09",
+          "scheduleFinish": "2026-04",
+          "table": "completed"
+        },
+        "CP2-3:102": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2019-06",
+          "scheduleFinish": "2026-04",
+          "table": "completed"
+        },
+        "CP2-3:142": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2019-07",
+          "scheduleFinish": "2026-04",
+          "table": "completed"
+        },
+        "CP2-3:163": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2019-10",
+          "scheduleFinish": "2026-04",
+          "table": "completed"
+        },
+        "CP2-3:109": {
+          "completion": 0.99,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-03",
+          "scheduleFinish": "2026-05",
+          "table": "completed"
+        },
+        "CP2-3:141": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2019-04",
+          "scheduleFinish": "2026-05",
+          "table": "completed"
+        },
+        "CP2-3:166": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2023-09",
+          "scheduleFinish": "2026-05",
+          "table": "completed"
+        },
+        "CP2-3:122": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2026-03",
+          "scheduleFinish": "2026-05",
+          "table": "completed"
+        },
+        "CP2-3:162": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-11",
+          "scheduleFinish": "2026-05",
+          "table": "completed"
+        },
+        "CP2-3:103": {
+          "completion": 0.9,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-10",
+          "scheduleFinish": "2026-06",
+          "table": "completed"
+        },
+        "CP2-3:164": {
+          "completion": 0.95,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2019-10",
+          "scheduleFinish": "2026-06",
+          "table": "completed"
+        },
+        "CP2-3:155": {
+          "completion": 0.95,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2018-08",
+          "scheduleFinish": "2026-06",
+          "table": "completed"
+        },
+        "CP2-3:108": {
+          "completion": 0.99,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2025-11",
+          "scheduleFinish": "2026-06",
+          "table": "completed"
+        },
+        "CP2-3:106": {
+          "completion": 0.98,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-09",
+          "scheduleFinish": "2026-06",
+          "table": "completed"
+        },
+        "CP2-3:149": {
+          "completion": 0.95,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-04",
+          "scheduleFinish": "2026-06",
+          "table": "completed"
+        },
+        "CP2-3:107": {
+          "completion": 0.98,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2024-06",
+          "scheduleFinish": "2026-06",
+          "table": "completed"
+        },
+        "CP2-3:124": {
+          "completion": 0.98,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2019-09",
+          "scheduleFinish": "2026-06",
+          "table": "completed"
+        },
+        "CP2-3:148": {
+          "completion": 0.95,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2024-12",
+          "scheduleFinish": "2026-06",
+          "table": "completed"
+        },
+        "CP2-3:168": {
+          "completion": 0.94,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2025-11",
+          "scheduleFinish": "2026-07",
+          "table": "completed"
+        },
+        "CP2-3:171": {
+          "completion": 0.97,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2020-04",
+          "scheduleFinish": "2026-07",
+          "table": "completed"
+        },
+        "CP2-3:156": {
+          "completion": 0.98,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2018-09",
+          "scheduleFinish": "2026-07",
+          "table": "completed"
+        },
+        "CP2-3:146": {
+          "completion": 0.86,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2024-07",
+          "scheduleFinish": "2026-09",
+          "table": "completed"
+        },
+        "CP2-3:165": {
+          "completion": 0.98,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2024-08",
+          "scheduleFinish": "2026-10",
+          "table": "completed"
+        }
+      },
+      "structureEvidence": [
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-muscat-ave",
+          "segmentId": "CP1:199",
+          "claim": "completed",
+          "date": "2017-12",
+          "datePrecision": "month",
+          "label": "Muscat Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Muscat Ave Dec-16 Dec-17 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-south-of-pergola-viaduct",
+          "segmentId": "CP1:176",
+          "claim": "completed",
+          "date": "2018-09",
+          "datePrecision": "month",
+          "label": "South of Pergola Viaduct",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "South of Pergola Viaduct May-17 Sep-18 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-fresno-river-viaduct-501",
+          "segmentId": "CP1:187",
+          "claim": "completed",
+          "date": "2019-06",
+          "datePrecision": "month",
+          "label": "Fresno River Viaduct 501",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Fresno River Viaduct 501 Jun-15 Jun-19 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-cottonwood-creek",
+          "segmentId": "CP1:174",
+          "claim": "completed",
+          "date": "2019-06",
+          "datePrecision": "month",
+          "label": "Cottonwood Creek",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Cottonwood Creek Apr-16 Jun-19 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-golden-state-blvd",
+          "segmentId": "CP1:184",
+          "claim": "completed",
+          "date": "2022-04",
+          "datePrecision": "month",
+          "label": "Golden State Blvd",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Golden State Blvd Jan-20 Apr-22 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-hst-fresno-viaduct",
+          "segmentId": "CP1:178",
+          "claim": "completed",
+          "date": "2023-04",
+          "datePrecision": "month",
+          "label": "HST Fresno Viaduct",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "HST Fresno Viaduct Jun-15 Apr-23 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-tulare-underpass",
+          "segmentId": "CP1:190",
+          "claim": "completed",
+          "date": "2025-07",
+          "datePrecision": "month",
+          "label": "Tulare Underpass",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Tulare Underpass Oct-17 Jul-25 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-ventura-underpass",
+          "segmentId": "CP1:183",
+          "claim": "completed",
+          "date": "2026-03",
+          "datePrecision": "month",
+          "label": "Ventura Underpass",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ventura Underpass Jun-21 Mar-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-9th-ave",
+          "segmentId": "CP2-3:143",
+          "claim": "completed",
+          "date": "2023-07",
+          "datePrecision": "month",
+          "label": "9th Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "9th Ave Apr-20 Jul-23 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-cairo-ave",
+          "segmentId": "CP2-3:112",
+          "claim": "completed",
+          "date": "2023-07",
+          "datePrecision": "month",
+          "label": "Cairo Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Cairo Ave Jun-20 Jul-23 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-peach-ave",
+          "segmentId": "CP2-3:119",
+          "claim": "completed",
+          "date": "2023-09",
+          "datePrecision": "month",
+          "label": "Peach Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Peach Ave Aug-19 Sep-23 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-whitley-ave",
+          "segmentId": "CP2-3:139",
+          "claim": "completed",
+          "date": "2024-12",
+          "datePrecision": "month",
+          "label": "Whitley Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Whitley Ave Mar-23 Dec-24 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-lansing",
+          "segmentId": "CP2-3:132",
+          "claim": "completed",
+          "date": "2026-04",
+          "datePrecision": "month",
+          "label": "Lansing",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Lansing May-25 Apr-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-aaat",
+          "segmentId": "CP2-3:138",
+          "claim": "substantially_complete",
+          "date": "2024-08",
+          "datePrecision": "month",
+          "label": "AAAT",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "AAAT 1 Jun-23 Aug-24 96%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-ave-24",
+          "segmentId": "CP2-3:169",
+          "claim": "substantially_complete",
+          "date": "2024-10",
+          "datePrecision": "month",
+          "label": "Ave 24",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 241 Aug-22 Oct-24 97%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-ave-156",
+          "segmentId": "CP2-3:144",
+          "claim": "substantially_complete",
+          "date": "2025-10",
+          "datePrecision": "month",
+          "label": "Ave 156",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 1561 Mar-23 Oct-25 99%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-cross-creek",
+          "segmentId": "CP2-3:130",
+          "claim": "substantially_complete",
+          "date": "2026-04",
+          "datePrecision": "month",
+          "label": "Cross Creek",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Cross Creek1 Apr-21 Apr-26 97%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-dutch-john-cut-to-9th-ave",
+          "segmentId": "CP2-3:133",
+          "claim": "completed",
+          "date": "2024-12",
+          "datePrecision": "month",
+          "label": "Dutch John Cut to 9th Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Dutch John Cut to 9th Ave (0.29 Miles) Aug-19 Dec-24 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-9th-ave-to-cairo-ave",
+          "segmentId": "CP2-3:101",
+          "claim": "completed",
+          "date": "2024-12",
+          "datePrecision": "month",
+          "label": "9th Ave to Cairo Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "9th Ave to Cairo Ave (0.39 Miles) Sep-20 Dec-24 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-cairo-ave-to-kings-river",
+          "segmentId": "CP2-3:125",
+          "claim": "completed",
+          "date": "2024-12",
+          "datePrecision": "month",
+          "label": "Cairo Ave to Kings River",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Cairo Ave to Kings River (0.35 Miles) Sep-20 Dec-24 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-ave-56-to-aaat",
+          "segmentId": "CP2-3:161",
+          "claim": "completed",
+          "date": "2025-12",
+          "datePrecision": "month",
+          "label": "Ave 56 to AAAT",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 56 to AAAT (1.54 Miles) Aug-20 Dec-25 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-aaat-to-ave-24",
+          "segmentId": "CP2-3:135",
+          "claim": "completed",
+          "date": "2025-12",
+          "datePrecision": "month",
+          "label": "AAAT to Ave 24",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "AAAT to Ave 24 (2.46 Miles) May-22 Dec-25 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-project-start-to-adams",
+          "segmentId": "CP2-3:116",
+          "claim": "completed",
+          "date": "2026-02",
+          "datePrecision": "month",
+          "label": "Project Start to Adams",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Project Start to Adams (1.81 Miles) Jan-18 Feb-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-adams-ave-to-south-ave",
+          "segmentId": "CP2-3:126",
+          "claim": "completed",
+          "date": "2026-02",
+          "datePrecision": "month",
+          "label": "Adams Ave to South Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Adams Ave to South Ave (1.0 Miles) Jan-18 Feb-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-south-ave-to-manning-ave",
+          "segmentId": "CP2-3:172",
+          "claim": "completed",
+          "date": "2026-02",
+          "datePrecision": "month",
+          "label": "South Ave to Manning Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "South Ave to Manning Ave (1.0 Miles) Jan-20 Feb-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-manning-ave-to-floral-ave",
+          "segmentId": "CP2-3:147",
+          "claim": "completed",
+          "date": "2026-02",
+          "datePrecision": "month",
+          "label": "Manning Ave to Floral Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Manning Ave to Floral Ave (2.02 Miles) Feb-18 Feb-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-floral-ave-to-nebraska-ave",
+          "segmentId": "CP2-3:158",
+          "claim": "completed",
+          "date": "2026-02",
+          "datePrecision": "month",
+          "label": "Floral Ave to Nebraska Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Floral Ave to Nebraska Ave (1.09 Miles) Jan-18 Feb-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-idaho-ave-to-jackson-ave",
+          "segmentId": "CP2-3:154",
+          "claim": "completed",
+          "date": "2026-04",
+          "datePrecision": "month",
+          "label": "Idaho Ave to Jackson Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Idaho Ave to Jackson Ave (1.01 Miles) Oct-18 Apr-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-sr-43-jersey-to-kent-ave",
+          "segmentId": "CP2-3:104",
+          "claim": "completed",
+          "date": "2026-04",
+          "datePrecision": "month",
+          "label": "SR 43 Jersey to Kent Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "SR 43 Jersey to Kent Ave (0.98 Miles) Nov-18 Apr-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-kent-ave-to-kansas-ave",
+          "segmentId": "CP2-3:157",
+          "claim": "completed",
+          "date": "2026-04",
+          "datePrecision": "month",
+          "label": "Kent Ave to Kansas Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Kent Ave to Kansas Ave (1.03 Miles) Sep-18 Apr-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-kansas-ave-to-lansing",
+          "segmentId": "CP2-3:102",
+          "claim": "completed",
+          "date": "2026-04",
+          "datePrecision": "month",
+          "label": "Kansas Ave to Lansing",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Kansas Ave to Lansing (0.98 Miles) Jun-19 Apr-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-corcoran-hwy-to-whitley-ave",
+          "segmentId": "CP2-3:142",
+          "claim": "completed",
+          "date": "2026-04",
+          "datePrecision": "month",
+          "label": "Corcoran HWY to Whitley Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Corcoran HWY to Whitley Ave (0.98 Miles) Jul-19 Apr-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-whitley-ave-to-ave-156",
+          "segmentId": "CP2-3:163",
+          "claim": "completed",
+          "date": "2026-04",
+          "datePrecision": "month",
+          "label": "Whitley Ave to Ave 156",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Whitley Ave to Ave 156 (1.88 Miles) Oct-19 Apr-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-sr-43-tied-arch-to-cole-slough",
+          "segmentId": "CP2-3:109",
+          "claim": "substantially_complete",
+          "date": "2026-05",
+          "datePrecision": "month",
+          "label": "SR 43 Tied Arch to Cole Slough",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "SR 43 Tied Arch to Cole Slough (0.36 Miles)1 Mar-20 May-26 99%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-jackson-ave-to-sr-43-jersey",
+          "segmentId": "CP2-3:141",
+          "claim": "completed",
+          "date": "2026-05",
+          "datePrecision": "month",
+          "label": "Jackson Ave to SR 43 Jersey",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Jackson Ave to SR 43 Jersey (1.30 Miles) Apr-19 May-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-lansing-to-cross-creek",
+          "segmentId": "CP2-3:166",
+          "claim": "completed",
+          "date": "2026-05",
+          "datePrecision": "month",
+          "label": "Lansing to Cross Creek",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Lansing to Cross Creek (1.37 Miles) Sep-23 May-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-sr-43-tule-river-to-ave-136",
+          "segmentId": "CP2-3:122",
+          "claim": "completed",
+          "date": "2026-05",
+          "datePrecision": "month",
+          "label": "SR 43 Tule River to Ave 136",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "SR 43 Tule River to Ave 136 (0.45 Miles) Mar-26 May-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-ave-24-to-project-finish",
+          "segmentId": "CP2-3:162",
+          "claim": "completed",
+          "date": "2026-05",
+          "datePrecision": "month",
+          "label": "Ave 24 to Project Finish",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 24 to Project Finish (2.21 Miles) Nov-20 May-26 100%"
+        }
+      ],
+      "unmatchedCvsrRows": [
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Olive Ave"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Shaw Avenue"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Herndon UPRR Bridge"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "McKinley"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Church Ave"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Tuolumne Bridge"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 10"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 7"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 15"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 11"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 8"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "American Ave"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 12 BNSF"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 12 HST"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Road 27"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 15.5"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 9"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Belmont Avenue"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "E Central Avenue"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 17"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Road 26"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Viaduct 203 at SJR to Herndon Canal"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Clinton Ave Connector to Fresno Trench"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Ave 10 to Ave 09"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "N1A Boundary to Viaduct 501"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "GW North Extension"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "HST Guideway"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Caltrans Section"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Fresno St to SR 41"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Fresno Trench Shooflies / Dry Creek"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Jensen Trench"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "HST Viaduct 501 - Fresno River-18 Bents"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "HST Bridge-4 Spans"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "HST Bridge 89 – Cottonwood"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Cottonwood Creek Test Strip to Ave 12"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Ave 9 to Ave 8"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Ave 11 to Ave 10"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Ave 8 to Viaduct 203 at SJR"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Ave 12 to Ave 11"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Viaduct 203.2 San Joaquin River Crossing"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Fresno Viaduct-23 Spans"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Fresno Viaduct Caltrans Bridge"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Viaduct 501 at Fresno River to Cottonwood Creek"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "SR 43 Curved Bridge"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Corcoran Hwy"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Manning Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Nebraska Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Ave 120"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Houston Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "South Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Jackson Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Kent Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Adams Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Fowler Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Ave 88"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Dover Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Idaho Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Elkhorn Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Davis Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Kansas Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Flint Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Floral Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Mt. View"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Ave 56"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Fargo Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Hanford Armona"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "SR 43 Jersey"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Excelsior Ave"
+        }
+      ],
+      "program": {
         "parcelsDelivered": 2288,
         "parcelsTotal": 2288
       }
@@ -7429,7 +8783,7 @@
   ],
   "cvsrInventory": {
     "coverageStart": "2019-03",
-    "coverageEnd": "2026-04",
+    "coverageEnd": "2026-05",
     "expectedMonths": [
       "2019-03",
       "2019-04",
@@ -7516,7 +8870,8 @@
       "2026-01",
       "2026-02",
       "2026-03",
-      "2026-04"
+      "2026-04",
+      "2026-05"
     ],
     "availableMonths": [
       "2019-03",
@@ -7604,7 +8959,8 @@
       "2026-01",
       "2026-02",
       "2026-03",
-      "2026-04"
+      "2026-04",
+      "2026-05"
     ],
     "gaps": [
       {
@@ -7616,7 +8972,7 @@
           "CP4"
         ],
         "cause": "source_not_reported",
-        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones."
+        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones against a different denominator — the April 2020 report counts 20 of 87 CP 2-3 relocations where the first standardized report counts 187 of 692. The two are not the same series and are not merged."
       },
       {
         "month": "2019-04",
@@ -7627,7 +8983,7 @@
           "CP4"
         ],
         "cause": "source_not_reported",
-        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones."
+        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones against a different denominator — the April 2020 report counts 20 of 87 CP 2-3 relocations where the first standardized report counts 187 of 692. The two are not the same series and are not merged."
       },
       {
         "month": "2019-05",
@@ -7638,7 +8994,7 @@
           "CP4"
         ],
         "cause": "source_not_reported",
-        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones."
+        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones against a different denominator — the April 2020 report counts 20 of 87 CP 2-3 relocations where the first standardized report counts 187 of 692. The two are not the same series and are not merged."
       },
       {
         "month": "2019-06",
@@ -7649,7 +9005,7 @@
           "CP4"
         ],
         "cause": "source_not_reported",
-        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones."
+        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones against a different denominator — the April 2020 report counts 20 of 87 CP 2-3 relocations where the first standardized report counts 187 of 692. The two are not the same series and are not merged."
       },
       {
         "month": "2019-07",
@@ -7660,7 +9016,7 @@
           "CP4"
         ],
         "cause": "source_not_reported",
-        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones."
+        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones against a different denominator — the April 2020 report counts 20 of 87 CP 2-3 relocations where the first standardized report counts 187 of 692. The two are not the same series and are not merged."
       },
       {
         "month": "2019-08",
@@ -7671,7 +9027,7 @@
           "CP4"
         ],
         "cause": "source_not_reported",
-        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones."
+        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones against a different denominator — the April 2020 report counts 20 of 87 CP 2-3 relocations where the first standardized report counts 187 of 692. The two are not the same series and are not merged."
       },
       {
         "month": "2019-09",
@@ -7682,7 +9038,7 @@
           "CP4"
         ],
         "cause": "source_not_reported",
-        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones."
+        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones against a different denominator — the April 2020 report counts 20 of 87 CP 2-3 relocations where the first standardized report counts 187 of 692. The two are not the same series and are not merged."
       },
       {
         "month": "2019-10",
@@ -7693,7 +9049,7 @@
           "CP4"
         ],
         "cause": "source_not_reported",
-        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones."
+        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones against a different denominator — the April 2020 report counts 20 of 87 CP 2-3 relocations where the first standardized report counts 187 of 692. The two are not the same series and are not merged."
       },
       {
         "month": "2019-11",
@@ -7704,7 +9060,7 @@
           "CP4"
         ],
         "cause": "source_not_reported",
-        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones."
+        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones against a different denominator — the April 2020 report counts 20 of 87 CP 2-3 relocations where the first standardized report counts 187 of 692. The two are not the same series and are not merged."
       },
       {
         "month": "2019-12",
@@ -7715,7 +9071,7 @@
           "CP4"
         ],
         "cause": "source_not_reported",
-        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones."
+        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones against a different denominator — the April 2020 report counts 20 of 87 CP 2-3 relocations where the first standardized report counts 187 of 692. The two are not the same series and are not merged."
       },
       {
         "month": "2020-01",
@@ -7726,7 +9082,7 @@
           "CP4"
         ],
         "cause": "source_not_reported",
-        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones."
+        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones against a different denominator — the April 2020 report counts 20 of 87 CP 2-3 relocations where the first standardized report counts 187 of 692. The two are not the same series and are not merged."
       },
       {
         "month": "2020-02",
@@ -7737,7 +9093,7 @@
           "CP4"
         ],
         "cause": "source_not_reported",
-        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones."
+        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones against a different denominator — the April 2020 report counts 20 of 87 CP 2-3 relocations where the first standardized report counts 187 of 692. The two are not the same series and are not merged."
       },
       {
         "month": "2020-03",
@@ -7748,7 +9104,7 @@
           "CP4"
         ],
         "cause": "source_not_reported",
-        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones."
+        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones against a different denominator — the April 2020 report counts 20 of 87 CP 2-3 relocations where the first standardized report counts 187 of 692. The two are not the same series and are not merged."
       },
       {
         "month": "2020-04",
@@ -7759,7 +9115,7 @@
           "CP4"
         ],
         "cause": "source_not_reported",
-        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones."
+        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones against a different denominator — the April 2020 report counts 20 of 87 CP 2-3 relocations where the first standardized report counts 187 of 692. The two are not the same series and are not merged."
       },
       {
         "month": "2020-05",
@@ -7770,7 +9126,7 @@
           "CP4"
         ],
         "cause": "source_not_reported",
-        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones."
+        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones against a different denominator — the April 2020 report counts 20 of 87 CP 2-3 relocations where the first standardized report counts 187 of 692. The two are not the same series and are not merged."
       },
       {
         "month": "2020-06",
@@ -7781,7 +9137,7 @@
           "CP4"
         ],
         "cause": "source_not_reported",
-        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones."
+        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones against a different denominator — the April 2020 report counts 20 of 87 CP 2-3 relocations where the first standardized report counts 187 of 692. The two are not the same series and are not merged."
       },
       {
         "month": "2020-07",
@@ -7792,7 +9148,7 @@
           "CP4"
         ],
         "cause": "source_not_reported",
-        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones."
+        "detail": "Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones against a different denominator — the April 2020 report counts 20 of 87 CP 2-3 relocations where the first standardized report counts 187 of 692. The two are not the same series and are not merged."
       },
       {
         "month": "2019-09",
@@ -7846,8 +9202,8 @@
           "CP2-3",
           "CP4"
         ],
-        "cause": "related_measure_only",
-        "detail": "The report publishes package parcel acquisition, needed and remaining counts; it does not publish parcels certified and delivered to the design-builder. The acquisition series is displayed separately."
+        "cause": "total_not_reported",
+        "detail": "Cumulative parcels delivered to the design-builder for January 2020 are recovered from the April 2020 report (data through February 2020), which publishes them only as chart images: 1,498 program total on page 13, CP 1 785 on page 25, CP 2-3 557 on page 34, CP 4 156 on page 43. That report publishes no January total-needed count — its 1,066 / 1,011 / 253 figures are a March 9, 2020 count — so no denominator is recorded for this month."
       }
     ],
     "rejectedReports": [
@@ -8021,9 +9377,10 @@
         "month": "2020-01",
         "reportFile": "brdmtg_031720_FA_Central_Valley_Status_Report.pdf",
         "fields": [
-          "progress"
+          "progress",
+          "parcels"
         ],
-        "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+        "detail": "Reviewed transcription from a later report: January 2020 cumulative parcels delivered to the design-builder are published only as chart images in the April 2020 report (data through February 2020) — program total 1,498 on page 13, CP 1 785 on page 25, CP 2-3 557 on page 34, CP 4 156 on page 43. https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_042120_FA_Central_Valley_Status_Report.pdf. That report publishes no January total-needed count, so no denominator is recorded."
       },
       {
         "month": "2020-02",
@@ -8104,6 +9461,16 @@
           "progress"
         ],
         "detail": "Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text."
+      }
+    ],
+    "derivations": [
+      {
+        "month": "2026-05",
+        "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+        "fields": [
+          "parcels"
+        ],
+        "detail": "Determined, not reprinted: the July 2026 report retires the per-package right-of-way table and states \"All required parcels have been delivered — 2,288 of 2,288\". The April 2026 report (data through April 2026, page 10) publishes that same total as CP 1 1,080 of 1,080, CP 2-3 985 of 985 and CP 4 223 of 223, with zero parcels to be delivered in every package. https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf"
       }
     ],
     "revisions": [

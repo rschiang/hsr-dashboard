@@ -37,7 +37,7 @@ Authority figures, not estimates, and they are not gaps.
 | `2019-10` | `brdmtg_121019_FA_Central_Valley_Status_Report.pdf` | progress | Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text. |
 | `2019-11` | `brdmtg_011420_FA_Central_Valley_Status_Report.pdf` | progress | Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text. |
 | `2019-12` | `brdmtg_021820_FA_Central_Valley_Status_Report.pdf` | progress | Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text. |
-| `2020-01` | `brdmtg_031720_FA_Central_Valley_Status_Report.pdf` | progress | Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text. |
+| `2020-01` | `brdmtg_031720_FA_Central_Valley_Status_Report.pdf` | progress, parcels | Reviewed transcription from a later report: January 2020 cumulative parcels delivered to the design-builder are published only as chart images in the April 2020 report (data through February 2020) — program total 1,498 on page 13, CP 1 785 on page 25, CP 2-3 557 on page 34, CP 4 156 on page 43. https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_042120_FA_Central_Valley_Status_Report.pdf. That report publishes no January total-needed count, so no denominator is recorded. |
 | `2020-02` | `brdmtg_042120_FA_Central_Valley_Status_Report.pdf` | progress | Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text. |
 | `2020-03` | `brdmtg_051420_FA_Central_Valley_Status_Report.pdf` | progress | Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text. |
 | `2020-04` | `brdmtg_062520_FA_Central_Valley_Status_Report.pdf` | progress | Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text. |
@@ -48,6 +48,16 @@ Authority figures, not estimates, and they are not gaps.
 | `2020-09` | `brdmtg_111920_FA_CVSR_2011_2009_Data.pdf` | progress | Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text. |
 | `2020-10` | `brdmtg_121020_FA_CVSR_2012_2010_Data.pdf` | progress | Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text. |
 | `2020-11` | `brdmtg_012121_FA_CVSR_2011_Data.pdf` | progress | Reviewed transcription: the published value is a chart image in the source PDF and is not extractable as text. |
+
+## Derived values
+
+Package values the report stopped printing but pinned through a published program
+total, leaving the split determined. The parse re-checks each pin against the report
+it reads and fails if the total moves or the split is published again.
+
+| Data month | Report filename | Derived fields | Detail |
+|---|---|---|---|
+| `2026-05` | `FA-Central-Valley-Status-Report-July-2026-A11Y.pdf` | parcels | Determined, not reprinted: the July 2026 report retires the per-package right-of-way table and states "All required parcels have been delivered — 2,288 of 2,288". The April 2026 report (data through April 2026, page 10) publishes that same total as CP 1 1,080 of 1,080, CP 2-3 985 of 985 and CP 4 223 of 223, with zero parcels to be delivered in every package. https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf |
 
 ## Unresolved report URLs
 

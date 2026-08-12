@@ -40,6 +40,30 @@ const FOOTNOTED_ROWS: Readonly<Record<string, readonly string[]>> = {
     'SR 43 Jersey1',
     'Belmont Avenue 1',
   ],
+  'FA-Central-Valley-Status-Report-July-2026-A11Y.pdf': [
+    'Belmont Avenue1',
+    'Road 261',
+    'Excelsior Ave1',
+    'AAAT 1',
+    'Ave 241',
+    'Ave 1561',
+    'Cross Creek1',
+    'SR 43 Tied Arch to Cole Slough (0.36 Miles)1',
+    'Conejo Ave to Peach Ave (0.23 Miles)1',
+    'Elkhorn Ave to Fowler Ave (0.55 Miles)1',
+    'Fowler Ave to Davis Ave (1.35 Miles)1',
+    'Cole Slough to Access Road (0.33 Miles) 1',
+    'Kings River to Dover Ave (1.29 Miles)1',
+    'Dover Ave to Excelsior Ave (1.01 Miles)1',
+    'Hanford Armona to Houston Ave (1.04 Miles)1',
+    'Ave 156 to SR 43 Tule River (1.58 Miles)1',
+    'Alpaugh Bridge to Ave 56 (0.95 Miles)1',
+    'Access Road to Dutch John Cut (0.22 Miles) 1',
+    'Excelsior Ave to Flint Ave (2.04 Miles)1',
+    'Houston Ave to Idaho Ave (2.0 Miles)1',
+    'Fargo Ave to Grangeville Ave (1.04 Miles)1',
+    'Ave 88 to Deer Creek (2.14 Miles)1',
+  ],
 };
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] as const;
@@ -122,6 +146,9 @@ export function parseRowProgress(text: string, reportFile?: string): CvsrRowProg
       location = location.replace(/\s*1$/, '');
       footnote = cp === 'CP1' ? 'partially_open' : 'substantially_complete';
     }
+    // July 2026 appends the published span to guideway labels. ArcGIS `Limits` and the
+    // structure crosswalk both key on the bare label; `quote` keeps the verbatim line.
+    location = location.replace(/\s*\(\d+(?:\.\d+)?\s*Miles\)$/i, '');
     const percent = match.groups.pct;
     const monthly = match.groups.monthly;
     rows.push({
@@ -544,7 +571,7 @@ function boundedCpSection(text: string, heading: RegExpExecArray, maxLength: num
 }
 
 function parseDeliveryTable(text: string, cp: CvsrPackage): CountPair | null {
-  const heading = /CP\s*1-4\s*[–—-]\s*Real Property\/Right-of-Way\s*\(ROW\)[\s\S]{0,100}?(?:To Be Delivered vs\. Delivered|Parcels Delivered to DB)/i.exec(text);
+  const heading = /CP\s*1-4\s*[–—-]\s*Real Property\/Right-of-Way\s*\(ROW\)(?!\s*Railroad)[\s\S]{0,100}?(?:To Be Delivered vs\. Delivered|Parcels Delivered to DB)/i.exec(text);
   if (!heading) return null;
   const section = boundedCpSection(text, heading, 8000);
   const row = new RegExp(
@@ -657,6 +684,18 @@ export function parseParcelPair(text: string, cp: CvsrPackage): CountPair | null
   if (invalidTable) throw invalidTable;
   return null;
 }
+
+/**
+ * Cumulative parcels delivered to the design-builder as the report states it for
+ * CP 1-4. Recorded only when the report prints the pair itself; package tables are
+ * never summed into it.
+ */
+export function parseProgramParcelDelivery(text: string): CountPair | null {
+  const match = /All required parcels have been delivered\s*[\u2014\u2013-]\s*([0-9,]+)\s+of\s+([0-9,]+)/i.exec(text);
+  if (!match) return null;
+  return validateCountPair({ delivered: integer(match[1]), total: integer(match[2]) }, 'program parcels');
+}
+
 function cpTableRow(section: string, cp: CvsrPackage): number[] | null {
   const label = cp === 'CP1' ? String.raw`CP\s*1(?![-\d])` : cp === 'CP2-3' ? String.raw`CP\s*2[-–]3` : String.raw`CP\s*4(?![-\d])`;
   const line = section.split(/\r?\n/).find((candidate) => new RegExp(`^\\s*${label}\\s+`, 'i').test(candidate));

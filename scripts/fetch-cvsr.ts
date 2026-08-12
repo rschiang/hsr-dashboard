@@ -16,6 +16,7 @@ import {
   parseParcelAcquisitionAudit,
   parseParcelAcquisitionPair,
   parseParcelPair,
+  parseProgramParcelDelivery,
   parseProgressMetrics,
   parseRailroadParcelPair,
   parseReportMonth,
@@ -25,7 +26,7 @@ import {
 } from './lib/cvsr-parser';
 import {
   buildCvsrInventory,
-  PARCEL_OMISSION_MONTHS,
+  parcelOmission,
   type CvsrFieldFailure,
   type CvsrParseFailure,
   type ReviewedCvsrReport,
@@ -177,6 +178,20 @@ async function writeManifest(): Promise<void> {
     }
     lines.push(
       '',
+      '## Derived values',
+      '',
+      'Package values the report stopped printing but pinned through a published program',
+      'total, leaving the split determined. The parse re-checks each pin against the report',
+      'it reads and fails if the total moves or the split is published again.',
+      '',
+      '| Data month | Report filename | Derived fields | Detail |',
+      '|---|---|---|---|',
+    );
+    for (const record of inventory.derivations) {
+      lines.push(`| \`${record.month}\` | \`${record.reportFile}\` | ${record.fields.join(', ')} | ${record.detail} |`);
+    }
+    lines.push(
+      '',
       '## Unresolved report URLs',
       '',
       'No direct hsr.ca.gov PDF URL could be byte-verified for these local files; the dashboard',
@@ -205,22 +220,68 @@ const LEGACY_DATES: Record<string, string> = {
   'brdmtg_082019_FA_Central_Valley_Status_Report.pdf': '2019-06',
   'brdmtg_091719_FA_Central_Valley_Status_Report.pdf': '2019-07',
 };
-// Reviewed transcriptions from package ROW charts whose blue labels are vector
-// outlines rather than extractable PDF text. Each pair is the report's current
-// month, not a value carried from the comparison month.
-const LEGACY_PARCELS: Readonly<Record<string, Record<CvsrPackage, {
-  delivered: number;
-  total: number;
-}>>> = {
+// Reviewed transcriptions from ROW charts whose blue labels are vector outlines
+// rather than extractable PDF text. Every entry is the keyed report's own data
+// month, never a value carried from a comparison month; `detail` records the cases
+// where the chart publishing that month appears in a later report.
+const LEGACY_PARCELS: Readonly<Record<string, {
+  /** Replaces TRANSCRIPTION_DETAIL when the value comes from a later report. */
+  detail?: string;
+  values: Record<CvsrPackage, { delivered: number; total?: number }>;
+}>> = {
   'brdmtg_082019_FA_Central_Valley_Status_Report.pdf': {
-    CP1: { delivered: 819, total: 892 },
-    'CP2-3': { delivered: 533, total: 755 },
-    CP4: { delivered: 164, total: 208 },
+    values: {
+      CP1: { delivered: 819, total: 892 },
+      'CP2-3': { delivered: 533, total: 755 },
+      CP4: { delivered: 164, total: 208 },
+    },
   },
   'brdmtg_091719_FA_Central_Valley_Status_Report.pdf': {
-    CP1: { delivered: 823, total: 893 },
-    'CP2-3': { delivered: 540, total: 756 },
-    CP4: { delivered: 165, total: 210 },
+    values: {
+      CP1: { delivered: 823, total: 893 },
+      'CP2-3': { delivered: 540, total: 756 },
+      CP4: { delivered: 165, total: 210 },
+    },
+  },
+  'brdmtg_031720_FA_Central_Valley_Status_Report.pdf': {
+    detail: 'Reviewed transcription from a later report: January 2020 cumulative parcels delivered to the design-builder are published only as chart images in the April 2020 report (data through February 2020) — program total 1,498 on page 13, CP 1 785 on page 25, CP 2-3 557 on page 34, CP 4 156 on page 43. https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_042120_FA_Central_Valley_Status_Report.pdf. That report publishes no January total-needed count, so no denominator is recorded.',
+    values: {
+      CP1: { delivered: 785 },
+      'CP2-3': { delivered: 557 },
+      CP4: { delivered: 156 },
+    },
+  },
+};
+
+/**
+ * Months whose per-package split the report stops printing while still pinning the
+ * program total that produced it.
+ *
+ * This is not a carry-forward. A carry-forward asserts an unverified value; a pin
+ * leaves no value free to assert. The April 2026 report publishes the split as
+ * 1,080 + 985 + 223 = 2,288 with **zero** parcels to be delivered in every package, and
+ * the July 2026 report — which prints no split at all — states "All required parcels
+ * have been delivered — 2,288 of 2,288". With the program total unmoved and every
+ * package already at zero remaining, the split is determined.
+ *
+ * `parsePdf` re-derives that pin from the report it is reading and throws if the total
+ * moves or if the report resumes publishing its own split, so a stale entry fails loudly
+ * instead of ageing into a fabricated value.
+ */
+const PINNED_PARCELS: Readonly<Record<string, {
+  /** Report whose published split this month's program total pins. */
+  source: string;
+  detail: string;
+  values: Record<CvsrPackage, { delivered: number; total: number }>;
+}>> = {
+  'FA-Central-Valley-Status-Report-July-2026-A11Y.pdf': {
+    source: 'FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf',
+    detail: 'Determined, not reprinted: the July 2026 report retires the per-package right-of-way table and states "All required parcels have been delivered — 2,288 of 2,288". The April 2026 report (data through April 2026, page 10) publishes that same total as CP 1 1,080 of 1,080, CP 2-3 985 of 985 and CP 4 223 of 223, with zero parcels to be delivered in every package. https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf',
+    values: {
+      CP1: { delivered: 1080, total: 1080 },
+      'CP2-3': { delivered: 985, total: 985 },
+      CP4: { delivered: 223, total: 223 },
+    },
   },
 };
 
@@ -408,7 +469,7 @@ async function parsePdf(
       table: row.table,
     };
   }
-  if (dataMonth === '2026-04' && rowProgress.length > 0) {
+  if (dataMonth >= '2026-04' && rowProgress.length > 0) {
     const resolvedStructures = rowProgress.filter(
       (row) => row.kind === 'structure' && CVSR_ROW_CROSSWALK[row.location],
     ).length;
@@ -455,12 +516,19 @@ async function parsePdf(
         perPackage[cp].utilitiesTotal = utilities.total;
       }
     }
-    const transcribedParcels = LEGACY_PARCELS[reportFile]?.[cp];
-    const parcels = transcribedParcels ?? parseParcelPair(text, cp);
-    if (parcels) {
-      perPackage[cp].parcelsDelivered = parcels.delivered;
-      perPackage[cp].parcelsTotal = parcels.total;
-      if (transcribedParcels) (perPackage[cp].transcribedFields ??= []).push('parcels');
+    const transcribed = LEGACY_PARCELS[reportFile];
+    const transcribedParcels = transcribed?.values[cp];
+    if (transcribedParcels) {
+      perPackage[cp].parcelsDelivered = transcribedParcels.delivered;
+      if (transcribedParcels.total !== undefined) perPackage[cp].parcelsTotal = transcribedParcels.total;
+      (perPackage[cp].transcribedFields ??= []).push('parcels');
+      if (transcribed.detail !== undefined) perPackage[cp].transcriptionDetail = transcribed.detail;
+    } else {
+      const parcels = parseParcelPair(text, cp);
+      if (parcels) {
+        perPackage[cp].parcelsDelivered = parcels.delivered;
+        perPackage[cp].parcelsTotal = parcels.total;
+      }
     }
     const acquisition = parseParcelAcquisitionPair(text, cp, dataMonth);
     if (acquisition) {
@@ -477,25 +545,57 @@ async function parsePdf(
     }
   }
 
+  const pinned = PINNED_PARCELS[reportFile];
+  if (pinned) {
+    const programPin = parseProgramParcelDelivery(text);
+    if (!programPin) {
+      throw new Error(`${reportFile}: a pinned parcel split needs this report's own program total, which it does not publish`);
+    }
+    for (const cp of CVSR_PACKAGES) {
+      if (perPackage[cp].parcelsTotal !== undefined) {
+        throw new Error(`${reportFile}: ${cp} publishes its own parcel split; retire the pinned entry`);
+      }
+    }
+    const delivered = CVSR_PACKAGES.reduce((sum, cp) => sum + pinned.values[cp].delivered, 0);
+    const total = CVSR_PACKAGES.reduce((sum, cp) => sum + pinned.values[cp].total, 0);
+    if (programPin.delivered !== delivered || programPin.total !== total) {
+      throw new Error(
+        `${reportFile}: program parcels ${programPin.delivered}/${programPin.total} no longer pin the ${pinned.source} split ${delivered}/${total}`,
+      );
+    }
+    for (const cp of CVSR_PACKAGES) {
+      perPackage[cp].parcelsDelivered = pinned.values[cp].delivered;
+      perPackage[cp].parcelsTotal = pinned.values[cp].total;
+      (perPackage[cp].derivedFields ??= []).push('parcels');
+      perPackage[cp].derivationDetail = pinned.detail;
+    }
+  }
+
   const packageMetrics = Object.values(perPackage);
-  const utilitiesRelocated = packageMetrics.reduce(
-    (sum, metrics) => sum + (metrics.utilitiesRelocated ?? 0),
-    0,
-  );
-  const utilitiesTotal = packageMetrics.reduce(
-    (sum, metrics) => sum + (metrics.utilitiesTotal ?? 0),
-    0,
-  );
-  const parcelsDelivered = packageMetrics.reduce(
-    (sum, metrics) => sum + (metrics.parcelsDelivered ?? 0),
-    0,
-  );
-  const parcelsTotal = packageMetrics.reduce(
-    (sum, metrics) => sum + (metrics.parcelsTotal ?? 0),
-    0,
-  );
-  const aggregate = utilitiesTotal > 0 && parcelsTotal > 0
-    ? { utilitiesRelocated, utilitiesTotal, parcelsDelivered, parcelsTotal }
+  const packageSum = (key: 'parcelsDelivered' | 'parcelsTotal'): number | undefined => {
+    let total = 0;
+    for (const metrics of packageMetrics) {
+      const value = metrics[key];
+      if (typeof value !== 'number') return undefined;
+      total += value;
+    }
+    return total;
+  };
+  const programParcels = parseProgramParcelDelivery(text);
+  const summedDelivered = packageSum('parcelsDelivered');
+  const summedTotal = packageSum('parcelsTotal');
+  if (
+    programParcels
+    && summedDelivered !== undefined
+    && summedTotal !== undefined
+    && (programParcels.delivered !== summedDelivered || programParcels.total !== summedTotal)
+  ) {
+    throw new Error(
+      `${reportFile}: published program parcels ${programParcels.delivered}/${programParcels.total} disagree with the package sum ${summedDelivered}/${summedTotal}`,
+    );
+  }
+  const program = programParcels
+    ? { parcelsDelivered: programParcels.delivered, parcelsTotal: programParcels.total }
     : undefined;
   return {
     date: `${dataMonth}-01`,
@@ -517,7 +617,7 @@ async function parsePdf(
     ...(unmatchedRows.length > 0
       ? { unmatchedCvsrRows: unmatchedRows.map(({ cp, kind, location }) => ({ cp, kind, location })) }
       : {}),
-    aggregate,
+    ...(program ? { program } : {}),
   };
 }
 
@@ -549,8 +649,8 @@ async function parseLocalPdfs(): Promise<void> {
       const snapshot = await parsePdf(`${DIRECTORY}/${file}`, reportUrls, guidewayByLabel);
       const existing = snapshotsByDate.get(snapshot.date);
       if (existing) {
-        const existingPayload = JSON.stringify({ perPackage: existing.perPackage, aggregate: existing.aggregate });
-        const candidatePayload = JSON.stringify({ perPackage: snapshot.perPackage, aggregate: snapshot.aggregate });
+        const existingPayload = JSON.stringify({ perPackage: existing.perPackage, program: existing.program });
+        const candidatePayload = JSON.stringify({ perPackage: snapshot.perPackage, program: snapshot.program });
         const existingScore = (existing.reportFile?.toLowerCase().includes('draft') ? -10 : 0) + (existing.reportFile?.toLowerCase().includes('final') ? 2 : 0);
         const candidateScore = (file.toLowerCase().includes('draft') ? -10 : 0) + (file.toLowerCase().includes('final') ? 2 : 0);
         const candidateWins = existingPayload !== candidatePayload && candidateScore > existingScore;
@@ -589,7 +689,7 @@ async function parseLocalPdfs(): Promise<void> {
   for (const snapshot of snapshots) {
     for (const cp of CVSR_PACKAGES) {
       const metrics = snapshot.perPackage?.[cp];
-      if (metrics?.parcelsTotal === undefined && !PARCEL_OMISSION_MONTHS.includes(snapshot.dataMonth)) {
+      if (metrics?.parcelsTotal === undefined && !parcelOmission(snapshot.dataMonth, cp)) {
         fieldFailures.push({ month: snapshot.dataMonth, cp, metric: 'parcels' });
       }
       if (snapshot.dataMonth >= '2020-08' && metrics?.utilitiesTotal === undefined) {
@@ -614,7 +714,7 @@ async function parseLocalPdfs(): Promise<void> {
     fieldFailures,
     revisions: REVIEWED_REVISIONS,
     coverageStart: '2019-03',
-    coverageEnd: '2026-04',
+    coverageEnd: '2026-05',
     unresolvedReportUrls: candidates.filter(
       (file) => !reportMetadata(file) && !reportUrls[file],
     ),

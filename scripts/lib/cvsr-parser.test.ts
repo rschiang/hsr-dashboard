@@ -8,6 +8,7 @@ import {
   parseParcelAcquisitionAudit,
   parseParcelAcquisitionPair,
   parseParcelPair,
+  parseProgramParcelDelivery,
   parseRailroadParcelPair,
   parseReportMonth,
   parseRowProgress,
@@ -528,7 +529,7 @@ test('classifies the audited utility omission boundary without inventing later g
   assert.deepEqual(utilityGaps[0].packages, ['CP1', 'CP2-3', 'CP4']);
 });
 
-test('records acquisition-only months as a related delivery measure, not a parser failure', () => {
+test('records each audited parcel-delivery omission with the cause its own source states', () => {
   const inventory = buildCvsrInventory({
     snapshots: [],
     localFiles: new Set(),
@@ -538,12 +539,20 @@ test('records acquisition-only months as a related delivery measure, not a parse
     fieldFailures: [],
     revisions: [],
     coverageStart: '2019-03',
-    coverageEnd: '2020-08',
+    coverageEnd: '2026-05',
   });
   const parcelGaps = inventory.gaps.filter((gap) => gap.metric === 'parcel_delivery');
-  assert.deepEqual(parcelGaps.map((gap) => gap.month), ['2019-09', '2019-10', '2019-11', '2019-12', '2020-01']);
-  assert.equal(parcelGaps.every((gap) => gap.cause === 'related_measure_only'), true);
+  assert.deepEqual(parcelGaps.map((gap) => [gap.month, gap.cause]), [
+    ['2019-09', 'related_measure_only'],
+    ['2019-10', 'related_measure_only'],
+    ['2019-11', 'related_measure_only'],
+    ['2019-12', 'related_measure_only'],
+    ['2020-01', 'total_not_reported'],
+  ]);
   assert.deepEqual(parcelGaps[0].packages, ['CP1', 'CP2-3', 'CP4']);
+  // 2026-05 publishes no split either, but the program total pins it, so it is a
+  // determined value rather than a gap.
+  assert.equal(parcelGaps.some((gap) => gap.month === '2026-05'), false);
 });
 
 test('flattens a reviewed restatement to one annotated month without creating a gap', () => {
@@ -607,4 +616,78 @@ test('assigns one snapshot gap cause using parser, download, then location prece
     ],
   );
   assert.equal(new Set(snapshotGaps.map((gap) => gap.month)).size, snapshotGaps.length);
+});
+
+const JULY_2026_FILE = 'FA-Central-Valley-Status-Report-July-2026-A11Y.pdf';
+
+test('never reads a railroad delivery table as ordinary right-of-way delivery', () => {
+  // July 2026 retires the ordinary CP 1-4 ROW delivery page, so the railroad table is
+  // the first heading match. Reading it here would publish 164/176 rail parcels as the
+  // program's right-of-way delivery.
+  const july2026 = `
+    CP 1-4 – Real Property/Right-of-Way (ROW) Railroad
+    To Be Delivered vs. Delivered
+    Segment Railroad Parcels to be Delivered Delivered to Date Total Railroad Parcels
+    CP 1 9 80 89
+    CP 2-3 3 55 58
+    CP 4 0 29 29
+    Total 12 164 176
+    Actual vs. Forecast – Railroad Parcel Delivery to Design-Builder (DB)
+  `;
+  assert.equal(parseParcelPair(july2026, 'CP1'), null);
+  assert.equal(parseParcelPair(july2026, 'CP2-3'), null);
+  assert.equal(parseParcelPair(july2026, 'CP4'), null);
+  assert.deepEqual(parseRailroadParcelPair(july2026, 'CP1'), { delivered: 80, total: 89, remaining: 9 });
+});
+
+test('reads a program parcel total only from the sentence that publishes it', () => {
+  assert.deepEqual(
+    parseProgramParcelDelivery(
+      '• All required parcels have been delivered — 2,288 of 2,288. This achievement marks a major program milestone.',
+    ),
+    { delivered: 2288, total: 2288 },
+  );
+  assert.equal(
+    parseProgramParcelDelivery('CP 1 1,069 901 168\nCP 2-3 1,000 754 246\nCP 4 237 182 55'),
+    null,
+  );
+});
+
+test('keys July guideway rows on the bare label while the quote keeps the published span', () => {
+  const july2026 = `
+    CP 2-3 – Construction Progress
+    Guideways - Underway
+    Peach Ave to Elkhorn Ave (1.86 Miles) Aug-18 Jun-26 93% 0%
+    Guideways - Completed
+    Fowler Ave to Davis Ave (1.35 Miles)1 Aug-18 Jun-26 95% 1%
+  `;
+  const rows = parseRowProgress(july2026, JULY_2026_FILE);
+  assert.deepEqual(rows.map((row) => row.location), [
+    'Peach Ave to Elkhorn Ave',
+    'Fowler Ave to Davis Ave',
+  ]);
+  assert.equal(rows[0].quote, 'Peach Ave to Elkhorn Ave (1.86 Miles) Aug-18 Jun-26 93% 0%');
+  assert.equal(rows[0].footnote, null);
+  // The footnote digit sits outside the parenthesis, so it is stripped first.
+  assert.equal(rows[1].footnote, 'substantially_complete');
+  assert.equal(rows[1].quote, 'Fowler Ave to Davis Ave (1.35 Miles)1 Aug-18 Jun-26 95% 1%');
+});
+
+test('strips a footnote digit only from reviewed rows, never from a genuine label', () => {
+  const july2026 = `
+    CP 1 – Construction Progress
+    Structures - Completed
+    Avenue 11 Sep-17 Jul-20 100%
+    CP 2-3 – Construction Progress
+    Structures - Completed
+    Cross Creek1 Apr-21 Apr-26 97%
+  `;
+  const rows = parseRowProgress(july2026, JULY_2026_FILE);
+  assert.deepEqual(
+    rows.map((row) => [row.cp, row.location, row.footnote]),
+    [
+      ['CP1', 'Avenue 11', null],
+      ['CP2-3', 'Cross Creek', 'substantially_complete'],
+    ],
+  );
 });

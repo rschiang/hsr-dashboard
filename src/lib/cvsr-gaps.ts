@@ -67,6 +67,7 @@ export const GAP_LABELS: Record<CvsrGapCause, string> = {
   report_not_located: 'No valid report located',
   source_not_reported: 'Not published in source',
   related_measure_only: 'Related measure only',
+  total_not_reported: 'Total not published',
   parser_failure: 'Parser failed — report available',
 };
 

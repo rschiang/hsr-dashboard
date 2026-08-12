@@ -1,5 +1,6 @@
 import type {
   CvsrGap,
+  CvsrGapCause,
   CvsrInventory,
   CvsrReportDiagnostic,
   Snapshot,
@@ -69,12 +70,36 @@ function monthRange(start: string, end: string): string[] {
 }
 
 /**
- * Audited window in which the reports publish ROW parcel *acquisition* counts
- * but no cumulative parcels-delivered-to-design-builder figure. Acquisition is
- * a different measure, so these months are a source omission, never a parser
- * failure and never a substituted value.
+ * Audited months where the reports publish no per-package cumulative
+ * parcels-delivered-to-design-builder pair. Each entry says what the source
+ * published instead, so a withheld measure is never a parser failure and never a
+ * substituted value.
  */
-export const PARCEL_OMISSION_MONTHS: readonly string[] = monthRange('2019-09', '2020-01');
+export type ReviewedParcelOmission = {
+  months: readonly string[];
+  packages: readonly CvsrPackage[];
+  cause: Extract<CvsrGapCause, 'related_measure_only' | 'source_not_reported' | 'total_not_reported'>;
+  detail: string;
+};
+
+export const PARCEL_OMISSIONS: readonly ReviewedParcelOmission[] = [
+  {
+    months: monthRange('2019-09', '2019-12'),
+    packages: [...CVSR_PACKAGES],
+    cause: 'related_measure_only',
+    detail: 'The report publishes package parcel acquisition, needed and remaining counts; it does not publish parcels certified and delivered to the design-builder. The acquisition series is displayed separately.',
+  },
+  {
+    months: ['2020-01'],
+    packages: [...CVSR_PACKAGES],
+    cause: 'total_not_reported',
+    detail: 'Cumulative parcels delivered to the design-builder for January 2020 are recovered from the April 2020 report (data through February 2020), which publishes them only as chart images: 1,498 program total on page 13, CP 1 785 on page 25, CP 2-3 557 on page 34, CP 4 156 on page 43. That report publishes no January total-needed count — its 1,066 / 1,011 / 253 figures are a March 9, 2020 count — so no denominator is recorded for this month.',
+  },
+];
+
+export function parcelOmission(month: string, cp: CvsrPackage): ReviewedParcelOmission | undefined {
+  return PARCEL_OMISSIONS.find((entry) => entry.months.includes(month) && entry.packages.includes(cp));
+}
 
 export function buildCvsrInventory({
   snapshots,
@@ -147,18 +172,20 @@ export function buildCvsrInventory({
       metric: 'utilities',
       packages: [...CVSR_PACKAGES],
       cause: 'source_not_reported',
-      detail: 'Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones.',
+      detail: 'Package utility relocation counts are first published in the August-2020-data report; earlier reports publish only third-party agreement schedules and target milestones against a different denominator — the April 2020 report counts 20 of 87 CP 2-3 relocations where the first standardized report counts 187 of 692. The two are not the same series and are not merged.',
     });
   }
 
-  for (const month of PARCEL_OMISSION_MONTHS) {
-    gaps.push({
-      month,
-      metric: 'parcel_delivery',
-      packages: [...CVSR_PACKAGES],
-      cause: 'related_measure_only',
-      detail: 'The report publishes package parcel acquisition, needed and remaining counts; it does not publish parcels certified and delivered to the design-builder. The acquisition series is displayed separately.',
-    });
+  for (const entry of PARCEL_OMISSIONS) {
+    for (const month of entry.months) {
+      gaps.push({
+        month,
+        metric: 'parcel_delivery',
+        packages: [...entry.packages],
+        cause: entry.cause,
+        detail: entry.detail,
+      });
+    }
   }
 
   for (const failure of fieldFailures) {
@@ -186,10 +213,13 @@ export function buildCvsrInventory({
     .sort((a, b) => a.dataMonth.localeCompare(b.dataMonth))
     .flatMap((snapshot) => {
       const fields: Array<'progress' | 'parcels'> = [];
+      let detail: string | undefined;
       for (const cp of CVSR_PACKAGES) {
-        for (const field of snapshot.perPackage?.[cp]?.transcribedFields ?? []) {
+        const metrics = snapshot.perPackage?.[cp];
+        for (const field of metrics?.transcribedFields ?? []) {
           if (!fields.includes(field)) fields.push(field);
         }
+        detail ??= metrics?.transcriptionDetail;
       }
       if (fields.length === 0) return [];
       fields.sort((a, b) => (a === b ? 0 : a === 'progress' ? -1 : 1));
@@ -197,7 +227,30 @@ export function buildCvsrInventory({
         month: snapshot.dataMonth,
         reportFile: snapshot.reportFile ?? '',
         fields,
-        detail: TRANSCRIPTION_DETAIL,
+        detail: detail ?? TRANSCRIPTION_DETAIL,
+      }];
+    });
+
+  // Derived values are determined values, not gaps: the report pins a program total that
+  // leaves the package split with nothing free to assume.
+  const derivations = [...snapshots]
+    .sort((a, b) => a.dataMonth.localeCompare(b.dataMonth))
+    .flatMap((snapshot) => {
+      const fields: Array<'parcels'> = [];
+      let detail: string | undefined;
+      for (const cp of CVSR_PACKAGES) {
+        const metrics = snapshot.perPackage?.[cp];
+        for (const field of metrics?.derivedFields ?? []) {
+          if (!fields.includes(field)) fields.push(field);
+        }
+        detail ??= metrics?.derivationDetail;
+      }
+      if (fields.length === 0 || detail === undefined) return [];
+      return [{
+        month: snapshot.dataMonth,
+        reportFile: snapshot.reportFile ?? '',
+        fields,
+        detail,
       }];
     });
 
@@ -222,6 +275,7 @@ export function buildCvsrInventory({
     gaps,
     rejectedReports,
     transcriptions,
+    derivations,
     revisions: flatRevisions,
     unresolvedReportUrls: [...unresolvedReportUrls].sort(),
   };

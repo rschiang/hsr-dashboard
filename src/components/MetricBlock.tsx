@@ -22,7 +22,7 @@ export function MetricBlock({
   value: string;
   unit?: string;
   chip?: React.ReactNode;
-  packages?: Array<{ cp: CvsrPackageId; percent: string; revisedTitle?: string }>;
+  packages?: Array<{ cp: CvsrPackageId; percent: string; revisedTitle?: string; derivedTitle?: string }>;
   series: SparklineSeries[];
   selectedIndex: number | null;
   ariaLabel: string;
@@ -38,12 +38,14 @@ export function MetricBlock({
         {chip && <span className="metric-chip">{chip}</span>}
         {packages && (
           <ul className="metric-packages">
-            {packages.map(({ cp, percent, revisedTitle }) => (
+            {packages.map(({ cp, percent, revisedTitle, derivedTitle }) => (
               <li key={cp}>
                 <b><Abbr>{cp}</Abbr></b>:{' '}
-                {revisedTitle === undefined
-                  ? percent
-                  : <span className="revised" title={revisedTitle}>{percent}</span>}
+                {revisedTitle !== undefined
+                  ? <span className="revised" title={revisedTitle}>{percent}</span>
+                  : derivedTitle !== undefined
+                    ? <span className="derived" title={derivedTitle}>{percent}</span>
+                    : percent}
               </li>
             ))}
           </ul>

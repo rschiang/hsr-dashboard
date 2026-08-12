@@ -132,6 +132,15 @@ export type PackageMetrics = {
   };
   /** Fields hand-transcribed from a chart image because the PDF exposes no extractable text for them. */
   transcribedFields?: Array<'progress' | 'parcels'>;
+  /** Overrides TRANSCRIPTION_DETAIL when the transcribed value came from a later report. */
+  transcriptionDetail?: string;
+  /**
+   * Fields carried from an earlier report because this report pins the program total
+   * that produced them, leaving the split determined rather than assumed.
+   */
+  derivedFields?: Array<'parcels'>;
+  /** What pins a derived field, and to which report it is pinned. */
+  derivationDetail?: string;
   sourceId: SourceId;
 };
 
@@ -142,11 +151,10 @@ type SnapshotFields = {
   structureEvidence?: StructureEvidence[];
   unmatchedCvsrRows?: Array<{ cp: CvsrPackageId; kind: 'structure' | 'guideway'; location: string }>;
   perPackage?: Partial<Record<'CP1' | 'CP2-3' | 'CP4', PackageMetrics>>;
-  aggregate?: {
-    utilitiesRelocated: number;
-    utilitiesTotal: number;
-    parcelsDelivered: number;
-    parcelsTotal: number;
+  /** Values the report prints for CP 1-4 as a program total, never a sum of packages. */
+  program?: {
+    parcelsDelivered?: number;
+    parcelsTotal?: number;
   };
 };
 
@@ -176,6 +184,7 @@ export type CvsrGapCause =
   | 'report_not_located'
   | 'source_not_reported'
   | 'related_measure_only'
+  | 'total_not_reported'
   | 'parser_failure';
 
 export type CvsrGap = {
@@ -207,6 +216,13 @@ export type CvsrInventory = {
     month: string;
     reportFile: string;
     fields: Array<'progress' | 'parcels'>;
+    detail: string;
+  }>;
+  /** Package values determined by a published program total rather than reprinted by the report. */
+  derivations: Array<{
+    month: string;
+    reportFile: string;
+    fields: Array<'parcels'>;
     detail: string;
   }>;
   /** Package values the Authority later restated. The superseded month keeps its published value. */

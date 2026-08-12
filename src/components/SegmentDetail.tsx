@@ -1,3 +1,4 @@
+import { SOURCES } from '../data/sources';
 import type { AlignmentStatus, Segment, StructureEvidence } from '../data/types';
 import { STATUS_LABELS } from '../lib/status';
 import { evidenceDateLabel, structureObservationLabel } from '../lib/observation-labels';
@@ -52,9 +53,9 @@ export function SegmentDetail({
         {disagreement && date.slice(0, 7) >= disagreement.cvsrMonth && (
           <>
             <dt>Earthwork · ArcGIS</dt>
-            <dd>{Math.round(disagreement.arcgis * 100)}% <SourceLink sourceId="arcgis_progress" /></dd>
+            <dd>{Math.round(disagreement.arcgis * 100)}% · layer updated {SOURCES.arcgis_progress.date} <SourceLink sourceId="arcgis_progress" /></dd>
             <dt>Earthwork · CVSR</dt>
-            <dd>{Math.round(disagreement.cvsr * 100)}% · April 2026 data <SourceLink sourceId="cvsr" /></dd>
+            <dd>{Math.round(disagreement.cvsr * 100)}% · {disagreement.cvsrMonth} data <SourceLink sourceId="cvsr" /></dd>
           </>
         )}
 

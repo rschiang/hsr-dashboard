@@ -9,8 +9,9 @@ import type {
   Snapshot,
 } from './data/types';
 import { deriveStatuses, selectedCompletions } from './lib/status';
-import { buildCvsrSeries, sparklineLabel, type NumericPackageMetric } from './lib/cvsr-series';
+import { buildCvsrSeries, sparklineLabel } from './lib/cvsr-series';
 import { GAP_LABELS, groupCvsrGaps, groupRevisions } from './lib/cvsr-gaps';
+import { formatRailValue, packagePercent, railMetricValues, RAIL_METRICS } from './lib/rail-metrics';
 import { Abbr, type Abbreviation } from './components/Abbr';
 import { SourceLink, SourcesList } from './components/Citation';
 import { NotesList } from './components/Notes';
@@ -32,21 +33,6 @@ const CVSR_PACKAGES = ['CP1', 'CP2-3', 'CP4'] as const satisfies readonly CvsrPa
 // TypeScript rejects a bare text child against a union-typed `children` (TS2745),
 // so the rail's report abbreviation travels as a checked constant.
 const CVSR: Abbreviation = 'CVSR';
-
-function sumPackages(
-  snapshot: Snapshot | undefined,
-  key: NumericPackageMetric,
-): number | undefined {
-  const packages = Object.values(snapshot?.perPackage ?? {});
-  if (packages.length === 0) return undefined;
-  let total = 0;
-  for (const metrics of packages) {
-    const value = metrics[key];
-    if (typeof value !== 'number') return undefined;
-    total += value;
-  }
-  return total;
-}
 
 function App() {
   const [data, setData] = useState<LoadedData | null>(null);
@@ -291,30 +277,14 @@ const CP_COLORS: Record<(typeof CVSR_PACKAGES)[number], string> = {
   CP4: 'var(--cp4)',
 };
 
-const RAIL_METRICS: ReadonlyArray<{
-  label: string;
-  value: NumericPackageMetric;
-  total: NumericPackageMetric;
-  unit?: string;
-  /** CVSR revision family this metric belongs to; marks restated package cells. */
-  revisedAs?: 'progress' | 'parcels' | 'utilities';
-  /** CVSR gap metric that explains a blank month for this block. */
-  gapMetric?: CvsrGap['metric'];
-  format: (value: number, total: number) => string;
-}> = [
-  { label: 'Guideway complete', value: 'guidewayMilesComplete', total: 'guidewayMilesTotal', unit: 'mi', revisedAs: 'progress', format: (value, total) => `${value.toFixed(1)} / ${total.toFixed(0)}` },
-  { label: 'Structures complete', value: 'structuresComplete', total: 'structuresTotal', revisedAs: 'progress', format: (value, total) => `${value} / ${total}` },
-  { label: 'Right-of-way delivered', value: 'parcelsDelivered', total: 'parcelsTotal', revisedAs: 'parcels', gapMetric: 'parcel_delivery', format: (value, total) => `${value.toLocaleString()} / ${total.toLocaleString()}` },
-  { label: 'Utilities relocated', value: 'utilitiesRelocated', total: 'utilitiesTotal', revisedAs: 'utilities', gapMetric: 'utilities', format: (value, total) => `${value.toLocaleString()} / ${total.toLocaleString()}` },
-];
-
 const TRACK_ARIA_LABEL = 'Track installed: zero miles. The 2026 Final Business Plan reports Track and Systems design and construction for the 119-mile Central Valley Segment as not started, and the Authority publishes no monthly track-installation series.';
 
 /**
- * The rail carries the aggregate for each published CVSR metric over the three
- * construction packages that reported it. An aggregate is shown only when every
- * package published both halves of the ratio — `sumPackages` returns `undefined`
- * otherwise, and a partial sum would read as a program total it is not.
+ * The rail reads each published CVSR metric at program level: a value the report
+ * printed for CP 1-4 wins, otherwise the sum over the packages that all reported it,
+ * and guideway uses the fixed 119-mile corridor denominator rather than a sum of
+ * package denominators that move with contract scope. A partial package sum is never
+ * shown, because it would read as a program total it is not.
  */
 function MetricRail({
   snapshot,
@@ -369,8 +339,9 @@ function MetricRail({
         ariaLabel={TRACK_ARIA_LABEL}
       />
       {RAIL_METRICS.map((metric) => {
-        const value = beforeCoverage ? undefined : sumPackages(snapshot, metric.value);
-        const total = beforeCoverage ? undefined : sumPackages(snapshot, metric.total);
+        const { value, total } = beforeCoverage
+          ? { value: undefined, total: undefined }
+          : railMetricValues(snapshot, metric);
         const metricSeries = series[metric.value];
         const gap = beforeCoverage || metric.gapMetric === undefined
           ? undefined
@@ -379,24 +350,19 @@ function MetricRail({
           <MetricBlock
             key={metric.value}
             label={metric.label}
-            value={value === undefined || total === undefined ? '—' : metric.format(value, total)}
+            value={formatRailValue(metric, value, total)}
             unit={metric.unit}
             packages={CVSR_PACKAGES.map((cp) => {
-              const packageMetric = beforeCoverage ? undefined : snapshot?.perPackage?.[cp];
-              const packageValue = packageMetric?.[metric.value];
-              const packageTotal = packageMetric?.[metric.total];
               // The superseded month keeps the number its own report published; the marker
               // says the Authority later restated it.
-              const revision = beforeCoverage || metric.revisedAs === undefined ? undefined : inventory.revisions.find(
+              const revision = beforeCoverage || metric.family === undefined ? undefined : inventory.revisions.find(
                 (entry) => entry.month === selectedMonth
-                  && entry.metric === metric.revisedAs
+                  && entry.metric === metric.family
                   && entry.packages.includes(cp),
               );
               return {
                 cp,
-                percent: packageValue === undefined || packageTotal === undefined || packageTotal <= 0
-                  ? '—'
-                  : `${Math.round((packageValue / packageTotal) * 100)}%`,
+                ...packagePercent(beforeCoverage ? undefined : snapshot, metric, cp),
                 revisedTitle: revision === undefined
                   ? undefined
                   : `Superseded: the Authority restated this value in the ${revision.correctedIn} report. ${revision.detail}`,
