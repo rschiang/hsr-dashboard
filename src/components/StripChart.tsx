@@ -294,7 +294,7 @@ export function StripChart({
         })}
       </svg>
       {tooltip && (
-        <div className="segment-tooltip" style={{ left: Math.min(width - 312, Math.max(8, tooltip.x + 12)), bottom: CHART_H + 6 }}>
+        <div className="segment-tooltip" style={{ left: `clamp(var(--space-2), ${tooltip.x}px + var(--space-3), 100% - var(--tooltip-width) - var(--space-2))` }}>
           <strong>{tooltip.segment.label}</strong>
           <span>{tooltip.segment.cp} · {STATUS_LABELS[statuses[tooltip.segment.id] ?? tooltip.segment.currentStatus]}</span>
           <span>Station {tooltip.segment.stationStart?.toLocaleString() ?? 'not published'}–{tooltip.segment.stationEnd?.toLocaleString() ?? 'not published'} ft <SourceLink sourceId={tooltip.segment.sourceId} /></span>
