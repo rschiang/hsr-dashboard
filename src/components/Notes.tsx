@@ -1,4 +1,3 @@
-import { OFFICIAL_DEFINITIONS } from '../lib/status';
 import {
   GAP_LABELS,
   GAP_METRIC_LABELS,
@@ -42,12 +41,6 @@ export function NotesList({ gaps, revisions }: { gaps: CvsrGapGroup[]; revisions
           no published basis. CP1 publishes structure rows inside their guideway rows, so about
           1.6 mi of corridor appears in both. <SourceLink sourceId="arcgis_progress" />{' '}
           <SourceLink sourceId="cvsr" /> <SourceLink sourceId="business_plan_2026" />
-        </li>
-        <li>
-          <b>Guideway complete.</b> {OFFICIAL_DEFINITIONS.guideway} <SourceLink sourceId="cvsr" />
-        </li>
-        <li>
-          <b>Structure complete.</b> {OFFICIAL_DEFINITIONS.structure} <SourceLink sourceId="cvsr" />
         </li>
         <li>
           <b>Granularity matters.</b> ROW and utility progress are reported by construction package,
