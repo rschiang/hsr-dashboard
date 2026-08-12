@@ -6,6 +6,8 @@ import 'maplibre-gl/dist/maplibre-gl.css';
 import type { AlignmentStatus } from '../data/types';
 import { STATUS_COLORS } from '../lib/status';
 maplibregl.setWorkerUrl(`${import.meta.env.BASE_URL}vendor/maplibre-gl-worker.mjs`);
+const PROJECT_OVERVIEW_CENTER: [number, number] = [-119.72, 36.34];
+const PROJECT_OVERVIEW_ZOOM = 7.5;
 
 
 export type SegmentFeatureCollection = FeatureCollection<LineString, {
@@ -46,8 +48,8 @@ export function AlignmentMap({
     const map = new maplibregl.Map({
       container: containerRef.current,
       style: 'https://tiles.openfreemap.org/styles/positron',
-      center: [-119.73, 36.35],
-      zoom: 6.55,
+      center: PROJECT_OVERVIEW_CENTER,
+      zoom: PROJECT_OVERVIEW_ZOOM,
       // The OpenFreeMap style JSON carries no `attribution` field, so MapLibre would
       // otherwise credit only itself. Supplying `customAttribution` replaces MapLibre's
       // default entry, hence the explicit MapLibre item below.
@@ -197,7 +199,15 @@ export function AlignmentMap({
     const map = mapRef.current;
     if (!map || !readyRef.current) return;
     if (priorSelectedRef.current) map.setFeatureState({ source: 'alignment', id: priorSelectedRef.current }, { selected: false });
-    if (!selectedId) return;
+    if (!selectedId) {
+      priorSelectedRef.current = null;
+      map.easeTo({
+        center: PROJECT_OVERVIEW_CENTER,
+        zoom: PROJECT_OVERVIEW_ZOOM,
+        duration: 650,
+      });
+      return;
+    }
     map.setFeatureState({ source: 'alignment', id: selectedId }, { selected: true });
     priorSelectedRef.current = selectedId;
     const feature = data.features.find((candidate) => candidate.properties.id === selectedId);
