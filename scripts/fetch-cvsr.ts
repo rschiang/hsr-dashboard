@@ -276,7 +276,7 @@ const PINNED_PARCELS: Readonly<Record<string, {
 }>> = {
   'FA-Central-Valley-Status-Report-July-2026-A11Y.pdf': {
     source: 'FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf',
-    detail: 'Determined, not reprinted: the July 2026 report retires the per-package right-of-way table and states "All required parcels have been delivered — 2,288 of 2,288". The April 2026 report (data through April 2026, page 10) publishes that same total as CP 1 1,080 of 1,080, CP 2-3 985 of 985 and CP 4 223 of 223, with zero parcels to be delivered in every package. https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf',
+    detail: 'The authority officially marked 100% acquisition milestone for parcels required for CP1–4 guideway construction in the July 2026 report (data through May 2026). The separate values are sourced from June 2026 report (data through April 2026) which publishes that same total.',
     values: {
       CP1: { delivered: 1080, total: 1080 },
       'CP2-3': { delivered: 985, total: 985 },
