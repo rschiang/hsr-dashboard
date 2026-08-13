@@ -47,6 +47,11 @@ const PACKAGE_INPUTS: Record<'CP1' | 'CP2-3' | 'CP4', {
   CP4: { contractAmountMillions: 866.093967, publishedMiles: 21.2, publishedStructures: 11 },
 };
 
+/**
+ * Each extension's construction, utility-relocation and right-of-way line items,
+ * summed from the 2026 Business Plan Estimate column of Table B.1 (printed p. 47):
+ * Merced 2,539 + 287 + 565 = 3,391; Bakersfield 1,984 + 276 + 280 = 2,540.
+ */
 const EXTENSION_COSTS: Record<'M2M' | 'LGA', number> = {
   M2M: 3391,
   LGA: 2540,

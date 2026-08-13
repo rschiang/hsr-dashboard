@@ -718,6 +718,7 @@ async function parseLocalPdfs(): Promise<void> {
     unresolvedReportUrls: candidates.filter(
       (file) => !reportMetadata(file) && !reportUrls[file],
     ),
+    reportUrls,
   });
   await writeFile(PARSED, `${JSON.stringify({ snapshots, cvsrInventory, diagnostics: { parseFailures, fieldFailures } }, null, 2)}\n`);
   console.log(`CVSR parse: ${snapshots.length} monthly snapshots from ${candidates.length} candidate reports; ${alternativeFiles.length} non-CVSR alternatives ignored; network requests: 0`);

@@ -1,20 +1,12 @@
 import { useMemo, useRef, useState, useSyncExternalStore, type SVGProps } from 'react';
 import { scaleLinear } from 'd3-scale';
-import type { AlignmentStatus, Segment, StructureEvidence } from '../data/types';
+import type { AlignmentStatus, Segment, SegmentsArtifact, StructureEvidence } from '../data/types';
 import { STATUS_COLORS, STATUS_LABELS } from '../lib/status';
 import { iosMileToOfficialMp } from '../lib/mileposts';
 import { evidenceDateLabel, structureObservationLabel } from '../lib/observation-labels';
 import { SourceLink } from './Citation';
 
 export type AxisMode = 'distance' | 'difficulty';
-
-const STATIONS = [
-  { name: 'Merced', mile: 0, note: 'C 124; station point snaps at iosMile 0' },
-  { name: 'Madera', mile: 34, note: 'Station site near CP1 north limit' },
-  { name: 'Fresno', mile: 70, note: 'Published S 194 / iosMile 70; GIS station point snaps near geodesic mile 59 — unresolved source discrepancy' },
-  { name: 'Kings/Tulare', mile: 115, note: 'Published S 239; station site is 3.05 mi off the built alignment' },
-  { name: 'Bakersfield', mile: 171, note: 'S 295 / D 295' },
-] as const;
 
 const CP_BOUNDARIES = [
   { label: 'M2M / CVY', mile: 0, color: 'var(--m2m)', title: 'M2M — Merced to Madera extension · CVY — Central Valley Wye' },
@@ -55,6 +47,7 @@ function useElementWidth(ref: React.RefObject<HTMLDivElement | null>): number {
 
 export function StripChart({
   segments,
+  stations,
   statuses,
   hoveredId,
   selectedId,
@@ -67,6 +60,7 @@ export function StripChart({
   disagreements,
 }: {
   segments: Segment[];
+  stations: SegmentsArtifact['stations'];
   statuses: Record<string, AlignmentStatus>;
   hoveredId: string | null;
   selectedId: string | null;
@@ -129,7 +123,7 @@ export function StripChart({
   };
   const overlaps = (a: [number, number], b: [number, number]) => a[0] < b[1] + 6 && b[0] < a[1] + 6;
 
-  const stationLabels = STATIONS.map((station) => ({ station, label: place(xForMile(station.mile), station.name) }));
+  const stationLabels = stations.map((station) => ({ station, label: place(xForMile(station.iosMile), station.label) }));
   const reserved: Array<[number, number]> = stationLabels.map(({ label }) => label.box);
   const keptMileposts = new Map<number, AxisLabel>();
   for (const mile of TICK_ORDER) {
@@ -282,12 +276,18 @@ export function StripChart({
           <text key={label.text} x={label.x} y={LABEL_Y} textAnchor={label.anchor} className="axis-label">{label.text}</text>
         ))}
         {stationLabels.map(({ station, label }) => {
-          const x = xForMile(station.mile);
+          const x = xForMile(station.iosMile);
           return (
-            <g key={station.name}>
+            <g key={station.officialName}>
               <path d={`M ${x - 4} ${AXIS_Y} L ${x + 4} ${AXIS_Y} L ${x} ${AXIS_Y + 7} Z`} className="station-marker" />
               <text x={label.x} y={LABEL_Y} textAnchor={label.anchor} className="station-label">
-                {station.name}<title>{station.note}</title>
+                {station.label}
+                <title>
+                  {`${station.officialName}${station.crossStreets ? ` (${station.crossStreets})` : ''} — ${station.officialMp}, ios mile ${station.iosMile.toFixed(2)}`}
+                  {station.chordMi >= 0.5
+                    ? `; position interpolated across a ${station.chordMi.toFixed(1)} mi gap in the published alignment geometry`
+                    : ''}
+                </title>
               </text>
             </g>
           );
@@ -297,16 +297,19 @@ export function StripChart({
         <div className="segment-tooltip" style={{ left: `clamp(var(--space-2), ${tooltip.x}px + var(--space-3), 100% - var(--tooltip-width) - var(--space-2))` }}>
           <strong>{tooltip.segment.label}</strong>
           <span>{tooltip.segment.cp} · {STATUS_LABELS[statuses[tooltip.segment.id] ?? tooltip.segment.currentStatus]}</span>
-          <span>Station {tooltip.segment.stationStart?.toLocaleString() ?? 'not published'}–{tooltip.segment.stationEnd?.toLocaleString() ?? 'not published'} ft <SourceLink sourceId={tooltip.segment.sourceId} /></span>
+          <span>Station {tooltip.segment.stationStart?.toLocaleString() ?? 'not published'}–{tooltip.segment.stationEnd?.toLocaleString() ?? 'not published'} ft <SourceLink sourceId={tooltip.segment.stationSourceId} /></span>
           <span>{tooltip.segment.iosMileStart.toFixed(2)}–{tooltip.segment.iosMileEnd.toFixed(2)} ios mi · {tooltip.segment.officialMpStart}–{tooltip.segment.officialMpEnd} <SourceLink sourceId="ts1_alignment" /></span>
           <span>Earthwork completion at selected date {tooltipCompletion === null || tooltipCompletion === undefined ? 'not reported' : `${Math.round(tooltipCompletion * 100)}%`}{tooltipDisagrees ? ' · sources disagree' : ''} <SourceLink sourceId={tooltip.segment.sourceId === 'cvsr' ? 'cvsr' : 'arcgis_progress'} /></span>
           {/* Plain text only: `.segment-tooltip` is `pointer-events: none`, so anchors here
               are unclickable by mouse and unreachable by keyboard. The SegmentDetail panel
               below the fold carries the working evidence and structure links. */}
           {tooltipEvidence && (
-            <span>Evidence: “{tooltipEvidence.quote}” — {evidenceDateLabel(tooltipEvidence)}. {tooltipEvidence.sourceTitle}</span>
+            <span>
+              Evidence: {tooltipEvidence.label === tooltip.segment.label ? '' : `${tooltipEvidence.label} — `}
+              “{tooltipEvidence.quote}” — {evidenceDateLabel(tooltipEvidence)}. {tooltipEvidence.sourceTitle}
+            </span>
           )}
-          <span>Difficulty share {(tooltip.segment.weightShare * 100).toFixed(2)}% <SourceLink sourceId="business_plan_2026" /></span>
+          <span>Difficulty share {(tooltip.segment.weightShare * 100).toFixed(2)}% <SourceLink sourceId="bp2026_costs" /></span>
         </div>
       )}
     </div>

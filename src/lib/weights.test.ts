@@ -23,6 +23,7 @@ function segment(overrides: Partial<Segment> & Pick<Segment, 'id' | 'cp' | 'kind
     currentStatus: 'no_data',
     structures: [],
     evidence: [],
+    stationSourceId: 'arcgis_progress',
     sourceId: 'arcgis_progress',
     ...overrides,
   };

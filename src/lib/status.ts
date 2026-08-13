@@ -49,6 +49,13 @@ export const STATUS_LABELS: Record<AlignmentStatus, string> = {
   systems_installed: 'Systems installed',
 };
 
+/**
+ * The Authority's own wording, verbatim from the July 2026 Central Valley Status
+ * Report (data through May 31, 2026): the structure definition on printed pp. 6 and
+ * 30, the guideway definition on printed p. 7. Printed p. 18 carries the structure
+ * definition without its trailing "then ready for either track install or open to
+ * traffic" clause, which is the form the legend caption quotes.
+ */
 export const OFFICIAL_DEFINITIONS = {
   structure: 'Structure Completion – all concrete work is complete, ready for punchlist and certification, then ready for either track install or open to traffic.',
   guideway: 'Guideway Completion – earthworks complete with rough grading.',

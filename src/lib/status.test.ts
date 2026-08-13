@@ -26,21 +26,22 @@ function segment(overrides: Partial<Segment> = {}): Segment {
     currentStatus: 'no_data',
     structures: [],
     evidence: [],
+    stationSourceId: 'arcgis_progress',
     sourceId: 'arcgis_progress',
     ...overrides,
   };
 }
 
 const progressEvidence: StructureEvidence = {
-  id: 'san-joaquin-progress-2020-08',
+  id: 'san-joaquin-progress-2020-06',
   segmentId: 'CP1:176',
   claim: 'in_progress',
-  date: '2020-08',
+  date: '2020-06',
   datePrecision: 'month',
   label: 'San Joaquin River Viaduct & Pergola',
-  sourceTitle: 'Central Valley Status Report, August 2020',
-  sourceUrl: 'https://example.test/cvsr-2020-08.pdf',
-  sourceId: 'cvsr_2020_08',
+  sourceTitle: 'Central Valley Status Report, August 2020 (data through June 2020)',
+  sourceUrl: 'https://example.test/cvsr-2020-06.pdf',
+  sourceId: 'cvsr_2020_06',
   quote: 'Finishing touches on the Arch Span and clean-up work.',
 };
 
@@ -58,8 +59,8 @@ const completionEvidence: StructureEvidence = {
 test('dated evidence changes categorical status without inventing completion', () => {
   const subject = segment({ evidence: [progressEvidence, completionEvidence] });
 
-  assert.equal(resolveSegmentStatus(subject, '2020-07-01').status, 'no_data');
-  assert.equal(resolveSegmentStatus(subject, '2020-08-01').status, 'under_construction');
+  assert.equal(resolveSegmentStatus(subject, '2020-05-01').status, 'no_data');
+  assert.equal(resolveSegmentStatus(subject, '2020-06-01').status, 'under_construction');
   assert.equal(resolveSegmentStatus(subject, '2021-02-01').status, 'structure_complete');
   assert.equal(subject.completion, null);
 });

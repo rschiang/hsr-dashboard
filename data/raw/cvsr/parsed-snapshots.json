@@ -3770,7 +3770,7 @@
           "structuresComplete": 11,
           "structuresTotal": 11,
           "guidewayMilesComplete": 21.1,
-          "guidewayMilesTotal": 21.200000000000003,
+          "guidewayMilesTotal": 21.2,
           "sourceId": "cvsr",
           "utilitiesRelocated": 133,
           "utilitiesTotal": 133,
@@ -3818,7 +3818,7 @@
           "structuresComplete": 11,
           "structuresTotal": 11,
           "guidewayMilesComplete": 21.1,
-          "guidewayMilesTotal": 21.200000000000003,
+          "guidewayMilesTotal": 21.2,
           "sourceId": "cvsr",
           "utilitiesRelocated": 133,
           "utilitiesTotal": 133,
@@ -3867,7 +3867,7 @@
           "structuresComplete": 11,
           "structuresTotal": 11,
           "guidewayMilesComplete": 21.1,
-          "guidewayMilesTotal": 21.200000000000003,
+          "guidewayMilesTotal": 21.2,
           "sourceId": "cvsr",
           "utilitiesRelocated": 133,
           "utilitiesTotal": 133,
@@ -3916,7 +3916,7 @@
           "structuresComplete": 11,
           "structuresTotal": 11,
           "guidewayMilesComplete": 21.1,
-          "guidewayMilesTotal": 21.200000000000003,
+          "guidewayMilesTotal": 21.2,
           "sourceId": "cvsr",
           "utilitiesRelocated": 133,
           "utilitiesTotal": 133,
@@ -3965,7 +3965,7 @@
           "structuresComplete": 11,
           "structuresTotal": 11,
           "guidewayMilesComplete": 21.1,
-          "guidewayMilesTotal": 21.200000000000003,
+          "guidewayMilesTotal": 21.2,
           "sourceId": "cvsr",
           "utilitiesRelocated": 133,
           "utilitiesTotal": 133,
@@ -4014,7 +4014,7 @@
           "structuresComplete": 11,
           "structuresTotal": 11,
           "guidewayMilesComplete": 21.1,
-          "guidewayMilesTotal": 21.200000000000003,
+          "guidewayMilesTotal": 21.2,
           "sourceId": "cvsr",
           "utilitiesRelocated": 133,
           "utilitiesTotal": 133,
@@ -4063,7 +4063,7 @@
           "structuresComplete": 11,
           "structuresTotal": 11,
           "guidewayMilesComplete": 21.1,
-          "guidewayMilesTotal": 21.200000000000003,
+          "guidewayMilesTotal": 21.2,
           "sourceId": "cvsr",
           "utilitiesRelocated": 133,
           "utilitiesTotal": 133,
@@ -4112,7 +4112,7 @@
           "structuresComplete": 11,
           "structuresTotal": 11,
           "guidewayMilesComplete": 21.1,
-          "guidewayMilesTotal": 21.200000000000003,
+          "guidewayMilesTotal": 21.2,
           "sourceId": "cvsr",
           "utilitiesRelocated": 133,
           "utilitiesTotal": 133,
@@ -4161,7 +4161,7 @@
           "structuresComplete": 11,
           "structuresTotal": 11,
           "guidewayMilesComplete": 21.1,
-          "guidewayMilesTotal": 21.200000000000003,
+          "guidewayMilesTotal": 21.2,
           "sourceId": "cvsr",
           "utilitiesRelocated": 133,
           "utilitiesTotal": 133,
@@ -4210,7 +4210,7 @@
           "structuresComplete": 11,
           "structuresTotal": 11,
           "guidewayMilesComplete": 21.1,
-          "guidewayMilesTotal": 21.200000000000003,
+          "guidewayMilesTotal": 21.2,
           "sourceId": "cvsr",
           "utilitiesRelocated": 133,
           "utilitiesTotal": 133,
@@ -4259,7 +4259,7 @@
           "structuresComplete": 11,
           "structuresTotal": 11,
           "guidewayMilesComplete": 21.1,
-          "guidewayMilesTotal": 21.200000000000003,
+          "guidewayMilesTotal": 21.2,
           "sourceId": "cvsr",
           "utilitiesRelocated": 133,
           "utilitiesTotal": 133,
@@ -4308,7 +4308,7 @@
           "structuresComplete": 11,
           "structuresTotal": 11,
           "guidewayMilesComplete": 21.1,
-          "guidewayMilesTotal": 22,
+          "guidewayMilesTotal": 21.2,
           "sourceId": "cvsr",
           "utilitiesRelocated": 133,
           "utilitiesTotal": 133,
@@ -5385,7 +5385,7 @@
           "structuresComplete": 11,
           "structuresTotal": 11,
           "guidewayMilesComplete": 21.1,
-          "guidewayMilesTotal": 22,
+          "guidewayMilesTotal": 21.2,
           "sourceId": "cvsr",
           "utilitiesRelocated": 133,
           "utilitiesTotal": 133,
@@ -7071,7 +7071,7 @@
           "structuresComplete": 11,
           "structuresTotal": 11,
           "guidewayMilesComplete": 21.1,
-          "guidewayMilesTotal": 22,
+          "guidewayMilesTotal": 21.2,
           "sourceId": "cvsr",
           "utilitiesRelocated": 133,
           "utilitiesTotal": 133,
@@ -9203,7 +9203,8 @@
           "CP4"
         ],
         "cause": "total_not_reported",
-        "detail": "Cumulative parcels delivered to the design-builder for January 2020 are recovered from the April 2020 report (data through February 2020), which publishes them only as chart images: 1,498 program total on page 13, CP 1 785 on page 25, CP 2-3 557 on page 34, CP 4 156 on page 43. That report publishes no January total-needed count — its 1,066 / 1,011 / 253 figures are a March 9, 2020 count — so no denominator is recorded for this month."
+        "detail": "Cumulative parcels delivered to the design-builder for January 2020 are recovered from the April 2020 report (data through February 2020), which publishes them only as chart images: 1,498 program total on page 13, CP 1 785 on page 25, CP 2-3 557 on page 34, CP 4 156 on page 43. That report publishes no January total-needed count — its 1,066 / 1,011 / 253 figures are a March 9, 2020 count — so no denominator is recorded for this month.",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_042120_FA_Central_Valley_Status_Report.pdf"
       }
     ],
     "rejectedReports": [
@@ -9482,6 +9483,7 @@
         ],
         "correctedIn": "2022-04",
         "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/06/CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
         "detail": "A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress. This has been corrected for the April 2022 Data report."
       },
       {
@@ -9492,6 +9494,7 @@
         ],
         "correctedIn": "2022-04",
         "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/06/CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
         "detail": "A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress. This has been corrected for the April 2022 Data report."
       },
       {
@@ -9502,6 +9505,7 @@
         ],
         "correctedIn": "2022-04",
         "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/06/CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
         "detail": "A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress. This has been corrected for the April 2022 Data report."
       },
       {
@@ -9512,6 +9516,7 @@
         ],
         "correctedIn": "2022-04",
         "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/06/CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
         "detail": "A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress. This has been corrected for the April 2022 Data report."
       },
       {
@@ -9522,6 +9527,7 @@
         ],
         "correctedIn": "2022-04",
         "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/06/CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
         "detail": "A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress. This has been corrected for the April 2022 Data report."
       },
       {
@@ -9532,6 +9538,7 @@
         ],
         "correctedIn": "2022-04",
         "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/06/CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
         "detail": "A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress. This has been corrected for the April 2022 Data report."
       },
       {
@@ -9542,6 +9549,7 @@
         ],
         "correctedIn": "2022-04",
         "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/06/CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
         "detail": "A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress. This has been corrected for the April 2022 Data report."
       },
       {
@@ -9552,6 +9560,7 @@
         ],
         "correctedIn": "2022-04",
         "reportFile": "CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
+        "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2022/06/CVSR-2206-2204-Data-FINAL-V0-A11Y.pdf",
         "detail": "A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress. This has been corrected for the April 2022 Data report."
       }
     ],

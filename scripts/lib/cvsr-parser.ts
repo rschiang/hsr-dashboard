@@ -29,6 +29,15 @@ export type CvsrRowProgress = {
   quote: string;
 };
 
+/**
+ * Row labels whose trailing `1` is a footnote marker `pdftotext` inlined, not part
+ * of the name — a hand-maintained allowlist per report, because the extracted text
+ * carries no way to tell the two apart. Whether the marker arrives as `AAAT1` or
+ * `AAAT 1` is an artifact of the extraction, so entries are written and matched in
+ * the canonical no-space form; a missed registration cannot mis-state anything
+ * silently, because `scripts/build-segments.ts` throws unless every structure and
+ * guideway row resolves.
+ */
 const FOOTNOTED_ROWS: Readonly<Record<string, readonly string[]>> = {
   'FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf': [
     'Excelsior Ave1',
@@ -38,13 +47,13 @@ const FOOTNOTED_ROWS: Readonly<Record<string, readonly string[]>> = {
     'Lansing1',
     'Cross Creek1',
     'SR 43 Jersey1',
-    'Belmont Avenue 1',
+    'Belmont Avenue1',
   ],
   'FA-Central-Valley-Status-Report-July-2026-A11Y.pdf': [
     'Belmont Avenue1',
     'Road 261',
     'Excelsior Ave1',
-    'AAAT 1',
+    'AAAT1',
     'Ave 241',
     'Ave 1561',
     'Cross Creek1',
@@ -52,13 +61,13 @@ const FOOTNOTED_ROWS: Readonly<Record<string, readonly string[]>> = {
     'Conejo Ave to Peach Ave (0.23 Miles)1',
     'Elkhorn Ave to Fowler Ave (0.55 Miles)1',
     'Fowler Ave to Davis Ave (1.35 Miles)1',
-    'Cole Slough to Access Road (0.33 Miles) 1',
+    'Cole Slough to Access Road (0.33 Miles)1',
     'Kings River to Dover Ave (1.29 Miles)1',
     'Dover Ave to Excelsior Ave (1.01 Miles)1',
     'Hanford Armona to Houston Ave (1.04 Miles)1',
     'Ave 156 to SR 43 Tule River (1.58 Miles)1',
     'Alpaugh Bridge to Ave 56 (0.95 Miles)1',
-    'Access Road to Dutch John Cut (0.22 Miles) 1',
+    'Access Road to Dutch John Cut (0.22 Miles)1',
     'Excelsior Ave to Flint Ave (2.04 Miles)1',
     'Houston Ave to Idaho Ave (2.0 Miles)1',
     'Fargo Ave to Grangeville Ave (1.04 Miles)1',
@@ -142,7 +151,7 @@ export function parseRowProgress(text: string, reportFile?: string): CvsrRowProg
     if (!match?.groups) continue;
     let location = match.groups.location;
     let footnote: CvsrRowProgress['footnote'] = null;
-    if (footnoted.has(location)) {
+    if (footnoted.has(location.replace(/\s+/g, ' ').replace(/\s+(\d)$/, '$1'))) {
       location = location.replace(/\s*1$/, '');
       footnote = cp === 'CP1' ? 'partially_open' : 'substantially_complete';
     }
@@ -258,25 +267,58 @@ function sectionBetween(text: string, start: RegExp, end: RegExp): string {
   return endMatch ? remainder.slice(0, endMatch.index) : remainder;
 }
 
+/** Round half-up at `places`; the Authority rounds 62.5% to 63%, not to 62%. */
+function roundHalfUp(value: number, places: number): number {
+  const factor = 10 ** places;
+  return Math.sign(value) * Math.round(Math.abs(value) * factor + Number.EPSILON) / factor;
+}
+
+/**
+ * Every exec-summary progress bullet that prints a percentage must be reproduced by
+ * its own complete/underway/not-started breakdown. That is what proves the derived
+ * denominator against the report instead of against a hardcoded package total: all
+ * 75 bullets that print one across the 107 local reports reproduce exactly.
+ */
+function checkedCounts(count: ProgressCount, printedPct: string | undefined, context: string): ProgressCount {
+  if (printedPct === undefined) return count;
+  if (!(count.total > 0)) throw new Error(`${context}: printed ${printedPct}% against a zero total`);
+  const places = printedPct.includes('.') ? 1 : 0;
+  const derived = roundHalfUp((count.complete / count.total) * 100, places);
+  if (derived !== Number(printedPct)) {
+    throw new Error(`${context}: ${count.complete} of ${count.total} is ${derived}%, but the report prints ${printedPct}%`);
+  }
+  return count;
+}
+
 function packageCounts(
   section: string,
   cp: string,
   fallbackTotal: number,
+  context: string,
 ): ProgressCount | null {
   const prefix = `Construction Package\\s*${cp}\\s*[–—-]`;
   const completeOfTotal = new RegExp(`${prefix}[^\\n]*?([0-9.]+)\\s+of\\s+([0-9.]+)[^\\n]*?complete`, 'i').exec(section);
   if (completeOfTotal) return { complete: Number(completeOfTotal[1]), total: Number(completeOfTotal[2]) };
 
-  const breakdown = new RegExp(`${prefix}[^\\n]*?([0-9.]+)\\s+(?:construction\\s+)?complete(?:d)?[^\\n]*?([0-9.]+)\\s+underway[^\\n]*?([0-9.]+)\\s+not started`, 'i').exec(section);
-  if (breakdown) {
-    const complete = Number(breakdown[1]);
-    return { complete, total: complete + Number(breakdown[2]) + Number(breakdown[3]) };
+  const breakdown = new RegExp(`${prefix}[^\\n]*?(?<complete>[0-9.]+)\\s+(?:construction\\s+)?complete(?:d)?(?:\\s*\\((?<pct>[0-9.]+)%\\))?[^\\n]*?(?<underway>[0-9.]+)\\s+underway[^\\n]*?(?<notstarted>[0-9.]+)\\s+not started`, 'i').exec(section);
+  if (breakdown?.groups) {
+    const complete = Number(breakdown.groups.complete);
+    const total = complete + Number(breakdown.groups.underway) + Number(breakdown.groups.notstarted);
+    // Rounded at construction: 21.1 + 0.1 is 21.200000000000003 in IEEE-754, and the
+    // denominator the report states is 21.2.
+    return checkedCounts({ complete, total: Math.round(total * 10) / 10 }, breakdown.groups.pct, context);
   }
 
   const parenthetical = new RegExp(`${prefix}[^\\n]*?\\(\\s*([0-9.]+)\\s+underway\\s*,\\s*([0-9.]+)\\s+completed?\\s*\\)`, 'i').exec(section);
   if (parenthetical) return { complete: Number(parenthetical[2]), total: fallbackTotal };
-  const allActive = new RegExp(`${prefix}[^\\n]*?([0-9.]+)\\s+(?:construction\\s+)?complete(?:d)?(?:\\s*\\([^)]*\\))?[^\\n]*?([0-9.]+)\\s+underway[^\\n]*?all\\s+(?:structures|guideway(?:\\s+miles)?)\\s+(?:in\\s+active\\s+construction|started)`, 'i').exec(section);
-  if (allActive) return { complete: Number(allActive[1]), total: fallbackTotal };
+  // "All guideway miles started" says not-started is zero, so the breakdown gives the
+  // denominator here exactly as it does above; the package constant is not a source.
+  const allActive = new RegExp(`${prefix}[^\\n]*?(?<complete>[0-9.]+)\\s+(?:construction\\s+)?complete(?:d)?(?:\\s*\\((?<pct>[0-9.]+)%\\))?[^\\n]*?(?<underway>[0-9.]+)\\s+underway[^\\n]*?all\\s+(?:structures|guideway(?:\\s+miles)?)\\s+(?:in\\s+active\\s+construction|started)`, 'i').exec(section);
+  if (allActive?.groups) {
+    const complete = Number(allActive.groups.complete);
+    const total = complete + Number(allActive.groups.underway);
+    return checkedCounts({ complete, total: Math.round(total * 10) / 10 }, allActive.groups.pct, context);
+  }
   return null;
 }
 
@@ -314,8 +356,8 @@ export function parseProgressMetrics(
   const result = {} as Record<CvsrPackage, PackageMetrics>;
   for (const cp of CVSR_PACKAGES) {
     const label = PACKAGE_LABELS[cp];
-    const structures = packageCounts(structuresSection, label, structureTotals[cp]) ?? tableStructures?.[cp];
-    const guideway = packageCounts(guidewaySection, label, guidewayTotals[cp]) ?? tableGuideway?.[cp];
+    const structures = packageCounts(structuresSection, label, structureTotals[cp], `${dataMonth} ${cp} structures`) ?? tableStructures?.[cp];
+    const guideway = packageCounts(guidewaySection, label, guidewayTotals[cp], `${dataMonth} ${cp} guideway`) ?? tableGuideway?.[cp];
     if (!structures) throw new Error(`missing ${cp} structure completed-progress metrics`);
     if (!guideway) throw new Error(`missing ${cp} guideway completed-progress metrics`);
     result[cp] = {

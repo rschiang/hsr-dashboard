@@ -39,6 +39,11 @@ type StructureResponse = {
     geometry?: { x: number; y: number };
   }>;
 };
+type StationResponse = {
+  features: Array<{
+    attributes: { Stat_Name: string; X_Streets: string | null; LAT: number; LONG: number };
+  }>;
+};
 
 type MilepostArtifact = { iosMiles: number[] };
 
@@ -97,6 +102,7 @@ function makeGap(cp: ConstructionPackage, start: number, end: number, index: num
     currentStatus: 'no_data',
     structures: [],
     evidence: [],
+    stationSourceId: 'arcgis_progress',
     sourceId: 'arcgis_progress',
   };
 }
@@ -151,6 +157,7 @@ for (const cp of ['CP1', 'CP2-3'] as const) {
       currentStatus: 'no_data',
       structures: [],
       evidence: [],
+      stationSourceId: 'arcgis_progress',
       sourceId: 'arcgis_progress',
     });
   }
@@ -208,6 +215,7 @@ for (const { attributes } of cp4Features) {
     currentStatus: 'no_data',
     structures: [],
     evidence: [],
+    stationSourceId: 'arcgis_progress',
     sourceId: 'arcgis_progress',
   });
 }
@@ -240,6 +248,7 @@ parsedCp4.push({
   currentStatus: 'no_data',
   structures: [],
   evidence: [],
+  stationSourceId: 'arcgis_progress',
   sourceId: 'arcgis_progress',
 });
 segments.push(...parsedCp4);
@@ -254,6 +263,9 @@ herndonCp1Gap.label = 'Herndon Avenue to Golden State Boulevard realignment — 
 herndonCp1Gap.completion = 0;
 herndonCp1Gap.currentStatus = 'not_started';
 herndonCp1Gap.sourceId = 'cvsr';
+// The two named CVSR rows are what establishes this gap's coverage; no ArcGIS row
+// publishes a station range for it.
+herndonCp1Gap.stationSourceId = 'cvsr';
 herndonCp1Gap.coveringCvsrRows = ['Viaduct 203 at SJR to Herndon Canal', 'Herndon Canal to Swift Ave'];
 
 const centerline = JSON.parse(await readFile('public/data/centerline.geojson', 'utf8')) as Feature<LineString>;
@@ -293,6 +305,60 @@ function iosMileToGeodesicDistance(iosMile: number): number {
   const span = mileposts.iosMiles[high] - mileposts.iosMiles[low];
   const fraction = span === 0 ? 0 : (iosMile - mileposts.iosMiles[low]) / span;
   return cumulative[low] + fraction * (cumulative[high] - cumulative[low]);
+}
+
+// Station marks on the strip axis. The Authority publishes the station sites as
+// points, not as mileposts, so the position along the axis is read by projecting
+// each point onto the committed centerline — TS1 still defines the milepost the
+// projection is read against. `Kings Tulare - East Alt` duplicates `VTH Station`'s
+// coordinates exactly and is deliberately not listed.
+const STATION_MARKS: ReadonlyArray<{ statName: string; label: string }> = [
+  { statName: 'Downtown Merced', label: 'Merced' },
+  { statName: 'Madera Stop', label: 'Madera' },
+  { statName: 'Fresno - Mariposa St.', label: 'Fresno' },
+  { statName: 'VTH Station', label: 'Kings/Tulare' },
+  { statName: 'Bakersfield - F Street', label: 'Bakersfield' },
+];
+
+const stationLayer = JSON.parse(await readFile('data/raw/arcgis/stations.json', 'utf8')) as StationResponse;
+const stations: SegmentsArtifact['stations'] = STATION_MARKS.map(({ statName, label }) => {
+  const matches = stationLayer.features.filter((feature) => feature.attributes.Stat_Name === statName);
+  if (matches.length !== 1) {
+    throw new Error(`Station ${statName} resolved to ${matches.length} features in the published Stations layer`);
+  }
+  const { attributes } = matches[0];
+  // The layer's published LAT/LONG attributes, not its display geometry: the two
+  // differ by up to 0.06 mi, and Merced's display point falls off the north end of
+  // the centerline while its published coordinate lands on it.
+  const snap = nearestPointOnLine(centerline, point([attributes.LONG, attributes.LAT]), { units: 'miles' });
+  const { totalDistance, dist, index } = snap.properties;
+  if (typeof totalDistance !== 'number' || typeof dist !== 'number' || typeof index !== 'number') {
+    throw new Error(`Station ${statName} did not project onto the centerline`);
+  }
+  const iosMile = geodesicDistanceToIosMile(totalDistance);
+  if (!Number.isFinite(iosMile) || iosMile < 0 || iosMile > 175) {
+    throw new Error(`Station ${statName} projects to ios mile ${iosMile}, outside the 0–175 axis`);
+  }
+  if (!(dist <= 0.1)) {
+    throw new Error(`Station ${statName} sits ${dist.toFixed(3)} mi off the centerline, beyond the 0.1 mi bound`);
+  }
+  // The published geometry has multi-mile holes; a point can land on a bridging
+  // chord rather than surveyed vertices, and the reader is told when it does.
+  const chord = index + 1 < cumulative.length ? cumulative[index + 1] - cumulative[index] : 0;
+  return {
+    label,
+    officialName: attributes.Stat_Name,
+    crossStreets: attributes.X_Streets ?? '',
+    iosMile: Math.round(iosMile * 100) / 100,
+    officialMp: formatOfficialMp(iosMile),
+    offsetMi: Math.round(dist * 1000) / 1000,
+    chordMi: Math.round(chord * 100) / 100,
+  };
+});
+for (let index = 1; index < stations.length; index += 1) {
+  if (!(stations[index].iosMile > stations[index - 1].iosMile)) {
+    throw new Error(`Station ${stations[index].officialName} at ios mile ${stations[index].iosMile} does not follow ${stations[index - 1].officialName} at ${stations[index - 1].iosMile}`);
+  }
 }
 
 const metadata = JSON.parse(await readFile('data/raw/arcgis/fetch-metadata.json', 'utf8')) as { fetchedAt: string };
@@ -515,6 +581,7 @@ if (parsedSnapshotsRaw === null) {
         cvsr: observation.completion,
         cvsrMonth: latest.dataMonth!,
         reportFile: observation.reportFile!,
+        reportUrl: observation.reportUrl!,
       });
     }
     segment.completion = observation.completion;
@@ -541,6 +608,7 @@ const artifact: SegmentsArtifact = {
   model: 'Package and extension totals are published contract values; the structure/guideway split and structure type factors are editorial with no published basis',
   calibration,
   ...(crossCheck ? { crossCheck } : {}),
+  stations,
   overlaps,
   segments,
 };

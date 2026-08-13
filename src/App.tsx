@@ -13,7 +13,7 @@ import { buildCvsrSeries, sparklineLabel } from './lib/cvsr-series';
 import { GAP_LABELS, groupCvsrGaps, groupRevisions } from './lib/cvsr-gaps';
 import { formatRailValue, packagePercent, railMetricValues, RAIL_METRICS } from './lib/rail-metrics';
 import { Abbr, type Abbreviation } from './components/Abbr';
-import { SourceLink, SourcesList } from './components/Citation';
+import { ReportLink, SourceLink, SourcesList } from './components/Citation';
 import { NotesList } from './components/Notes';
 import { Legend } from './components/Legend';
 import { type SparklineSeries } from './components/Sparkline';
@@ -216,6 +216,7 @@ function App() {
           </div>
           <StripChart
             segments={data.segments.segments}
+            stations={data.segments.stations}
             statuses={derived.statuses}
             hoveredId={hoveredId}
             selectedId={selectedId}
@@ -232,7 +233,11 @@ function App() {
 
       <section className="below-fold">
         <Legend />
-        <NotesList gaps={groupedCvsrGaps} revisions={groupedRevisions} />
+        <NotesList
+          gaps={groupedCvsrGaps}
+          revisions={groupedRevisions}
+          overlapMiles={data.segments.overlaps.reduce((sum, overlap) => sum + overlap.miles, 0)}
+        />
         <SourcesList />
       </section>
 
@@ -246,9 +251,9 @@ function App() {
   );
 }
 
-function ReportLink({ gap }: { gap: CvsrGap }) {
+function GapReportLink({ gap }: { gap: CvsrGap }) {
   if (!gap.reportUrl) return <SourceLink sourceId="cvsr" />;
-  return <a className="fn-ref" href={gap.reportUrl} target="_blank" rel="noreferrer" title={gap.detail}><sup>↗</sup></a>;
+  return <ReportLink url={gap.reportUrl} title={gap.detail} />;
 }
 
 function SnapshotReportLink({ snapshot }: { snapshot: Snapshot }) {
@@ -333,7 +338,7 @@ function MetricRail({
         label="Track installed"
         value="0"
         unit="mi"
-        chip={<>Upcoming 2026 <SourceLink sourceId="business_plan_2026_schedule" /></>}
+        chip={<>Upcoming 2026 <SourceLink sourceId="bp2026_schedule" /></>}
         series={trackSeries}
         selectedIndex={null}
         ariaLabel={TRACK_ARIA_LABEL}
@@ -368,7 +373,7 @@ function MetricRail({
                   : `Superseded: the Authority restated this value in the ${revision.correctedIn} report. ${revision.detail}`,
               };
             })}
-            status={gap && <><span title={gap.detail}>{GAP_LABELS[gap.cause]}</span> <ReportLink gap={gap} /></>}
+            status={gap && <><span title={gap.detail}>{GAP_LABELS[gap.cause]}</span> <GapReportLink gap={gap} /></>}
             series={metricSeries}
             selectedIndex={selectedIndex}
             ariaLabel={metricSeries.map((entry) => sparklineLabel(metric.label, entry.id, entry.points)).join('; ')}

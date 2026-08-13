@@ -3,7 +3,7 @@ import type { AlignmentStatus, Segment, StructureEvidence } from '../data/types'
 import { STATUS_LABELS } from '../lib/status';
 import { evidenceDateLabel, structureObservationLabel } from '../lib/observation-labels';
 import { Abbr } from './Abbr';
-import { SourceLink } from './Citation';
+import { ReportLink, SourceLink } from './Citation';
 
 /**
  * The strip tooltip is `pointer-events: none`, so anchors inside it are dead for
@@ -21,7 +21,7 @@ export function SegmentDetail({
   segment: Segment;
   status: AlignmentStatus | undefined;
   evidence: StructureEvidence | undefined;
-  disagreement?: { arcgis: number; cvsr: number; cvsrMonth: string; reportFile: string };
+  disagreement?: { arcgis: number; cvsr: number; cvsrMonth: string; reportFile: string; reportUrl: string };
   date: string;
   onClear: () => void;
 }) {
@@ -38,7 +38,7 @@ export function SegmentDetail({
         <dt>Station</dt>
         <dd>
           {segment.stationStart?.toLocaleString() ?? 'not published'}–{segment.stationEnd?.toLocaleString() ?? 'not published'} ft
-          {' '}<SourceLink sourceId={segment.sourceId} />
+          {' '}<SourceLink sourceId={segment.stationSourceId} />
         </dd>
 
         <dt>Milepost</dt>
@@ -52,17 +52,23 @@ export function SegmentDetail({
             <dt>Earthwork · ArcGIS</dt>
             <dd>{Math.round(disagreement.arcgis * 100)}% · layer updated {SOURCES.arcgis_progress.date} <SourceLink sourceId="arcgis_progress" /></dd>
             <dt>Earthwork · CVSR</dt>
-            <dd>{Math.round(disagreement.cvsr * 100)}% · {disagreement.cvsrMonth} data <SourceLink sourceId="cvsr" /></dd>
+            <dd>
+              {Math.round(disagreement.cvsr * 100)}% · {disagreement.cvsrMonth} data{' '}
+              <ReportLink url={disagreement.reportUrl} title={disagreement.reportFile} />
+            </dd>
           </>
         )}
 
         <dt>Difficulty share</dt>
-        <dd>{(segment.weightShare * 100).toFixed(2)}% <SourceLink sourceId="business_plan_2026" /></dd>
+        <dd>{(segment.weightShare * 100).toFixed(2)}% <SourceLink sourceId="bp2026_costs" /></dd>
 
         {evidence && (
           <>
             <dt>Evidence</dt>
             <dd>
+              {/* A row whose label differs from the segment reads as a claim about the whole
+                  segment unless the row is named. The name stays outside the quotation marks. */}
+              {evidence.label === segment.label ? '' : `${evidence.label} — `}
               “{evidence.quote}” — {evidenceDateLabel(evidence)}.{' '}
               <a href={evidence.sourceUrl} target="_blank" rel="noreferrer">{evidence.sourceTitle}</a>
             </dd>

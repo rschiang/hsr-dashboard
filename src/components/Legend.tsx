@@ -13,9 +13,17 @@ const VISIBLE_STATUSES: AlignmentStatus[] = [
   'systems_installed',
 ];
 
-const STATUS_CAPTIONS: Partial<Record<AlignmentStatus, string>> = {
-  structure_complete: 'All concrete work complete; ready for punchlist and certification.',
-  guideway_complete: 'Earthworks complete with rough grading.',
+// Verbatim from the July 2026 report: the structure sentence on printed p. 18, the
+// guideway sentence on printed p. 7. Each cites the page it is quoted from.
+const STATUS_CAPTIONS: Partial<Record<AlignmentStatus, { text: string; page: string }>> = {
+  structure_complete: {
+    text: 'All concrete work is complete, ready for punchlist and certification.',
+    page: 'p. 18',
+  },
+  guideway_complete: {
+    text: 'Earthworks complete with rough grading.',
+    page: 'p. 7',
+  },
 };
 
 export function Legend() {
@@ -31,7 +39,9 @@ export function Legend() {
               <span className="legend-copy">
                 <span className="legend-name">{STATUS_LABELS[status]}</span>
                 {caption && (
-                  <span className="legend-caption">{caption} <SourceLink sourceId="cvsr" /></span>
+                  <span className="legend-caption">
+                    {caption.text} <SourceLink sourceId="cvsr_2026_07" page={caption.page} />
+                  </span>
                 )}
               </span>
             </li>

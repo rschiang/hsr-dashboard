@@ -71,6 +71,9 @@ export type Segment = {
   structures: NamedStructure[];
   evidence: StructureEvidence[];
   coveringCvsrRows?: string[];
+  /** Who published the station range. Never overwritten by a completion observation. */
+  stationSourceId: SourceId;
+  /** Who published the earthwork completion currently on the segment. */
   sourceId: SourceId;
 };
 
@@ -102,8 +105,23 @@ export type SegmentsArtifact = {
       cvsr: number;
       cvsrMonth: string;
       reportFile: string;
+      reportUrl: string;
     }>;
   };
+  stations: Array<{
+    /** Display label on the strip axis. */
+    label: string;
+    /** ArcGIS `Stat_Name`, verbatim. */
+    officialName: string;
+    /** ArcGIS `X_Streets`, verbatim; empty string when the layer leaves it blank. */
+    crossStreets: string;
+    iosMile: number;
+    officialMp: string;
+    /** Perpendicular distance from the published point to the centerline, miles. */
+    offsetMi: number;
+    /** Length of the centerline chord the point projects onto, miles. */
+    chordMi: number;
+  }>;
   overlaps: Array<{ guidewayId: string; structureId: string; miles: number }>;
   segments: Segment[];
 };
@@ -232,6 +250,7 @@ export type CvsrInventory = {
     packages: Array<'CP1' | 'CP2-3' | 'CP4'>;
     correctedIn: string;
     reportFile: string;
+    reportUrl?: string;
     detail: string;
   }>;
   /** Local report filenames with no byte-verified direct PDF URL. */

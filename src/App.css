@@ -232,6 +232,8 @@ abbr[title] { text-decoration: underline dotted; text-decoration-thickness: from
 .sources-list li a { display: block; color: var(--ink); font-weight: 750; text-decoration: none; }
 .sources-list li a:hover { text-decoration: underline; }
 .sources-list li span { display: block; }
+.sources-list .source-locators { list-style-type: lower-alpha; margin: var(--space-1) 0 0; }
+.sources-list .source-locators li:last-child { margin-bottom: 0; }
 
 .page-footer { width: 100%; max-width: var(--content-max); margin: 0 auto; padding: 0 var(--page-gutter) var(--space-16); color: var(--faint); font-size: 0.71875rem; line-height: 1.45; }
 .page-footer a { color: var(--muted); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }

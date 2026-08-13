@@ -56,6 +56,8 @@ type BuildCvsrInventoryInput = {
   coverageEnd: string;
   /** Local CVSR candidate filenames with no byte-verified direct PDF URL. */
   unresolvedReportUrls?: readonly string[];
+  /** Byte-verified direct PDF URLs by filename, as written to `report-urls.json`. */
+  reportUrls?: Readonly<Record<string, { url: string }>>;
 };
 
 function monthRange(start: string, end: string): string[] {
@@ -80,6 +82,8 @@ export type ReviewedParcelOmission = {
   packages: readonly CvsrPackage[];
   cause: Extract<CvsrGapCause, 'related_measure_only' | 'source_not_reported' | 'total_not_reported'>;
   detail: string;
+  /** The report the detail names, when one report carries the recovered figures. */
+  reportUrl?: string;
 };
 
 export const PARCEL_OMISSIONS: readonly ReviewedParcelOmission[] = [
@@ -94,6 +98,7 @@ export const PARCEL_OMISSIONS: readonly ReviewedParcelOmission[] = [
     packages: [...CVSR_PACKAGES],
     cause: 'total_not_reported',
     detail: 'Cumulative parcels delivered to the design-builder for January 2020 are recovered from the April 2020 report (data through February 2020), which publishes them only as chart images: 1,498 program total on page 13, CP 1 785 on page 25, CP 2-3 557 on page 34, CP 4 156 on page 43. That report publishes no January total-needed count — its 1,066 / 1,011 / 253 figures are a March 9, 2020 count — so no denominator is recorded for this month.',
+    reportUrl: 'https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_042120_FA_Central_Valley_Status_Report.pdf',
   },
 ];
 
@@ -112,6 +117,7 @@ export function buildCvsrInventory({
   coverageStart,
   coverageEnd,
   unresolvedReportUrls = [],
+  reportUrls = {},
 }: BuildCvsrInventoryInput): CvsrInventory {
   const expectedMonths = monthRange(coverageStart, coverageEnd);
   const availableMonths = snapshots.map((snapshot) => snapshot.dataMonth);
@@ -184,6 +190,7 @@ export function buildCvsrInventory({
         packages: [...entry.packages],
         cause: entry.cause,
         detail: entry.detail,
+        ...(entry.reportUrl ? { reportUrl: entry.reportUrl } : {}),
       });
     }
   }
@@ -263,6 +270,7 @@ export function buildCvsrInventory({
       packages: [...entry.packages],
       correctedIn: entry.correctedIn,
       reportFile: entry.reportFile,
+      ...(reportUrls[entry.reportFile] ? { reportUrl: reportUrls[entry.reportFile].url } : {}),
       detail: entry.detail,
     })))
     .sort((a, b) => a.month.localeCompare(b.month) || a.metric.localeCompare(b.metric));

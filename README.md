@@ -21,7 +21,7 @@ A date scrubber replays the available history. The strip can use either physical
 
 - Construction phase by alignment segment: not started, preconstruction, under construction, structure complete, guideway complete, track laid, systems installed, or no data.
 - Official IOS distance and subdivision mileposts (`C`, `S`, and `D`).
-- Construction-package boundaries, stations, named structures, station ranges, earthwork completion, dated structure evidence, and source links.
+- Construction-package boundaries, named structures, station ranges, earthwork completion, dated structure evidence, and source links; the five station marks are derived from the Authority’s published station points by projection onto the TS1-fitted alignment axis.
 - Package-level structures, guideway miles, parcel acquisition, delivery to the design-builder, railroad parcel acquisition, and utility relocations reported in historical CVSR PDFs.
 - Distance-proportional and difficulty-proportional strip widths.
 - Linked hover and selection between the strip chart and map.
@@ -51,7 +51,7 @@ Reviewed dated structure claims live in [`src/data/structure-evidence.ts`](src/d
 
 | Tier | Meaning | Resolution |
 |---|---|---|
-| 1 | Observed metrics parsed from monthly Central Valley Status Reports | Package metrics for all 86 months; per-segment observations for the two reports that publish row tables |
+| 1 | Observed metrics parsed from monthly Central Valley Status Reports | Package metrics for all 87 months; per-segment observations for three reports: June 2026 (March 2026 data, 72 rows), June 24, 2026 (April 2026 data, 85 rows), and July 2026 (May 2026 data, 85 rows) |
 | 2 | One BuildHSR ArcGIS poll: what the layers returned at a single recorded instant | Per segment, applied to the last scrubber tick only |
 
 **CVSR is the replay spine.** This is a ten-year program and monthly granularity sits comfortably against it. The status reports are the stable record: a published data month, a fixed PDF that can be re-read years later, and a correction trail when the Authority restates a figure. ArcGIS is realtime and therefore volatile — it can regress or blank out between reads, and none of it is archived. Tier 2 overlays the last tick during the two to three months before a report lands; once a report covering that month is published the poll is superseded and dropped, and tier 1 controls.
@@ -123,7 +123,7 @@ npm run fetch        # rebuild public/data/history.json
 
 The parser keys snapshots by the report's **data month**, not its publication month, preserves changing denominators, and maps counts by semantic table labels rather than fixed column positions. It exits nonzero after writing diagnostics if a present report or required published metric cannot be parsed.
 
-`data/raw/cvsr/parsed-snapshots.json` and `public/data/history.json` carry an explicit inventory from March 2019 through April 2026. It distinguishes reports not downloaded, reports not located, metrics the source did not publish, and parser failures. Missing months are not filled from later or earlier reports; the dashboard labels the gap and links the exact report when known.
+`data/raw/cvsr/parsed-snapshots.json` and `public/data/history.json` carry an explicit inventory from March 2019 through May 2026. It distinguishes reports not downloaded, reports not located, metrics the source did not publish, and parser failures. Missing months are not filled from later or earlier reports; the dashboard labels the gap and links the exact report when known.
 
 ## Validation
 

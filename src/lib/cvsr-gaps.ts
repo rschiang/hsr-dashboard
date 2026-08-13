@@ -8,6 +8,8 @@ export type RevisionGroup = {
   month: string;
   endMonth: string;
   correctedIn: string;
+  reportFile: string;
+  reportUrl?: string;
   detail: string;
 };
 
@@ -55,6 +57,8 @@ export function groupRevisions(entries: CvsrInventory['revisions']): RevisionGro
         month: entry.month,
         endMonth: entry.month,
         correctedIn: entry.correctedIn,
+        reportFile: entry.reportFile,
+        ...(entry.reportUrl ? { reportUrl: entry.reportUrl } : {}),
         detail: entry.detail,
       });
     }
