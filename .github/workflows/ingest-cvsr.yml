@@ -1,0 +1,231 @@
+name: Check CVSR publication
+
+# Weekdays 09:10 PT: two ~20 KB JSON requests, so daily costs less than the weekly ArcGIS
+# job, and daily retries are what turn an intermittently blocked source into reliable
+# detection. Committee meetings bound the *expected* drops but interim reports appear
+# unannounced, so no calendar is encoded here: a fixed schedule would miss exactly the
+# unpredictable case. All four recent uploads landed on weekdays.
+on:
+  schedule:
+    - cron: '10 9 * * 1-5'
+      timezone: "America/Los_Angeles"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+  id-token: write
+
+# Shared with refresh-arcgis.yml so the two never race the same push.
+concurrency:
+  group: data-refresh
+  cancel-in-progress: false
+
+env:
+  INDEX_URL: https://hsr.ca.gov/about/board-of-directors/finance-audit-committee/
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.gate.outputs.changed == 'true' }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+
+      # A closed "ingest failing for <file>" issue is the maintainer's acknowledgement
+      # that a report is deliberately not ingested, so the run stops rediscovering it.
+      - name: Build the skip list from acknowledged reports
+        id: skip
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          SKIP="$(gh issue list --state closed --limit 200 --json title \
+            | jq -r '[.[].title
+                      | select(test("^CI: CVSR ingest failing for .+$"))
+                      | sub("^CI: CVSR ingest failing for "; "")]
+                     | join(",")')"
+          echo "skip=$SKIP" >> "$GITHUB_OUTPUT"
+          if [ -n "$SKIP" ]; then
+            echo "Acknowledged reports held out of discovery: $SKIP"
+          fi
+
+      # pipefail matters: without it tee's exit code masks a script failure.
+      - name: Discover, download and merge
+        env:
+          HSR_CVSR_SKIP: ${{ steps.skip.outputs.skip }}
+        run: |
+          set -o pipefail
+          npm run ingest:cvsr 2>&1 | tee /tmp/ingest.log
+
+      # MANIFEST.md is deliberately not regenerated here: writeManifest derives each
+      # report's downloaded/missing state from a readdir of the local corpus, so in CI it
+      # would relabel every reviewed report as missing. It stays a maintainer action.
+      - name: Gate on the tracked CVSR artifacts
+        id: gate
+        run: |
+          if git diff --quiet -- data/raw/cvsr/parsed-snapshots.json data/raw/cvsr/report-urls.json; then
+            echo "No new CVSR observation"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Rebuilds public/data from the tracked raw ArcGIS layers and the merged snapshots;
+      # no PDFs needed.
+      - name: Rebuild the published artifacts
+        if: steps.gate.outputs.changed == 'true'
+        run: npm run fetch
+
+      - name: Validate
+        if: steps.gate.outputs.changed == 'true'
+        run: |
+          npm run lint
+          npm test
+          npm run build
+
+      - name: Commit the ingested report
+        if: steps.gate.outputs.changed == 'true'
+        run: |
+          MONTHS="$(sed -n 's/^cvsr-ingested: \([0-9][0-9-]*\) .*/\1/p' /tmp/ingest.log | paste -sd',' - | sed 's/,/, /g')"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/raw/cvsr/parsed-snapshots.json data/raw/cvsr/report-urls.json public/data data/raw/arcgis
+          git commit -m "data: ingest CVSR report for $MONTHS"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"
+
+      # The PDF cannot be committed (data/raw/cvsr/.gitignore is *.pdf, and the corpus is
+      # 107 files at 1.5-3 MB), so this artifact plus the registry's url, bytes and
+      # prefixSha256 is the retention and provenance path for the maintainer's archive.
+      - name: Retain the downloaded report
+        if: steps.gate.outputs.changed == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: cvsr-report
+          path: data/raw/cvsr/*.pdf
+          retention-days: 90
+
+      # Exact-title list + jq rather than --search, whose index lags. A closed issue means
+      # the maintainer verified the month is genuinely absent, so the run stays silent.
+      - name: Open issues for overdue data months
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          MONTHS="$(sed -n 's/^cvsr-overdue: \([0-9][0-9-]*\)$/\1/p' /tmp/ingest.log)"
+          if [ -z "$MONTHS" ]; then
+            echo "No overdue data months"
+            exit 0
+          fi
+          NEWEST="$(jq -r '.snapshots[-1].dataMonth' data/raw/cvsr/parsed-snapshots.json)"
+          EXISTING="$(gh issue list --state all --limit 200 --json number,state,title)"
+          for MONTH in $MONTHS; do
+            TITLE="CVSR data month $MONTH not published"
+            if printf '%s' "$EXISTING" | jq -e --arg title "$TITLE" 'any(.[]; .title == $title)' > /dev/null; then
+              echo "$TITLE: an issue already exists in some state; staying silent"
+              continue
+            fi
+            gh issue create --title "$TITLE" --body "$(cat <<BODY
+          No Central Valley Status Report covering data month \`$MONTH\` has been published.
+
+          The newest ingested data month is \`$NEWEST\`. Monthly reports are expected with a
+          ~2-month publication lag, so this month is more than four months overdue.
+
+          - Committee index: $INDEX_URL
+          - Detecting run: $RUN_URL
+
+          Close this issue to ratify a genuinely skipped month; the check will then stay
+          silent about it.
+          BODY
+          )"
+          done
+
+      # Six months of unexplained, unacknowledged absence is structural. The run then
+      # stays red every weekday until a report lands or the maintainer closes those
+      # issues to ratify the absence; that persistence is the signal.
+      - name: Escalate a sustained absence
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          MONTHS="$(sed -n 's/^cvsr-overdue: \([0-9][0-9-]*\)$/\1/p' /tmp/ingest.log)"
+          COUNT="$(printf '%s\n' "$MONTHS" | grep -c . || true)"
+          if [ "$COUNT" -lt 6 ]; then
+            exit 0
+          fi
+          OPEN="$(gh issue list --state open --limit 200 --json title)"
+          for MONTH in $MONTHS; do
+            if printf '%s' "$OPEN" | jq -e --arg title "CVSR data month $MONTH not published" 'any(.[]; .title == $title)' > /dev/null; then
+              echo 'cvsr: overdue escalation' >> /tmp/ingest.log
+              echo "::error::$COUNT CVSR data months are unpublished and unacknowledged"
+              exit 1
+            fi
+          done
+
+      # A final step of this job so it can read /tmp/ingest.log, which captured stderr.
+      # The per-month issues above are already the report for an escalation, so a generic
+      # "ingest failing" issue on top of them would be the duplicate noise this design
+      # exists to avoid.
+      - name: Report a failing ingest
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if grep -qx 'cvsr: overdue escalation' /tmp/ingest.log 2> /dev/null; then
+            echo "Overdue escalation is already reported per month; creating nothing"
+            exit 0
+          fi
+          FILE="$(grep -o '[A-Za-z0-9._-]*\.pdf' /tmp/ingest.log | tail -1 || true)"
+          URL="$(grep -o 'https://[^ ]*\.pdf' /tmp/ingest.log | tail -1 || true)"
+          if [ -n "$FILE" ]; then
+            TITLE="CI: CVSR ingest failing for $FILE"
+          else
+            TITLE="CI: CVSR ingest failing"
+          fi
+          MATCH="$(gh issue list --state all --limit 200 --json number,state,title \
+            | jq -r --arg title "$TITLE" '[.[] | select(.title == $title) | "\(.number) \(.state)"] | first // empty')"
+          if [ -n "$MATCH" ]; then
+            set -- $MATCH
+            if [ "$2" = "OPEN" ]; then
+              gh issue comment "$1" --body "Failed again: $RUN_URL"
+            else
+              echo "Closed issue #$1 records the decision to skip ${FILE:-this report}; staying silent"
+            fi
+            exit 0
+          fi
+          gh issue create --title "$TITLE" --body "$(cat <<BODY
+          The scheduled CVSR publication check failed: $RUN_URL
+
+          - Report: \`${FILE:-unknown}\`
+          - URL: ${URL:-unknown}
+
+          Script output:
+
+          \`\`\`
+          $(tail -30 /tmp/ingest.log)
+          \`\`\`
+
+          Manual runbook, run beside the local PDF corpus:
+
+          \`\`\`bash
+          npm run fetch:cvsr   # produce/update the download manifest
+          # Place downloaded PDFs in data/raw/cvsr/
+          npm run parse:cvsr   # parse local PDFs; performs no network requests
+          npm run fetch        # rebuild public/data/history.json
+          \`\`\`
+
+          Closing this issue without ingesting the report holds it out of every future
+          discovery run.
+          BODY
+          )"
+
+  deploy:
+    needs: ingest
+    if: needs.ingest.outputs.changed == 'true'
+    uses: ./.github/workflows/deploy.yml

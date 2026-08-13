@@ -1,0 +1,145 @@
+name: Refresh BuildHSR ArcGIS data
+
+# Tuesday 09:40 PT: the layers are staff-edited in Pacific business hours, and weekly is
+# the useful ceiling because build-history.ts stores exactly one tier-2 poll rebuilt from
+# scratch each run, so a denser cadence adds no rows. Mid-hour and timezone-pinned
+# because GitHub delays schedules at the start of every hour, and an IANA timezone keeps
+# the intent across DST.
+on:
+  schedule:
+    - cron: '40 9 * * 2'
+      timezone: "America/Los_Angeles"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: data-refresh
+  cancel-in-progress: false
+
+env:
+  # Four unreachable layers for two months is structural, not weather.
+  STALE_FAIL_AFTER_DAYS: 60
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.gate.outputs.changed == 'true' }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Poll the ArcGIS layers
+        run: npx tsx scripts/fetch-arcgis.ts
+
+      # A stale poll observed nothing, so it must not publish: fetch-arcgis.ts holds
+      # fetchedAt at the committed value, and the run ends here without a commit.
+      - name: Detect a stale poll
+        id: stale
+        run: |
+          if ! jq -e '[.sources[].stale] | any' data/raw/arcgis/fetch-metadata.json > /dev/null; then
+            echo "stale=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          FETCHED_AT="$(jq -r '.fetchedAt' data/raw/arcgis/fetch-metadata.json)"
+          AGE_DAYS=$(( ( $(date -u +%s) - $(date -u -d "$FETCHED_AT" +%s) ) / 86400 ))
+          {
+            echo "### BuildHSR ArcGIS poll served from the committed cache"
+            echo
+            jq -r '.sources[] | select(.stale) | "- `\(.name)` unreachable"' data/raw/arcgis/fetch-metadata.json
+            echo
+            echo "Last observed upstream response: \`$FETCHED_AT\` ($AGE_DAYS days ago)."
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$AGE_DAYS" -gt "$STALE_FAIL_AFTER_DAYS" ]; then
+            echo "::error::ArcGIS layers unreachable since $FETCHED_AT ($AGE_DAYS days > $STALE_FAIL_AFTER_DAYS)"
+            exit 1
+          fi
+          git restore .
+          echo "stale=true" >> "$GITHUB_OUTPUT"
+
+      # Gate on the raw payloads, not public/data: fetchedAt propagates into
+      # segments.json:generatedAt and history.json:polledAt, so a public/data diff is
+      # never empty even when upstream is unchanged.
+      - name: Gate on the raw payloads
+        id: gate
+        if: steps.stale.outputs.stale == 'false'
+        run: |
+          if git diff --quiet -- data/raw/arcgis/alignment.json data/raw/arcgis/progress.json data/raw/arcgis/structures.json data/raw/arcgis/stations.json; then
+            echo "Upstream layers unchanged; discarding the timestamp-only diff"
+            git restore .
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Rebuild the published artifacts
+        if: steps.gate.outputs.changed == 'true'
+        run: |
+          npx tsx scripts/build-centerline.ts
+          npx tsx scripts/build-segments.ts
+          npx tsx scripts/build-history.ts
+
+      - name: Validate
+        if: steps.gate.outputs.changed == 'true'
+        run: |
+          npm run lint
+          npm test
+          npm run build
+
+      # The raw layers are tracked precisely so the committed snapshot stays
+      # reproducible, so they are committed together with what they produced.
+      - name: Commit the observed snapshot
+        if: steps.gate.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/raw/arcgis public/data
+          git commit -m "data: refresh BuildHSR ArcGIS snapshot"
+          git pull --rebase origin "$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"
+
+      # A final step of this job rather than a separate one: it inherits the checkout, so
+      # gh resolves the repository from the git remote with no GH_REPO override.
+      # GITHUB_TOKEN-authored issues trigger no workflows, so there is no recursion risk.
+      - name: Report a failing refresh
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TITLE: 'CI: ArcGIS refresh failing'
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          NUMBER="$(gh issue list --state open --limit 200 --json number,title \
+            | jq -r --arg title "$TITLE" '[.[] | select(.title == $title) | .number] | first // empty')"
+          if [ -n "$NUMBER" ]; then
+            gh issue comment "$NUMBER" --body "The scheduled ArcGIS refresh failed again: $RUN_URL"
+            exit 0
+          fi
+          gh issue create --title "$TITLE" --body "$(cat <<BODY
+          The scheduled BuildHSR ArcGIS refresh failed: $RUN_URL
+
+          Either a layer returned an unusable payload with no valid cache, a corridor
+          invariant in the build scripts rejected the new data, or the layers have been
+          unreachable for more than $STALE_FAIL_AFTER_DAYS days.
+
+          To reproduce locally:
+
+          \`\`\`bash
+          npm ci
+          npm run fetch
+          npm run lint && npm test && npm run build
+          \`\`\`
+          BODY
+          )"
+
+  deploy:
+    needs: refresh
+    if: needs.refresh.outputs.changed == 'true'
+    uses: ./.github/workflows/deploy.yml

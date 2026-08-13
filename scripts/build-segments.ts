@@ -603,6 +603,22 @@ if (parsedSnapshotsRaw === null) {
   console.log(`cross-check vs CVSR ${latest.dataMonth}: 35/35 structures, ${matchedGuideways} guideways, ${unmatchedCvsrRows.length} unmatched rows, ${disagreements.length} disagreements`);
 }
 
+// Corridor invariants run before the first artifact write: a run that ultimately throws
+// must leave the previously published public/data artifacts intact.
+const cp1Gaps = segments.filter((segment) => segment.cp === 'CP1' && segment.kind === 'no-data');
+const largeHole = cp1Gaps.find((segment) => segment.iosMileEnd - segment.iosMileStart > 1.5);
+if (!largeHole) throw new Error('CP1 expected ~2-mile no-data hole was not emitted');
+const inputGeometryMiles = progress.features.reduce(
+  (sum, feature) => sum + feature.geometry.paths.reduce(
+    (pathSum, path) => path.length < 2 ? pathSum : pathSum + length(lineString(path), { units: 'miles' }),
+    0,
+  ),
+  0,
+);
+if (!(inputGeometryMiles > 118 && inputGeometryMiles < 119.5)) {
+  throw new Error(`Input guideway geometry ${inputGeometryMiles.toFixed(2)} mi outside 118–119.5`);
+}
+
 const artifact: SegmentsArtifact = {
   generatedAt: metadata.fetchedAt,
   model: 'Package and extension totals are published contract values; the structure/guideway split and structure type factors are editorial with no published basis',
@@ -630,9 +646,6 @@ const geojson = {
 };
 await writeFile('public/data/segments.geojson', `${JSON.stringify(geojson)}\n`);
 
-const cp1Gaps = segments.filter((segment) => segment.cp === 'CP1' && segment.kind === 'no-data');
-const largeHole = cp1Gaps.find((segment) => segment.iosMileEnd - segment.iosMileStart > 1.5);
-if (!largeHole) throw new Error('CP1 expected ~2-mile no-data hole was not emitted');
 const coveredMiles = (['CP1', 'CP2-3', 'CP4'] as const).reduce((sum, cp) => {
   const cpSegments = segments.filter((segment) => segment.cp === cp && segment.kind !== 'no-data');
   const intervals = cpSegments.map((segment) => [segment.iosMileStart, segment.iosMileEnd] as [number, number]).sort((a, b) => a[0] - b[0]);
@@ -648,16 +661,6 @@ const coveredMiles = (['CP1', 'CP2-3', 'CP4'] as const).reduce((sum, cp) => {
   }
   return sum + cpTotal + end - cursor;
 }, 0);
-const inputGeometryMiles = progress.features.reduce(
-  (sum, feature) => sum + feature.geometry.paths.reduce(
-    (pathSum, path) => path.length < 2 ? pathSum : pathSum + length(lineString(path), { units: 'miles' }),
-    0,
-  ),
-  0,
-);
-if (!(inputGeometryMiles > 118 && inputGeometryMiles < 119.5)) {
-  throw new Error(`Input guideway geometry ${inputGeometryMiles.toFixed(2)} mi outside 118–119.5`);
-}
 
 const completeByPackage: Partial<Record<ConstructionPackage, number>> = {};
 for (const cp of ['CP1', 'CP2-3', 'CP4'] as const) {

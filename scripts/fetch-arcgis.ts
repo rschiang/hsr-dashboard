@@ -3,6 +3,7 @@ import { dirname } from 'node:path';
 
 const ROOT = 'https://services3.arcgis.com/rGGp0aiv6Rf11t2H/arcgis/rest/services';
 const USER_AGENT = 'hsr-dashboard/1.0 (public-data-pipeline)';
+const METADATA = 'data/raw/arcgis/fetch-metadata.json';
 
 type Target = { name: string; path: string; params: Record<string, string> };
 
@@ -54,7 +55,8 @@ const targets: Target[] = [
   },
 ];
 
-async function fetchTarget(target: Target): Promise<void> {
+/** Returns `true` when the payload came from the network, `false` when the committed cache was reused. */
+async function fetchTarget(target: Target): Promise<boolean> {
   const url = new URL(`${ROOT}/${target.path}`);
   for (const [key, value] of Object.entries(target.params)) url.searchParams.set(key, value);
   const output = `data/raw/arcgis/${target.name}.json`;
@@ -68,19 +70,52 @@ async function fetchTarget(target: Target): Promise<void> {
     await mkdir(dirname(output), { recursive: true });
     await writeFile(output, `${JSON.stringify(body)}\n`);
     console.log(`${target.name}: fetched ${body.features.length} features → ${output}`);
+    return true;
   } catch (error) {
     try {
       const cached = JSON.parse(await readFile(output, 'utf8')) as { features?: unknown[] };
       if (!Array.isArray(cached.features)) throw new Error('invalid cache');
       console.warn(`${target.name}: network failed; using ${cached.features.length}-feature cache (${String(error)})`);
+      return false;
     } catch {
       throw new Error(`${target.name}: fetch failed and no valid cache exists: ${String(error)}`);
     }
   }
 }
 
-for (const target of targets) await fetchTarget(target);
+const fetched: boolean[] = [];
+for (const target of targets) fetched.push(await fetchTarget(target));
+const anyStale = fetched.includes(false);
+
+// A poll that observed nothing must not claim freshness: `fetchedAt` propagates into
+// `segments.json:generatedAt` and reaches users as "Last updated", so when any target fell
+// back to its committed cache the recorded timestamp is carried forward unchanged.
+let fetchedAt = new Date().toISOString();
+if (anyStale) {
+  try {
+    const previous = JSON.parse(await readFile(METADATA, 'utf8')) as { fetchedAt?: unknown };
+    if (typeof previous.fetchedAt === 'string') fetchedAt = previous.fetchedAt;
+  } catch {
+    // Absent or unparseable metadata leaves the current timestamp in place.
+  }
+}
 await writeFile(
-  'data/raw/arcgis/fetch-metadata.json',
-  `${JSON.stringify({ fetchedAt: new Date().toISOString(), sources: targets.map(({ name, path }) => ({ name, url: `${ROOT}/${path}` })) }, null, 2)}\n`,
+  METADATA,
+  `${JSON.stringify(
+    {
+      fetchedAt,
+      sources: targets.map(({ name, path }, index) => ({
+        name,
+        url: `${ROOT}/${path}`,
+        stale: !fetched[index],
+      })),
+    },
+    null,
+    2,
+  )}\n`,
 );
+if (anyStale) {
+  console.warn(
+    `arcgis: ${fetched.filter((ok) => !ok).length} of ${targets.length} sources served from cache; fetchedAt held at ${fetchedAt}`,
+  );
+}

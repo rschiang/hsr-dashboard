@@ -32,6 +32,7 @@ import {
   type ReviewedCvsrReport,
   type ReviewedCvsrRevision,
 } from './lib/cvsr-inventory';
+import { assertPdfResponse } from './lib/cvsr-download';
 
 const DIRECTORY = 'data/raw/cvsr';
 const MANIFEST = `${DIRECTORY}/MANIFEST.md`;
@@ -43,12 +44,23 @@ const CVSR_CANDIDATE = /CVSR|Central[_ -]Valley[_ -]Status[_ -](?:Report|Update)
 const PREFIX_BYTES = 262144;
 const USER_AGENT = 'hsr-dashboard/1.0 (+https://github.com/rschiang/hsr-dashboard)';
 const REQUEST_INTERVAL_MS = 1000;
+/** How far back `--ingest` looks for a new report. Fixed, so no bookkeeping can drift. */
+const DISCOVERY_WINDOW_DAYS = 180;
+/** The observed data-to-publication lag is ~2 months, so four leaves a month of slack. */
+const EXPECTED_LAG_MONTHS = 4;
+const MEDIA_API = 'https://hsr.ca.gov/wp-json/wp/v2/media';
+/** `CVSR` matches report titles; the phrase catches `FA-Central-Valley-Status-Report-*`. */
+const MEDIA_SEARCH_TERMS = ['CVSR', 'Central Valley Status Report'] as const;
+/** Decks, executive summaries and remediation re-postings are not the monthly report. */
+const VARIANT_REPORT = /Executive[_ -]Summary|PRESENTATION|PPT|with[_ -]Flash|Remediation/i;
 
 /** A direct hsr.ca.gov PDF URL proven to serve the exact local file. */
 type ResolvedReportUrl = {
   url: string;
   bytes: number;
   prefixSha256: string;
+  /** Upload date reported by the media API, recorded as provenance only. */
+  publishedAt?: string;
   verifiedAt: string;
 };
 type ReportUrlRegistry = Record<string, ResolvedReportUrl>;
@@ -621,9 +633,7 @@ async function parsePdf(
   };
 }
 
-async function parseLocalPdfs(): Promise<void> {
-  await mkdir(DIRECTORY, { recursive: true });
-  const reportUrls = await loadReportUrls();
+async function loadGuidewayLabels(): Promise<Map<string, string>> {
   const arcgis = JSON.parse(await readFile('data/raw/arcgis/progress.json', 'utf8')) as {
     features: Array<{ attributes: { OBJECTID: number; Section: string; Limits: string | null; StructureType: string | null } }>;
   };
@@ -634,6 +644,51 @@ async function parseLocalPdfs(): Promise<void> {
     if (guidewayByLabel.has(label)) throw new Error(`Duplicate ArcGIS guideway label: ${label}`);
     guidewayByLabel.set(label, `${attributes.Section}:${attributes.OBJECTID}`);
   }
+  return guidewayByLabel;
+}
+
+/**
+ * Final-over-draft precedence between two reports claiming the same data month. A
+ * candidate replaces the incumbent only when it publishes different values *and* scores
+ * higher, so a re-posting never silently rewrites a retained snapshot and a draft never
+ * displaces a final.
+ */
+function preferSnapshot(
+  existing: Snapshot,
+  candidate: Snapshot,
+  candidateFile: string,
+): { winner: Snapshot; loser: Snapshot; identical: boolean } {
+  const existingFile = existing.reportFile?.toLowerCase() ?? '';
+  const candidateLower = candidateFile.toLowerCase();
+  const existingScore = (existingFile.includes('draft') ? -10 : 0) + (existingFile.includes('final') ? 2 : 0);
+  const candidateScore = (candidateLower.includes('draft') ? -10 : 0) + (candidateLower.includes('final') ? 2 : 0);
+  const identical =
+    JSON.stringify({ perPackage: existing.perPackage, program: existing.program })
+    === JSON.stringify({ perPackage: candidate.perPackage, program: candidate.program });
+  return !identical && candidateScore > existingScore
+    ? { winner: candidate, loser: existing, identical }
+    : { winner: existing, loser: candidate, identical };
+}
+
+/**
+ * The corpus filenames a run can know without reading the directory: every parsed
+ * snapshot's report, every byte-verified registry entry, every reviewed report, and the
+ * reviewed duplicate the Authority overwrote. For the committed artifact this union
+ * equals the local corpus exactly, which is what lets `--ingest` recognise an
+ * already-ingested report with no PDFs on disk.
+ */
+function knownReportFiles(snapshots: readonly Snapshot[], reportUrls: ReportUrlRegistry): Set<string> {
+  const files = new Set<string>([REJECTED_OVERWRITTEN_REPORT.file]);
+  for (const snapshot of snapshots) if (snapshot.reportFile) files.add(snapshot.reportFile);
+  for (const file of Object.keys(reportUrls)) files.add(file);
+  for (const report of REVIEWED_CVSR_REPORTS) files.add(report.file);
+  return files;
+}
+
+async function parseLocalPdfs(): Promise<void> {
+  await mkdir(DIRECTORY, { recursive: true });
+  const reportUrls = await loadReportUrls();
+  const guidewayByLabel = await loadGuidewayLabels();
   const files = (await readdir(DIRECTORY)).filter((file) => file.toLowerCase().endsWith('.pdf')).sort();
   const candidates = files.filter((file) => CVSR_CANDIDATE.test(file));
   const alternativeFiles = files.filter((file) => !candidates.includes(file));
@@ -649,26 +704,21 @@ async function parseLocalPdfs(): Promise<void> {
       const snapshot = await parsePdf(`${DIRECTORY}/${file}`, reportUrls, guidewayByLabel);
       const existing = snapshotsByDate.get(snapshot.date);
       if (existing) {
-        const existingPayload = JSON.stringify({ perPackage: existing.perPackage, program: existing.program });
-        const candidatePayload = JSON.stringify({ perPackage: snapshot.perPackage, program: snapshot.program });
-        const existingScore = (existing.reportFile?.toLowerCase().includes('draft') ? -10 : 0) + (existing.reportFile?.toLowerCase().includes('final') ? 2 : 0);
-        const candidateScore = (file.toLowerCase().includes('draft') ? -10 : 0) + (file.toLowerCase().includes('final') ? 2 : 0);
-        const candidateWins = existingPayload !== candidatePayload && candidateScore > existingScore;
-        const rejected = candidateWins ? existing : snapshot;
+        const { winner, loser, identical } = preferSnapshot(existing, snapshot, file);
         rejectedReports.push({
-          reportFile: rejected.reportFile,
-          reportUrl: rejected.reportUrl,
-          dataMonth: rejected.dataMonth,
-          reason: rejected.reportFile === REJECTED_OVERWRITTEN_REPORT.file
+          reportFile: loser.reportFile,
+          reportUrl: loser.reportUrl,
+          dataMonth: loser.dataMonth,
+          reason: loser.reportFile === REJECTED_OVERWRITTEN_REPORT.file
             ? 'Rejected as May data: the document header says data through April 2023 and duplicates the retained April snapshot; the Authority overwrote the original URL.'
-            : existingPayload === candidatePayload
-              ? `Duplicate monthly snapshot; retained ${candidateWins ? file : existing.reportFile}.`
-              : `Conflicting monthly snapshot; retained ${candidateWins ? file : existing.reportFile} by final-over-draft precedence.`,
+            : identical
+              ? `Duplicate monthly snapshot; retained ${winner.reportFile}.`
+              : `Conflicting monthly snapshot; retained ${winner.reportFile} by final-over-draft precedence.`,
         });
-        if (existingPayload !== candidatePayload) {
-          console.warn(`${file}: conflicts with ${existing.reportFile} for ${snapshot.date}; ${candidateWins ? 'using candidate' : 'keeping existing'}`);
+        if (!identical) {
+          console.warn(`${file}: conflicts with ${existing.reportFile} for ${snapshot.date}; ${winner === snapshot ? 'using candidate' : 'keeping existing'}`);
         }
-        if (candidateWins) snapshotsByDate.set(snapshot.date, snapshot);
+        if (winner === snapshot) snapshotsByDate.set(snapshot.date, snapshot);
       } else {
         snapshotsByDate.set(snapshot.date, snapshot);
       }
@@ -714,7 +764,7 @@ async function parseLocalPdfs(): Promise<void> {
     fieldFailures,
     revisions: REVIEWED_REVISIONS,
     coverageStart: '2019-03',
-    coverageEnd: '2026-05',
+    coverageEnd: snapshots.reduce((latest, snapshot) => (snapshot.dataMonth > latest ? snapshot.dataMonth : latest), '2019-03'),
     unresolvedReportUrls: candidates.filter(
       (file) => !reportMetadata(file) && !reportUrls[file],
     ),
@@ -737,10 +787,256 @@ function shiftMonth(month: string, delta: number): string {
   return `${cursor.getUTCFullYear()}-${String(cursor.getUTCMonth() + 1).padStart(2, '0')}`;
 }
 
+/** The fixed gap kept between hsr.ca.gov requests, shared by every network mode here. */
+let lastRequestAt = 0;
+async function throttle(): Promise<void> {
+  const idle = REQUEST_INTERVAL_MS - (Date.now() - lastRequestAt);
+  if (idle > 0) {
+    const { promise, resolve } = Promise.withResolvers<void>();
+    setTimeout(resolve, idle);
+    await promise;
+  }
+  lastRequestAt = Date.now();
+}
+
+/** A PDF upload observed upstream, keyed by the filename the local corpus would use. */
+type DiscoveredReport = { file: string; url: string; publishedAt?: string };
+
+/**
+ * Report PDFs the Authority published inside the discovery window.
+ *
+ * Both media-search terms are required: `CVSR` matches titles and misses
+ * `FA-Central-Valley-Status-Report-July-2026-A11Y.pdf`, which only the phrase returns.
+ * If neither term answers with JSON, the committee index is scraped once as a fallback;
+ * if that is also unusable the run is told discovery is unavailable and ends quietly.
+ * That page carries intermittent bot protection, and a blocked read is weather — it is
+ * never retried, and no header is rotated to work around it.
+ */
+async function discoverReports(): Promise<DiscoveredReport[]> {
+  const after = new Date(Date.now() - DISCOVERY_WINDOW_DAYS * 86_400_000).toISOString();
+  const byFile = new Map<string, DiscoveredReport>();
+  let mediaAnswered = false;
+
+  for (const term of MEDIA_SEARCH_TERMS) {
+    const query = `${MEDIA_API}?search=${encodeURIComponent(term)}&per_page=100&after=${after}&orderby=date&order=desc&_fields=date,source_url`;
+    await throttle();
+    try {
+      const response = await fetch(query, { headers: { 'User-Agent': USER_AGENT } });
+      if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+      const items = (await response.json()) as Array<{ date?: unknown; source_url?: unknown }>;
+      if (!Array.isArray(items)) throw new Error('media search did not return an array');
+      mediaAnswered = true;
+      for (const item of items) {
+        if (typeof item.source_url !== 'string') continue;
+        const file = decodeURIComponent(basename(new URL(item.source_url).pathname));
+        if (!file.toLowerCase().endsWith('.pdf') || byFile.has(file)) continue;
+        byFile.set(file, {
+          file,
+          url: item.source_url,
+          ...(typeof item.date === 'string' ? { publishedAt: item.date } : {}),
+        });
+      }
+    } catch (error) {
+      console.warn(`cvsr: media search "${term}" unusable (${error instanceof Error ? error.message : String(error)})`);
+    }
+  }
+  if (mediaAnswered) return [...byFile.values()];
+
+  await throttle();
+  try {
+    const response = await fetch(CURRENT_INDEX, { headers: { 'User-Agent': USER_AGENT } });
+    const contentType = response.headers.get('content-type') ?? '';
+    if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+    if (!contentType.startsWith('text/html')) throw new Error(`answered as ${contentType || '(no content type)'}`);
+    const html = await response.text();
+    for (const [, href] of html.matchAll(/href="([^"]+\.pdf)"/gi)) {
+      const url = new URL(href, CURRENT_INDEX).toString();
+      const file = decodeURIComponent(basename(new URL(url).pathname));
+      if (!byFile.has(file)) byFile.set(file, { file, url });
+    }
+    if (byFile.size === 0) throw new Error('index page carries no PDF links');
+    return [...byFile.values()];
+  } catch (error) {
+    console.warn(`cvsr: committee index unusable (${error instanceof Error ? error.message : String(error)})`);
+    console.log('cvsr: discovery unavailable');
+    return [];
+  }
+}
+
+/**
+ * Add newly published reports to the tracked artifacts without a local PDF corpus.
+ *
+ * `--parse` rebuilds `parsed-snapshots.json` from every PDF on disk, which a CI checkout
+ * does not have; this mode merges one new observation into the committed artifact
+ * instead. `--ingest --file <name>` skips discovery and download and merges an
+ * already-local report. The `cvsr-ingested:`, `cvsr-overdue:` and
+ * `cvsr: discovery unavailable` lines are a stdout contract with
+ * `.github/workflows/ingest-cvsr.yml`; keep them exact.
+ */
+async function ingestCvsr(): Promise<void> {
+  await mkdir(DIRECTORY, { recursive: true });
+  const registry = await loadReportUrls();
+  const artifact = JSON.parse(await readFile(PARSED, 'utf8')) as {
+    snapshots: Snapshot[];
+    cvsrInventory: CvsrInventory;
+    diagnostics: { parseFailures: CvsrParseFailure[]; fieldFailures: CvsrFieldFailure[] };
+  };
+  const snapshots = [...artifact.snapshots];
+
+  const fileFlag = process.argv.indexOf('--file');
+  const requested = fileFlag === -1 ? undefined : process.argv[fileFlag + 1];
+  if (fileFlag !== -1 && (!requested || requested.startsWith('--'))) {
+    throw new Error('--file requires the name of a report already present in data/raw/cvsr');
+  }
+
+  let candidates: DiscoveredReport[];
+  if (requested) {
+    // Without a citation the merged snapshot could not link its own source, so the
+    // maintainer resolves the URL beside the local corpus before ingesting by hand.
+    const url = registry[requested]?.url ?? reportMetadata(requested)?.reportUrl;
+    if (!url) {
+      throw new Error(
+        `${requested}: no report-urls.json entry and no reviewed-report citation; run \`npm run resolve:cvsr-urls\` first`,
+      );
+    }
+    candidates = [{ file: requested, url }];
+  } else {
+    const skip = new Set(
+      (process.env.HSR_CVSR_SKIP ?? '').split(',').map((entry) => entry.trim()).filter(Boolean),
+    );
+    const known = knownReportFiles(snapshots, registry);
+    const discovered = await discoverReports();
+    candidates = discovered
+      .filter((report) => CVSR_CANDIDATE.test(report.file)
+        && !VARIANT_REPORT.test(report.file)
+        && !known.has(report.file)
+        && !skip.has(report.file))
+      .sort((a, b) => (a.publishedAt ?? '').localeCompare(b.publishedAt ?? ''));
+    console.log(`CVSR discovery: ${discovered.length} upstream PDFs in window, ${candidates.length} new`);
+
+    for (const report of candidates) {
+      await throttle();
+      const response = await fetch(report.url, { headers: { 'User-Agent': USER_AGENT } });
+      const body = new Uint8Array(await response.arrayBuffer());
+      // A page served where a PDF was promised is a challenge or a dead link, and the
+      // throw is the point: it needs a human, not a fallback.
+      assertPdfResponse(report.file, report.url, response.status, response.headers.get('content-type') ?? '', body);
+      await writeFile(`${DIRECTORY}/${report.file}`, body);
+      registry[report.file] = {
+        url: report.url,
+        bytes: body.byteLength,
+        prefixSha256: createHash('sha256').update(body.subarray(0, PREFIX_BYTES)).digest('hex'),
+        ...(report.publishedAt ? { publishedAt: report.publishedAt } : {}),
+        verifiedAt: new Date().toISOString(),
+      };
+      console.log(`${report.file}: downloaded ${body.byteLength} bytes from ${report.url}`);
+    }
+    if (candidates.length > 0) {
+      const sorted = Object.fromEntries(Object.keys(registry).sort().map((file) => [file, registry[file]]));
+      await writeFile(REPORT_URLS, `${JSON.stringify(sorted, null, 2)}\n`);
+      console.log(`CVSR report URLs → ${REPORT_URLS}`);
+    }
+  }
+
+  const guidewayByLabel = candidates.length > 0 ? await loadGuidewayLabels() : new Map<string, string>();
+  const newRejections: CvsrReportDiagnostic[] = [];
+  const ingested: Snapshot[] = [];
+  for (const report of candidates) {
+    const snapshot = await parsePdf(`${DIRECTORY}/${report.file}`, registry, guidewayByLabel);
+    const index = snapshots.findIndex((entry) => entry.date === snapshot.date);
+    if (index === -1) snapshots.push(snapshot);
+    else {
+      const { winner, loser, identical } = preferSnapshot(snapshots[index], snapshot, report.file);
+      newRejections.push({
+        reportFile: loser.reportFile,
+        reportUrl: loser.reportUrl,
+        dataMonth: loser.dataMonth,
+        reason: identical
+          ? `Duplicate monthly snapshot; retained ${winner.reportFile}.`
+          : `Conflicting monthly snapshot; retained ${winner.reportFile} by final-over-draft precedence.`,
+      });
+      if (!identical) {
+        console.warn(`${report.file}: conflicts with ${winner === snapshot ? loser.reportFile : winner.reportFile} for ${snapshot.date}; ${winner === snapshot ? 'using candidate' : 'keeping existing'}`);
+      }
+      snapshots[index] = winner;
+    }
+    ingested.push(snapshot);
+    console.log(`cvsr-ingested: ${snapshot.dataMonth} ${report.file}`);
+  }
+  snapshots.sort((a, b) => a.date.localeCompare(b.date));
+  const maxDataMonth = snapshots.reduce(
+    (latest, snapshot) => (snapshot.dataMonth > latest ? snapshot.dataMonth : latest),
+    '2019-03',
+  );
+
+  const fieldFailures = [...artifact.diagnostics.fieldFailures];
+  if (ingested.length > 0) {
+    const recorded = new Set(fieldFailures.map((failure) => `${failure.month}|${failure.cp}|${failure.metric}`));
+    for (const snapshot of ingested) {
+      // A candidate that lost on precedence publishes no value in the artifact.
+      if (!snapshots.includes(snapshot)) continue;
+      for (const cp of CVSR_PACKAGES) {
+        const metrics = snapshot.perPackage?.[cp];
+        const failures: CvsrFieldFailure[] = [];
+        if (metrics?.parcelsTotal === undefined && !parcelOmission(snapshot.dataMonth, cp)) {
+          failures.push({ month: snapshot.dataMonth, cp, metric: 'parcels' });
+        }
+        if (snapshot.dataMonth >= '2020-08' && metrics?.utilitiesTotal === undefined) {
+          failures.push({ month: snapshot.dataMonth, cp, metric: 'utilities' });
+        }
+        for (const failure of failures) {
+          const key = `${failure.month}|${failure.cp}|${failure.metric}`;
+          if (recorded.has(key)) continue;
+          recorded.add(key);
+          fieldFailures.push(failure);
+        }
+      }
+    }
+    const { parseFailures } = artifact.diagnostics;
+    // Every input the local-corpus parse derives from disk is carried forward from the
+    // persisted inventory instead; `transcriptions` and `derivations` are recomputed by
+    // the builder from the merged snapshots and must not be carried.
+    const cvsrInventory = buildCvsrInventory({
+      snapshots,
+      localFiles: knownReportFiles(snapshots, registry),
+      reviewedReports: REVIEWED_CVSR_REPORTS,
+      rejectedReports: [...artifact.cvsrInventory.rejectedReports, ...newRejections],
+      parseFailures,
+      fieldFailures,
+      revisions: REVIEWED_REVISIONS,
+      coverageStart: '2019-03',
+      coverageEnd: maxDataMonth,
+      unresolvedReportUrls: artifact.cvsrInventory.unresolvedReportUrls,
+      reportUrls: registry,
+    });
+    await writeFile(PARSED, `${JSON.stringify({ snapshots, cvsrInventory, diagnostics: { parseFailures, fieldFailures } }, null, 2)}\n`);
+    console.log(`CVSR ingest: ${ingested.length} merged; ${snapshots.length} monthly snapshots through ${maxDataMonth}`);
+    console.log(`CVSR snapshots → ${PARSED}`);
+  }
+
+  // The overdue report always runs, including on blocked discovery, and never fails on
+  // its own; the workflow decides when an absence has persisted long enough to escalate.
+  const now = new Date();
+  const expectedLatest = shiftMonth(
+    `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}`,
+    -EXPECTED_LAG_MONTHS,
+  );
+  for (let month = shiftMonth(maxDataMonth, 1); month <= expectedLatest; month = shiftMonth(month, 1)) {
+    console.log(`cvsr-overdue: ${month}`);
+  }
+
+  if (ingested.length > 0 && fieldFailures.length > 0) {
+    throw new Error(
+      `CVSR ingest: ${fieldFailures.length} package fields missing after merge; see ${PARSED}`,
+    );
+  }
+}
+
 /**
  * Resolve a direct, byte-verified hsr.ca.gov PDF URL for every local report.
  *
- * This is the only network path in this file, and the policy is deliberately narrow.
+ * One of the two network paths in this file (the other is `--ingest`), and the policy
+ * here is deliberately narrow.
  *
  * 1. `data/raw/cvsr/report-urls.json` is the committed registry. Any file already in it
  *    is skipped with zero requests, so anything already proven costs nothing to re-run.
@@ -770,7 +1066,6 @@ async function resolveReportUrls(): Promise<void> {
   const attempted = new Set<string>();
   const unresolved: string[] = [];
   let requests = 0;
-  let lastRequestAt = 0;
 
   for (const file of files) {
     if (registry[file]) {
@@ -823,13 +1118,7 @@ async function resolveReportUrls(): Promise<void> {
     for (const url of ordered) {
       if (attempted.has(url)) continue;
       attempted.add(url);
-      const idle = REQUEST_INTERVAL_MS - (Date.now() - lastRequestAt);
-      if (idle > 0) {
-        const { promise, resolve } = Promise.withResolvers<void>();
-        setTimeout(resolve, idle);
-        await promise;
-      }
-      lastRequestAt = Date.now();
+      await throttle();
       requests += 1;
 
       let response: Response;
@@ -882,6 +1171,8 @@ async function resolveReportUrls(): Promise<void> {
 
 const parseMode = process.argv.includes('--parse');
 const resolveMode = process.argv.includes('--resolve-urls');
-if (resolveMode) await resolveReportUrls();
+const ingestMode = process.argv.includes('--ingest');
+if (ingestMode) await ingestCvsr();
+else if (resolveMode) await resolveReportUrls();
 else if (parseMode) await parseLocalPdfs();
 else await writeManifest();

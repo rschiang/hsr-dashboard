@@ -123,6 +123,8 @@ npm run fetch        # rebuild public/data/history.json
 
 The parser keys snapshots by the report's **data month**, not its publication month, preserves changing denominators, and maps counts by semantic table labels rather than fixed column positions. It exits nonzero after writing diagnostics if a present report or required published metric cannot be parsed.
 
+`npm run ingest:cvsr` is the incremental path CI uses. It discovers reports published in the last 180 days, downloads one that is new, and merges it into `data/raw/cvsr/parsed-snapshots.json` without rebuilding from the local corpus, so no PDFs are needed on the runner. Add `-- --file <name>` to merge a report already sitting in `data/raw/cvsr/`. A PDF that a CI run downloaded is attached to the run as the `cvsr-report` artifact; archive it into the local corpus.
+
 `data/raw/cvsr/parsed-snapshots.json` and `public/data/history.json` carry an explicit inventory from March 2019 through May 2026. It distinguishes reports not downloaded, reports not located, metrics the source did not publish, and parser failures. Missing months are not filled from later or earlier reports; the dashboard labels the gap and links the exact report when known.
 
 ## Validation
@@ -146,7 +148,7 @@ The data scripts also enforce corridor invariants, including TS1 section totals,
 
 ## Static deployment
 
-Vite builds the site under the `/hsr-dashboard/` base path. GitHub Actions publishes `dist/` to GitHub Pages. A scheduled workflow refreshes the public ArcGIS data and commits changed generated artifacts, so the tier-2 poll always reflects the most recent successful fetch.
+Vite builds the site under the `/hsr-dashboard/` base path. GitHub Actions publishes `dist/` to GitHub Pages. Two scheduled workflows keep the data current: `refresh-arcgis.yml` re-polls the BuildHSR layers weekly, and `ingest-cvsr.yml` checks each weekday for a newly published Central Valley Status Report. Each validates and commits only when the upstream payloads actually changed, then calls the deploy workflow directly, so a data commit reaches the site without a token that could retrigger `push`. A poll that observed nothing records `stale` sources and holds `fetchedAt` at the last observed value rather than claiming freshness.
 
 ## Core integrity rules
 

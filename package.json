@@ -12,7 +12,8 @@
     "fetch:cvsr": "tsx scripts/fetch-cvsr.ts --manifest",
     "parse:cvsr": "tsx scripts/fetch-cvsr.ts --parse",
     "resolve:cvsr-urls": "tsx scripts/fetch-cvsr.ts --resolve-urls",
-    "test": "tsx --test src/lib/status.test.ts src/lib/cvsr-series.test.ts src/lib/weights.test.ts src/lib/rail-metrics.test.ts scripts/lib/cvsr-parser.test.ts",
+    "ingest:cvsr": "tsx scripts/fetch-cvsr.ts --ingest",
+    "test": "tsx --test src/lib/status.test.ts src/lib/cvsr-series.test.ts src/lib/weights.test.ts src/lib/rail-metrics.test.ts scripts/lib/cvsr-parser.test.ts scripts/lib/cvsr-download.test.ts",
     "lint": "oxlint src scripts vite.config.ts",
     "preview": "vite preview"
   },
