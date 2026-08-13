@@ -28,11 +28,8 @@ export function SegmentDetail({
   return (
     <section className="segment-detail" aria-labelledby="segment-detail-heading" aria-live="polite">
       <div className="segment-detail-head">
-        <div>
-          <p className="eyebrow">Selected segment · working citations</p>
-          <h2 id="segment-detail-heading">{segment.label}</h2>
-        </div>
-        <button type="button" onClick={onClear}>Clear selection</button>
+        <p className="eyebrow">Selected segment</p>
+        <h2 id="segment-detail-heading">{segment.label}</h2>
       </div>
       <dl>
         <dt>Package · status</dt>
@@ -88,6 +85,7 @@ export function SegmentDetail({
           </>
         )}
       </dl>
+      <button type="button" onClick={onClear}>Clear selection</button>
     </section>
   );
 }

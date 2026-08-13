@@ -21,7 +21,7 @@ const STATUS_CAPTIONS: Partial<Record<AlignmentStatus, string>> = {
 export function Legend() {
   return (
     <aside className="legend-panel" aria-labelledby="legend-heading">
-      <h2 id="legend-heading">Alignment status</h2>
+      <h2 id="legend-heading">Segment status</h2>
       <ul className="legend-items">
         {VISIBLE_STATUSES.map((status) => {
           const caption = STATUS_CAPTIONS[status];

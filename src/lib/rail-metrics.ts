@@ -52,6 +52,14 @@ export const RAIL_METRICS: readonly RailMetric[] = [
     format: (value, total) => `${value} / ${total}`,
   },
   {
+    label: 'Utilities relocated',
+    value: 'utilitiesRelocated',
+    total: 'utilitiesTotal',
+    family: 'utilities',
+    gapMetric: 'utilities',
+    format: (value, total) => `${value.toLocaleString()} / ${total.toLocaleString()}`,
+  },
+  {
     label: 'Right-of-way delivered',
     value: 'parcelsDelivered',
     total: 'parcelsTotal',
@@ -61,14 +69,6 @@ export const RAIL_METRICS: readonly RailMetric[] = [
     gapMetric: 'parcel_delivery',
     format: (value, total) => `${value.toLocaleString()} / ${total.toLocaleString()}`,
     formatPartial: (value) => value.toLocaleString(),
-  },
-  {
-    label: 'Utilities relocated',
-    value: 'utilitiesRelocated',
-    total: 'utilitiesTotal',
-    family: 'utilities',
-    gapMetric: 'utilities',
-    format: (value, total) => `${value.toLocaleString()} / ${total.toLocaleString()}`,
   },
 ];
 
