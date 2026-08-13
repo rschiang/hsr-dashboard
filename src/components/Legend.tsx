@@ -1,4 +1,4 @@
-import { STATUS_COLORS, STATUS_LABELS } from '../lib/status';
+import { STATUS_COLOR_VARS, STATUS_LABELS } from '../lib/status';
 import type { AlignmentStatus } from '../data/types';
 import { SourceLink } from './Citation';
 
@@ -35,7 +35,7 @@ export function Legend() {
           const caption = STATUS_CAPTIONS[status];
           return (
             <li key={status}>
-              <span className={`legend-swatch ${status === 'no_data' ? 'hatched' : ''}`} style={{ backgroundColor: STATUS_COLORS[status] }} />
+              <span className={`legend-swatch ${status === 'no_data' ? 'hatched' : ''}`} style={{ backgroundColor: STATUS_COLOR_VARS[status] }} />
               <span className="legend-copy">
                 <span className="legend-name">{STATUS_LABELS[status]}</span>
                 {caption && (

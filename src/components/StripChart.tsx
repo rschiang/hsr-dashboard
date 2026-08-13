@@ -1,7 +1,7 @@
 import { useMemo, useRef, useState, useSyncExternalStore, type SVGProps } from 'react';
 import { scaleLinear } from 'd3-scale';
 import type { AlignmentStatus, Segment, SegmentsArtifact, StructureEvidence } from '../data/types';
-import { STATUS_COLORS, STATUS_LABELS } from '../lib/status';
+import { STATUS_COLOR_VARS, STATUS_LABELS } from '../lib/status';
 import { iosMileToOfficialMp } from '../lib/mileposts';
 import { evidenceDateLabel, structureObservationLabel } from '../lib/observation-labels';
 import { SourceLink } from './Citation';
@@ -201,8 +201,8 @@ export function StripChart({
       <svg viewBox={`0 0 ${width} ${CHART_H}`} role="group" aria-label="Construction status strip from Merced to Oswell Street">
         <defs>
           <pattern id="no-data-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-            <rect width="6" height="6" fill={STATUS_COLORS.no_data} />
-            <line x1="0" y1="0" x2="0" y2="6" stroke="#b7b7b7" strokeWidth="2" />
+            <rect width="6" height="6" fill={STATUS_COLOR_VARS.no_data} />
+            <line x1="0" y1="0" x2="0" y2="6" stroke="var(--status-no-data-hatch)" strokeWidth="2" />
           </pattern>
         </defs>
         {CP_BOUNDARIES.map((boundary) => {
@@ -221,7 +221,7 @@ export function StripChart({
             const end = axisMode === 'distance' ? distanceScale(segment.iosMileEnd) : difficultyScale(position.end);
             const trueWidth = Math.max(0, end - x);
             const status = statuses[segment.id] ?? segment.currentStatus;
-            const fill = status === 'no_data' ? 'url(#no-data-hatch)' : STATUS_COLORS[status];
+            const fill = status === 'no_data' ? 'url(#no-data-hatch)' : STATUS_COLOR_VARS[status];
             const className = `strip-segment ${hoveredId === segment.id ? 'hovered' : ''} ${selectedId === segment.id ? 'selected' : ''}`;
             if (trueWidth < 1.5) {
               return (
@@ -231,7 +231,7 @@ export function StripChart({
                     x2={x}
                     y1={BAND_TOP}
                     y2={AXIS_Y}
-                    stroke={STATUS_COLORS[status]}
+                    stroke={STATUS_COLOR_VARS[status]}
                     strokeWidth="3"
                   />
                   <rect

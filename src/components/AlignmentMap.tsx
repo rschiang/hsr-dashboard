@@ -4,7 +4,8 @@ import type { MapGeoJSONFeature } from 'maplibre-gl';
 import type { FeatureCollection, LineString } from 'geojson';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import type { AlignmentStatus } from '../data/types';
-import { STATUS_COLORS } from '../lib/status';
+import { STATUS_COLOR_TOKENS } from '../lib/status';
+import { resolveColor } from '../lib/tokens';
 maplibregl.setWorkerUrl(`${import.meta.env.BASE_URL}vendor/maplibre-gl-worker.mjs`);
 const PROJECT_OVERVIEW_CENTER: [number, number] = [-119.72, 36.34];
 const PROJECT_OVERVIEW_ZOOM = 7.5;
@@ -69,6 +70,7 @@ export function AlignmentMap({
     mapRef.current = map;
 
     map.on('load', () => {
+      const statusColor = (status: AlignmentStatus): string => resolveColor(STATUS_COLOR_TOKENS[status]);
       map.addSource('terrain-dem', {
         type: 'raster-dem',
         tiles: ['https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png'],
@@ -83,9 +85,9 @@ export function AlignmentMap({
         source: 'terrain-dem',
         paint: {
           'hillshade-exaggeration': 0.45,
-          'hillshade-shadow-color': '#6d7276',
-          'hillshade-highlight-color': '#ffffff',
-          'hillshade-accent-color': '#9aa0a4',
+          'hillshade-shadow-color': resolveColor('--map-relief-shadow'),
+          'hillshade-highlight-color': resolveColor('--map-relief-highlight'),
+          'hillshade-accent-color': resolveColor('--map-relief-accent'),
         },
       }, firstSymbol);
       map.addSource('usgs-imagery', {
@@ -107,10 +109,13 @@ export function AlignmentMap({
       // it can never repaint them. If OpenFreeMap renames its layers the loop matches
       // nothing and the map degrades to plain positron plus hillshade.
       const GRAY_PREFIXES = ['landcover', 'landuse', 'park', 'wood', 'grass', 'sand', 'beach', 'pier', 'aeroway'];
+      const waterwayTint = resolveColor('--map-waterway');
+      const waterTint = resolveColor('--map-water');
+      const landTint = resolveColor('--map-land');
       for (const layer of map.getStyle().layers ?? []) {
-        const gray = layer.id.startsWith('waterway') ? '#dfe1e2'
-          : layer.id.startsWith('water') ? '#e4e6e7'
-            : GRAY_PREFIXES.some((prefix) => layer.id.startsWith(prefix)) ? '#efeeec'
+        const gray = layer.id.startsWith('waterway') ? waterwayTint
+          : layer.id.startsWith('water') ? waterTint
+            : GRAY_PREFIXES.some((prefix) => layer.id.startsWith(prefix)) ? landTint
               : null;
         if (gray === null) continue;
         if (layer.type === 'fill') map.setPaintProperty(layer.id, 'fill-color', gray);
@@ -123,7 +128,7 @@ export function AlignmentMap({
         source: 'alignment',
         layout: { 'line-cap': 'butt', 'line-join': 'round' },
         paint: {
-          'line-color': '#172b32',
+          'line-color': resolveColor('--chart-mark'),
           'line-opacity': ['case', ['boolean', ['feature-state', 'selected'], false], 0.95, ['boolean', ['feature-state', 'hover'], false], 0.8, 0],
           'line-width': ['interpolate', ['linear'], ['zoom'], 6, 5, 12, 11],
         },
@@ -137,14 +142,14 @@ export function AlignmentMap({
           'line-width': ['interpolate', ['linear'], ['zoom'], 6, 2.5, 12, 7],
           'line-color': [
             'match', ['feature-state', 'status'],
-            'preconstruction', STATUS_COLORS.preconstruction,
-            'under_construction', STATUS_COLORS.under_construction,
-            'structure_complete', STATUS_COLORS.structure_complete,
-            'guideway_complete', STATUS_COLORS.guideway_complete,
-            'track_laid', STATUS_COLORS.track_laid,
-            'systems_installed', STATUS_COLORS.systems_installed,
-            'not_started', STATUS_COLORS.not_started,
-            STATUS_COLORS.no_data,
+            'preconstruction', statusColor('preconstruction'),
+            'under_construction', statusColor('under_construction'),
+            'structure_complete', statusColor('structure_complete'),
+            'guideway_complete', statusColor('guideway_complete'),
+            'track_laid', statusColor('track_laid'),
+            'systems_installed', statusColor('systems_installed'),
+            'not_started', statusColor('not_started'),
+            statusColor('no_data'),
           ],
         },
       });

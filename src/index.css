@@ -1,16 +1,70 @@
 :root {
+  /* Ink — text on light surfaces, darkest to faintest */
   --ink: #14181c;
+  --prose: #556265;
+  --label: #5f6d70;
   --muted: #6b7378;
   --faint: #9aa2a7;
+
+  /* Surfaces */
   --paper: #ffffff;
   --panel: #fbfaf8;
+  --panel-scrim: rgba(255, 255, 255, 0.96);
+  --panel-sunken: #ebe7dc;
+  --on-dark: #ffffff;
+
+  /* Lines, edges, shadows */
   --line: #e3e1dc;
+  --line-strong: #aeb6b5;
+  --line-swatch: rgba(20, 24, 28, 0.12);
+  --shadow-control: rgba(20, 24, 28, 0.18);
+  --shadow-tooltip: rgba(23, 43, 50, 0.25);
+
+  /* Accent and attention */
   --accent: #d95f02;
+  --accent-ink: #a04302;
+  --accent-wash: #fdf1e5;
+  --warning-ink: #7a3c13;
+
+  /* Construction packages, north to south */
   --m2m: #ff6a1c;
   --cp1: #769826;
   --cp2-3: #427ab5;
   --cp4: #f62477;
   --lga: #a8a492;
+
+  /* Segment status palette — legend swatches, strip chart, map alignment */
+  --status-not-started: #d9d9d9;
+  --status-no-data: #f0f0f0;
+  --status-no-data-hatch: #b7b7b7;
+  --status-preconstruction: #e6ab02;
+  --status-under-construction: #d95f02;
+  --status-structure-complete: #66a61e;
+  --status-guideway-complete: #1b9e77;
+  --status-track-laid: #1f78b4;
+  --status-systems-installed: #6a3d9a;
+
+  /* Strip chart and sparkline furniture */
+  --chart-axis: #c8ccce;
+  --chart-rule: #d6d3cc;
+  --chart-gap: #c3c8c6;
+  --chart-mark: #172b32;
+  --chart-mark-selected: #101c21;
+
+  /* Tooltip (dark surface) */
+  --tooltip-surface: rgba(23, 43, 50, 0.97);
+  --tooltip-ink: #e9efef;
+  --tooltip-muted: #bdc9ca;
+  --tooltip-link: #f1be94;
+  --tooltip-line: rgba(255, 255, 255, 0.2);
+
+  /* Basemap tint — MapLibre paint, resolved in TS via src/lib/tokens.ts */
+  --map-water: #e4e6e7;
+  --map-waterway: #dfe1e2;
+  --map-land: #efeeec;
+  --map-relief-shadow: #6d7276;
+  --map-relief-highlight: #ffffff;
+  --map-relief-accent: #9aa0a4;
   --sans: 'Public Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --space-0-5: 0.125rem;
   --space-1: 0.25rem;

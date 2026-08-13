@@ -27,16 +27,25 @@ export const ALIGNMENT_STATUSES: AlignmentStatus[] = [
   'systems_installed',
 ];
 
-export const STATUS_COLORS: Record<AlignmentStatus, string> = {
-  not_started: '#d9d9d9',
-  no_data: '#f0f0f0',
-  preconstruction: '#e6ab02',
-  under_construction: '#d95f02',
-  structure_complete: '#66a61e',
-  guideway_complete: '#1b9e77',
-  track_laid: '#1f78b4',
-  systems_installed: '#6a3d9a',
+/**
+ * Status colors live on `:root` in `src/index.css`. DOM styles and SVG attributes use
+ * `STATUS_COLOR_VARS`; MapLibre paint needs a resolved literal, so it looks the token
+ * name up through `resolveColor` (`src/lib/tokens.ts`).
+ */
+export const STATUS_COLOR_TOKENS: Record<AlignmentStatus, `--${string}`> = {
+  not_started: '--status-not-started',
+  no_data: '--status-no-data',
+  preconstruction: '--status-preconstruction',
+  under_construction: '--status-under-construction',
+  structure_complete: '--status-structure-complete',
+  guideway_complete: '--status-guideway-complete',
+  track_laid: '--status-track-laid',
+  systems_installed: '--status-systems-installed',
 };
+
+export const STATUS_COLOR_VARS = Object.fromEntries(
+  Object.entries(STATUS_COLOR_TOKENS).map(([status, token]) => [status, `var(${token})`]),
+) as Record<AlignmentStatus, string>;
 
 export const STATUS_LABELS: Record<AlignmentStatus, string> = {
   not_started: 'Not started',
