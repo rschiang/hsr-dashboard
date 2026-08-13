@@ -53,6 +53,12 @@
     "prefixSha256": "11c43e1345b1d2322d43bea5db4b40a14d15cd424a35071d3604aa02ca4c31ec",
     "verifiedAt": "2026-08-09T18:36:19.448Z"
   },
+  "CVSR-2025-07-Data-2025-05-FINAL-V2-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2023/03/CVSR-2025-07-Data-2025-05-FINAL-V2-A11Y.pdf",
+    "bytes": 2102469,
+    "prefixSha256": "d04bf35223bc27adb8a0c8e984952572b7911f4c8570f2abc39f794c3b076978",
+    "verifiedAt": "2026-08-13T17:30:03.540Z"
+  },
   "CVSR-2025-08-Data-2025-06-FINAL-V0-A11Y.pdf": {
     "url": "https://hsr.ca.gov/wp-content/uploads/2025/08/CVSR-2025-08-Data-2025-06-FINAL-V0-A11Y.pdf",
     "bytes": 2229034,
@@ -328,6 +334,18 @@
     "bytes": 107536,
     "prefixSha256": "2336a21f104e1c11acb9eba626cc22dff4ce4e8709f0979c2beb3466ae3b2d11",
     "verifiedAt": "2026-08-09T18:37:35.387Z"
+  },
+  "brdmtg_012121_FA_CVSR_2011_Data.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2021/04/brdmtg_012121_FA_CVSR_2011_Data.pdf",
+    "bytes": 2574416,
+    "prefixSha256": "b2bb8329a317451b84ba2d20cc092b6fd2f0b2d2f87cb0f0d3055a2da397b9c7",
+    "verifiedAt": "2026-08-13T17:34:18.782Z"
+  },
+  "brdmtg_020921_FA_CVSR_2102_2012_Data.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2021/04/brdmtg_020921_FA_CVSR_2102_2012_Data.pdf",
+    "bytes": 2602029,
+    "prefixSha256": "2b5d2c9d34a4eb73f9c0dc2a342bd1b8dba1ba6814de570577179405558696b6",
+    "verifiedAt": "2026-08-13T17:34:19.414Z"
   },
   "brdmtg_021820_FA_Central_Valley_Status_Report.pdf": {
     "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_021820_FA_Central_Valley_Status_Report.pdf",

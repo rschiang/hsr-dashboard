@@ -1130,6 +1130,7 @@
       "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_012121_FA_CVSR_2011_Data.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/04/brdmtg_012121_FA_CVSR_2011_Data.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 13,
@@ -1196,6 +1197,7 @@
       "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "brdmtg_020921_FA_CVSR_2102_2012_Data.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2021/04/brdmtg_020921_FA_CVSR_2102_2012_Data.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 13,
@@ -3787,6 +3789,7 @@
       "tier": 1,
       "sourceId": "cvsr",
       "reportFile": "CVSR-2025-07-Data-2025-05-FINAL-V2-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2023/03/CVSR-2025-07-Data-2025-05-FINAL-V2-A11Y.pdf",
       "perPackage": {
         "CP1": {
           "structuresComplete": 20,
@@ -9564,11 +9567,7 @@
         "detail": "A discrepancy has been identified for CP4 in the previous months reporting of the guideway progress. This has been corrected for the April 2022 Data report."
       }
     ],
-    "unresolvedReportUrls": [
-      "CVSR-2025-07-Data-2025-05-FINAL-V2-A11Y.pdf",
-      "brdmtg_012121_FA_CVSR_2011_Data.pdf",
-      "brdmtg_020921_FA_CVSR_2102_2012_Data.pdf"
-    ]
+    "unresolvedReportUrls": []
   },
   "diagnostics": {
     "parseFailures": [],

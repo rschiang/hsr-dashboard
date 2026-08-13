@@ -57,13 +57,11 @@ it reads and fails if the total moves or the split is published again.
 
 | Data month | Report filename | Derived fields | Detail |
 |---|---|---|---|
-| `2026-05` | `FA-Central-Valley-Status-Report-July-2026-A11Y.pdf` | parcels | Determined, not reprinted: the July 2026 report retires the per-package right-of-way table and states "All required parcels have been delivered — 2,288 of 2,288". The April 2026 report (data through April 2026, page 10) publishes that same total as CP 1 1,080 of 1,080, CP 2-3 985 of 985 and CP 4 223 of 223, with zero parcels to be delivered in every package. https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf |
+| `2026-05` | `FA-Central-Valley-Status-Report-July-2026-A11Y.pdf` | parcels | The authority officially marked 100% acquisition milestone for parcels required for CP1–4 guideway construction in the July 2026 report (data through May 2026). The separate values are sourced from June 2026 report (data through April 2026) which publishes that same total. |
 
 ## Unresolved report URLs
 
 No direct hsr.ca.gov PDF URL could be byte-verified for these local files; the dashboard
 falls back to the CVSR registry link and shows the filename instead of a per-report link.
 
-- `CVSR-2025-07-Data-2025-05-FINAL-V2-A11Y.pdf`
-- `brdmtg_012121_FA_CVSR_2011_Data.pdf`
-- `brdmtg_020921_FA_CVSR_2102_2012_Data.pdf`
+- none

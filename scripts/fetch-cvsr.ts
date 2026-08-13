@@ -44,6 +44,11 @@ const CVSR_CANDIDATE = /CVSR|Central[_ -]Valley[_ -]Status[_ -](?:Report|Update)
 const PREFIX_BYTES = 262144;
 const USER_AGENT = 'hsr-dashboard/1.0 (+https://github.com/rschiang/hsr-dashboard)';
 const REQUEST_INTERVAL_MS = 1000;
+/**
+ * Gaps waited out when the host answers a PDF request with HTML. It throttles well before
+ * it blocks, so the fixed 1 s gap is not always enough and a single refusal proves nothing.
+ */
+const CHALLENGE_BACKOFF_MS = [5_000, 15_000, 45_000] as const;
 /** How far back `--ingest` looks for a new report. Fixed, so no bookkeeping can drift. */
 const DISCOVERY_WINDOW_DAYS = 180;
 /** The observed data-to-publication lag is ~2 months, so four leaves a month of slack. */
@@ -137,6 +142,28 @@ const REJECTED_OVERWRITTEN_REPORT: ReviewedCvsrReport = {
   month: '2023-04',
   file: 'CVSR-2307-2305-Data-FINAL-V0-A11Y.pdf',
   reportUrl: 'https://hsr.ca.gov/wp-content/uploads/2023/07/CVSR-2307-2305-Data-FINAL-V0-A11Y.pdf',
+};
+
+/**
+ * Extra candidate URLs for reports the resolver's month heuristics cannot reach, because
+ * the Authority filed them under an upload month no month in or derivable from the report
+ * implies: `CVSR-2025-07-…` sits in `uploads/2023/03/`, and the January and February 2021
+ * board-meeting reports (data through November and December 2020) sit in `uploads/2021/04/`.
+ *
+ * A hint is only a place to look. It is probed and byte-verified like every other
+ * candidate, so a wrong or stale hint resolves nothing instead of publishing an
+ * unverified citation.
+ */
+const REPORT_URL_HINTS: Readonly<Record<string, readonly string[]>> = {
+  'CVSR-2025-07-Data-2025-05-FINAL-V2-A11Y.pdf': [
+    'https://hsr.ca.gov/wp-content/uploads/2023/03/CVSR-2025-07-Data-2025-05-FINAL-V2-A11Y.pdf',
+  ],
+  'brdmtg_012121_FA_CVSR_2011_Data.pdf': [
+    'https://hsr.ca.gov/wp-content/uploads/2021/04/brdmtg_012121_FA_CVSR_2011_Data.pdf',
+  ],
+  'brdmtg_020921_FA_CVSR_2102_2012_Data.pdf': [
+    'https://hsr.ca.gov/wp-content/uploads/2021/04/brdmtg_020921_FA_CVSR_2102_2012_Data.pdf',
+  ],
 };
 
 async function writeManifest(): Promise<void> {
@@ -765,9 +792,7 @@ async function parseLocalPdfs(): Promise<void> {
     revisions: REVIEWED_REVISIONS,
     coverageStart: '2019-03',
     coverageEnd: snapshots.reduce((latest, snapshot) => (snapshot.dataMonth > latest ? snapshot.dataMonth : latest), '2019-03'),
-    unresolvedReportUrls: candidates.filter(
-      (file) => !reportMetadata(file) && !reportUrls[file],
-    ),
+    unresolvedReportUrls: candidates.filter((file) => !reportMetadata(file) && !reportUrls[file]),
     reportUrls,
   });
   await writeFile(PARSED, `${JSON.stringify({ snapshots, cvsrInventory, diagnostics: { parseFailures, fieldFailures } }, null, 2)}\n`);
@@ -787,15 +812,17 @@ function shiftMonth(month: string, delta: number): string {
   return `${cursor.getUTCFullYear()}-${String(cursor.getUTCMonth() + 1).padStart(2, '0')}`;
 }
 
+async function sleep(ms: number): Promise<void> {
+  const { promise, resolve } = Promise.withResolvers<void>();
+  setTimeout(resolve, ms);
+  await promise;
+}
+
 /** The fixed gap kept between hsr.ca.gov requests, shared by every network mode here. */
 let lastRequestAt = 0;
 async function throttle(): Promise<void> {
   const idle = REQUEST_INTERVAL_MS - (Date.now() - lastRequestAt);
-  if (idle > 0) {
-    const { promise, resolve } = Promise.withResolvers<void>();
-    setTimeout(resolve, idle);
-    await promise;
-  }
+  if (idle > 0) await sleep(idle);
   lastRequestAt = Date.now();
 }
 
@@ -1040,24 +1067,30 @@ async function ingestCvsr(): Promise<void> {
  *
  * 1. `data/raw/cvsr/report-urls.json` is the committed registry. Any file already in it
  *    is skipped with zero requests, so anything already proven costs nothing to re-run.
- *    Files carrying reviewed metadata already have a canonical URL and are never probed.
+ *    Files carrying reviewed report metadata already have a citation and are never probed.
  * 2. Each unresolved local PDF gets at most eight ordered, deduped candidates, every one
- *    of them built from evidence already in hand: the publication month printed inside
- *    the PDF, then the data month plus two, three and one month, then every `20YY` + `MM`
- *    pair in the filename, and for `brdmtg_*` files the legacy
- *    `uploads/docs/brdmeetings/{year}/` layout. Months are never brute-forced.
+ *    of them built from evidence already in hand: any `REPORT_URL_HINTS` path recorded for
+ *    the file, the publication month printed inside the PDF, then the data month plus two,
+ *    three and one month, then every `20YY` + `MM` pair in the filename, and for `brdmtg_*`
+ *    files the legacy `uploads/docs/brdmeetings/{year}/` layout. Months are never
+ *    brute-forced, and a hint earns nothing beyond being probed first.
  * 3. Every probe is one `GET` with `Range: bytes=0-262143` and a single fixed
  *    User-Agent, with a hard 1000 ms gap between requests — including across files.
- *    No URL is requested twice in a run.
+ *    No URL is requested twice, except to retry a throttled answer.
  * 4. A candidate is accepted only when all of these hold: status 200 or 206; content type
  *    `application/pdf`; the advertised full length (Content-Range total, else
  *    Content-Length) equals the local byte size; and SHA-256 of the returned prefix
  *    equals SHA-256 of the local file's first 262144 bytes. An unverified URL is never
- *    recorded.
- * 5. `wp-json` and HTML pages are Incapsula-gated and are never requested. An HTML answer
- *    to a PDF request means the host is challenging us, so the file's remaining
- *    candidates are abandoned and it is recorded unresolved. A `404` with an HTML body is
- *    the site's ordinary not-found page, which is a miss, not a challenge.
+ *    added to the byte-verified registry.
+ * 5. `wp-json` and HTML pages are Incapsula-gated and are never requested. A `404` is the
+ *    site's ordinary not-found answer: the URL is wrong, or the Authority retired an old
+ *    upload. Either way it is a miss, the file is reported unresolved, and the run still
+ *    succeeds — an absent report is a fact about the site, not a failure.
+ * 6. Any other HTML answer to a PDF request is the host throttling us, which is not
+ *    evidence about the URL. Each such answer is retried on `CHALLENGE_BACKOFF_MS`, and a
+ *    file whose budget runs out is reported *inconclusive* and fails the run instead of
+ *    joining the unresolved list. A throttle must never be recorded as proof that no
+ *    canonical URL exists.
  */
 async function resolveReportUrls(): Promise<void> {
   await mkdir(DIRECTORY, { recursive: true });
@@ -1065,6 +1098,7 @@ async function resolveReportUrls(): Promise<void> {
   const files = (await readdir(DIRECTORY)).filter((file) => file.toLowerCase().endsWith('.pdf')).sort();
   const attempted = new Set<string>();
   const unresolved: string[] = [];
+  const inconclusive: string[] = [];
   let requests = 0;
 
   for (const file of files) {
@@ -1099,74 +1133,99 @@ async function resolveReportUrls(): Promise<void> {
     }
 
     const urls: string[] = [];
-    const addUpload = (month: string): void => {
-      const url = `https://hsr.ca.gov/wp-content/uploads/${month.slice(0, 4)}/${month.slice(5, 7)}/${file}`;
+    const add = (url: string): void => {
       if (!urls.includes(url)) urls.push(url);
     };
+    const addUpload = (month: string): void => {
+      add(`https://hsr.ca.gov/wp-content/uploads/${month.slice(0, 4)}/${month.slice(5, 7)}/${file}`);
+    };
+    for (const hint of REPORT_URL_HINTS[file] ?? []) add(hint);
     if (reportMonth) addUpload(reportMonth);
     if (dataMonth) for (const delta of [2, 3, 1]) addUpload(shiftMonth(dataMonth, delta));
     for (const [, year, month] of file.matchAll(/(20\d{2})[-_]?(0[1-9]|1[0-2])/g)) addUpload(`${year}-${month}`);
     const boardMeeting = /^brdmtg_\d{4}(\d{2})_/.exec(file);
     if (boardMeeting) {
-      const url = `https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/20${boardMeeting[1]}/${file}`;
-      if (!urls.includes(url)) urls.push(url);
+      add(`https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/20${boardMeeting[1]}/${file}`);
     }
     const ordered = urls.slice(0, 8);
 
     let resolved: ResolvedReportUrl | undefined;
-    let challenged = false;
+    // One budget per file, so a throttled host cannot stretch the run without bound.
+    let backoffs = 0;
+    let throttled = false;
     for (const url of ordered) {
       if (attempted.has(url)) continue;
       attempted.add(url);
-      await throttle();
-      requests += 1;
 
-      let response: Response;
-      try {
-        response = await fetch(url, {
-          headers: { Range: `bytes=0-${PREFIX_BYTES - 1}`, 'User-Agent': USER_AGENT },
-        });
-      } catch (error) {
-        console.warn(`  ${url}: request failed (${error instanceof Error ? error.message : String(error)})`);
-        continue;
-      }
-      const contentType = response.headers.get('content-type') ?? '';
-      const body = Buffer.from(await response.arrayBuffer());
-      if (contentType.startsWith('text/html') && response.status !== 404) {
-        challenged = true;
+      // Retries re-request this same candidate; a straight answer always breaks out.
+      while (!resolved && !throttled) {
+        await throttle();
+        requests += 1;
+
+        let response: Response;
+        try {
+          response = await fetch(url, {
+            headers: { Range: `bytes=0-${PREFIX_BYTES - 1}`, 'User-Agent': USER_AGENT },
+          });
+        } catch (error) {
+          console.warn(`  ${url}: request failed (${error instanceof Error ? error.message : String(error)})`);
+          break;
+        }
+        const contentType = response.headers.get('content-type') ?? '';
+        const body = Buffer.from(await response.arrayBuffer());
+        if (contentType.startsWith('text/html') && response.status !== 404) {
+          const wait = CHALLENGE_BACKOFF_MS[backoffs];
+          if (wait === undefined) {
+            throttled = true;
+            break;
+          }
+          backoffs += 1;
+          console.warn(`  ${url}: HTML answered a PDF request; retrying in ${wait / 1000}s`);
+          await sleep(wait);
+          continue;
+        }
+        if (response.status === 200 || response.status === 206) {
+          const contentRange = response.headers.get('content-range');
+          const total = Number(
+            contentRange?.split('/')[1] ?? response.headers.get('content-length') ?? Number.NaN,
+          );
+          const prefixSha256 = contentType.startsWith('application/pdf') && total === bytes
+            ? createHash('sha256').update(body.subarray(0, PREFIX_BYTES)).digest('hex')
+            : undefined;
+          if (prefixSha256 === localPrefixSha256) {
+            resolved = { url, bytes, prefixSha256, verifiedAt: new Date().toISOString() };
+          }
+        }
         break;
       }
-      if (response.status !== 200 && response.status !== 206) continue;
-      if (!contentType.startsWith('application/pdf')) continue;
-      const contentRange = response.headers.get('content-range');
-      const total = Number(
-        contentRange?.split('/')[1] ?? response.headers.get('content-length') ?? Number.NaN,
-      );
-      if (total !== bytes) continue;
-      const prefixSha256 = createHash('sha256').update(body.subarray(0, PREFIX_BYTES)).digest('hex');
-      if (prefixSha256 !== localPrefixSha256) continue;
-      resolved = { url, bytes, prefixSha256, verifiedAt: new Date().toISOString() };
-      break;
+      if (resolved || throttled) break;
     }
 
     if (resolved) {
       registry[file] = resolved;
       console.log(`${file}: verified ${resolved.url}`);
+    } else if (throttled) {
+      inconclusive.push(file);
+      console.log(`${file}: inconclusive — hsr.ca.gov answered PDF requests with HTML through ${CHALLENGE_BACKOFF_MS.length} retries`);
     } else {
       unresolved.push(file);
-      console.log(
-        `${file}: unresolved after ${ordered.length} candidate${ordered.length === 1 ? '' : 's'}${challenged ? ' (host answered a PDF request with HTML; remaining candidates abandoned)' : ''}`,
-      );
+      console.log(`${file}: unresolved after ${ordered.length} candidate${ordered.length === 1 ? '' : 's'}`);
     }
   }
 
   const sorted = Object.fromEntries(Object.keys(registry).sort().map((file) => [file, registry[file]]));
   await writeFile(REPORT_URLS, `${JSON.stringify(sorted, null, 2)}\n`);
   console.log(
-    `CVSR report URLs: ${Object.keys(sorted).length} verified, ${unresolved.length} unresolved; network requests: ${requests}`,
+    `CVSR report URLs: ${Object.keys(sorted).length} verified, ${unresolved.length} unresolved, ${inconclusive.length} inconclusive; network requests: ${requests}`,
   );
   for (const file of unresolved) console.log(`  unresolved: ${file}`);
   console.log(`CVSR report URLs → ${REPORT_URLS}`);
+  if (inconclusive.length > 0) {
+    throw new Error(
+      `CVSR report URLs: ${inconclusive.length} file(s) got no straight answer from hsr.ca.gov (${inconclusive.join(', ')}); ` +
+        'the host was throttling, so this run proves nothing about their URLs — re-run later instead of recording them unresolved',
+    );
+  }
 }
 
 const parseMode = process.argv.includes('--parse');
