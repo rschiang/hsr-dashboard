@@ -363,6 +363,7 @@ for (let index = 1; index < stations.length; index += 1) {
 
 const metadata = JSON.parse(await readFile('data/raw/arcgis/fetch-metadata.json', 'utf8')) as { fetchedAt: string };
 const structures = JSON.parse(await readFile('data/raw/arcgis/structures.json', 'utf8')) as StructureResponse;
+if (structures.features.length !== 88) throw new Error(`Expected 88 structure features, received ${structures.features.length}`);
 for (const [globalId, segmentId] of Object.entries(STRUCTURE_CROSSWALK)) {
   const matchingFeatures = structures.features.filter(
     (feature) => feature.attributes.GlobalID.toLowerCase() === globalId,
@@ -371,6 +372,20 @@ for (const [globalId, segmentId] of Object.entries(STRUCTURE_CROSSWALK)) {
   if (matchingFeatures.length !== 1 || matchingSegments.length !== 1) {
     throw new Error(
       `Crosswalk ${globalId} → ${segmentId} resolved to ${matchingFeatures.length} source records and ${matchingSegments.length} segments`,
+    );
+  }
+}
+// A context project that stops resolving is silently re-admitted as HSR progress: the
+// feature falls through to the spatial branch and is attached to whatever segment its
+// geometry lands on. Verified 1:1 exactly like the structure crosswalk above.
+for (const [globalId, { segmentId }] of Object.entries(CONTEXT_PROJECTS)) {
+  const matchingFeatures = structures.features.filter(
+    (feature) => feature.attributes.GlobalID.toLowerCase() === globalId,
+  );
+  const matchingSegments = segments.filter((segment) => segment.id === segmentId);
+  if (matchingFeatures.length !== 1 || matchingSegments.length !== 1) {
+    throw new Error(
+      `Context project ${globalId} → ${segmentId} resolved to ${matchingFeatures.length} source records and ${matchingSegments.length} segments`,
     );
   }
 }
@@ -461,9 +476,17 @@ for (const segment of segments) {
     { completion: segment.completion },
   ).status;
 }
-if (completedStructures !== 59 || inProgressStructures !== 27) {
+// The exclusion arithmetic, not the status split: a structure completing flips one
+// record from in-progress to completed every month or two, which is the program
+// working, not a data defect. Each structure's own status ships in `segment.structures`
+// inside the committed `public/data/segments.json`, so a flip is reviewed there. What
+// must hold is that every non-context feature was counted exactly once — the layer size
+// is pinned at the read and each context project is verified 1:1 above.
+const countedStructures = completedStructures + inProgressStructures;
+const expectedStructures = structures.features.length - Object.keys(CONTEXT_PROJECTS).length;
+if (countedStructures !== expectedStructures) {
   throw new Error(
-    `Structure status count changed after excluding reviewed context projects ${Object.keys(CONTEXT_PROJECTS).join(', ')}: ${completedStructures} completed + ${inProgressStructures} in progress`,
+    `Counted ${countedStructures} structures, expected ${expectedStructures} after excluding reviewed context projects ${Object.keys(CONTEXT_PROJECTS).join(', ')}`,
   );
 }
 
@@ -593,14 +616,22 @@ if (parsedSnapshotsRaw === null) {
   if (structureIds.size !== 35 || crosswalkIds.size !== 35 || [...structureIds].some((id) => !crosswalkIds.has(id))) {
     throw new Error(`CVSR structure crosswalk does not cover all ${structureIds.size} structure segments`);
   }
+  // Resolution floor, not a fingerprint. This count rises whenever a report publishes
+  // a guideway row that resolves, and unmatched rows are not a defect signal at all —
+  // the CVSR publishes 81 structure rows against the 35 the segment model carries, so
+  // most unmatched rows are simply out of scope. What is a bug is resolution going
+  // backwards: a label that used to match and silently stops, dropping a published row
+  // out of `perSegment`. Exact membership — which rows resolved, which disagreed — is
+  // reviewed in the `crossCheck` diff of the committed `public/data/segments.json`,
+  // and the aggregate magnitude is bounded by the per-package reconciliation above.
   const matchedGuideways = Object.keys(latest.perSegment ?? {}).filter(
     (id) => segments.find((segment) => segment.id === id)?.kind === 'guideway',
   ).length;
-  if (matchedGuideways !== 49) throw new Error(`Expected 49 exact-label CVSR guideway matches, received ${matchedGuideways}`);
-  if (unmatchedCvsrRows.length !== 68) throw new Error(`Expected 68 unmatched CVSR rows, received ${unmatchedCvsrRows.length}`);
-  if (disagreements.length !== 10) throw new Error(`Expected 10 ArcGIS/CVSR disagreements, received ${disagreements.length}`);
+  if (matchedGuideways < 49) {
+    throw new Error(`CVSR guideway label resolution regressed to ${matchedGuideways}; 49 resolved as of the 2026-06 report`);
+  }
   crossCheck = { cvsrDataMonth: latest.dataMonth!, perPackage, unmatchedCvsrRows, disagreements };
-  console.log(`cross-check vs CVSR ${latest.dataMonth}: 35/35 structures, ${matchedGuideways} guideways, ${unmatchedCvsrRows.length} unmatched rows, ${disagreements.length} disagreements`);
+  console.log(`cross-check vs CVSR ${latest.dataMonth}: ${structureIds.size}/${crosswalkIds.size} structures, ${matchedGuideways} guideways, ${unmatchedCvsrRows.length} unmatched rows, ${disagreements.length} disagreements`);
 }
 
 // Corridor invariants run before the first artifact write: a run that ultimately throws

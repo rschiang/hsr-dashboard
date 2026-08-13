@@ -95,15 +95,46 @@ test('carries the package across a bare continued row table heading', () => {
   assert.ok(rows.every((row) => row.cp === 'CP2-3' && row.kind === 'structure'));
 });
 
-test('uses the reviewed footnote set instead of guessing numeric location suffixes', () => {
-  const [row] = parseRowProgress(`
-    April 2026 Data
+/**
+ * Ingestion resolves structure rows through the fixed crosswalk and guideway rows
+ * through ArcGIS `Limits`; the parser only learns which labels those sources know.
+ */
+const KNOWN_LABELS: Readonly<Record<'structure' | 'guideway', readonly string[]>> = {
+  structure: ['Ave 24', 'Cross Creek', 'Lansing'],
+  guideway: ['Fowler Ave to Davis Ave', 'Peach Ave to Elkhorn Ave'],
+};
+const isKnownLabel = (kind: 'structure' | 'guideway', label: string) =>
+  KNOWN_LABELS[kind].includes(label);
+
+test('strips a footnote anchor only when the bare label is one ingestion can resolve', () => {
+  const rows = parseRowProgress(
+    `
     CP 2-3 – Construction Progress
     Structures - Completed
-    Ave 241 Jun-23 Aug-24 90%
-  `);
-  assert.equal(row.location, 'Ave 24');
-  assert.equal(row.footnote, 'substantially_complete');
+    Ave 24 1 Jun-23 Aug-24 90%
+    Cross Creek1 Apr-21 Apr-26 97%
+    Fresno River Viaduct 501 Sep-17 Jul-20 100%
+    CP 1 – Construction Progress
+    Structures - Completed
+    Lansing1 Sep-17 Jul-20 100%
+    Avenue 11 Sep-17 Jul-20 100%
+  `,
+    undefined,
+    isKnownLabel,
+  );
+  assert.deepEqual(
+    rows.map((row) => [row.cp, row.location, row.footnote]),
+    [
+      // Spaced and glued anchors are both extraction artifacts of the same marker.
+      ['CP2-3', 'Ave 24', 'substantially_complete'],
+      ['CP2-3', 'Cross Creek', 'substantially_complete'],
+      // Genuine numeric names survive: `Fresno River Viaduct 50` and `Avenue 1` are
+      // not labels ingestion resolves, so the trailing digit stays part of the name.
+      ['CP2-3', 'Fresno River Viaduct 501', null],
+      ['CP1', 'Lansing', 'partially_open'],
+      ['CP1', 'Avenue 11', null],
+    ],
+  );
 });
 
 test('rejects header and legend lines that do not match the row grammar', () => {
@@ -618,8 +649,6 @@ test('assigns one snapshot gap cause using parser, download, then location prece
   assert.equal(new Set(snapshotGaps.map((gap) => gap.month)).size, snapshotGaps.length);
 });
 
-const JULY_2026_FILE = 'FA-Central-Valley-Status-Report-July-2026-A11Y.pdf';
-
 test('never reads a railroad delivery table as ordinary right-of-way delivery', () => {
   // July 2026 retires the ordinary CP 1-4 ROW delivery page, so the railroad table is
   // the first heading match. Reading it here would publish 164/176 rail parcels as the
@@ -661,7 +690,7 @@ test('keys July guideway rows on the bare label while the quote keeps the publis
     Guideways - Completed
     Fowler Ave to Davis Ave (1.35 Miles)1 Aug-18 Jun-26 95% 1%
   `;
-  const rows = parseRowProgress(july2026, JULY_2026_FILE);
+  const rows = parseRowProgress(july2026, undefined, isKnownLabel);
   assert.deepEqual(rows.map((row) => row.location), [
     'Peach Ave to Elkhorn Ave',
     'Fowler Ave to Davis Ave',
@@ -671,23 +700,4 @@ test('keys July guideway rows on the bare label while the quote keeps the publis
   // The footnote digit sits outside the parenthesis, so it is stripped first.
   assert.equal(rows[1].footnote, 'substantially_complete');
   assert.equal(rows[1].quote, 'Fowler Ave to Davis Ave (1.35 Miles)1 Aug-18 Jun-26 95% 1%');
-});
-
-test('strips a footnote digit only from reviewed rows, never from a genuine label', () => {
-  const july2026 = `
-    CP 1 – Construction Progress
-    Structures - Completed
-    Avenue 11 Sep-17 Jul-20 100%
-    CP 2-3 – Construction Progress
-    Structures - Completed
-    Cross Creek1 Apr-21 Apr-26 97%
-  `;
-  const rows = parseRowProgress(july2026, JULY_2026_FILE);
-  assert.deepEqual(
-    rows.map((row) => [row.cp, row.location, row.footnote]),
-    [
-      ['CP1', 'Avenue 11', null],
-      ['CP2-3', 'Cross Creek', 'substantially_complete'],
-    ],
-  );
 });

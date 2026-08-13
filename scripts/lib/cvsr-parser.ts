@@ -29,51 +29,8 @@ export type CvsrRowProgress = {
   quote: string;
 };
 
-/**
- * Row labels whose trailing `1` is a footnote marker `pdftotext` inlined, not part
- * of the name — a hand-maintained allowlist per report, because the extracted text
- * carries no way to tell the two apart. Whether the marker arrives as `AAAT1` or
- * `AAAT 1` is an artifact of the extraction, so entries are written and matched in
- * the canonical no-space form; a missed registration cannot mis-state anything
- * silently, because `scripts/build-segments.ts` throws unless every structure and
- * guideway row resolves.
- */
-const FOOTNOTED_ROWS: Readonly<Record<string, readonly string[]>> = {
-  'FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf': [
-    'Excelsior Ave1',
-    'AAAT1',
-    'Ave 241',
-    'Ave 1561',
-    'Lansing1',
-    'Cross Creek1',
-    'SR 43 Jersey1',
-    'Belmont Avenue1',
-  ],
-  'FA-Central-Valley-Status-Report-July-2026-A11Y.pdf': [
-    'Belmont Avenue1',
-    'Road 261',
-    'Excelsior Ave1',
-    'AAAT1',
-    'Ave 241',
-    'Ave 1561',
-    'Cross Creek1',
-    'SR 43 Tied Arch to Cole Slough (0.36 Miles)1',
-    'Conejo Ave to Peach Ave (0.23 Miles)1',
-    'Elkhorn Ave to Fowler Ave (0.55 Miles)1',
-    'Fowler Ave to Davis Ave (1.35 Miles)1',
-    'Cole Slough to Access Road (0.33 Miles)1',
-    'Kings River to Dover Ave (1.29 Miles)1',
-    'Dover Ave to Excelsior Ave (1.01 Miles)1',
-    'Hanford Armona to Houston Ave (1.04 Miles)1',
-    'Ave 156 to SR 43 Tule River (1.58 Miles)1',
-    'Alpaugh Bridge to Ave 56 (0.95 Miles)1',
-    'Access Road to Dutch John Cut (0.22 Miles)1',
-    'Excelsior Ave to Flint Ave (2.04 Miles)1',
-    'Houston Ave to Idaho Ave (2.0 Miles)1',
-    'Fargo Ave to Grangeville Ave (1.04 Miles)1',
-    'Ave 88 to Deer Creek (2.14 Miles)1',
-  ],
-};
+/** Published span appended to guideway labels, e.g. `Fowler Ave to Davis Ave (1.35 Miles)`. */
+const PUBLISHED_SPAN = /\s*\(\d+(?:\.\d+)?\s*Miles\)$/i;
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'] as const;
 
@@ -84,19 +41,16 @@ function rowMonth(value: string): string {
   return `20${year}-${String(month).padStart(2, '0')}`;
 }
 
-function rowReportFile(text: string, reportFile?: string): string | undefined {
-  if (reportFile) return reportFile;
-  return /April 2026 Data/i.test(text)
-    ? 'FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf'
-    : undefined;
-}
-
 /**
  * Parses the Authority's row-level construction-progress tables. Package and
  * table headings are stateful because continued pages do not always repeat the
  * package heading in extracted text.
  */
-export function parseRowProgress(text: string, reportFile?: string): CvsrRowProgress[] {
+export function parseRowProgress(
+  text: string,
+  reportFile?: string,
+  isKnownLabel?: (kind: CvsrRowKind, label: string) => boolean,
+): CvsrRowProgress[] {
   const normalized = normalizeCvsrText(text);
   const lines = normalized.split(/\r?\n/).map((line) => line.trim());
   const rows: CvsrRowProgress[] = [];
@@ -104,8 +58,6 @@ export function parseRowProgress(text: string, reportFile?: string): CvsrRowProg
   let cp: CvsrPackage | undefined;
   let kind: CvsrRowKind | undefined;
   let table: CvsrRowTable | undefined;
-  const reviewedFile = rowReportFile(normalized, reportFile);
-  const footnoted = new Set(reviewedFile ? FOOTNOTED_ROWS[reviewedFile] ?? [] : []);
   const rowPattern =
     /^(?<location>\S.*?)\s+(?<start>[A-Z][a-z]{2}-\d{2})\s+(?<finish>[A-Z][a-z]{2}-\d{2})\s+(?<pct>\d+(?:\.\d+)?%|Open)(?:\s+(?<monthly>\d+(?:\.\d+)?%|[\u2013-]))?$/;
 
@@ -149,15 +101,22 @@ export function parseRowProgress(text: string, reportFile?: string): CvsrRowProg
     if (!cp || !kind || !table) continue;
     const match = rowPattern.exec(line);
     if (!match?.groups) continue;
-    let location = match.groups.location;
-    let footnote: CvsrRowProgress['footnote'] = null;
-    if (footnoted.has(location.replace(/\s+/g, ' ').replace(/\s+(\d)$/, '$1'))) {
-      location = location.replace(/\s*1$/, '');
-      footnote = cp === 'CP1' ? 'partially_open' : 'substantially_complete';
-    }
-    // July 2026 appends the published span to guideway labels. ArcGIS `Limits` and the
+    const raw = match.groups.location;
+    // The published span is appended to guideway labels. ArcGIS `Limits` and the
     // structure crosswalk both key on the bare label; `quote` keeps the verbatim line.
-    location = location.replace(/\s*\(\d+(?:\.\d+)?\s*Miles\)$/i, '');
+    let location = raw.replace(PUBLISHED_SPAN, '');
+    let footnote: CvsrRowProgress['footnote'] = null;
+    if (isKnownLabel && !isKnownLabel(kind, location)) {
+      // `pdftotext` inlines the footnote marker `1`, glued (`Cross Creek1`) or spaced
+      // (`Ave 24 1`), and outside the span (`Fowler Ave to Davis Ave (1.35 Miles)1`).
+      // Only a label that resolves without it was anchored: genuine numeric names
+      // (`Avenue 11`) do not resolve once their last digit is stripped.
+      const anchored = (/^(?<head>.*?)\s*1$/.exec(raw)?.groups?.head ?? '').replace(PUBLISHED_SPAN, '');
+      if (anchored && isKnownLabel(kind, anchored)) {
+        location = anchored;
+        footnote = cp === 'CP1' ? 'partially_open' : 'substantially_complete';
+      }
+    }
     const percent = match.groups.pct;
     const monthly = match.groups.monthly;
     rows.push({
@@ -177,7 +136,7 @@ export function parseRowProgress(text: string, reportFile?: string): CvsrRowProg
   }
 
   if (/(?:Structures|Guideways)\s*-\s*(?:Underway|Completed)/i.test(normalized) && rows.length === 0) {
-    throw new Error(`${reviewedFile ?? 'CVSR report'} contains row progress tables but yielded zero rows`);
+    throw new Error(`${reportFile ?? 'CVSR report'} contains row progress tables but yielded zero rows`);
   }
   for (const [key, summary] of summaries) {
     const [summaryCp, summaryKind] = key.split(':') as [CvsrPackage, CvsrRowKind];

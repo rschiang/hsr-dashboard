@@ -299,7 +299,7 @@ const LEGACY_PARCELS: Readonly<Record<string, {
  * This is not a carry-forward. A carry-forward asserts an unverified value; a pin
  * leaves no value free to assert. The April 2026 report publishes the split as
  * 1,080 + 985 + 223 = 2,288 with **zero** parcels to be delivered in every package, and
- * the July 2026 report — which prints no split at all — states "All required parcels
+ * every later report — which prints no split at all — states "All required parcels
  * have been delivered — 2,288 of 2,288". With the program total unmoved and every
  * package already at zero remaining, the split is determined.
  *
@@ -316,6 +316,15 @@ const PINNED_PARCELS: Readonly<Record<string, {
   'FA-Central-Valley-Status-Report-July-2026-A11Y.pdf': {
     source: 'FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf',
     detail: 'The authority officially marked 100% acquisition milestone for parcels required for CP1–4 guideway construction in the July 2026 report (data through May 2026). The separate values are sourced from June 2026 report (data through April 2026) which publishes that same total.',
+    values: {
+      CP1: { delivered: 1080, total: 1080 },
+      'CP2-3': { delivered: 985, total: 985 },
+      CP4: { delivered: 223, total: 223 },
+    },
+  },
+  'FA-Central-Valley-Status-Report-August-2026-A11Y.pdf': {
+    source: 'FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf',
+    detail: 'The August 2026 report (data through June 2026) prints no package parcel split and restates the completed program total, "All required parcels have been delivered — 2,288 of 2,288". The separate values are sourced from June 2026 report (data through April 2026) which publishes that same total.',
     values: {
       CP1: { delivered: 1080, total: 1080 },
       'CP2-3': { delivered: 985, total: 985 },
@@ -481,7 +490,10 @@ async function parsePdf(
         ]),
       )
     : parseProgressMetrics(text, dataMonth)) as Record<CvsrPackage, PackageMetrics>;
-  const rowProgress = parseRowProgress(text, reportFile);
+  const rowProgress = parseRowProgress(text, reportFile, (kind, label) =>
+    kind === 'structure'
+      ? Boolean(CVSR_ROW_CROSSWALK[label])
+      : label === 'Herndon Canal to Swift Ave' || guidewayByLabel.has(label));
   const perSegment: NonNullable<Snapshot['perSegment']> = {};
   const unmatchedRows: typeof rowProgress = [];
   for (const row of rowProgress) {

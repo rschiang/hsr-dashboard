@@ -6775,7 +6775,7 @@
         {
           "cp": "CP1",
           "kind": "structure",
-          "location": "Belmont Avenue"
+          "location": "Belmont Avenue 1"
         },
         {
           "cp": "CP1",
@@ -6930,7 +6930,7 @@
         {
           "cp": "CP2-3",
           "kind": "structure",
-          "location": "Excelsior Ave"
+          "location": "Excelsior Ave1"
         },
         {
           "cp": "CP2-3",
@@ -7020,7 +7020,7 @@
         {
           "cp": "CP2-3",
           "kind": "structure",
-          "location": "SR 43 Jersey"
+          "location": "SR 43 Jersey1"
         }
       ],
       "program": {
@@ -8525,7 +8525,7 @@
         {
           "cp": "CP1",
           "kind": "structure",
-          "location": "Belmont Avenue"
+          "location": "Belmont Avenue1"
         },
         {
           "cp": "CP1",
@@ -8540,7 +8540,7 @@
         {
           "cp": "CP1",
           "kind": "structure",
-          "location": "Road 26"
+          "location": "Road 261"
         },
         {
           "cp": "CP1",
@@ -8775,6 +8775,1792 @@
         {
           "cp": "CP2-3",
           "kind": "structure",
+          "location": "Excelsior Ave1"
+        }
+      ],
+      "program": {
+        "parcelsDelivered": 2288,
+        "parcelsTotal": 2288
+      }
+    },
+    {
+      "date": "2026-06-01",
+      "dataMonth": "2026-06",
+      "tier": 1,
+      "sourceId": "cvsr",
+      "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+      "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+      "perPackage": {
+        "CP1": {
+          "structuresComplete": 24,
+          "structuresTotal": 33,
+          "guidewayMilesComplete": 11,
+          "guidewayMilesTotal": 32,
+          "sourceId": "cvsr",
+          "utilitiesRelocated": 919,
+          "utilitiesTotal": 992,
+          "railroadParcelsAcquired": 80,
+          "railroadParcelsTotal": 89,
+          "parcelsDelivered": 1080,
+          "parcelsTotal": 1080,
+          "derivedFields": [
+            "parcels"
+          ],
+          "derivationDetail": "The August 2026 report (data through June 2026) prints no package parcel split and restates the completed program total, \"All required parcels have been delivered — 2,288 of 2,288\". The separate values are sourced from June 2026 report (data through April 2026) which publishes that same total."
+        },
+        "CP2-3": {
+          "structuresComplete": 30,
+          "structuresTotal": 48,
+          "guidewayMilesComplete": 57,
+          "guidewayMilesTotal": 65,
+          "sourceId": "cvsr",
+          "utilitiesRelocated": 671,
+          "utilitiesTotal": 701,
+          "railroadParcelsAcquired": 55,
+          "railroadParcelsTotal": 58,
+          "parcelsDelivered": 985,
+          "parcelsTotal": 985,
+          "derivedFields": [
+            "parcels"
+          ],
+          "derivationDetail": "The August 2026 report (data through June 2026) prints no package parcel split and restates the completed program total, \"All required parcels have been delivered — 2,288 of 2,288\". The separate values are sourced from June 2026 report (data through April 2026) which publishes that same total."
+        },
+        "CP4": {
+          "structuresComplete": 11,
+          "structuresTotal": 11,
+          "guidewayMilesComplete": 21.1,
+          "guidewayMilesTotal": 21.2,
+          "sourceId": "cvsr",
+          "utilitiesRelocated": 133,
+          "utilitiesTotal": 133,
+          "railroadParcelsAcquired": 29,
+          "railroadParcelsTotal": 29,
+          "parcelsDelivered": 223,
+          "parcelsTotal": 223,
+          "derivedFields": [
+            "parcels"
+          ],
+          "derivationDetail": "The August 2026 report (data through June 2026) prints no package parcel split and restates the completed program total, \"All required parcels have been delivered — 2,288 of 2,288\". The separate values are sourced from June 2026 report (data through April 2026) which publishes that same total."
+        }
+      },
+      "perSegment": {
+        "CP1:195": {
+          "completion": 0.01,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2026-05",
+          "scheduleFinish": "2027-02",
+          "table": "underway"
+        },
+        "CP1:189": {
+          "completion": 0.53,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2025-07",
+          "scheduleFinish": "2027-02",
+          "table": "underway"
+        },
+        "CP1:197": {
+          "completion": 0.08,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2026-04",
+          "scheduleFinish": "2027-03",
+          "table": "underway"
+        },
+        "CP1:192": {
+          "completion": 0.8,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2016-02",
+          "scheduleFinish": "2027-09",
+          "table": "underway"
+        },
+        "CP1:199": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2016-12",
+          "scheduleFinish": "2017-12",
+          "table": "completed"
+        },
+        "CP1:176": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2017-05",
+          "scheduleFinish": "2018-09",
+          "table": "completed"
+        },
+        "CP1:187": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2015-06",
+          "scheduleFinish": "2019-06",
+          "table": "completed"
+        },
+        "CP1:174": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2016-04",
+          "scheduleFinish": "2019-06",
+          "table": "completed"
+        },
+        "CP1:184": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-01",
+          "scheduleFinish": "2022-04",
+          "table": "completed"
+        },
+        "CP1:178": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2015-06",
+          "scheduleFinish": "2023-04",
+          "table": "completed"
+        },
+        "CP1:190": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2017-10",
+          "scheduleFinish": "2025-07",
+          "table": "completed"
+        },
+        "CP1:183": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2021-06",
+          "scheduleFinish": "2026-03",
+          "table": "completed"
+        },
+        "CP1:gap:1": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2026-06",
+          "scheduleFinish": "2026-11",
+          "table": "underway"
+        },
+        "CP2-3:129": {
+          "completion": 0.98,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-04",
+          "scheduleFinish": "2026-08",
+          "table": "underway"
+        },
+        "CP2-3:117": {
+          "completion": 0.85,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2023-11",
+          "scheduleFinish": "2026-08",
+          "table": "underway"
+        },
+        "CP2-3:114": {
+          "completion": 0.45,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-06",
+          "scheduleFinish": "2026-08",
+          "table": "underway"
+        },
+        "CP2-3:150": {
+          "completion": 0.82,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2023-11",
+          "scheduleFinish": "2026-08",
+          "table": "underway"
+        },
+        "CP2-3:170": {
+          "completion": 0.89,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2022-10",
+          "scheduleFinish": "2026-08",
+          "table": "underway"
+        },
+        "CP2-3:137": {
+          "completion": 0.61,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2023-08",
+          "scheduleFinish": "2026-09",
+          "table": "underway"
+        },
+        "CP2-3:160": {
+          "completion": 0.93,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-11",
+          "scheduleFinish": "2026-09",
+          "table": "underway"
+        },
+        "CP2-3:128": {
+          "completion": 0.94,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2019-11",
+          "scheduleFinish": "2026-09",
+          "table": "underway"
+        },
+        "CP2-3:110": {
+          "completion": 0.4,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2024-10",
+          "scheduleFinish": "2026-10",
+          "table": "underway"
+        },
+        "CP2-3:118": {
+          "completion": 0.35,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2025-06",
+          "scheduleFinish": "2026-12",
+          "table": "underway"
+        },
+        "CP2-3:127": {
+          "completion": 0.47,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2024-09",
+          "scheduleFinish": "2026-12",
+          "table": "underway"
+        },
+        "CP2-3:123": {
+          "completion": 0.75,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-11",
+          "scheduleFinish": "2027-03",
+          "table": "underway"
+        },
+        "CP2-3:143": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-04",
+          "scheduleFinish": "2023-07",
+          "table": "completed"
+        },
+        "CP2-3:112": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-06",
+          "scheduleFinish": "2023-07",
+          "table": "completed"
+        },
+        "CP2-3:119": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2019-08",
+          "scheduleFinish": "2023-09",
+          "table": "completed"
+        },
+        "CP2-3:139": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2023-03",
+          "scheduleFinish": "2024-12",
+          "table": "completed"
+        },
+        "CP2-3:132": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2025-05",
+          "scheduleFinish": "2026-04",
+          "table": "completed"
+        },
+        "CP2-3:138": {
+          "completion": 0.96,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2023-06",
+          "scheduleFinish": "2024-08",
+          "table": "completed"
+        },
+        "CP2-3:169": {
+          "completion": 0.97,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2022-08",
+          "scheduleFinish": "2024-10",
+          "table": "completed"
+        },
+        "CP2-3:144": {
+          "completion": 0.99,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2023-03",
+          "scheduleFinish": "2025-10",
+          "table": "completed"
+        },
+        "CP2-3:130": {
+          "completion": 0.97,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2021-04",
+          "scheduleFinish": "2026-04",
+          "table": "completed"
+        },
+        "CP2-3:131": {
+          "completion": 0.98,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-11",
+          "scheduleFinish": "2026-05",
+          "table": "completed"
+        },
+        "CP2-3:151": {
+          "completion": 0.9,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2025-06",
+          "scheduleFinish": "2026-05",
+          "table": "completed"
+        },
+        "CP2-3:121": {
+          "completion": 0.34,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2025-06",
+          "scheduleFinish": "2026-09",
+          "table": "underway"
+        },
+        "CP2-3:136": {
+          "completion": 0.78,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2024-03",
+          "scheduleFinish": "2026-09",
+          "table": "underway"
+        },
+        "CP2-3:113": {
+          "completion": 0.73,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2018-01",
+          "scheduleFinish": "2026-09",
+          "table": "underway"
+        },
+        "CP2-3:153": {
+          "completion": 0.78,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2024-01",
+          "scheduleFinish": "2026-10",
+          "table": "underway"
+        },
+        "CP2-3:111": {
+          "completion": 0.7,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2024-10",
+          "scheduleFinish": "2026-11",
+          "table": "underway"
+        },
+        "CP2-3:159": {
+          "completion": 0.46,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-10",
+          "scheduleFinish": "2026-11",
+          "table": "underway"
+        },
+        "CP2-3:120": {
+          "completion": 0.43,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2025-04",
+          "scheduleFinish": "2026-11",
+          "table": "underway"
+        },
+        "CP2-3:133": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2019-08",
+          "scheduleFinish": "2024-12",
+          "table": "completed"
+        },
+        "CP2-3:101": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-09",
+          "scheduleFinish": "2024-12",
+          "table": "completed"
+        },
+        "CP2-3:125": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-09",
+          "scheduleFinish": "2024-12",
+          "table": "completed"
+        },
+        "CP2-3:161": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-08",
+          "scheduleFinish": "2025-12",
+          "table": "completed"
+        },
+        "CP2-3:135": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2022-05",
+          "scheduleFinish": "2025-12",
+          "table": "completed"
+        },
+        "CP2-3:116": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2018-01",
+          "scheduleFinish": "2026-02",
+          "table": "completed"
+        },
+        "CP2-3:126": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2018-01",
+          "scheduleFinish": "2026-02",
+          "table": "completed"
+        },
+        "CP2-3:172": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-01",
+          "scheduleFinish": "2026-02",
+          "table": "completed"
+        },
+        "CP2-3:147": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2018-02",
+          "scheduleFinish": "2026-02",
+          "table": "completed"
+        },
+        "CP2-3:158": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2018-01",
+          "scheduleFinish": "2026-02",
+          "table": "completed"
+        },
+        "CP2-3:154": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2018-10",
+          "scheduleFinish": "2026-04",
+          "table": "completed"
+        },
+        "CP2-3:157": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2018-09",
+          "scheduleFinish": "2026-04",
+          "table": "completed"
+        },
+        "CP2-3:102": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2019-06",
+          "scheduleFinish": "2026-04",
+          "table": "completed"
+        },
+        "CP2-3:142": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2019-07",
+          "scheduleFinish": "2026-04",
+          "table": "completed"
+        },
+        "CP2-3:163": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2019-10",
+          "scheduleFinish": "2026-04",
+          "table": "completed"
+        },
+        "CP2-3:141": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2019-04",
+          "scheduleFinish": "2026-05",
+          "table": "completed"
+        },
+        "CP2-3:104": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2026-05",
+          "table": "completed"
+        },
+        "CP2-3:166": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2023-09",
+          "scheduleFinish": "2026-05",
+          "table": "completed"
+        },
+        "CP2-3:122": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2026-03",
+          "scheduleFinish": "2026-05",
+          "table": "completed"
+        },
+        "CP2-3:162": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-11",
+          "scheduleFinish": "2026-05",
+          "table": "completed"
+        },
+        "CP2-3:124": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2019-09",
+          "scheduleFinish": "2026-06",
+          "table": "completed"
+        },
+        "CP2-3:103": {
+          "completion": 0.9,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-10",
+          "scheduleFinish": "2026-07",
+          "table": "completed"
+        },
+        "CP2-3:140": {
+          "completion": 0.93,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2018-08",
+          "scheduleFinish": "2026-07",
+          "table": "completed"
+        },
+        "CP2-3:164": {
+          "completion": 0.95,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2019-10",
+          "scheduleFinish": "2026-07",
+          "table": "completed"
+        },
+        "CP2-3:155": {
+          "completion": 0.95,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2018-08",
+          "scheduleFinish": "2026-07",
+          "table": "completed"
+        },
+        "CP2-3:152": {
+          "completion": 0.9,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2018-02",
+          "scheduleFinish": "2026-07",
+          "table": "completed"
+        },
+        "CP2-3:109": {
+          "completion": 0.99,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-03",
+          "scheduleFinish": "2026-07",
+          "table": "completed"
+        },
+        "CP2-3:108": {
+          "completion": 0.99,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2025-11",
+          "scheduleFinish": "2026-07",
+          "table": "completed"
+        },
+        "CP2-3:168": {
+          "completion": 0.94,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2025-11",
+          "scheduleFinish": "2026-07",
+          "table": "completed"
+        },
+        "CP2-3:106": {
+          "completion": 0.98,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-09",
+          "scheduleFinish": "2026-07",
+          "table": "completed"
+        },
+        "CP2-3:149": {
+          "completion": 0.95,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-04",
+          "scheduleFinish": "2026-07",
+          "table": "completed"
+        },
+        "CP2-3:171": {
+          "completion": 0.97,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-04",
+          "scheduleFinish": "2026-07",
+          "table": "completed"
+        },
+        "CP2-3:115": {
+          "completion": 0.95,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2020-09",
+          "scheduleFinish": "2026-07",
+          "table": "completed"
+        },
+        "CP2-3:107": {
+          "completion": 0.98,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2024-06",
+          "scheduleFinish": "2026-07",
+          "table": "completed"
+        },
+        "CP2-3:156": {
+          "completion": 0.98,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2018-09",
+          "scheduleFinish": "2026-07",
+          "table": "completed"
+        },
+        "CP2-3:148": {
+          "completion": 0.95,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2024-12",
+          "scheduleFinish": "2026-07",
+          "table": "completed"
+        },
+        "CP2-3:134": {
+          "completion": 0.95,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2025-11",
+          "scheduleFinish": "2026-08",
+          "table": "completed"
+        },
+        "CP2-3:167": {
+          "completion": 0.9,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2024-07",
+          "scheduleFinish": "2026-08",
+          "table": "completed"
+        },
+        "CP2-3:165": {
+          "completion": 0.98,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2024-08",
+          "scheduleFinish": "2026-08",
+          "table": "completed"
+        },
+        "CP2-3:145": {
+          "completion": 0.97,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2018-01",
+          "scheduleFinish": "2026-09",
+          "table": "completed"
+        },
+        "CP2-3:146": {
+          "completion": 0.86,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2024-07",
+          "scheduleFinish": "2026-09",
+          "table": "completed"
+        },
+        "CP2-3:105": {
+          "completion": 0.9,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2022-09",
+          "scheduleFinish": "2026-10",
+          "table": "completed"
+        }
+      },
+      "structureEvidence": [
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-muscat-ave",
+          "segmentId": "CP1:199",
+          "claim": "completed",
+          "date": "2017-12",
+          "datePrecision": "month",
+          "label": "Muscat Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Muscat Ave Dec-16 Dec-17 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-south-of-pergola-viaduct",
+          "segmentId": "CP1:176",
+          "claim": "completed",
+          "date": "2018-09",
+          "datePrecision": "month",
+          "label": "South of Pergola Viaduct",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "South of Pergola Viaduct May-17 Sep-18 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-fresno-river-viaduct-501",
+          "segmentId": "CP1:187",
+          "claim": "completed",
+          "date": "2019-06",
+          "datePrecision": "month",
+          "label": "Fresno River Viaduct 501",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Fresno River Viaduct 501 Jun-15 Jun-19 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-cottonwood-creek",
+          "segmentId": "CP1:174",
+          "claim": "completed",
+          "date": "2019-06",
+          "datePrecision": "month",
+          "label": "Cottonwood Creek",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Cottonwood Creek Apr-16 Jun-19 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-golden-state-blvd",
+          "segmentId": "CP1:184",
+          "claim": "completed",
+          "date": "2022-04",
+          "datePrecision": "month",
+          "label": "Golden State Blvd",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Golden State Blvd Jan-20 Apr-22 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-hst-fresno-viaduct",
+          "segmentId": "CP1:178",
+          "claim": "completed",
+          "date": "2023-04",
+          "datePrecision": "month",
+          "label": "HST Fresno Viaduct",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "HST Fresno Viaduct Jun-15 Apr-23 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-tulare-underpass",
+          "segmentId": "CP1:190",
+          "claim": "completed",
+          "date": "2025-07",
+          "datePrecision": "month",
+          "label": "Tulare Underpass",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Tulare Underpass Oct-17 Jul-25 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-ventura-underpass",
+          "segmentId": "CP1:183",
+          "claim": "completed",
+          "date": "2026-03",
+          "datePrecision": "month",
+          "label": "Ventura Underpass",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ventura Underpass Jun-21 Mar-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-9th-ave",
+          "segmentId": "CP2-3:143",
+          "claim": "completed",
+          "date": "2023-07",
+          "datePrecision": "month",
+          "label": "9th Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "9th Ave Apr-20 Jul-23 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-cairo-ave",
+          "segmentId": "CP2-3:112",
+          "claim": "completed",
+          "date": "2023-07",
+          "datePrecision": "month",
+          "label": "Cairo Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Cairo Ave Jun-20 Jul-23 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-peach-ave",
+          "segmentId": "CP2-3:119",
+          "claim": "completed",
+          "date": "2023-09",
+          "datePrecision": "month",
+          "label": "Peach Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Peach Ave Aug-19 Sep-23 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-whitley-ave",
+          "segmentId": "CP2-3:139",
+          "claim": "completed",
+          "date": "2024-12",
+          "datePrecision": "month",
+          "label": "Whitley Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Whitley Ave Mar-23 Dec-24 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-lansing",
+          "segmentId": "CP2-3:132",
+          "claim": "completed",
+          "date": "2026-04",
+          "datePrecision": "month",
+          "label": "Lansing",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Lansing May-25 Apr-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-aaat",
+          "segmentId": "CP2-3:138",
+          "claim": "substantially_complete",
+          "date": "2024-08",
+          "datePrecision": "month",
+          "label": "AAAT",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "AAAT 1 Jun-23 Aug-24 96%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-ave-24",
+          "segmentId": "CP2-3:169",
+          "claim": "substantially_complete",
+          "date": "2024-10",
+          "datePrecision": "month",
+          "label": "Ave 24",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 24 1 Aug-22 Oct-24 97%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-ave-156",
+          "segmentId": "CP2-3:144",
+          "claim": "substantially_complete",
+          "date": "2025-10",
+          "datePrecision": "month",
+          "label": "Ave 156",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 156 1 Mar-23 Oct-25 99%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-cross-creek",
+          "segmentId": "CP2-3:130",
+          "claim": "substantially_complete",
+          "date": "2026-04",
+          "datePrecision": "month",
+          "label": "Cross Creek",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Cross Creek 1 Apr-21 Apr-26 97%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-sr-43-tule-river",
+          "segmentId": "CP2-3:131",
+          "claim": "substantially_complete",
+          "date": "2026-05",
+          "datePrecision": "month",
+          "label": "SR 43 Tule River",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "SR 43 Tule River 1 Nov-20 May-26 98%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-ave-136",
+          "segmentId": "CP2-3:151",
+          "claim": "substantially_complete",
+          "date": "2026-05",
+          "datePrecision": "month",
+          "label": "Ave 136",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 136 1 Jun-25 May-26 90%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-dutch-john-cut-to-9th-ave",
+          "segmentId": "CP2-3:133",
+          "claim": "completed",
+          "date": "2024-12",
+          "datePrecision": "month",
+          "label": "Dutch John Cut to 9th Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Dutch John Cut to 9th Ave (0.29 Miles) Aug-19 Dec-24 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-9th-ave-to-cairo-ave",
+          "segmentId": "CP2-3:101",
+          "claim": "completed",
+          "date": "2024-12",
+          "datePrecision": "month",
+          "label": "9th Ave to Cairo Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "9th Ave to Cairo Ave (0.39 Miles) Sep-20 Dec-24 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-cairo-ave-to-kings-river",
+          "segmentId": "CP2-3:125",
+          "claim": "completed",
+          "date": "2024-12",
+          "datePrecision": "month",
+          "label": "Cairo Ave to Kings River",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Cairo Ave to Kings River (0.35 Miles) Sep-20 Dec-24 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-ave-56-to-aaat",
+          "segmentId": "CP2-3:161",
+          "claim": "completed",
+          "date": "2025-12",
+          "datePrecision": "month",
+          "label": "Ave 56 to AAAT",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 56 to AAAT (1.54 Miles) Aug-20 Dec-25 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-aaat-to-ave-24",
+          "segmentId": "CP2-3:135",
+          "claim": "completed",
+          "date": "2025-12",
+          "datePrecision": "month",
+          "label": "AAAT to Ave 24",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "AAAT to Ave 24 (2.46 Miles) May-22 Dec-25 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-project-start-to-adams",
+          "segmentId": "CP2-3:116",
+          "claim": "completed",
+          "date": "2026-02",
+          "datePrecision": "month",
+          "label": "Project Start to Adams",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Project Start to Adams (1.81 Miles) Jan-18 Feb-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-adams-ave-to-south-ave",
+          "segmentId": "CP2-3:126",
+          "claim": "completed",
+          "date": "2026-02",
+          "datePrecision": "month",
+          "label": "Adams Ave to South Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Adams Ave to South Ave (1.0 Miles) Jan-18 Feb-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-south-ave-to-manning-ave",
+          "segmentId": "CP2-3:172",
+          "claim": "completed",
+          "date": "2026-02",
+          "datePrecision": "month",
+          "label": "South Ave to Manning Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "South Ave to Manning Ave (1.0 Miles) Jan-20 Feb-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-manning-ave-to-floral-ave",
+          "segmentId": "CP2-3:147",
+          "claim": "completed",
+          "date": "2026-02",
+          "datePrecision": "month",
+          "label": "Manning Ave to Floral Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Manning Ave to Floral Ave (2.02 Miles) Feb-18 Feb-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-floral-ave-to-nebraska-ave",
+          "segmentId": "CP2-3:158",
+          "claim": "completed",
+          "date": "2026-02",
+          "datePrecision": "month",
+          "label": "Floral Ave to Nebraska Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Floral Ave to Nebraska Ave (1.09 Miles) Jan-18 Feb-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-idaho-ave-to-jackson-ave",
+          "segmentId": "CP2-3:154",
+          "claim": "completed",
+          "date": "2026-04",
+          "datePrecision": "month",
+          "label": "Idaho Ave to Jackson Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Idaho Ave to Jackson Ave (1.01 Miles) Oct-18 Apr-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-kent-ave-to-kansas-ave",
+          "segmentId": "CP2-3:157",
+          "claim": "completed",
+          "date": "2026-04",
+          "datePrecision": "month",
+          "label": "Kent Ave to Kansas Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Kent Ave to Kansas Ave (1.03 Miles) Sep-18 Apr-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-kansas-ave-to-lansing",
+          "segmentId": "CP2-3:102",
+          "claim": "completed",
+          "date": "2026-04",
+          "datePrecision": "month",
+          "label": "Kansas Ave to Lansing",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Kansas Ave to Lansing (0.98 Miles) Jun-19 Apr-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-corcoran-hwy-to-whitley-ave",
+          "segmentId": "CP2-3:142",
+          "claim": "completed",
+          "date": "2026-04",
+          "datePrecision": "month",
+          "label": "Corcoran HWY to Whitley Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Corcoran HWY to Whitley Ave (0.98 Miles) Jul-19 Apr-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-whitley-ave-to-ave-156",
+          "segmentId": "CP2-3:163",
+          "claim": "completed",
+          "date": "2026-04",
+          "datePrecision": "month",
+          "label": "Whitley Ave to Ave 156",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Whitley Ave to Ave 156 (1.88 Miles) Oct-19 Apr-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-jackson-ave-to-sr-43-jersey",
+          "segmentId": "CP2-3:141",
+          "claim": "completed",
+          "date": "2026-05",
+          "datePrecision": "month",
+          "label": "Jackson Ave to SR 43 Jersey",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Jackson Ave to SR 43 Jersey (1.30 Miles) Apr-19 May-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-sr-43-jersey-to-kent-ave",
+          "segmentId": "CP2-3:104",
+          "claim": "completed",
+          "date": "2026-05",
+          "datePrecision": "month",
+          "label": "SR 43 Jersey to Kent Ave",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "SR 43 Jersey to Kent Ave (0.98 Miles) Nov-18 May-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-lansing-to-cross-creek",
+          "segmentId": "CP2-3:166",
+          "claim": "completed",
+          "date": "2026-05",
+          "datePrecision": "month",
+          "label": "Lansing to Cross Creek",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Lansing to Cross Creek (1.37 Miles) Sep-23 May-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-sr-43-tule-river-to-ave-136",
+          "segmentId": "CP2-3:122",
+          "claim": "completed",
+          "date": "2026-05",
+          "datePrecision": "month",
+          "label": "SR 43 Tule River to Ave 136",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "SR 43 Tule River to Ave 136 (0.45 Miles) Mar-26 May-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-ave-24-to-project-finish",
+          "segmentId": "CP2-3:162",
+          "claim": "completed",
+          "date": "2026-05",
+          "datePrecision": "month",
+          "label": "Ave 24 to Project Finish",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 24 to Project Finish (2.21 Miles) Nov-20 May-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-ave-156-to-sr-43-tule-river",
+          "segmentId": "CP2-3:124",
+          "claim": "completed",
+          "date": "2026-06",
+          "datePrecision": "month",
+          "label": "Ave 156 to SR 43 Tule River",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 156 to SR 43 Tule River (1.58 Miles) Sep-19 Jun-26 100%"
+        }
+      ],
+      "unmatchedCvsrRows": [
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Shaw Avenue"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Herndon UPRR Bridge"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "McKinley"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Church Ave"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Olive Ave"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Tuolumne Bridge"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 10"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 7"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 15"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 11"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 8"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "American Ave"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 12 BNSF"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 12 HST"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Road 27"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 15.5"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 9"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Belmont Avenue 1"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "E Central Avenue"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Avenue 17"
+        },
+        {
+          "cp": "CP1",
+          "kind": "structure",
+          "location": "Road 26 1"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Clinton Ave Connector to Fresno Trench"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Viaduct 203 at SJR to Herndon Canal"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Fresno Trench - N. of Belmont"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "GW North Extension"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Fresno St to SR 41"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Caltrans Section"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "HST Guideway"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Fresno Trench Shooflies / Dry Creek"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Jensen Trench"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "HST Viaduct 501 - Fresno River-18 Bents"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "HST Bridge-4 Spans"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "HST Bridge 89 – Cottonwood"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Cottonwood Creek Test Strip to Ave 12"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Ave 9 to Ave 8"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Ave 11 to Ave 10"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Ave 8 to Viaduct 203 at SJR"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Ave 12 to Ave 11"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Viaduct 203.2 San Joaquin River Crossing"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Fresno Viaduct-23 Spans"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Fresno Viaduct Caltrans Bridge"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Viaduct 501 at Fresno River to Cottonwood Creek"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "Ave 10 to Ave 09"
+        },
+        {
+          "cp": "CP1",
+          "kind": "guideway",
+          "location": "N1A Boundary to Viaduct 501"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Corcoran HWY"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Manning Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "SR 43 Curved Bridge"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Nebraska Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Houston Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Ave 120"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "South Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Jackson Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Kent Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Adams Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Fowler Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Ave 88"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Dover Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Idaho Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Elkhorn Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Davis Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Kansas Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Flint Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Floral Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Mt. View"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Ave 56"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Fargo Ave"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "Hanford Armona"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
+          "location": "SR 43 Jersey"
+        },
+        {
+          "cp": "CP2-3",
+          "kind": "structure",
           "location": "Excelsior Ave"
         }
       ],
@@ -8786,7 +10572,7 @@
   ],
   "cvsrInventory": {
     "coverageStart": "2019-03",
-    "coverageEnd": "2026-05",
+    "coverageEnd": "2026-06",
     "expectedMonths": [
       "2019-03",
       "2019-04",
@@ -8874,7 +10660,8 @@
       "2026-02",
       "2026-03",
       "2026-04",
-      "2026-05"
+      "2026-05",
+      "2026-06"
     ],
     "availableMonths": [
       "2019-03",
@@ -8963,7 +10750,8 @@
       "2026-02",
       "2026-03",
       "2026-04",
-      "2026-05"
+      "2026-05",
+      "2026-06"
     ],
     "gaps": [
       {
@@ -9475,6 +11263,14 @@
           "parcels"
         ],
         "detail": "The authority officially marked 100% acquisition milestone for parcels required for CP1–4 guideway construction in the July 2026 report (data through May 2026). The separate values are sourced from June 2026 report (data through April 2026) which publishes that same total."
+      },
+      {
+        "month": "2026-06",
+        "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+        "fields": [
+          "parcels"
+        ],
+        "detail": "The August 2026 report (data through June 2026) prints no package parcel split and restates the completed program total, \"All required parcels have been delivered — 2,288 of 2,288\". The separate values are sourced from June 2026 report (data through April 2026) which publishes that same total."
       }
     ],
     "revisions": [
