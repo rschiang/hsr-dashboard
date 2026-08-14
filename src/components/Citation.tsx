@@ -2,20 +2,20 @@ import { SOURCES, type SourceId } from '../data/sources';
 
 const SOURCE_IDS = Object.keys(SOURCES) as SourceId[];
 const PARENT_IDS = SOURCE_IDS.filter((id) => SOURCES[id].partOf === undefined);
-/** Locators nested under each parent, in registry order — the order their letters follow. */
-const CHILD_IDS: Partial<Record<SourceId, SourceId[]>> = Object.fromEntries(
-  PARENT_IDS.map((parentId) => [parentId, SOURCE_IDS.filter((id) => SOURCES[id].partOf === parentId)]),
-);
+/** Locators nested under each entry, in registry order — the order their letters follow. */
+const CHILD_IDS = Object.fromEntries(
+  SOURCE_IDS.map((parentId) => [parentId, SOURCE_IDS.filter((id) => SOURCES[id].partOf === parentId)]),
+) as Record<SourceId, SourceId[]>;
 
 /**
- * A parent carries the footnote number; a locator inside it carries the parent's
- * number plus its own letter, so `15c` reads as the third pinpoint in source 15.
+ * A parent carries the footnote number; a locator inside it carries its parent's
+ * label plus its own letter, so `15c` reads as the third pinpoint in source 15 and
+ * `15ca` as the first pinpoint inside that.
  */
 function sourceLabel(sourceId: SourceId): string {
   const parentId = SOURCES[sourceId].partOf;
   if (parentId === undefined) return String(PARENT_IDS.indexOf(sourceId) + 1);
-  const childIndex = CHILD_IDS[parentId]!.indexOf(sourceId);
-  return `${PARENT_IDS.indexOf(parentId) + 1}${String.fromCharCode(97 + childIndex)}`;
+  return `${sourceLabel(parentId)}${String.fromCharCode(97 + CHILD_IDS[parentId].indexOf(sourceId))}`;
 }
 
 export function SourceLink({ sourceId, title, page }: {
@@ -52,7 +52,7 @@ export function ReportLink({ url, title }: { url: string; title?: string }) {
 function SourceEntry({ id }: { id: SourceId }) {
   const source = SOURCES[id];
   const parent = source.partOf === undefined ? undefined : SOURCES[source.partOf];
-  const children = CHILD_IDS[id] ?? [];
+  const children = CHILD_IDS[id];
   // A locator inherits its parent's publisher and date; it prints only what it adds.
   const meta = [
     parent === undefined ? source.publisher : undefined,

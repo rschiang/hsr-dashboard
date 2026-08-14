@@ -1,7 +1,7 @@
 .page { display: flex; flex-direction: column; background: var(--paper); }
 .screen { display: flex; flex-direction: column; height: 100vh; min-height: 40rem; }
 .viewport-grid { display: grid; grid-template-columns: minmax(0, 1fr) var(--metric-rail-width); flex: 1 1 auto; min-height: 0; }
-.below-fold { display: grid; grid-template-columns: minmax(0, 1fr) minmax(13.75rem, 17.5rem); grid-template-areas: 'notes legend' 'sources sources'; gap: var(--space-4); min-height: 80vh; max-width: var(--content-max); margin: 0 auto; padding: var(--space-8) var(--page-gutter); }
+.below-fold { display: grid; grid-template-columns: minmax(0, 1fr) minmax(13.75rem, 17.5rem); grid-template-areas: 'delivery delivery' 'notes legend' 'sources sources'; gap: var(--space-4); min-height: 80vh; max-width: var(--content-max); margin: 0 auto; padding: var(--space-8) var(--page-gutter); }
 .notes-list { grid-area: notes; }
 .legend-panel h2, .notes-list h2, .sources-list h2 { font-size: 1rem; font-weight: 750; letter-spacing: -0.01em; }
 .notes-list ul { margin: var(--space-2) 0 0; padding-left: var(--space-4); }
@@ -226,6 +226,39 @@ abbr[title] { text-decoration: underline dotted; text-decoration-thickness: from
 .legend-swatch.hatched {
   background-image: repeating-linear-gradient(45deg, transparent 0 3px, var(--status-no-data-hatch) 3px 4px);
 }
+.delivery-outlook { grid-area: delivery; }
+.delivery-outlook h2 { font-size: 1rem; font-weight: 750; letter-spacing: -0.01em; }
+.delivery-outlook > header p { margin-top: var(--space-1); color: var(--muted); font-size: 0.71875rem; line-height: 1.45; }
+.delivery-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); margin-top: var(--space-3); }
+.delivery-card { align-self: start; padding: var(--space-4); background: var(--panel); border: 1px solid var(--line); border-radius: 6px; color: var(--prose); font-size: 0.71875rem; line-height: 1.45; }
+.delivery-card-wide { grid-column: 1 / -1; }
+.delivery-card table { width: 100%; }
+.delivery-scroll { overflow-x: auto; }
+.delivery-card h3 { font-size: 0.875rem; font-weight: 750; letter-spacing: -0.01em; }
+.delivery-card h4 { margin-top: var(--space-3); color: var(--ink); font-size: 0.75rem; font-weight: 700; }
+.delivery-card h5 { color: var(--ink); font-size: 0.71875rem; font-weight: 700; }
+.delivery-card p { margin-top: var(--space-2); }
+.delivery-status { color: var(--ink); font-weight: 700; }
+.delivery-card table { margin-top: var(--space-2); border-collapse: collapse; }
+.delivery-card th, .delivery-card td { padding: var(--space-1) var(--space-2) var(--space-1) 0; text-align: left; vertical-align: top; }
+.delivery-card tbody th { color: var(--ink); font-weight: 700; }
+.delivery-card thead th { color: var(--label); font-size: 0.6875rem; letter-spacing: 0.06em; text-transform: uppercase; }
+.delivery-card caption { color: var(--muted); font-size: 0.6875rem; text-align: left; caption-side: bottom; padding-top: var(--space-2); }
+.delivery-state { color: var(--muted); white-space: nowrap; }
+.delivery-sections td { white-space: nowrap; }
+.delivery-forecast-group th { padding-top: var(--space-2); border-top: 1px solid var(--line); }
+.delivery-bars { margin-top: var(--space-3); }
+.delivery-bars ul { display: grid; gap: var(--space-1); margin: 0; padding: 0; list-style: none; }
+.delivery-bars li { display: grid; grid-template-columns: 7rem minmax(0, 1fr) 4.5rem; align-items: center; gap: var(--space-2); }
+.delivery-bar { height: 9px; background: var(--cp1); border-radius: var(--element-radius); }
+.delivery-bar-label { color: var(--ink); font-weight: 700; }
+.delivery-bar-value { font-variant-numeric: tabular-nums; }
+.delivery-bars figcaption { margin-top: var(--space-2); color: var(--muted); font-size: 0.6875rem; }
+.delivery-features { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); margin-top: var(--space-2); }
+.delivery-features ul, .delivery-legend, .delivery-notes, .delivery-options, .delivery-packages { margin: var(--space-1) 0 0; padding-left: var(--space-4); }
+.delivery-legend li, .delivery-notes li, .delivery-options li, .delivery-packages li { margin-bottom: var(--space-1); }
+.delivery-legend, .delivery-notes { margin-top: var(--space-3); }
+.delivery-transcription { color: var(--muted); }
 .sources-list { grid-area: sources; border-top: 1px solid var(--line); padding-top: var(--space-4); }
 .sources-list ol { margin: var(--space-2) 0 0; padding-left: var(--space-4); }
 .sources-list li { margin-bottom: var(--space-2); color: var(--prose); font-size: 0.6875rem; line-height: 1.3; }
@@ -252,7 +285,10 @@ abbr[title] { text-decoration: underline dotted; text-decoration-thickness: from
 
 @media (max-width: 64rem) {
   .screen { height: auto; }
-  .below-fold { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'legend' 'notes' 'sources'; }
+  .below-fold { grid-template-columns: minmax(0, 1fr); grid-template-areas: 'delivery' 'legend' 'notes' 'sources'; }
+  .delivery-grid { grid-template-columns: minmax(0, 1fr); }
+  .delivery-card-wide { grid-column: auto; }
+  .delivery-features { grid-template-columns: minmax(0, 1fr); }
   .viewport-grid { grid-template-columns: 1fr; }
   .map-pane { min-height: 60vh; }
   .metric-rail { border-left: 0; border-top: 1px solid var(--line); overflow: visible; }

@@ -1,6 +1,6 @@
 import type { ConstructionPackage } from '../data/types';
 
-export type Abbreviation = ConstructionPackage | 'CVY' | 'CVSR';
+export type Abbreviation = ConstructionPackage | 'CVY' | 'CVSR' | 'TSCC' | 'OCS';
 
 /** Expansions verified against Authority documents; see README source list. */
 const ABBREVIATIONS: Record<Abbreviation, string> = {
@@ -11,6 +11,8 @@ const ABBREVIATIONS: Record<Abbreviation, string> = {
   CP4: 'Construction Package 4',
   LGA: 'Locally Generated Alternative (Fresno–Bakersfield)',
   CVSR: 'Central Valley Status Report',
+  TSCC: 'Track and Systems Construction Contract',
+  OCS: 'overhead contact system',
 };
 
 export function Abbr({ children }: { children: Abbreviation }) {

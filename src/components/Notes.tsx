@@ -60,13 +60,15 @@ export function NotesList({ gaps, revisions, overlapMiles }: {
           never painted by mile. Historical colors before the latest fetch are schedule-derived.
         </li>
         <li>
-          <b>Track installation.</b> Exhibit D.0 of the 2026 Final Business Plan lists Track &amp;
-          Systems Design &amp; Construction for the 119-mile Central Valley Segment as NOT STARTED,
-          and the Authority’s 2026 milestones say the track-laying phase can
-          commence <SourceLink sourceId="bp2026_milestones" />. No
-          monthly track-installation series and no track-mileage total are published, so the block
-          shows a bare zero over a dashed baseline rather than a reported trend.{' '}
-          <SourceLink sourceId="bp2026_schedule" />
+          <b>Track installation.</b> The Authority awarded the Track &amp; Systems Construction
+          Contract in June 2026 and authorized Packages 1B and 2, so track work is under contract
+          rather than unstarted; every later package still needs its own Board
+          approval <SourceLink sourceId="tscc_resolution_2026" />. CP4 track laying is forecast to
+          begin in Q4 2026, against a contract requirement to start track construction no later
+          than December 15, 2026. No installed-track mileage total and no monthly
+          track-installation series are published, so the block shows an em dash over a dashed
+          baseline rather than a number. <SourceLink sourceId="cvsr_2026_08_forecast" /> Package and
+          section detail is in the delivery outlook below.
         </li>
         <li>
           <b>Right-of-way delivered.</b> The CVSR counts parcels the Authority has handed to the

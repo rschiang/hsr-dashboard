@@ -15,6 +15,8 @@ import { formatRailValue, packagePercent, railMetricValues, RAIL_METRICS } from 
 import { Abbr, type Abbreviation } from './components/Abbr';
 import { ReportLink, SourceLink, SourcesList } from './components/Citation';
 import { NotesList } from './components/Notes';
+import { DeliveryOutlook } from './components/DeliveryOutlook';
+import { DELIVERY_CONTEXT_BY_PACKAGE, TRACK_METRIC } from './data/delivery-outlook';
 import { Legend } from './components/Legend';
 import { type SparklineSeries } from './components/Sparkline';
 import { MetricBlock } from './components/MetricBlock';
@@ -182,6 +184,7 @@ function App() {
                   status={derived.statuses[selectedSegment.id]}
                   evidence={derived.evidence[selectedSegment.id]}
                   disagreement={selectedDisagreement}
+                  deliveryContext={DELIVERY_CONTEXT_BY_PACKAGE[selectedSegment.cp]}
                   date={date}
                   onClear={handleClearSelection}
                 />
@@ -232,6 +235,7 @@ function App() {
       </div>
 
       <section className="below-fold">
+        <DeliveryOutlook />
         <Legend />
         <NotesList
           gaps={groupedCvsrGaps}
@@ -281,8 +285,6 @@ const CP_COLORS: Record<(typeof CVSR_PACKAGES)[number], string> = {
   'CP2-3': 'var(--cp2-3)',
   CP4: 'var(--cp4)',
 };
-
-const TRACK_ARIA_LABEL = 'Track installed: zero miles. The 2026 Final Business Plan reports Track and Systems design and construction for the 119-mile Central Valley Segment as not started, and the Authority publishes no monthly track-installation series.';
 
 /**
  * The rail reads each published CVSR metric at program level: a value the report
@@ -336,12 +338,12 @@ function MetricRail({
     <>
       <MetricBlock
         label="Track installed"
-        value="0"
-        unit="mi"
-        chip={<>Upcoming 2026 <SourceLink sourceId="bp2026_schedule" /></>}
+        value={TRACK_METRIC.value}
+        unit={TRACK_METRIC.unit}
+        chip={<>{TRACK_METRIC.chip} <SourceLink sourceId={TRACK_METRIC.sourceId} /></>}
         series={trackSeries}
         selectedIndex={null}
-        ariaLabel={TRACK_ARIA_LABEL}
+        ariaLabel={TRACK_METRIC.ariaLabel}
       />
       {RAIL_METRICS.map((metric) => {
         const { value, total } = beforeCoverage

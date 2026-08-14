@@ -1,4 +1,5 @@
 import { SOURCES } from '../data/sources';
+import type { DeliveryContext } from '../data/delivery-outlook';
 import type { AlignmentStatus, Segment, StructureEvidence } from '../data/types';
 import { STATUS_LABELS } from '../lib/status';
 import { evidenceDateLabel, structureObservationLabel } from '../lib/observation-labels';
@@ -15,6 +16,7 @@ export function SegmentDetail({
   status,
   evidence,
   disagreement,
+  deliveryContext,
   date,
   onClear,
 }: {
@@ -22,6 +24,8 @@ export function SegmentDetail({
   status: AlignmentStatus | undefined;
   evidence: StructureEvidence | undefined;
   disagreement?: { arcgis: number; cvsr: number; cvsrMonth: string; reportFile: string; reportUrl: string };
+  /** Procurement or forecast standing for this package; never an observed status. */
+  deliveryContext?: DeliveryContext;
   date: string;
   onClear: () => void;
 }) {
@@ -34,6 +38,17 @@ export function SegmentDetail({
       <dl>
         <dt>Package · status</dt>
         <dd><Abbr>{segment.cp}</Abbr> · {STATUS_LABELS[status ?? segment.currentStatus]}</dd>
+
+        {deliveryContext && (
+          <>
+            <dt>Delivery outlook</dt>
+            <dd>
+              {deliveryContext.state} — {deliveryContext.summary}
+              {' '}<SourceLink sourceId={deliveryContext.sourceId} />
+              {' '}<a href={deliveryContext.anchor}>See outlook</a>
+            </dd>
+          </>
+        )}
 
         <dt>Station</dt>
         <dd>
