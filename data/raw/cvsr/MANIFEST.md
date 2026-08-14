@@ -58,6 +58,7 @@ it reads and fails if the total moves or the split is published again.
 | Data month | Report filename | Derived fields | Detail |
 |---|---|---|---|
 | `2026-05` | `FA-Central-Valley-Status-Report-July-2026-A11Y.pdf` | parcels | The authority officially marked 100% acquisition milestone for parcels required for CP1–4 guideway construction in the July 2026 report (data through May 2026). The separate values are sourced from June 2026 report (data through April 2026) which publishes that same total. |
+| `2026-06` | `FA-Central-Valley-Status-Report-August-2026-A11Y.pdf` | parcels | The August 2026 report (data through June 2026) prints no package parcel split and restates the completed program total, "All required parcels have been delivered — 2,288 of 2,288". The separate values are sourced from June 2026 report (data through April 2026) which publishes that same total. |
 
 ## Unresolved report URLs
 

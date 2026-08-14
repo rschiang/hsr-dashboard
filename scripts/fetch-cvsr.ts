@@ -25,7 +25,9 @@ import {
   type CvsrPackage,
 } from './lib/cvsr-parser';
 import {
+  PARSE_FAILURE_PREFIX,
   buildCvsrInventory,
+  ingestedReportFiles,
   parcelOmission,
   type CvsrFieldFailure,
   type CvsrParseFailure,
@@ -710,13 +712,14 @@ function preferSnapshot(
 }
 
 /**
- * The corpus filenames a run can know without reading the directory: every parsed
- * snapshot's report, every byte-verified registry entry, every reviewed report, and the
- * reviewed duplicate the Authority overwrote. For the committed artifact this union
- * equals the local corpus exactly, which is what lets `--ingest` recognise an
- * already-ingested report with no PDFs on disk.
+ * Which filenames the local corpus contains, answered without reading the directory: every
+ * parsed snapshot's report, every byte-verified registry entry, every reviewed report, and
+ * the reviewed duplicate the Authority overwrote. For the committed artifact this union
+ * equals the corpus exactly, which is what lets the inventory label reports downloaded or
+ * missing where CI has no PDFs on disk. It is *not* proof of ingestion — see
+ * `ingestedReportFiles`.
  */
-function knownReportFiles(snapshots: readonly Snapshot[], reportUrls: ReportUrlRegistry): Set<string> {
+function corpusReportFiles(snapshots: readonly Snapshot[], reportUrls: ReportUrlRegistry): Set<string> {
   const files = new Set<string>([REJECTED_OVERWRITTEN_REPORT.file]);
   for (const snapshot of snapshots) if (snapshot.reportFile) files.add(snapshot.reportFile);
   for (const file of Object.keys(reportUrls)) files.add(file);
@@ -791,7 +794,7 @@ async function parseLocalPdfs(): Promise<void> {
       reportFile: failure.file,
       reportUrl: reportMetadata(failure.file)?.reportUrl,
       dataMonth: failure.dataMonth,
-      reason: `Parser failure: ${failure.reason}`,
+      reason: `${PARSE_FAILURE_PREFIX}${failure.reason}`,
     });
   }
   const cvsrInventory = buildCvsrInventory({
@@ -928,6 +931,10 @@ async function ingestCvsr(): Promise<void> {
     throw new Error('--file requires the name of a report already present in data/raw/cvsr');
   }
 
+  const skipList = new Set(
+    (process.env.HSR_CVSR_SKIP ?? '').split(',').map((entry) => entry.trim()).filter(Boolean),
+  );
+
   let candidates: DiscoveredReport[];
   if (requested) {
     // Without a citation the merged snapshot could not link its own source, so the
@@ -940,16 +947,17 @@ async function ingestCvsr(): Promise<void> {
     }
     candidates = [{ file: requested, url }];
   } else {
-    const skip = new Set(
-      (process.env.HSR_CVSR_SKIP ?? '').split(',').map((entry) => entry.trim()).filter(Boolean),
+    const ingestedFiles = ingestedReportFiles(
+      snapshots,
+      artifact.cvsrInventory.rejectedReports,
+      [REJECTED_OVERWRITTEN_REPORT.file, ...REVIEWED_CVSR_REPORTS.map((report) => report.file)],
     );
-    const known = knownReportFiles(snapshots, registry);
     const discovered = await discoverReports();
     candidates = discovered
       .filter((report) => CVSR_CANDIDATE.test(report.file)
         && !VARIANT_REPORT.test(report.file)
-        && !known.has(report.file)
-        && !skip.has(report.file))
+        && !ingestedFiles.has(report.file)
+        && !skipList.has(report.file))
       .sort((a, b) => (a.publishedAt ?? '').localeCompare(b.publishedAt ?? ''));
     console.log(`CVSR discovery: ${discovered.length} upstream PDFs in window, ${candidates.length} new`);
 
@@ -960,11 +968,21 @@ async function ingestCvsr(): Promise<void> {
       // A page served where a PDF was promised is a challenge or a dead link, and the
       // throw is the point: it needs a human, not a fallback.
       assertPdfResponse(report.file, report.url, response.status, response.headers.get('content-type') ?? '', body);
+      const prefixSha256 = createHash('sha256').update(body.subarray(0, PREFIX_BYTES)).digest('hex');
+      // A filename already in the registry must serve the same bytes. If the Authority
+      // legitimately republished a corrected PDF under this name, delete that file's
+      // report-urls.json entry and re-run, which registers the new bytes deliberately.
+      const prior = registry[report.file];
+      if (prior && (prior.bytes !== body.byteLength || prior.prefixSha256 !== prefixSha256)) {
+        throw new Error(
+          `${report.file}: ${report.url} now serves ${body.byteLength} bytes/${prefixSha256.slice(0, 12)}, not the registered ${prior.bytes} bytes/${prior.prefixSha256.slice(0, 12)}`,
+        );
+      }
       await writeFile(`${DIRECTORY}/${report.file}`, body);
       registry[report.file] = {
         url: report.url,
         bytes: body.byteLength,
-        prefixSha256: createHash('sha256').update(body.subarray(0, PREFIX_BYTES)).digest('hex'),
+        prefixSha256,
         ...(report.publishedAt ? { publishedAt: report.publishedAt } : {}),
         verifiedAt: new Date().toISOString(),
       };
@@ -1037,7 +1055,7 @@ async function ingestCvsr(): Promise<void> {
     // the builder from the merged snapshots and must not be carried.
     const cvsrInventory = buildCvsrInventory({
       snapshots,
-      localFiles: knownReportFiles(snapshots, registry),
+      localFiles: corpusReportFiles(snapshots, registry),
       reviewedReports: REVIEWED_CVSR_REPORTS,
       rejectedReports: [...artifact.cvsrInventory.rejectedReports, ...newRejections],
       parseFailures,
@@ -1051,6 +1069,21 @@ async function ingestCvsr(): Promise<void> {
     await writeFile(PARSED, `${JSON.stringify({ snapshots, cvsrInventory, diagnostics: { parseFailures, fieldFailures } }, null, 2)}\n`);
     console.log(`CVSR ingest: ${ingested.length} merged; ${snapshots.length} monthly snapshots through ${maxDataMonth}`);
     console.log(`CVSR snapshots → ${PARSED}`);
+  }
+
+  if (!requested) {
+    const merged = ingestedReportFiles(
+      snapshots,
+      [...artifact.cvsrInventory.rejectedReports, ...newRejections],
+      [REJECTED_OVERWRITTEN_REPORT.file, ...REVIEWED_CVSR_REPORTS.map((report) => report.file)],
+    );
+    const orphans = Object.keys(registry).filter((file) => CVSR_CANDIDATE.test(file)
+      && !VARIANT_REPORT.test(file)
+      && !merged.has(file)
+      && !skipList.has(file));
+    if (orphans.length > 0) {
+      throw new Error(`CVSR reports cited in ${REPORT_URLS} with no snapshot: ${orphans.join(', ')}`);
+    }
   }
 
   // The overdue report always runs, including on blocked discovery, and never fails on

@@ -106,6 +106,30 @@ export function parcelOmission(month: string, cp: CvsrPackage): ReviewedParcelOm
   return PARCEL_OMISSIONS.find((entry) => entry.months.includes(month) && entry.packages.includes(cp));
 }
 
+/** Prefix `parseLocalPdfs` puts on a rejection caused by a parser throw. */
+export const PARSE_FAILURE_PREFIX = 'Parser failure: ';
+
+/**
+ * Report files `--ingest` must not offer again: already merged, reviewed, or deliberately
+ * excluded. A parser failure is deliberately NOT a member — that is exactly the class a
+ * parser fix must be able to retry. Nor is a URL citation: an entry in `report-urls.json`
+ * proves only that the file was byte-verified once, not that it ever produced a snapshot.
+ */
+export function ingestedReportFiles(
+  snapshots: readonly Snapshot[],
+  rejectedReports: readonly CvsrReportDiagnostic[],
+  reviewedFiles: readonly string[],
+): Set<string> {
+  const files = new Set<string>(reviewedFiles);
+  for (const snapshot of snapshots) if (snapshot.reportFile) files.add(snapshot.reportFile);
+  for (const rejected of rejectedReports) {
+    if (rejected.reportFile && !rejected.reason.startsWith(PARSE_FAILURE_PREFIX)) {
+      files.add(rejected.reportFile);
+    }
+  }
+  return files;
+}
+
 export function buildCvsrInventory({
   snapshots,
   localFiles,

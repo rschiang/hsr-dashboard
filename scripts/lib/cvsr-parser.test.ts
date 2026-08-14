@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import type { Snapshot } from '../../src/data/types';
-import { buildCvsrInventory } from './cvsr-inventory';
+import { PARSE_FAILURE_PREFIX, buildCvsrInventory, ingestedReportFiles } from './cvsr-inventory';
 import {
   normalizeDataMonth,
   parseDataMonth,
@@ -700,4 +700,30 @@ test('keys July guideway rows on the bare label while the quote keeps the publis
   // The footnote digit sits outside the parenthesis, so it is stripped first.
   assert.equal(rows[1].footnote, 'substantially_complete');
   assert.equal(rows[1].quote, 'Fowler Ave to Davis Ave (1.35 Miles)1 Aug-18 Jun-26 95% 1%');
+});
+
+test('treats merged, reviewed and deliberately excluded reports as ingested, but never a parser failure', () => {
+  const snapshot: Snapshot = {
+    date: '2026-06-01',
+    dataMonth: '2026-06',
+    tier: 1,
+    sourceId: 'cvsr',
+    reportFile: 'august-2026.pdf',
+  };
+  const ingested = ingestedReportFiles(
+    [snapshot],
+    [
+      { reportFile: 'duplicate.pdf', reason: 'Duplicate monthly snapshot; retained other.pdf.' },
+      { reportFile: 'unparsed.pdf', reason: `${PARSE_FAILURE_PREFIX}resolved 29 of 35 structure rows` },
+      { reason: 'Non-CVSR alternative report ignored; it is not a combined monthly Central Valley Status Report.' },
+    ],
+    ['reviewed.pdf'],
+  );
+  assert.equal(ingested.has('august-2026.pdf'), true);
+  assert.equal(ingested.has('reviewed.pdf'), true);
+  assert.equal(ingested.has('duplicate.pdf'), true);
+  // The regression this predicate exists for: a parser fix must be able to retry this file,
+  // so discovery has to keep offering it.
+  assert.equal(ingested.has('unparsed.pdf'), false);
+  assert.equal(ingested.size, 3);
 });
