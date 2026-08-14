@@ -1,21 +1,25 @@
 {
-  "fetchedAt": "2026-08-13T10:42:40.157Z",
+  "fetchedAt": "2026-08-14T01:52:28.331Z",
   "sources": [
     {
       "name": "alignment",
-      "url": "https://services3.arcgis.com/rGGp0aiv6Rf11t2H/arcgis/rest/services/HSR_Statewide_Alignment/FeatureServer/1/query"
+      "url": "https://services3.arcgis.com/rGGp0aiv6Rf11t2H/arcgis/rest/services/HSR_Statewide_Alignment/FeatureServer/1/query",
+      "stale": false
     },
     {
       "name": "progress",
-      "url": "https://services3.arcgis.com/rGGp0aiv6Rf11t2H/arcgis/rest/services/BuildHSR_Guideways_Construction_Progress_view/FeatureServer/0/query"
+      "url": "https://services3.arcgis.com/rGGp0aiv6Rf11t2H/arcgis/rest/services/BuildHSR_Guideways_Construction_Progress_view/FeatureServer/0/query",
+      "stale": false
     },
     {
       "name": "structures",
-      "url": "https://services3.arcgis.com/rGGp0aiv6Rf11t2H/arcgis/rest/services/Closures_and_Detours_Public/FeatureServer/0/query"
+      "url": "https://services3.arcgis.com/rGGp0aiv6Rf11t2H/arcgis/rest/services/Closures_and_Detours_Public/FeatureServer/0/query",
+      "stale": false
     },
     {
       "name": "stations",
-      "url": "https://services3.arcgis.com/rGGp0aiv6Rf11t2H/arcgis/rest/services/ALL_CHSRA_MULTIMEDIA_LAYERS/FeatureServer/0/query"
+      "url": "https://services3.arcgis.com/rGGp0aiv6Rf11t2H/arcgis/rest/services/ALL_CHSRA_MULTIMEDIA_LAYERS/FeatureServer/0/query",
+      "stale": false
     }
   ]
 }
