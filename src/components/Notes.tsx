@@ -53,6 +53,9 @@ export function NotesList({ gaps, revisions, overlapMiles }: {
           <SourceLink sourceId="cvsr" /> <SourceLink sourceId="bp2026_costs" />
         </li>
         <li>
+          <b>Guideway complete.</b> Construction spans are listed in the report’s <i>Completed</i> table once they reached substantial completion — minor closeout work may still remain. To actually contribute to the mileage tally, the span must be officially announced as finished in the report. Take June 2026 for example: despite several new CP2-3 spans being marked as complete announced none for CP2-3, thus completed mileage remained flat in June 2026. <SourceLink sourceId="cvsr_2026_08" page="p. 2" />
+        </li>
+        <li>
           <b>Granularity matters.</b> ROW and utility progress are reported by construction package,
           never painted by mile. Historical colors before the latest fetch are schedule-derived.
         </li>

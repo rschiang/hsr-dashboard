@@ -117,6 +117,13 @@ const REGISTRY = {
     publisher: 'California High-Speed Rail Authority',
     url: 'https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf',
   },
+  cvsr_2026_08: {
+    partOf: 'cvsr',
+    title: 'Central Valley Status Report, August 2026 (data through June 30, 2026)',
+    date: '2026-06-01',
+    publisher: 'California High-Speed Rail Authority',
+    url: 'https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf',
+  },
 
   sb1029_2017: {
     title: 'SB 1029 Project Update Report, February 2017',
