@@ -83,31 +83,64 @@ async function fetchTarget(target: Target): Promise<boolean> {
   }
 }
 
+type SourceMetadata = { name: string; url: string; stale: boolean; dataLastEditedAt?: string };
+
+/**
+ * The layer's own last data edit, from its metadata document. This is what tells a
+ * reader whether an old snapshot means a broken poll or an Authority that has not
+ * edited the layer. Absent or unreadable metadata yields `undefined`, never a guess.
+ */
+async function fetchLastEdit(target: Target): Promise<string | undefined> {
+  const url = new URL(`${ROOT}/${target.path.replace(/\/query$/, '')}`);
+  url.searchParams.set('f', 'json');
+  try {
+    const response = await fetch(url, { headers: { 'User-Agent': USER_AGENT } });
+    if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
+    const body = (await response.json()) as {
+      editingInfo?: { dataLastEditDate?: unknown; lastEditDate?: unknown };
+    };
+    const epoch = body.editingInfo?.dataLastEditDate ?? body.editingInfo?.lastEditDate;
+    if (typeof epoch !== 'number' || !Number.isFinite(epoch)) throw new Error('layer metadata carries no edit date');
+    return new Date(epoch).toISOString();
+  } catch (error) {
+    console.warn(`${target.name}: layer edit date unavailable (${String(error)})`);
+    return undefined;
+  }
+}
+
+let previous: { fetchedAt?: unknown; sources?: Array<Partial<SourceMetadata>> } = {};
+try {
+  previous = JSON.parse(await readFile(METADATA, 'utf8')) as typeof previous;
+} catch {
+  // Absent or unparseable metadata leaves nothing to carry forward.
+}
+
 const fetched: boolean[] = [];
-for (const target of targets) fetched.push(await fetchTarget(target));
+const lastEdits: Array<string | undefined> = [];
+for (const target of targets) {
+  fetched.push(await fetchTarget(target));
+  // An unreadable edit date is carried forward rather than dropped; it says nothing
+  // about the payload, so it never marks the source stale.
+  const carried = previous.sources?.find((source) => source.name === target.name)?.dataLastEditedAt;
+  lastEdits.push((await fetchLastEdit(target)) ?? (typeof carried === 'string' ? carried : undefined));
+}
 const anyStale = fetched.includes(false);
 
 // A poll that observed nothing must not claim freshness: `fetchedAt` propagates into
 // `segments.json:generatedAt` and reaches users as "Last updated", so when any target fell
 // back to its committed cache the recorded timestamp is carried forward unchanged.
 let fetchedAt = new Date().toISOString();
-if (anyStale) {
-  try {
-    const previous = JSON.parse(await readFile(METADATA, 'utf8')) as { fetchedAt?: unknown };
-    if (typeof previous.fetchedAt === 'string') fetchedAt = previous.fetchedAt;
-  } catch {
-    // Absent or unparseable metadata leaves the current timestamp in place.
-  }
-}
+if (anyStale && typeof previous.fetchedAt === 'string') fetchedAt = previous.fetchedAt;
 await writeFile(
   METADATA,
   `${JSON.stringify(
     {
       fetchedAt,
-      sources: targets.map(({ name, path }, index) => ({
+      sources: targets.map(({ name, path }, index): SourceMetadata => ({
         name,
         url: `${ROOT}/${path}`,
         stale: !fetched[index],
+        ...(lastEdits[index] ? { dataLastEditedAt: lastEdits[index] } : {}),
       })),
     },
     null,

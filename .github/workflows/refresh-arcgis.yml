@@ -30,6 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       changed: ${{ steps.gate.outputs.changed == 'true' }}
+      sha: ${{ steps.commit.outputs.sha }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -65,14 +66,19 @@ jobs:
           git restore .
           echo "stale=true" >> "$GITHUB_OUTPUT"
 
-      # Gate on the raw payloads, not public/data: fetchedAt propagates into
-      # segments.json:generatedAt and history.json:polledAt, so a public/data diff is
-      # never empty even when upstream is unchanged.
+      # Gate on the raw payloads and the layers' upstream edit dates, not public/data:
+      # fetchedAt propagates into segments.json:generatedAt and history.json:polledAt, so
+      # a public/data diff is never empty even when upstream is unchanged. An edit date
+      # that moved is published even when the queried fields are untouched, because the
+      # page shows it as the source's own freshness.
       - name: Gate on the raw payloads
         id: gate
         if: steps.stale.outputs.stale == 'false'
         run: |
-          if git diff --quiet -- data/raw/arcgis/alignment.json data/raw/arcgis/progress.json data/raw/arcgis/structures.json data/raw/arcgis/stations.json; then
+          EDITED_BEFORE="$(git show HEAD:data/raw/arcgis/fetch-metadata.json | jq -c '[.sources[].dataLastEditedAt]')"
+          EDITED_NOW="$(jq -c '[.sources[].dataLastEditedAt]' data/raw/arcgis/fetch-metadata.json)"
+          if git diff --quiet -- data/raw/arcgis/alignment.json data/raw/arcgis/progress.json data/raw/arcgis/structures.json data/raw/arcgis/stations.json \
+            && [ "$EDITED_BEFORE" = "$EDITED_NOW" ]; then
             echo "Upstream layers unchanged; discarding the timestamp-only diff"
             git restore .
             echo "changed=false" >> "$GITHUB_OUTPUT"
@@ -97,6 +103,7 @@ jobs:
       # The raw layers are tracked precisely so the committed snapshot stays
       # reproducible, so they are committed together with what they produced.
       - name: Commit the observed snapshot
+        id: commit
         if: steps.gate.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
@@ -105,6 +112,8 @@ jobs:
           git commit -m "data: refresh BuildHSR ArcGIS snapshot"
           git pull --rebase origin "$GITHUB_REF_NAME"
           git push origin "HEAD:$GITHUB_REF_NAME"
+          # Handed to the deploy job, whose github.sha would still be the pre-push commit.
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       # A final step of this job rather than a separate one: it inherits the checkout, so
       # gh resolves the repository from the git remote with no GH_REPO override.
@@ -143,3 +152,5 @@ jobs:
     needs: refresh
     if: needs.refresh.outputs.changed == 'true'
     uses: ./.github/workflows/deploy.yml
+    with:
+      ref: ${{ needs.refresh.outputs.sha }}

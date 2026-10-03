@@ -361,7 +361,16 @@ for (let index = 1; index < stations.length; index += 1) {
   }
 }
 
-const metadata = JSON.parse(await readFile('data/raw/arcgis/fetch-metadata.json', 'utf8')) as { fetchedAt: string };
+const metadata = JSON.parse(await readFile('data/raw/arcgis/fetch-metadata.json', 'utf8')) as {
+  fetchedAt: string;
+  sources: Array<{ dataLastEditedAt?: string }>;
+};
+// The newest upstream edit across the polled layers; ISO strings sort chronologically.
+const arcgisEditedAt = metadata.sources
+  .map((source) => source.dataLastEditedAt)
+  .filter((value): value is string => typeof value === 'string')
+  .sort()
+  .at(-1);
 const structures = JSON.parse(await readFile('data/raw/arcgis/structures.json', 'utf8')) as StructureResponse;
 if (structures.features.length !== 88) throw new Error(`Expected 88 structure features, received ${structures.features.length}`);
 for (const [globalId, segmentId] of Object.entries(STRUCTURE_CROSSWALK)) {
@@ -652,6 +661,7 @@ if (!(inputGeometryMiles > 118 && inputGeometryMiles < 119.5)) {
 
 const artifact: SegmentsArtifact = {
   generatedAt: metadata.fetchedAt,
+  ...(arcgisEditedAt ? { arcgisEditedAt } : {}),
   model: 'Package and extension totals are published contract values; the structure/guideway split and structure type factors are editorial with no published basis',
   calibration,
   ...(crossCheck ? { crossCheck } : {}),
