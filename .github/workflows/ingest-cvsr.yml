@@ -30,6 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       changed: ${{ steps.gate.outputs.changed == 'true' }}
+      sha: ${{ steps.commit.outputs.sha }}
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-node@v5
@@ -38,15 +39,19 @@ jobs:
           cache: npm
       - run: npm ci
 
-      # A closed "ingest failing for <file>" issue is the maintainer's acknowledgement
-      # that a report is deliberately not ingested, so the run stops rediscovering it.
+      # An "ingest failing for <file>" issue closed as *not planned* is the maintainer's
+      # acknowledgement that a report is deliberately not ingested, so the run stops
+      # rediscovering it. Closing as completed means the failure was fixed (a fixing PR
+      # closes it that way), and the report must be retried, not held out.
       - name: Build the skip list from acknowledged reports
         id: skip
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          SKIP="$(gh issue list --state closed --limit 200 --json title \
-            | jq -r '[.[].title
+          SKIP="$(gh issue list --state closed --limit 200 --json title,stateReason \
+            | jq -r '[.[]
+                      | select(.stateReason == "NOT_PLANNED")
+                      | .title
                       | select(test("^CI: CVSR ingest failing for .+$"))
                       | sub("^CI: CVSR ingest failing for "; "")]
                      | join(",")')"
@@ -77,10 +82,14 @@ jobs:
           fi
 
       # Rebuilds public/data from the tracked raw ArcGIS layers and the merged snapshots;
-      # no PDFs needed.
+      # no PDFs and no network. Polling ArcGIS is refresh-arcgis.yml's job alone, behind
+      # its stale and change gates.
       - name: Rebuild the published artifacts
         if: steps.gate.outputs.changed == 'true'
-        run: npm run fetch
+        run: |
+          npx tsx scripts/build-centerline.ts
+          npx tsx scripts/build-segments.ts
+          npx tsx scripts/build-history.ts
 
       - name: Validate
         if: steps.gate.outputs.changed == 'true'
@@ -89,16 +98,20 @@ jobs:
           npm test
           npm run build
 
+      # The pushed SHA feeds the deploy job: a called workflow's github.sha is still this
+      # run's trigger commit, which predates the data commit.
       - name: Commit the ingested report
+        id: commit
         if: steps.gate.outputs.changed == 'true'
         run: |
           MONTHS="$(sed -n 's/^cvsr-ingested: \([0-9][0-9-]*\) .*/\1/p' /tmp/ingest.log | paste -sd',' - | sed 's/,/, /g')"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/raw/cvsr/parsed-snapshots.json data/raw/cvsr/report-urls.json public/data data/raw/arcgis
+          git add data/raw/cvsr/parsed-snapshots.json data/raw/cvsr/report-urls.json public/data
           git commit -m "data: ingest CVSR report for $MONTHS"
           git pull --rebase origin "$GITHUB_REF_NAME"
           git push origin "HEAD:$GITHUB_REF_NAME"
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       # The PDF cannot be committed (data/raw/cvsr/.gitignore is *.pdf, and the corpus is
       # 107 files at 1.5-3 MB), so this artifact plus the registry's url, bytes and
@@ -188,14 +201,17 @@ jobs:
           else
             TITLE="CI: CVSR ingest failing"
           fi
-          MATCH="$(gh issue list --state all --limit 200 --json number,state,title \
-            | jq -r --arg title "$TITLE" '[.[] | select(.title == $title) | "\(.number) \(.state)"] | first // empty')"
+          MATCH="$(gh issue list --state all --limit 200 --json number,state,stateReason,title \
+            | jq -r --arg title "$TITLE" '[.[] | select(.title == $title) | "\(.number) \(.state) \(.stateReason // "")"] | first // empty')"
           if [ -n "$MATCH" ]; then
             set -- $MATCH
             if [ "$2" = "OPEN" ]; then
               gh issue comment "$1" --body "Failed again: $RUN_URL"
+            elif [ "${3:-}" = "NOT_PLANNED" ]; then
+              echo "Issue #$1, closed as not planned, records the decision to skip ${FILE:-this report}; staying silent"
             else
-              echo "Closed issue #$1 records the decision to skip ${FILE:-this report}; staying silent"
+              # Closed as completed: the earlier fix no longer holds.
+              gh issue reopen "$1" --comment "Failed again after this issue was closed as fixed: $RUN_URL"
             fi
             exit 0
           fi
@@ -220,8 +236,9 @@ jobs:
           npm run fetch        # rebuild public/data/history.json
           \`\`\`
 
-          Closing this issue without ingesting the report holds it out of every future
-          discovery run.
+          Close this issue as **not planned** to hold the report out of every future
+          discovery run. Closing it as completed (for example through a fixing PR) lets
+          the next run retry the report.
           BODY
           )"
 
@@ -229,3 +246,5 @@ jobs:
     needs: ingest
     if: needs.ingest.outputs.changed == 'true'
     uses: ./.github/workflows/deploy.yml
+    with:
+      ref: ${{ needs.ingest.outputs.sha }}

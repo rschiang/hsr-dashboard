@@ -88,7 +88,14 @@ export type Calibration = {
 export type CvsrPackageId = 'CP1' | 'CP2-3' | 'CP4';
 
 export type SegmentsArtifact = {
+  /** The last poll that observed the layers; it only moves when their payloads change. */
   generatedAt: string;
+  /**
+   * The newest data edit the Authority made to any polled layer, from the layers' own
+   * metadata. Distinguishes an unedited source from a broken poll; absent when no
+   * layer reported one.
+   */
+  arcgisEditedAt?: string;
   model: string;
   calibration: Partial<Record<ConstructionPackage, Calibration>>;
   crossCheck?: {
