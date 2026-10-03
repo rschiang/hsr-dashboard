@@ -317,6 +317,13 @@
     "prefixSha256": "2a966cd844eec8d0ba8b2287490ebf587a9e4ab338a724c0b32941ec725b0a8a",
     "verifiedAt": "2026-08-09T18:37:21.574Z"
   },
+  "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf": {
+    "url": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+    "bytes": 1317621,
+    "prefixSha256": "3f60c3919792ebcd24f7195003105e3ff4eb0418f9ef428c74c9facef43b3c7b",
+    "publishedAt": "2026-10-02T13:20:35",
+    "verifiedAt": "2026-10-03T15:59:24.161Z"
+  },
   "brdmtg_011420_FA_Central_Valley_Status_Report.pdf": {
     "url": "https://hsr.ca.gov/wp-content/uploads/docs/brdmeetings/2020/brdmtg_011420_FA_Central_Valley_Status_Report.pdf",
     "bytes": 788377,
