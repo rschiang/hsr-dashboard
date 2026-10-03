@@ -11,6 +11,7 @@ import type {
 } from '../src/data/types';
 import {
   CVSR_PACKAGES,
+  derivePinnedParcels,
   normalizeCvsrText,
   parseDataMonth,
   parseParcelAcquisitionAudit,
@@ -295,44 +296,20 @@ const LEGACY_PARCELS: Readonly<Record<string, {
 };
 
 /**
- * Months whose per-package split the report stops printing while still pinning the
- * program total that produced it.
- *
- * This is not a carry-forward. A carry-forward asserts an unverified value; a pin
- * leaves no value free to assert. The April 2026 report publishes the split as
- * 1,080 + 985 + 223 = 2,288 with **zero** parcels to be delivered in every package, and
- * every later report — which prints no split at all — states "All required parcels
- * have been delivered — 2,288 of 2,288". With the program total unmoved and every
+ * Reports whose per-package parcel split is pinned through the published program total
+ * (see `derivePinnedParcels`). This is not a carry-forward. A carry-forward asserts an
+ * unverified value; a pin leaves no value free to assert. The April 2026 report publishes
+ * the split as 1,080 + 985 + 223 = 2,288 with **zero** parcels to be delivered in every
+ * package, and every later report, which prints no split at all, states "All required
+ * parcels have been delivered \u2014 2,288 of 2,288". With the program total unmoved and every
  * package already at zero remaining, the split is determined.
  *
- * `parsePdf` re-derives that pin from the report it is reading and throws if the total
- * moves or if the report resumes publishing its own split, so a stale entry fails loudly
- * instead of ageing into a fabricated value.
+ * The rule applies to every report from `PINNED_PARCELS_FROM`; this register only holds
+ * wording reviewed for the reports pinned before the rule existed.
  */
-const PINNED_PARCELS: Readonly<Record<string, {
-  /** Report whose published split this month's program total pins. */
-  source: string;
-  detail: string;
-  values: Record<CvsrPackage, { delivered: number; total: number }>;
-}>> = {
-  'FA-Central-Valley-Status-Report-July-2026-A11Y.pdf': {
-    source: 'FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf',
-    detail: 'The authority officially marked 100% acquisition milestone for parcels required for CP1–4 guideway construction in the July 2026 report (data through May 2026). The separate values are sourced from June 2026 report (data through April 2026) which publishes that same total.',
-    values: {
-      CP1: { delivered: 1080, total: 1080 },
-      'CP2-3': { delivered: 985, total: 985 },
-      CP4: { delivered: 223, total: 223 },
-    },
-  },
-  'FA-Central-Valley-Status-Report-August-2026-A11Y.pdf': {
-    source: 'FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf',
-    detail: 'The August 2026 report (data through June 2026) prints no package parcel split and restates the completed program total, "All required parcels have been delivered — 2,288 of 2,288". The separate values are sourced from June 2026 report (data through April 2026) which publishes that same total.',
-    values: {
-      CP1: { delivered: 1080, total: 1080 },
-      'CP2-3': { delivered: 985, total: 985 },
-      CP4: { delivered: 223, total: 223 },
-    },
-  },
+const PINNED_PARCEL_DETAIL: Readonly<Record<string, string>> = {
+  'FA-Central-Valley-Status-Report-July-2026-A11Y.pdf': 'The authority officially marked 100% acquisition milestone for parcels required for CP1\u20134 guideway construction in the July 2026 report (data through May 2026). The separate values are sourced from June 2026 report (data through April 2026) which publishes that same total.',
+  'FA-Central-Valley-Status-Report-August-2026-A11Y.pdf': 'The August 2026 report (data through June 2026) prints no package parcel split and restates the completed program total, "All required parcels have been delivered \u2014 2,288 of 2,288". The separate values are sourced from June 2026 report (data through April 2026) which publishes that same total.',
 };
 
 
@@ -598,24 +575,8 @@ async function parsePdf(
     }
   }
 
-  const pinned = PINNED_PARCELS[reportFile];
+  const pinned = derivePinnedParcels(text, dataMonth, reportFile, perPackage, PINNED_PARCEL_DETAIL[reportFile]);
   if (pinned) {
-    const programPin = parseProgramParcelDelivery(text);
-    if (!programPin) {
-      throw new Error(`${reportFile}: a pinned parcel split needs this report's own program total, which it does not publish`);
-    }
-    for (const cp of CVSR_PACKAGES) {
-      if (perPackage[cp].parcelsTotal !== undefined) {
-        throw new Error(`${reportFile}: ${cp} publishes its own parcel split; retire the pinned entry`);
-      }
-    }
-    const delivered = CVSR_PACKAGES.reduce((sum, cp) => sum + pinned.values[cp].delivered, 0);
-    const total = CVSR_PACKAGES.reduce((sum, cp) => sum + pinned.values[cp].total, 0);
-    if (programPin.delivered !== delivered || programPin.total !== total) {
-      throw new Error(
-        `${reportFile}: program parcels ${programPin.delivered}/${programPin.total} no longer pin the ${pinned.source} split ${delivered}/${total}`,
-      );
-    }
     for (const cp of CVSR_PACKAGES) {
       perPackage[cp].parcelsDelivered = pinned.values[cp].delivered;
       perPackage[cp].parcelsTotal = pinned.values[cp].total;

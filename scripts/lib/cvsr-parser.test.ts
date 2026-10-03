@@ -3,6 +3,7 @@ import test from 'node:test';
 import type { Snapshot } from '../../src/data/types';
 import { PARSE_FAILURE_PREFIX, buildCvsrInventory, ingestedReportFiles } from './cvsr-inventory';
 import {
+  derivePinnedParcels,
   normalizeDataMonth,
   parseDataMonth,
   parseParcelAcquisitionAudit,
@@ -726,4 +727,33 @@ test('treats merged, reviewed and deliberately excluded reports as ingested, but
   // so discovery has to keep offering it.
   assert.equal(ingested.has('unparsed.pdf'), false);
   assert.equal(ingested.size, 3);
+});
+
+test('pins the package parcel split from the program total for any report from May 2026', () => {
+  const none = { CP1: {}, 'CP2-3': {}, CP4: {} };
+  const text = 'All required parcels have been delivered \u2014 2,288 of 2,288';
+  const pinned = derivePinnedParcels(text, '2026-07', 'FA-Central-Valley-Status-Report-September-2026-A11Y.pdf', none);
+  assert.deepEqual(pinned?.values, {
+    CP1: { delivered: 1080, total: 1080 },
+    'CP2-3': { delivered: 985, total: 985 },
+    CP4: { delivered: 223, total: 223 },
+  });
+  assert.match(pinned?.detail ?? '', /data through July 2026/);
+  assert.equal(derivePinnedParcels(text, '2026-07', 'r.pdf', none, 'reviewed')?.detail, 'reviewed');
+  assert.equal(derivePinnedParcels(text, '2026-04', 'r.pdf', none), null);
+  const own = { CP1: { parcelsTotal: 1 }, 'CP2-3': { parcelsTotal: 2 }, CP4: { parcelsTotal: 3 } };
+  assert.equal(derivePinnedParcels(text, '2026-07', 'r.pdf', own), null);
+});
+
+test('refuses to pin a parcel split that the report contradicts or only partly publishes', () => {
+  const none = { CP1: {}, 'CP2-3': {}, CP4: {} };
+  assert.throws(() => derivePinnedParcels('no total here', '2026-07', 'r.pdf', none), /own program total/);
+  assert.throws(
+    () => derivePinnedParcels('All required parcels have been delivered \u2014 2,300 of 2,300', '2026-07', 'r.pdf', none),
+    /no longer pin/,
+  );
+  assert.throws(
+    () => derivePinnedParcels('', '2026-07', 'r.pdf', { CP1: { parcelsTotal: 1080 }, 'CP2-3': {}, CP4: {} }),
+    /publishes its own parcel split/,
+  );
 });
