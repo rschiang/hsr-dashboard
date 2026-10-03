@@ -697,6 +697,65 @@ export function parseProgramParcelDelivery(text: string): CountPair | null {
   return validateCountPair({ delivered: integer(match[1]), total: integer(match[2]) }, 'program parcels');
 }
 
+/** First data month whose reports stop printing the per-package parcel split. */
+export const PINNED_PARCELS_FROM = '2026-05';
+
+/**
+ * Split published by the June 24, 2026 report (data through April 2026): every package at
+ * zero parcels remaining, 1,080 + 985 + 223 = 2,288.
+ */
+export const PINNED_PARCEL_SPLIT: Readonly<Record<CvsrPackage, CountPair>> = {
+  CP1: { delivered: 1080, total: 1080 },
+  'CP2-3': { delivered: 985, total: 985 },
+  CP4: { delivered: 223, total: 223 },
+};
+
+const MONTH_NAMES = [
+  'January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December',
+];
+
+/**
+ * Package parcel values for a report that prints only the completed program total.
+ *
+ * Applies by rule, not by file name, so each new monthly report needs no code edit: from
+ * `PINNED_PARCELS_FROM` on, a report publishing no package split must restate the exact
+ * program total that the pinned split sums to. Returns null when every package publishes
+ * its own split (nothing to pin); throws when the split is partial, the program total is
+ * absent or has moved, so a stale pin fails loudly instead of ageing into a fabricated value.
+ */
+export function derivePinnedParcels(
+  text: string,
+  dataMonth: string,
+  reportFile: string,
+  published: Readonly<Record<CvsrPackage, { parcelsTotal?: number }>>,
+  detail?: string,
+): { values: Record<CvsrPackage, CountPair>; detail: string } | null {
+  if (dataMonth < PINNED_PARCELS_FROM) return null;
+  const own = CVSR_PACKAGES.filter((cp) => published[cp].parcelsTotal !== undefined);
+  if (own.length === CVSR_PACKAGES.length) return null;
+  if (own.length > 0) {
+    throw new Error(`${reportFile}: ${own.join(', ')} publishes its own parcel split but the other packages do not`);
+  }
+  const programPin = parseProgramParcelDelivery(text);
+  if (!programPin) {
+    throw new Error(`${reportFile}: a pinned parcel split needs this report's own program total, which it does not publish`);
+  }
+  const delivered = CVSR_PACKAGES.reduce((sum, cp) => sum + PINNED_PARCEL_SPLIT[cp].delivered, 0);
+  const total = CVSR_PACKAGES.reduce((sum, cp) => sum + PINNED_PARCEL_SPLIT[cp].total, 0);
+  if (programPin.delivered !== delivered || programPin.total !== total) {
+    throw new Error(
+      `${reportFile}: program parcels ${programPin.delivered}/${programPin.total} no longer pin the June 2026 split ${delivered}/${total}`,
+    );
+  }
+  const [year, month] = dataMonth.split('-');
+  return {
+    values: { ...PINNED_PARCEL_SPLIT },
+    detail: detail
+      ?? `This report (data through ${MONTH_NAMES[Number(month) - 1]} ${year}) prints no package parcel split and restates the completed program total, "All required parcels have been delivered \u2014 2,288 of 2,288". The separate values are sourced from June 2026 report (data through April 2026) which publishes that same total.`,
+  };
+}
+
 function cpTableRow(section: string, cp: CvsrPackage): number[] | null {
   const label = cp === 'CP1' ? String.raw`CP\s*1(?![-\d])` : cp === 'CP2-3' ? String.raw`CP\s*2[-–]3` : String.raw`CP\s*4(?![-\d])`;
   const line = section.split(/\r?\n/).find((candidate) => new RegExp(`^\\s*${label}\\s+`, 'i').test(candidate));
