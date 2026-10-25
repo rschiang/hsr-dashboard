@@ -24,6 +24,9 @@ import {
   parseRowProgress,
   parseUtilityPair,
   type CvsrPackage,
+  type CvsrRowKind,
+  type CvsrRowProgress,
+  type CvsrRowTable,
 } from './lib/cvsr-parser';
 import {
   PARSE_FAILURE_PREFIX,
@@ -436,6 +439,273 @@ const LEGACY_PROGRESS: Record<string, ManualProgress> = {
   },
 };
 
+/** `[location, published span, completion, table, schedule start, schedule finish, footnote]`. */
+type TranscribedRow = readonly [
+  location: string,
+  span: string | null,
+  completion: number,
+  table: CvsrRowTable,
+  start: string | null,
+  finish: string | null,
+  footnote?: CvsrRowProgress['footnote'],
+];
+
+type TranscribedReport = {
+  /** Guideway miles the package counts complete outside its rows, per the page's own notes. */
+  viaductMiles: Partial<Record<CvsrPackage, number>>;
+  rows: Partial<Record<CvsrPackage, Record<CvsrRowKind, readonly TranscribedRow[]>>>;
+};
+
+// Per-location rows transcribed by hand, because the October 2026 report (August 2026
+// data) replaced its `Structures/Guideways - Underway/Completed` tables with Gantt
+// charts. What those charts publish as text is bare `Cole Slough -- 97%` pairs: no
+// completed/underway split, no schedule columns. The split is not in the artwork either
+// — every bar is #03497e elapsed over #d6e9f1 remaining, so a 97% row the report counts
+// complete is pixel-identical to a 99% row it counts underway — and no percentage
+// threshold reproduces the published counts: the report's own `Complete: 35` for CP2-3
+// structures is the 31 rows at 100% plus four below it, while 99% and 95% rows stay
+// underway. Percentages and spans below are this report's. Membership, schedule months
+// and footnotes are the September 2026 report's, the last to publish them, with the only
+// changes the October notes announce: four CP2-3 structures completed (substantially
+// completed - Cole Slough, Access Road, Lakeland Bridge, and Curved Bridge). The two
+// miles its guideway note reports complete fall inside `SR 43 Curved Br to Corcoran HWY`
+// (4.35 mi, 85%), which stays underway: the package figure counts part of a row, the row
+// table never did, and September's 58 complete miles already exceeded its own completed
+// rows by 2.07 mi for the same reason. The Gantt bars corroborate the carried starts (58
+// of 84 to the month, 25 one month out) but their forecast tails run past the published
+// finishes, so the geometry is a check, not a source.
+const TRANSCRIBED_ROWS: Record<string, TranscribedReport> = {
+  'FA-Central-Valley-Status-Report-October-2026-A11Y.pdf': {
+    viaductMiles: { 'CP2-3': 3.6 },
+    rows: {
+      CP1: {
+        structure: [
+          ['American Ave', null, 1, 'completed', '2017-06', '2020-10'],
+          ['E Central Avenue', null, 1, 'completed', '2023-10', '2025-05'],
+          ['Muscat Ave', null, 1, 'completed', '2016-12', '2017-12'],
+          ['HST Fresno Viaduct', null, 1, 'completed', '2015-06', '2023-04'],
+          ['Golden State Blvd', null, 1, 'completed', '2020-01', '2022-04'],
+          ['Jensen Trench', null, 0.77, 'underway', '2025-07', '2026-12'],
+          ['Church Ave', null, 0.5, 'underway', '2025-01', '2027-05'],
+          ['Ventura Underpass', null, 1, 'completed', '2021-06', '2026-03'],
+          ['Tulare Underpass', null, 1, 'completed', '2017-10', '2025-07'],
+          ['Fresno Underpass', null, 0.16, 'underway', '2026-04', '2027-03'],
+          ['Tuolumne Bridge', null, 1, 'completed', '2016-02', '2017-08'],
+          ['Fresno Trench', null, 0.82, 'underway', '2016-02', '2027-09'],
+          ['Belmont Avenue', null, 1, 'completed', '2022-07', '2025-05'],
+          ['Olive Ave', null, 0.11, 'underway', '2026-06', '2027-07'],
+          ['McKinley', null, 0.75, 'underway', '2024-07', '2027-03'],
+          ['Shaw Avenue', null, 0.82, 'underway', '2025-04', '2026-10'],
+          ['Herndon UPRR Bridge', null, 0.01, 'underway', '2026-05', '2027-01'],
+          ['Herndon HST Bridge', null, 0.01, 'underway', '2026-05', '2027-01'],
+          ['South of Pergola Viaduct', null, 1, 'completed', '2017-05', '2018-09'],
+          ['Avenue 7', null, 1, 'completed', '2017-07', '2020-06'],
+          ['Avenue 8', null, 1, 'completed', '2016-09', '2020-07'],
+          ['Avenue 9', null, 1, 'completed', '2019-10', '2023-11'],
+          ['Avenue 10', null, 1, 'completed', '2019-08', '2020-05'],
+          ['Avenue 11', null, 1, 'completed', '2017-09', '2020-07'],
+          ['Avenue 12 HST', null, 1, 'completed', '2016-12', '2020-11'],
+          ['Avenue 12 BNSF', null, 1, 'completed', '2017-05', '2020-11'],
+          ['Cottonwood Creek', null, 1, 'completed', '2016-04', '2019-06'],
+          ['Avenue 15', null, 1, 'completed', '2017-08', '2020-07'],
+          ['Avenue 15.5', null, 1, 'completed', '2021-08', '2022-09'],
+          ['Fresno River Viaduct 501', null, 1, 'completed', '2015-06', '2019-06'],
+          ['Avenue 17', null, 1, 'completed', '2023-07', '2025-10'],
+          ['Road 27', null, 1, 'completed', '2016-10', '2021-08'],
+          ['Road 26', null, 1, 'completed', '2024-05', '2026-05'],
+        ],
+        guideway: [
+          ['HST Bridge-4 Spans', '0.06 Miles', 1, 'completed', '2016-12', '2017-12'],
+          ['Fresno Viaduct Caltrans Bridge', '0.15 Miles', 1, 'completed', '2018-05', '2022-07'],
+          ['Fresno Viaduct-23 Spans', '0.53 Miles', 1, 'completed', '2015-06', '2021-10'],
+          ['Jensen Trench', '1.28 Miles', 0.77, 'underway', '2025-12', '2026-12'],
+          ['HST Guideway', '3.40 Miles', 0.35, 'underway', '2021-08', '2026-09'],
+          ['Fresno St to SR 41', '2.15 Miles', 0.02, 'underway', '2025-08', '2026-09'],
+          ['Fresno Trench - N. of Belmont', '0.36 Miles', 0.3, 'underway', '2025-03', '2026-09'],
+          ['Fresno Trench Shooflies / Dry Creek', '0.77 Miles', 0.34, 'underway', '2016-02', '2026-12'],
+          ['Clinton Ave Connector to Fresno Trench', '1.14 Miles', 0, 'underway', '2024-05', '2027-05'],
+          ['Caltrans Section', '2.54 Miles', 0.95, 'underway', '2023-02', '2026-10'],
+          ['Herndon Canal to Swift Ave', '1.88 Miles', 0, 'underway', '2026-06', '2026-09'],
+          ['Viaduct 203 at SJR to Herndon Canal', '2.48 Miles', 0, 'underway', '2026-08', '2027-08'],
+          ['Viaduct 203.2 San Joaquin River Crossing', '1 Mile', 1, 'completed', '2020-10', '2020-11'],
+          ['Ave 8 to Viaduct 203 at SJR', '1.82 Miles', 1, 'completed', '2017-12', '2020-06'],
+          ['Ave 9 to Ave 8', '1.14 Miles', 1, 'completed', '2018-11', '2020-02'],
+          ['Ave 10 to Ave 09', '1.10 Miles', 1, 'completed', '2018-11', '2026-02', 'partially_open'],
+          ['Ave 11 to Ave 10', '1.02 Miles', 1, 'completed', '2018-11', '2020-03'],
+          ['Ave 12 to Ave 11', '1.03 Miles', 1, 'completed', '2019-05', '2020-09'],
+          ['Cottonwood Creek Test Strip to Ave 12', '1.49 Miles', 0.99, 'completed', '2018-09', '2019-09'],
+          ['HST Bridge 89 – Cottonwood', '0.05 Miles', 1, 'completed', '2016-04', '2019-06'],
+          ['Viaduct 501 at Fresno River to Cottonwood Creek', '2.92 Miles', 0.99, 'completed', '2018-08', '2022-09'],
+          ['HST Viaduct 501 - Fresno River-18 Bents', '0.30 Miles', 1, 'completed', '2014-06', '2017-05'],
+          ['N1A Boundary to Viaduct 501', '1.03 Miles', 1, 'completed', '2021-05', '2026-06'],
+          ['GW North Extension', '2.6 Miles', 0.75, 'underway', '2024-12', '2026-07'],
+        ],
+      },
+      'CP2-3': {
+        structure: [
+          ['Grangeville Ave', null, 0.43, 'underway', '2025-06', '2026-12'],
+          ['Fargo Ave', null, 1, 'completed', '2020-11', '2024-11'],
+          ['Flint Ave', null, 1, 'completed', '2020-09', '2023-12'],
+          ['Excelsior Ave', null, 1, 'completed', '2018-08', '2020-05'],
+          ['Dover Ave', null, 1, 'completed', '2021-07', '2023-05'],
+          ['Kings River', null, 0.93, 'underway', '2020-11', '2026-09'],
+          ['Cairo Ave', null, 1, 'completed', '2020-06', '2023-07'],
+          ['9th Ave', null, 1, 'completed', '2020-04', '2023-07'],
+          ['Dutch John Cut', null, 0.82, 'underway', '2023-08', '2026-09'],
+          ['Access Road', null, 0.95, 'completed', '2020-06', '2026-08', 'substantially_complete'],
+          ['Cole Slough', null, 0.97, 'completed', '2023-11', '2026-08', 'substantially_complete'],
+          ['SR 43 Tied Arch', null, 0.75, 'underway', '2020-11', '2027-03'],
+          ['Davis Ave', null, 1, 'completed', '2020-11', '2023-10'],
+          ['Fowler Ave', null, 1, 'completed', '2021-10', '2022-12'],
+          ['Elkhorn Ave', null, 1, 'completed', '2021-03', '2023-07'],
+          ['Peach Ave', null, 1, 'completed', '2019-08', '2023-09'],
+          ['Conejo Ave', null, 0.99, 'underway', '2020-04', '2026-09'],
+          ['Mt. View', null, 1, 'completed', '2022-12', '2024-07'],
+          ['Nebraska Ave', null, 0.85, 'underway', '2024-07', '2026-11'],
+          ['Floral Ave', null, 1, 'completed', '2023-07', '2024-07'],
+          ['Manning Ave', null, 0.93, 'underway', '2024-03', '2026-09'],
+          ['South Ave', null, 1, 'completed', '2019-03', '2022-02'],
+          ['Adams Ave', null, 1, 'completed', '2020-11', '2022-12'],
+          ['Ave 24', null, 1, 'completed', '2022-08', '2024-10', 'substantially_complete'],
+          ['AAAT', null, 1, 'completed', '2023-06', '2024-08', 'substantially_complete'],
+          ['Ave 56', null, 1, 'completed', '2023-10', '2024-10'],
+          ['Alpaugh Bridge', null, 0.6, 'underway', '2024-10', '2026-10'],
+          ['Stoil Spur', null, 0.6, 'underway', '2024-09', '2026-12'],
+          ['Deer Creek', null, 0.93, 'underway', '2022-10', '2026-08'],
+          ['Ave 88', null, 1, 'completed', '2019-05', '2023-04'],
+          ['Lakeland Bridge', null, 0.98, 'completed', '2023-11', '2026-08', 'substantially_complete'],
+          ['Ave 120', null, 0.61, 'underway', '2024-06', '2026-12'],
+          ['Ave 136', null, 1, 'completed', '2025-06', '2026-05', 'substantially_complete'],
+          ['SR 43 Tule River', null, 1, 'completed', '2020-11', '2026-05', 'substantially_complete'],
+          ['Ave 156', null, 1, 'completed', '2023-03', '2025-10', 'substantially_complete'],
+          ['Whitley Ave', null, 1, 'completed', '2023-03', '2024-12'],
+          ['Corcoran HWY', null, 1, 'completed', '2024-08', '2026-08'],
+          ['SR 43 Curved Bridge', null, 0.92, 'completed', '2023-10', '2026-09', 'substantially_complete'],
+          ['Cross Creek', null, 1, 'completed', '2021-04', '2026-04', 'substantially_complete'],
+          ['Lansing', null, 1, 'completed', '2025-05', '2026-04'],
+          ['Kansas Ave', null, 1, 'completed', '2018-06', '2023-10'],
+          ['Kent Ave', null, 1, 'completed', '2018-06', '2022-09'],
+          ['SR 43 Jersey', null, 1, 'completed', '2023-10', '2026-04'],
+          ['Jackson Ave', null, 1, 'completed', '2020-09', '2022-09'],
+          ['Idaho Ave', null, 1, 'completed', '2020-08', '2023-05'],
+          ['Houston Ave', null, 0.58, 'underway', '2025-12', '2026-12'],
+          ['Hanford Armona', null, 1, 'completed', '2024-06', '2025-10'],
+          ['Hanford Viaduct', null, 0.95, 'underway', '2019-11', '2026-09'],
+        ],
+        guideway: [
+          ['Fargo Ave to Grangeville Ave', '1.04 Miles', 0.98, 'completed', '2024-07', '2026-09', 'substantially_complete'],
+          ['Flint Ave to Fargo Ave', '1.01 Miles', 1, 'completed', '2022-09', '2026-07'],
+          ['Excelsior Ave to Flint Ave', '2.04 Miles', 1, 'completed', '2020-04', '2026-07'],
+          ['Dover Ave to Excelsior Ave', '1.01 Miles', 1, 'completed', '2020-04', '2026-08', 'substantially_complete'],
+          ['Kings River to Dover Ave', '1.29 Miles', 1, 'completed', '2020-09', '2026-07'],
+          ['Cairo Ave to Kings River', '0.35 Miles', 1, 'completed', '2020-09', '2024-12'],
+          ['9th Ave to Cairo Ave', '0.39 Miles', 1, 'completed', '2020-09', '2024-12'],
+          ['Dutch John Cut to 9th Ave', '0.29 Miles', 1, 'completed', '2019-08', '2024-12'],
+          ['Access Road to Dutch John Cut', '0.22 Miles', 0.94, 'completed', '2025-11', '2026-08', 'substantially_complete'],
+          ['Cole Slough to Access Road', '0.33 Miles', 0.99, 'completed', '2025-11', '2026-08', 'substantially_complete'],
+          ['SR 43 Tied Arch to Cole Slough', '0.36 Miles', 1, 'completed', '2020-03', '2026-08', 'substantially_complete'],
+          ['Davis Ave to SR 43 Tied Arch', '2.15 Miles', 0.94, 'completed', '2018-02', '2026-08', 'substantially_complete'],
+          ['Fowler Ave to Davis Ave', '1.35 Miles', 1, 'completed', '2018-08', '2026-08', 'substantially_complete'],
+          ['Elkhorn Ave to Fowler Ave', '0.55 Miles', 1, 'completed', '2019-10', '2026-08', 'substantially_complete'],
+          ['Peach Ave to Elkhorn Ave', '1.86 Miles', 1, 'completed', '2018-08', '2026-07'],
+          ['Conejo Ave to Peach Ave', '0.23 Miles', 0.95, 'completed', '2020-10', '2026-08', 'substantially_complete'],
+          ['Mt. View to Conejo Ave', '2.04 Miles', 1, 'completed', '2018-01', '2026-07'],
+          ['Nebraska Ave to Mt. View', '0.97 Miles', 1, 'completed', '2025-11', '2026-07'],
+          ['Floral Ave to Nebraska Ave', '1.09 Miles', 1, 'completed', '2018-01', '2026-02'],
+          ['Manning Ave to Floral Ave', '2.02 Miles', 1, 'completed', '2018-02', '2026-02'],
+          ['South Ave to Manning Ave', '1.0 Miles', 1, 'completed', '2020-01', '2026-02'],
+          ['Adams Ave to South Ave', '1.0 Miles', 1, 'completed', '2018-01', '2026-02'],
+          ['Project Start to Adams', '1.81 Miles', 1, 'completed', '2018-01', '2026-02'],
+          ['Ave 24 to Project Finish', '2.21 Miles', 1, 'completed', '2020-11', '2026-05'],
+          ['AAAT to Ave 24', '2.46 Miles', 1, 'completed', '2022-05', '2025-12'],
+          ['Ave 56 to AAAT', '1.54 Miles', 1, 'completed', '2020-08', '2025-12'],
+          ['Alpaugh Bridge to Ave 56', '0.95 Miles', 0.95, 'completed', '2024-12', '2026-07', 'substantially_complete'],
+          ['Stoil Spur to Alpaugh Bridge', '0.26 Miles', 0.78, 'underway', '2024-01', '2026-10'],
+          ['Deer Creek to Stoil Spur', '0.27 Miles', 0.43, 'underway', '2025-04', '2026-11'],
+          ['Ave 88 to Deer Creek', '2.14 Miles', 0.98, 'completed', '2024-08', '2026-08', 'substantially_complete'],
+          ['Lakeland Bridge to Ave 88', '2.19 Miles', 0.54, 'underway', '2020-10', '2026-11'],
+          ['Ave 120 to Lakeland Bridge', '2.53 Miles', 0.9, 'completed', '2024-07', '2026-08', 'substantially_complete'],
+          ['Ave 136 to Ave 120', '2.32 Miles', 0.78, 'underway', '2024-10', '2026-11'],
+          ['SR 43 Tule River to Ave 136', '0.45 Miles', 1, 'completed', '2026-03', '2026-05'],
+          ['Ave 156 to SR 43 Tule River', '1.58 Miles', 1, 'completed', '2019-09', '2026-06'],
+          ['Whitley Ave to Ave 156', '1.88 Miles', 1, 'completed', '2019-10', '2026-04'],
+          ['Corcoran HWY to Whitley Ave', '0.98 Miles', 1, 'completed', '2019-07', '2026-04'],
+          ['SR 43 Curved Br to Corcoran HWY', '4.35 Miles', 0.85, 'underway', '2018-01', '2026-09'],
+          ['Cross Creek to SR 43 Curved Br', '0.79 Miles', 0.97, 'completed', '2024-03', '2026-09', 'substantially_complete'],
+          ['Lansing to Cross Creek', '1.37 Miles', 1, 'completed', '2023-09', '2026-05'],
+          ['Kansas Ave to Lansing', '0.98 Miles', 1, 'completed', '2019-06', '2026-04'],
+          ['Kent Ave to Kansas Ave', '1.03 Miles', 1, 'completed', '2018-09', '2026-04'],
+          ['SR 43 Jersey to Kent Ave', '0.90 Miles', 1, 'completed', '2018-11', '2026-05'],
+          ['Jackson Ave to SR 43 Jersey', '1.30 Miles', 1, 'completed', '2019-04', '2026-05'],
+          ['Idaho Ave to Jackson Ave', '1.01 Miles', 1, 'completed', '2018-10', '2026-04'],
+          ['Houston Ave to Idaho Ave', '2.0 Miles', 0.98, 'completed', '2018-09', '2026-08', 'substantially_complete'],
+          ['Hanford Armona to Houston Ave', '1.04 Miles', 1, 'completed', '2024-06', '2026-07'],
+          ['Hanford Viaduct to Hanford Armona', '0.72 Miles', 0.98, 'completed', '2020-09', '2026-08', 'substantially_complete'],
+          ['Grangeville Ave to Hanford Viaduct', '0.07 Miles', 0.94, 'completed', '2025-06', '2026-09', 'substantially_complete'],
+        ],
+      },
+    },
+  },
+};
+
+function expandTranscribedRows(report: TranscribedReport): CvsrRowProgress[] {
+  const expanded: CvsrRowProgress[] = [];
+  for (const [cp, byKind] of Object.entries(report.rows) as Array<[CvsrPackage, Record<CvsrRowKind, readonly TranscribedRow[]>]>) {
+    for (const kind of ['structure', 'guideway'] as const) {
+      for (const [location, span, completion, table, start, finish, footnote] of byKind[kind]) {
+        expanded.push({
+          cp,
+          kind,
+          table,
+          location,
+          footnote: footnote ?? null,
+          ...(start ? { start } : {}),
+          ...(finish ? { finish } : {}),
+          completion,
+          monthlyProgress: null,
+          quote: `${location}${span ? ` (${span})` : ''} -- ${Math.round(completion * 100)}%`,
+        });
+      }
+    }
+  }
+  return expanded;
+}
+
+/**
+ * A transcription is only worth what its check is worth. The per-location pages and the
+ * package summary pages are different pages of the same report, so the transcription has
+ * to reproduce what the summary publishes: the structure counts exactly, and the row
+ * inventory to the published package mileage once the Type 1 structures the guideway
+ * notes exclude from the rows are added back. A dropped row, a mistyped span or a
+ * completion filed under the wrong heading fails the ingest. Completed guideway mileage
+ * is deliberately not asserted: the package figure credits part-built rows, so it sits
+ * above the completed rows in one package and below them in another.
+ */
+function assertTranscribedRows(
+  reportFile: string,
+  rows: readonly CvsrRowProgress[],
+  perPackage: Record<CvsrPackage, PackageMetrics>,
+  viaductMiles: Partial<Record<CvsrPackage, number>>,
+): void {
+  for (const cp of CVSR_PACKAGES) {
+    const cpRows = rows.filter((row) => row.cp === cp);
+    const metrics = perPackage[cp];
+    if (cpRows.length === 0 || !metrics) continue;
+    const structures = cpRows.filter((row) => row.kind === 'structure');
+    const complete = structures.filter((row) => row.table === 'completed').length;
+    if (complete !== metrics.structuresComplete || structures.length !== metrics.structuresTotal) {
+      throw new Error(`${reportFile}: ${cp} transcribes ${complete} of ${structures.length} structures complete against the ${metrics.structuresComplete} of ${metrics.structuresTotal} the report publishes`);
+    }
+    const miles = cpRows
+      .filter((row) => row.kind === 'guideway')
+      .reduce((sum, row) => sum + (Number(/\((\d+(?:\.\d+)?) Miles?\)/.exec(row.quote)?.[1]) || 0), 0)
+      + (viaductMiles[cp] ?? 0);
+    if (Math.abs(miles - metrics.guidewayMilesTotal) > 0.5) {
+      throw new Error(`${reportFile}: ${cp} transcribes ${miles.toFixed(2)} guideway miles against the ${metrics.guidewayMilesTotal} the report publishes`);
+    }
+  }
+}
+
 
 function reportMetadata(file: string): ReviewedCvsrReport | undefined {
   if (file === REJECTED_OVERWRITTEN_REPORT.file) return REJECTED_OVERWRITTEN_REPORT;
@@ -469,12 +739,16 @@ async function parsePdf(
         ]),
       )
     : parseProgressMetrics(text, dataMonth)) as Record<CvsrPackage, PackageMetrics>;
-  const rowProgress = parseRowProgress(text, reportFile, (kind, label) =>
-    kind === 'structure'
-      ? Boolean(CVSR_ROW_CROSSWALK[label])
-      : label === 'Herndon Canal to Swift Ave' || guidewayByLabel.has(label));
+  const transcribed = TRANSCRIBED_ROWS[reportFile];
+  const rowProgress = transcribed
+    ? expandTranscribedRows(transcribed)
+    : parseRowProgress(text, reportFile, (kind, label) =>
+      kind === 'structure'
+        ? Boolean(CVSR_ROW_CROSSWALK[label])
+        : label === 'Herndon Canal to Swift Ave' || guidewayByLabel.has(label));
+  if (transcribed) assertTranscribedRows(reportFile, rowProgress, perPackage, transcribed.viaductMiles);
+  const unmatchedRows: CvsrRowProgress[] = [];
   const perSegment: NonNullable<Snapshot['perSegment']> = {};
-  const unmatchedRows: typeof rowProgress = [];
   for (const row of rowProgress) {
     const segmentId = row.kind === 'structure'
       ? CVSR_ROW_CROSSWALK[row.location]
@@ -494,8 +768,8 @@ async function parsePdf(
       reportFile,
       ...(reportUrl ? { reportUrl } : {}),
       dataMonth,
-      scheduleStart: row.start,
-      scheduleFinish: row.finish,
+      ...(row.start ? { scheduleStart: row.start } : {}),
+      ...(row.finish ? { scheduleFinish: row.finish } : {}),
       table: row.table,
     };
   }
@@ -516,6 +790,7 @@ async function parsePdf(
     if (
       !segmentId
       || row.table !== 'completed'
+      || row.finish === undefined
       || row.finish > dataMonth
       || (row.completion !== 1 && row.footnote !== 'substantially_complete')
       || row.footnote === 'partially_open'

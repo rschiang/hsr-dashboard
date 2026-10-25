@@ -10,6 +10,7 @@ import { SOURCES } from '../src/data/sources';
 import { formatOfficialMp, stationToIosMile } from '../src/lib/mileposts';
 import { resolveSegmentStatus } from '../src/lib/status';
 import { assignWeights } from '../src/lib/weights';
+import { anchorDataMonth, anchorSnapshot } from './lib/cvsr-anchor';
 
 type Attributes = {
   OBJECTID: number;
@@ -363,7 +364,7 @@ for (let index = 1; index < stations.length; index += 1) {
 
 const metadata = JSON.parse(await readFile('data/raw/arcgis/fetch-metadata.json', 'utf8')) as {
   fetchedAt: string;
-  sources: Array<{ dataLastEditedAt?: string }>;
+  sources: Array<{ name: string; dataLastEditedAt?: string }>;
 };
 // The newest upstream edit across the polled layers; ISO strings sort chronologically.
 const arcgisEditedAt = metadata.sources
@@ -371,6 +372,10 @@ const arcgisEditedAt = metadata.sources
   .filter((value): value is string => typeof value === 'string')
   .sort()
   .at(-1);
+// The guideway completion values come from the progress layer alone, so its own edit
+// date — not the newest edit across all four layers — dates the earthwork-equivalent
+// miles computed below.
+const progressEditedAt = metadata.sources.find((source) => source.name === 'progress')?.dataLastEditedAt;
 const structures = JSON.parse(await readFile('data/raw/arcgis/structures.json', 'utf8')) as StructureResponse;
 if (structures.features.length !== 88) throw new Error(`Expected 88 structure features, received ${structures.features.length}`);
 for (const [globalId, segmentId] of Object.entries(STRUCTURE_CROSSWALK)) {
@@ -533,16 +538,18 @@ for (const cp of ['CP1', 'CP2-3', 'CP4'] as const) {
 const overlapMiles = overlaps.reduce((sum, overlap) => sum + overlap.miles, 0);
 if (!(overlapMiles < 3)) throw new Error(`Nested structure corridor ${overlapMiles.toFixed(2)} mi exceeds the 3 mi ceiling`);
 
-// Per-package cross-check against the latest published CVSR. Earthwork-equivalent
-// miles (Σ span × ArcGIS completion) and the CVSR's "guideway miles complete" are
-// independent measures of the same thing, but they are asynchronous. The CVSR is a
-// month-end report; the BuildHSR layer is edited feature by feature and was last
-// touched 2026-05-04 (SOURCES.arcgis_progress.date), so individual guideways sit
-// anywhere between April and May month-end regardless of when we poll it. One report
-// month of a single package's guideway progress is larger than the old 1.5-mile bound
-// — CP2-3 alone added 2.0 miles in May 2026 — so the bounds are sized to absorb that
-// and still catch a package-scale error. Spread today: total 86.95 vs 89.1 mi
-// (-2.15); CP1 -0.55, CP2-3 -1.27, CP4 -0.33.
+// Per-package cross-check between the ArcGIS progress layer and the CVSR report that is
+// contemporaneous with it. Earthwork-equivalent miles (Σ span × ArcGIS completion) and
+// the CVSR's "guideway miles complete" are independent measures of the same thing, but
+// they are not simultaneous: the CVSR is a month-end report, while the BuildHSR layer is
+// a feature-by-feature edit log that has not been touched since 2026-05-04. Comparing it
+// against whatever month CVSR published last is therefore an unbounded drift — in October
+// 2026 a correct pipeline failed by 4.27 mi on CP2-3 against the 2026-08 report. The
+// comparison is anchored instead to the last CVSR data month that had closed when the
+// layer was last edited, so the bounds only absorb within-month edit spread. One report
+// month of a single package is larger than the old 1.5-mile bound — CP2-3 alone added 2.0
+// miles in May 2026 — so 2.5/3.5 stay as they are. Spread at the 2026-04 anchor: total
+// 86.95 vs 87.1 mi (-0.15); CP1 -0.55, CP2-3 +0.73, CP4 -0.33.
 const CVSR_PACKAGE_IDS = ['CP1', 'CP2-3', 'CP4'] as const satisfies readonly CvsrPackageId[];
 const equivalentByPackage = Object.fromEntries(CVSR_PACKAGE_IDS.map((cp) => [
   cp,
@@ -569,13 +576,20 @@ if (parsedSnapshotsRaw === null) {
     .sort((a, b) => a.dataMonth!.localeCompare(b.dataMonth!))
     .at(-1);
   if (!latest) throw new Error('parsed-snapshots.json holds no tier-1 CVSR snapshot with package metrics');
+  const anchor = progressEditedAt === undefined
+    ? undefined
+    : anchorSnapshot(allSnapshots, anchorDataMonth(progressEditedAt));
+  if (!anchor) {
+    console.warn(`No CVSR snapshot is contemporaneous with the ArcGIS progress layer (${progressEditedAt ?? 'layer reports no edit date'}); reporting the package comparison against CVSR ${latest.dataMonth} unbounded`);
+  }
+  const reconciled = anchor ?? latest;
   const perPackage = {} as NonNullable<SegmentsArtifact['crossCheck']>['perPackage'];
   for (const cp of CVSR_PACKAGE_IDS) {
-    const metrics = latest.perPackage?.[cp];
-    if (!metrics) throw new Error(`CVSR ${latest.dataMonth} is missing ${cp} package metrics`);
+    const metrics = reconciled.perPackage?.[cp];
+    if (!metrics) throw new Error(`CVSR ${reconciled.dataMonth} is missing ${cp} package metrics`);
     const delta = equivalentByPackage[cp] - metrics.guidewayMilesComplete;
-    if (Math.abs(delta) > 2.5) {
-      throw new Error(`${cp} earthwork-equivalent ${equivalentByPackage[cp].toFixed(2)} mi differs from CVSR ${latest.dataMonth} guideway complete ${metrics.guidewayMilesComplete} mi by ${delta.toFixed(2)} mi`);
+    if (anchor && Math.abs(delta) > 2.5) {
+      throw new Error(`${cp} earthwork-equivalent ${equivalentByPackage[cp].toFixed(2)} mi differs from CVSR ${reconciled.dataMonth} guideway complete ${metrics.guidewayMilesComplete} mi by ${delta.toFixed(2)} mi`);
     }
     perPackage[cp] = {
       equivalentMiles: equivalentByPackage[cp],
@@ -584,8 +598,8 @@ if (parsedSnapshotsRaw === null) {
     };
   }
   const cvsrTotalComplete = CVSR_PACKAGE_IDS.reduce((sum, cp) => sum + perPackage[cp].cvsrMilesComplete, 0);
-  if (Math.abs(equivalentTotal - cvsrTotalComplete) > 3.5) {
-    throw new Error(`Earthwork-equivalent ${equivalentTotal.toFixed(2)} mi does not reconcile with CVSR ${latest.dataMonth} total ${cvsrTotalComplete.toFixed(2)} mi`);
+  if (anchor && Math.abs(equivalentTotal - cvsrTotalComplete) > 3.5) {
+    throw new Error(`Earthwork-equivalent ${equivalentTotal.toFixed(2)} mi does not reconcile with CVSR ${reconciled.dataMonth} total ${cvsrTotalComplete.toFixed(2)} mi`);
   }
 
   const unmatchedCvsrRows = latest.unmatchedCvsrRows ?? [];
@@ -639,8 +653,14 @@ if (parsedSnapshotsRaw === null) {
   if (matchedGuideways < 49) {
     throw new Error(`CVSR guideway label resolution regressed to ${matchedGuideways}; 49 resolved as of the 2026-06 report`);
   }
-  crossCheck = { cvsrDataMonth: latest.dataMonth!, perPackage, unmatchedCvsrRows, disagreements };
-  console.log(`cross-check vs CVSR ${latest.dataMonth}: ${structureIds.size}/${crosswalkIds.size} structures, ${matchedGuideways} guideways, ${unmatchedCvsrRows.length} unmatched rows, ${disagreements.length} disagreements`);
+  crossCheck = {
+    cvsrDataMonth: latest.dataMonth!,
+    ...(anchor ? { arcgisAnchorMonth: anchor.dataMonth } : {}),
+    perPackage,
+    unmatchedCvsrRows,
+    disagreements,
+  };
+  console.log(`cross-check vs CVSR ${latest.dataMonth} (package miles vs ${anchor ? anchor.dataMonth : `${latest.dataMonth}, unbounded`}): ${structureIds.size}/${crosswalkIds.size} structures, ${matchedGuideways} guideways, ${unmatchedCvsrRows.length} unmatched rows, ${disagreements.length} disagreements`);
 }
 
 // Corridor invariants run before the first artifact write: a run that ultimately throws

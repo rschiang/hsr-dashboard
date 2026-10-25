@@ -22,8 +22,9 @@ export type CvsrRowProgress = {
   table: CvsrRowTable;
   location: string;
   footnote: 'substantially_complete' | 'partially_open' | null;
-  start: string;
-  finish: string;
+  /** Absent in reports that publish no schedule columns; transcribed rows may carry none. */
+  start?: string;
+  finish?: string;
   completion: number | null;
   monthlyProgress: number | null;
   quote: string;

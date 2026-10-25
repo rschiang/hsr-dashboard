@@ -100,6 +100,13 @@ export type SegmentsArtifact = {
   calibration: Partial<Record<ConstructionPackage, Calibration>>;
   crossCheck?: {
     cvsrDataMonth: string;
+    /**
+     * The CVSR data month the package mileage below is reconciled against: the last
+     * month that had closed when the ArcGIS progress layer was last edited. Absent when
+     * the layer reports no edit date, in which case `perPackage` is measured against
+     * `cvsrDataMonth` and is not bounded by the build.
+     */
+    arcgisAnchorMonth?: string;
     perPackage: Record<CvsrPackageId, {
       equivalentMiles: number;
       cvsrMilesComplete: number;
