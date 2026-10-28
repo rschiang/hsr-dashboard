@@ -14,7 +14,9 @@ const VISIBLE_STATUSES: AlignmentStatus[] = [
 ];
 
 // Verbatim from the July 2026 report: the structure sentence on printed p. 18, the
-// guideway sentence on printed p. 7. Each cites the page it is quoted from.
+// guideway sentence on printed p. 7. Each cites the page it is quoted from. Both
+// sentences are still printed unchanged in the October 2026 report (structure p. 17,
+// guideway p. 7); the footnote stays on the report the words were read from.
 const STATUS_CAPTIONS: Partial<Record<AlignmentStatus, { text: string; page: string }>> = {
   structure_complete: {
     text: 'All concrete work is complete, ready for punchlist and certification.',

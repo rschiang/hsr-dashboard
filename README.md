@@ -26,7 +26,7 @@ A date scrubber replays the available history. The strip can use either physical
 - Distance-proportional and difficulty-proportional strip widths.
 - Linked hover and selection between the strip chart and map.
 
-ROW and utilities remain at construction-package granularity and are never painted onto individual miles. Since the March-2026-data report, the CVSR also publishes per-row structure and guideway progress; the dashboard reads those rows as segment-level numeric observations.
+ROW and utilities remain at construction-package granularity and are never painted onto individual miles. Since the March-2026-data report, the CVSR also publishes per-row structure and guideway progress; the dashboard reads those rows as segment-level numeric observations. From the October-2026 report (August 2026 data) the Authority publishes those rows as charts without the completed/underway split or schedule dates; that month's rows are transcribed by hand in `TRANSCRIBED_ROWS` (`scripts/fetch-cvsr.ts`) and checked at ingest against the package counts the same report prints.
 
 CVSR row tables are numeric Authority observations and can supply a published percentage. News releases and narrative CVSR quotes remain categorical evidence: they can resolve a named structure to under construction or structure complete but never manufacture a missing percentage.
 
@@ -51,7 +51,7 @@ Reviewed dated structure claims live in [`src/data/structure-evidence.ts`](src/d
 
 | Tier | Meaning | Resolution |
 |---|---|---|
-| 1 | Observed metrics parsed from monthly Central Valley Status Reports | Package metrics for all 87 months; per-segment observations for three reports: June 2026 (March 2026 data, 72 rows), June 24, 2026 (April 2026 data, 85 rows), and July 2026 (May 2026 data, 85 rows) |
+| 1 | Observed metrics parsed from monthly Central Valley Status Reports | Package metrics for all 90 months; per-segment observations for six reports: June 2026 (March 2026 data, 72 rows), June 24, 2026 (April 2026 data, 85 rows), July 2026 (May 2026 data, 85 rows), August 2026 (June 2026 data, 85 rows), September 2026 (July 2026 data, 85 rows), and October 2026 (August 2026 data, 85 rows, hand-transcribed) |
 | 2 | One BuildHSR ArcGIS poll: what the layers returned at a single recorded instant | Per segment, applied to the last scrubber tick only |
 
 **CVSR is the replay spine.** This is a ten-year program and monthly granularity sits comfortably against it. The status reports are the stable record: a published data month, a fixed PDF that can be re-read years later, and a correction trail when the Authority restates a figure. ArcGIS is realtime and therefore volatile — it can regress or blank out between reads, and none of it is archived. Tier 2 overlays the last tick during the two to three months before a report lands; once a report covering that month is published the poll is superseded and dropped, and tier 1 controls.
@@ -125,7 +125,38 @@ The parser keys snapshots by the report's **data month**, not its publication mo
 
 `npm run ingest:cvsr` is the incremental path CI uses. It discovers reports published in the last 180 days, downloads one that is new, and merges it into `data/raw/cvsr/parsed-snapshots.json` without rebuilding from the local corpus, so no PDFs are needed on the runner. Add `-- --file <name>` to merge a report already sitting in `data/raw/cvsr/`. A PDF that a CI run downloaded is attached to the run as the `cvsr-report` artifact; archive it into the local corpus.
 
-`data/raw/cvsr/parsed-snapshots.json` and `public/data/history.json` carry an explicit inventory from March 2019 through May 2026. It distinguishes reports not downloaded, reports not located, metrics the source did not publish, and parser failures. Missing months are not filled from later or earlier reports; the dashboard labels the gap and links the exact report when known.
+`data/raw/cvsr/parsed-snapshots.json` and `public/data/history.json` carry an explicit inventory from March 2019 through August 2026. It distinguishes reports not downloaded, reports not located, metrics the source did not publish, and parser failures. Missing months are not filled from later or earlier reports; the dashboard labels the gap and links the exact report when known.
+
+### Monthly checklist
+
+Run this after a CVSR ingest lands — automatic or hand-merged. Each line is something that has
+silently gone stale before.
+
+1. The replay axis moved: `jq -r '.replayMonths | last' public/data/history.json` is the new data
+   month, and `jq -r '.cvsrInventory.coverageEnd' public/data/history.json` agrees.
+2. The deploy ran for that commit: `gh run list --workflow deploy.yml --limit 3`. Pages serves
+   `index.html` and `data/*.json` with `max-age=600`, so verify against the site with a fresh
+   fetch — `curl -s https://poren.tw/hsr-dashboard/data/history.json | jq -r '.replayMonths | last'`
+   — rather than a browser tab that may still hold the previous build.
+3. The report is in the citation registry: add a `cvsr_<publication year>_<publication month>` entry
+   to `src/data/sources.ts` whenever page prose cites the new report; `date` is the first day of its
+   data month.
+4. The counts in this README still hold: the tier-1 resolution cell (months, and which reports carry
+   per-segment rows) and the inventory coverage range above.
+5. The report still prints its per-location `Structures/Guideways - Underway/Completed` tables. If
+   it does, no transcription is needed and the **Per-location rows** note in
+   `src/components/Notes.tsx` should be removed once no displayed month depends on it. If it
+   publishes charts instead, extend `TRANSCRIBED_ROWS` in `scripts/fetch-cvsr.ts` for that report.
+6. The citation dates the page prints still match the artifacts:
+   `jq -r '.sources[] | "\(.name) \(.dataLastEditedAt)"' data/raw/arcgis/fetch-metadata.json`
+   against the `date` fields of the `arcgis_*` entries in `src/data/sources.ts`, and the `cvsr`
+   entry's `accessed` against
+   `jq -r '[.[].verifiedAt] | max' data/raw/cvsr/report-urls.json`. The ArcGIS `accessed` date is
+   derived from `segments.json` `generatedAt` and needs no edit.
+7. The newest report still prints what the page quotes: the structure and guideway completion
+   definitions behind the legend captions, and the `CVS 119 Track and System Installation Forecast`
+   page behind the **Track installation** note and the Track chip. If the forecast's start quarter
+   moves, update both the note and `TRACK_ARIA_LABEL` in `src/App.tsx`.
 
 ## Validation
 

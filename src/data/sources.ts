@@ -38,7 +38,6 @@ const REGISTRY = {
     title: 'Interactive Map',
     publisher: 'California High-Speed Rail Authority (BuildHSR)',
     url: 'https://buildhsr.com/map/',
-    accessed: '2026-08-10',
     note: 'The Authority’s public map embeds its own ArcGIS GeoPlatform layers — portal account GeoPlatform_CHSRA, experience “BuildHSR Interactive Map (V2)” (item b2ab11d536da42c8bbe03f3e1458c0a2). The map exposes no per-layer permalink, so each layer service is cited directly below; every one is an Authority publication, not a third-party mirror.',
   },
   arcgis_progress: {
@@ -47,7 +46,6 @@ const REGISTRY = {
     date: '2026-05-04',
     publisher: 'California High-Speed Rail Authority',
     url: 'https://services3.arcgis.com/rGGp0aiv6Rf11t2H/arcgis/rest/services/BuildHSR_Guideways_Construction_Progress_view/FeatureServer/0',
-    accessed: '2026-08-10',
   },
   arcgis_alignment: {
     partOf: 'geoplatform',
@@ -55,7 +53,6 @@ const REGISTRY = {
     date: '2026-04-07',
     publisher: 'California High-Speed Rail Authority',
     url: 'https://services3.arcgis.com/rGGp0aiv6Rf11t2H/arcgis/rest/services/HSR_Statewide_Alignment/FeatureServer/1',
-    accessed: '2026-08-10',
   },
   arcgis_structures: {
     partOf: 'geoplatform',
@@ -63,7 +60,6 @@ const REGISTRY = {
     date: '2026-06-04',
     publisher: 'California High-Speed Rail Authority',
     url: 'https://services3.arcgis.com/rGGp0aiv6Rf11t2H/arcgis/rest/services/Closures_and_Detours_Public/FeatureServer/0',
-    accessed: '2026-08-10',
   },
   arcgis_stations: {
     partOf: 'geoplatform',
@@ -71,14 +67,13 @@ const REGISTRY = {
     date: '2025-03-18',
     publisher: 'California High-Speed Rail Authority',
     url: 'https://services3.arcgis.com/rGGp0aiv6Rf11t2H/arcgis/rest/services/ALL_CHSRA_MULTIMEDIA_LAYERS/FeatureServer/0',
-    accessed: '2026-08-10',
   },
 
   cvsr: {
     title: 'Central Valley Status Reports',
     publisher: 'California High-Speed Rail Authority, Finance & Audit Committee',
     url: 'https://hsr.ca.gov/about/board-of-directors/finance-audit-committee/',
-    accessed: '2026-08-10',
+    accessed: '2026-10-25',
     note: 'Monthly series published with the committee’s meeting materials; the dashboard keys each report by its data month. Reports that carry a specific figure cited on this page are listed below.',
   },
   cvsr_2020_03: {
@@ -123,6 +118,20 @@ const REGISTRY = {
     date: '2026-06-01',
     publisher: 'California High-Speed Rail Authority',
     url: 'https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf',
+  },
+  cvsr_2026_09: {
+    partOf: 'cvsr',
+    title: 'Central Valley Status Report, September 2026 (data through July 31, 2026)',
+    date: '2026-07-01',
+    publisher: 'California High-Speed Rail Authority',
+    url: 'https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf',
+  },
+  cvsr_2026_10: {
+    partOf: 'cvsr',
+    title: 'Central Valley Status Report, October 2026 (data through August 31, 2026)',
+    date: '2026-08-01',
+    publisher: 'California High-Speed Rail Authority',
+    url: 'https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf',
   },
 
   sb1029_2017: {

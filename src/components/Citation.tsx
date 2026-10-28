@@ -49,16 +49,19 @@ export function ReportLink({ url, title }: { url: string; title?: string }) {
   );
 }
 
-function SourceEntry({ id }: { id: SourceId }) {
+function SourceEntry({ id, arcgisAccessed }: { id: SourceId; arcgisAccessed: string }) {
   const source = SOURCES[id];
   const parent = source.partOf === undefined ? undefined : SOURCES[source.partOf];
   const children = CHILD_IDS[id] ?? [];
+  const accessed = id === 'geoplatform' || source.partOf === 'geoplatform'
+    ? arcgisAccessed
+    : source.accessed;
   // A locator inherits its parent's publisher and date; it prints only what it adds.
   const meta = [
     parent === undefined ? source.publisher : undefined,
     source.page,
     source.date === parent?.date ? undefined : source.date,
-    source.accessed === undefined ? undefined : `accessed ${source.accessed}`,
+    accessed === undefined ? undefined : `accessed ${accessed}`,
   ].filter((part) => part !== undefined);
   return (
     <li id={`fn-${id}`}>
@@ -67,19 +70,24 @@ function SourceEntry({ id }: { id: SourceId }) {
       {source.note && <span>{source.note}</span>}
       {children.length > 0 && (
         <ol className="source-locators">
-          {children.map((childId) => <SourceEntry key={childId} id={childId} />)}
+          {children.map((childId) => (
+            <SourceEntry key={childId} id={childId} arcgisAccessed={arcgisAccessed} />
+          ))}
         </ol>
       )}
     </li>
   );
 }
 
-export function SourcesList() {
+export function SourcesList({ arcgisAccessed }: {
+  /** Date of the committed ArcGIS poll; the layer entries carry no hand-typed accessed date. */
+  arcgisAccessed: string;
+}) {
   return (
     <section className="sources-list" aria-labelledby="sources-heading">
       <h2 id="sources-heading">Sources</h2>
       <ol>
-        {PARENT_IDS.map((id) => <SourceEntry key={id} id={id} />)}
+        {PARENT_IDS.map((id) => <SourceEntry key={id} id={id} arcgisAccessed={arcgisAccessed} />)}
       </ol>
     </section>
   );

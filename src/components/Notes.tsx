@@ -53,30 +53,58 @@ export function NotesList({ gaps, revisions, overlapMiles }: {
           <SourceLink sourceId="cvsr" /> <SourceLink sourceId="bp2026_costs" />
         </li>
         <li>
-          <b>Guideway complete.</b> Construction spans are listed in the report’s <i>Completed</i> table once they reached substantial completion — minor closeout work may still remain. To actually contribute to the mileage tally, the span must be officially announced as finished in the report. Take June 2026 for example: despite several new CP2-3 spans being marked as complete announced none for CP2-3, thus completed mileage remained flat in June 2026. <SourceLink sourceId="cvsr_2026_08" page="p. 2" />
+          <b>Guideway complete.</b> The report counts a construction span complete once it has
+          reached substantial completion — minor closeout work may still remain, so a span can be
+          counted complete below 100%. To actually contribute to the mileage tally, the span must be
+          officially announced as finished in the report. Take the June-2026 data for example: nine
+          CP2-3 rows moved from the report’s underway list to its completed list, yet the report
+          announced no completed miles for CP2-3, so the package stayed at 57 of 65 miles and the
+          program at 89. <SourceLink sourceId="cvsr_2026_08" page="p. 2" />
+        </li>
+        <li>
+          <b>Per-location rows.</b> Through the September-2026 report the Authority published
+          per-location progress as <i>Underway</i>/<i>Completed</i> tables carrying schedule dates.
+          The October-2026 report replaced them with charts labelled <i>Location -- Percentage
+          Complete</i>, which publish neither the completed/underway split nor the dates. The
+          August-2026-data rows here are therefore transcribed by hand: percentages and spans from
+          that report, the split and schedule months carried from the September report and changed
+          only where the October report’s notes announce a completion, checked against the package
+          counts the same report prints. <SourceLink sourceId="cvsr_2026_09" />{' '}
+          <SourceLink sourceId="cvsr_2026_10" />
         </li>
         <li>
           <b>Granularity matters.</b> ROW and utility progress are reported by construction package,
-          never painted by mile. Historical colors before the latest fetch are schedule-derived.
+          never painted by mile. Segment colors come from the newest CVSR row at or before the
+          selected month — those rows start with the March-2026 data month — and, for earlier
+          months, from dated structure evidence or, failing that, the schedule dates the ArcGIS
+          layer publishes. <SourceLink sourceId="arcgis_progress" /> <SourceLink sourceId="cvsr" />
         </li>
         <li>
           <b>Track installation.</b> Exhibit D.0 of the 2026 Final Business Plan lists Track &amp;
-          Systems Design &amp; Construction for the 119-mile Central Valley Segment as NOT STARTED,
-          and the Authority’s 2026 milestones say the track-laying phase can
-          commence <SourceLink sourceId="bp2026_milestones" />. No
-          monthly track-installation series and no track-mileage total are published, so the block
-          shows a bare zero over a dashed baseline rather than a reported trend.{' '}
-          <SourceLink sourceId="bp2026_schedule" />
+          Systems Design &amp; Construction for the 119-mile Central Valley Segment as NOT
+          STARTED <SourceLink sourceId="bp2026_schedule" />, and the Authority’s 2026 milestones put
+          the start behind the southern railhead: with that railhead ready, deliveries of rail,
+          concrete ties and ballast can begin and the track-laying phase can
+          commence <SourceLink sourceId="bp2026_milestones" />. The report does publish a quarterly
+          forecast — mobilization at the southern railhead through the fourth quarter of 2026, then
+          track laying running north from CP4 into 2029 — but no installed-track mileage for any
+          month, so the block shows a bare zero over a dashed baseline rather than a reported
+          trend. <SourceLink sourceId="cvsr_2026_10" page="p. 11" />
         </li>
         <li>
           <b>Right-of-way delivered.</b> The CVSR counts parcels the Authority has handed to the
           design-builder — the contractor joint venture building that package — which is what the
-          rail charts. The Authority also publishes a separate acquisition count, last reported for
-          the 2021-03 data month, and a railroad-parcel series in its own table: 105 of 183 parcels
-          acquired as of March 9, 2020 in the January-2020-data report <SourceLink sourceId="cvsr" />,
-          and 164 of 176 delivered to the design-builder in the May-2026-data
-          report <SourceLink sourceId="cvsr" />. Neither is charted here, and the acquisition and
-          delivery counts are not one series.
+          rail charts. Delivery reached all 2,288 parcels in the April-2026 data month and has not
+          moved since; the report calls it a program
+          milestone. <SourceLink sourceId="cvsr_2026_06_24" /> <SourceLink sourceId="cvsr_2026_10" page="p. 10" />
+          The Authority also publishes a separate acquisition count, last reported for the 2021-03
+          data month, and a railroad-parcel series in its own table: 105 of 183 parcels acquired as
+          of March 9, 2020 in the January-2020-data
+          report <SourceLink sourceId="cvsr_2020_03" />, and 164 of 176 railroad parcels delivered,
+          unchanged through the August-2026 data month, where the report records none delivered that
+          month and says the remainder are not needed to build the
+          guideway. <SourceLink sourceId="cvsr_2026_10" page="p. 10" /> Neither is charted here, and
+          the acquisition and delivery counts are not one series.
         </li>
         {gaps.length > 0 && (
           <li>

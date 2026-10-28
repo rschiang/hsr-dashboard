@@ -64,6 +64,9 @@ export const STATUS_LABELS: Record<AlignmentStatus, string> = {
  * 30, the guideway definition on printed p. 7. Printed p. 18 carries the structure
  * definition without its trailing "then ready for either track install or open to
  * traffic" clause, which is the form the legend caption quotes.
+ * Re-checked against the October 2026 report (data through August 31, 2026): same
+ * wording, structure definition on printed p. 6, guideway on p. 7, short structure
+ * form on printed p. 17.
  */
 export const OFFICIAL_DEFINITIONS = {
   structure: 'Structure Completion – all concrete work is complete, ready for punchlist and certification, then ready for either track install or open to traffic.',

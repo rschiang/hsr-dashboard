@@ -242,7 +242,7 @@ function App() {
           revisions={groupedRevisions}
           overlapMiles={data.segments.overlaps.reduce((sum, overlap) => sum + overlap.miles, 0)}
         />
-        <SourcesList />
+        <SourcesList arcgisAccessed={data.segments.generatedAt.slice(0, 10)} />
       </section>
 
       <footer className="page-footer">
@@ -286,7 +286,7 @@ const CP_COLORS: Record<(typeof CVSR_PACKAGES)[number], string> = {
   CP4: 'var(--cp4)',
 };
 
-const TRACK_ARIA_LABEL = 'Track installed: zero miles. The 2026 Final Business Plan reports Track and Systems design and construction for the 119-mile Central Valley Segment as not started, and the Authority publishes no monthly track-installation series.';
+const TRACK_ARIA_LABEL = 'Track installed: zero miles. The 2026 Final Business Plan reports Track and Systems design and construction for the 119-mile Central Valley Segment as not started, and the Central Valley Status Report track and system installation forecast, updated September 1, 2026, starts track laying after mobilization in the fourth quarter of 2026. No installed-track mileage is published for any month.';
 
 /**
  * The rail reads each published CVSR metric at program level: a value the report
@@ -342,7 +342,7 @@ function MetricRail({
         label="Track installed"
         value="0"
         unit="mi"
-        chip={<>Upcoming 2026 <SourceLink sourceId="bp2026_schedule" /></>}
+        chip={<>Laying 2027 <SourceLink sourceId="cvsr_2026_10" page="p. 11" /></>}
         series={trackSeries}
         selectedIndex={null}
         ariaLabel={TRACK_ARIA_LABEL}
