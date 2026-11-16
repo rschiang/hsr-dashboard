@@ -1,5 +1,6 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
+import { sameArcgisPayload } from './lib/arcgis-payload';
 
 const ROOT = 'https://services3.arcgis.com/rGGp0aiv6Rf11t2H/arcgis/rest/services';
 const USER_AGENT = 'hsr-dashboard/1.0 (public-data-pipeline)';
@@ -67,6 +68,16 @@ async function fetchTarget(target: Target): Promise<boolean> {
     const body = (await response.json()) as { error?: { message?: string }; features?: unknown[] };
     if (body.error) throw new Error(body.error.message ?? 'ArcGIS query error');
     if (!Array.isArray(body.features)) throw new Error('ArcGIS response contains no features array');
+    let cached: unknown;
+    try {
+      cached = JSON.parse(await readFile(output, 'utf8'));
+    } catch {
+      // Absent or unparseable cache: write the fetched payload.
+    }
+    if (cached !== undefined && sameArcgisPayload(cached, body)) {
+      console.log(`${target.name}: ${body.features.length} features, unchanged`);
+      return true;
+    }
     await mkdir(dirname(output), { recursive: true });
     await writeFile(output, `${JSON.stringify(body)}\n`);
     console.log(`${target.name}: fetched ${body.features.length} features → ${output}`);

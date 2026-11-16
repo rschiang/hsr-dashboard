@@ -2,7 +2,12 @@ import { createHash } from 'node:crypto';
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { basename } from 'node:path';
 import { PDFParse } from 'pdf-parse';
-import { CVSR_ROW_CROSSWALK } from '../src/data/cvsr-row-crosswalk';
+import {
+  CVSR_GUIDEWAY_CROSSWALK,
+  CVSR_ROW_CROSSWALK,
+  CVSR_STRUCTURE_LABEL_ALIASES,
+  NAMED_STRUCTURE_CVSR_ROWS,
+} from '../src/data/cvsr-row-crosswalk';
 import type {
   CvsrInventory,
   CvsrReportDiagnostic,
@@ -713,6 +718,12 @@ function reportMetadata(file: string): ReviewedCvsrReport | undefined {
 }
 
 
+/** Structure-row labels that report an ArcGIS named structure, plus the spellings aliased to them. */
+const NAMED_STRUCTURE_ROW_LABELS = new Set([
+  ...Object.values(NAMED_STRUCTURE_CVSR_ROWS).flat(),
+  ...Object.keys(CVSR_STRUCTURE_LABEL_ALIASES),
+]);
+
 async function parsePdf(
   path: string,
   reportUrls: ReportUrlRegistry,
@@ -740,37 +751,57 @@ async function parsePdf(
       )
     : parseProgressMetrics(text, dataMonth)) as Record<CvsrPackage, PackageMetrics>;
   const transcribed = TRANSCRIBED_ROWS[reportFile];
-  const rowProgress = transcribed
+  const rowProgress = (transcribed
     ? expandTranscribedRows(transcribed)
     : parseRowProgress(text, reportFile, (kind, label) =>
       kind === 'structure'
-        ? Boolean(CVSR_ROW_CROSSWALK[label])
-        : label === 'Herndon Canal to Swift Ave' || guidewayByLabel.has(label));
+        ? Boolean(CVSR_ROW_CROSSWALK[label]) || NAMED_STRUCTURE_ROW_LABELS.has(label)
+        : Boolean(CVSR_GUIDEWAY_CROSSWALK[label]) || guidewayByLabel.has(label))
+  ).map((row) => {
+    const alias = row.kind === 'structure' ? CVSR_STRUCTURE_LABEL_ALIASES[row.location] : undefined;
+    return alias ? { ...row, location: alias } : row;
+  });
   if (transcribed) assertTranscribedRows(reportFile, rowProgress, perPackage, transcribed.viaductMiles);
+  const segmentIdsFor = (row: CvsrRowProgress): readonly string[] => {
+    if (row.kind === 'structure') return CVSR_ROW_CROSSWALK[row.location] ? [CVSR_ROW_CROSSWALK[row.location]] : [];
+    const reviewed = CVSR_GUIDEWAY_CROSSWALK[row.location];
+    if (reviewed) return reviewed.segmentIds;
+    const exact = guidewayByLabel.get(row.location);
+    return exact ? [exact] : [];
+  };
   const unmatchedRows: CvsrRowProgress[] = [];
   const perSegment: NonNullable<Snapshot['perSegment']> = {};
   for (const row of rowProgress) {
-    const segmentId = row.kind === 'structure'
-      ? CVSR_ROW_CROSSWALK[row.location]
-      : row.location === 'Herndon Canal to Swift Ave'
-        ? 'CP1:gap:1'
-        : guidewayByLabel.get(row.location);
-    if (!segmentId) {
-      unmatchedRows.push(row);
+    const segmentIds = segmentIdsFor(row);
+    if (segmentIds.length === 0) {
+      if (row.kind !== 'structure' || !NAMED_STRUCTURE_ROW_LABELS.has(row.location)) unmatchedRows.push(row);
       continue;
     }
-    if (perSegment[segmentId]) {
-      throw new Error(`${reportFile}: multiple CVSR rows resolve to ${segmentId}`);
+    for (const segmentId of segmentIds) {
+      if (perSegment[segmentId]) {
+        throw new Error(`${reportFile}: multiple CVSR rows resolve to ${segmentId}`);
+      }
+      perSegment[segmentId] = {
+        completion: row.completion,
+        sourceId: 'cvsr',
+        reportFile,
+        ...(reportUrl ? { reportUrl } : {}),
+        dataMonth,
+        ...(row.start ? { scheduleStart: row.start } : {}),
+        ...(row.finish ? { scheduleFinish: row.finish } : {}),
+        table: row.table,
+      };
     }
-    perSegment[segmentId] = {
-      completion: row.completion,
-      sourceId: 'cvsr',
-      reportFile,
-      ...(reportUrl ? { reportUrl } : {}),
-      dataMonth,
-      ...(row.start ? { scheduleStart: row.start } : {}),
-      ...(row.finish ? { scheduleFinish: row.finish } : {}),
-      table: row.table,
+  }
+  const perStructure: NonNullable<Snapshot['perStructure']> = {};
+  for (const [globalId, labels] of Object.entries(NAMED_STRUCTURE_CVSR_ROWS)) {
+    const rows = rowProgress.filter((row) => row.kind === 'structure' && labels.includes(row.location));
+    if (rows.length !== labels.length || labels.some((label) => !rows.some((row) => row.location === label))) continue;
+    perStructure[globalId] = {
+      completion: rows.some((row) => row.completion === null)
+        ? null
+        : Math.min(...rows.map((row) => row.completion as number)),
+      table: rows.every((row) => row.table === 'completed') ? 'completed' : 'underway',
     };
   }
   if (dataMonth >= '2026-04' && rowProgress.length > 0) {
@@ -782,13 +813,9 @@ async function parsePdf(
     }
   }
   const structureEvidence = rowProgress.flatMap((row) => {
-    const segmentId = row.kind === 'structure'
-      ? CVSR_ROW_CROSSWALK[row.location]
-      : row.location === 'Herndon Canal to Swift Ave'
-        ? 'CP1:gap:1'
-        : guidewayByLabel.get(row.location);
+    const segmentIds = segmentIdsFor(row);
     if (
-      !segmentId
+      segmentIds.length === 0
       || row.table !== 'completed'
       || row.finish === undefined
       || row.finish > dataMonth
@@ -798,11 +825,12 @@ async function parsePdf(
     ) return [];
     const slug = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     const quote = row.quote;
-    return [{
-      id: `cvsr-row-${slug(reportFile.replace(/\.pdf$/i, ''))}-${slug(row.location)}`,
+    const finish = row.finish;
+    return segmentIds.map((segmentId) => ({
+      id: `cvsr-row-${slug(reportFile.replace(/\.pdf$/i, ''))}-${slug(row.location)}${segmentIds.length > 1 ? `-${slug(segmentId)}` : ''}`,
       segmentId,
       claim: row.footnote === 'substantially_complete' ? 'substantially_complete' as const : 'completed' as const,
-      date: row.finish,
+      date: finish,
       datePrecision: 'month' as const,
       label: row.location,
       sourceTitle: 'Central Valley Status Report',
@@ -810,7 +838,7 @@ async function parsePdf(
       reportFile,
       sourceId: 'cvsr' as const,
       quote,
-    }];
+    }));
   });
 
   for (const cp of CVSR_PACKAGES) {
@@ -902,6 +930,7 @@ async function parsePdf(
         : {}),
     perPackage,
     ...(Object.keys(perSegment).length > 0 ? { perSegment } : {}),
+    ...(Object.keys(perStructure).length > 0 ? { perStructure } : {}),
     ...(structureEvidence.length > 0 ? { structureEvidence } : {}),
     ...(unmatchedRows.length > 0
       ? { unmatchedCvsrRows: unmatchedRows.map(({ cp, kind, location }) => ({ cp, kind, location })) }

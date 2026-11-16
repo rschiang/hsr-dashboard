@@ -197,6 +197,24 @@ const REGISTRY = {
     url: 'https://hsr.ca.gov/2026/03/13/photo-release-high-speed-rail-completes-underpass-reconnecting-downtown-and-southwest-fresno/',
     note: 'Updated 2026-05-11 to rename the street throughout; the release carries the editor’s note.',
   },
+  hsr_corcoran_2026: {
+    title: 'California High-Speed Rail Completes Corcoran Highway Grade Separation in Kings County',
+    date: '2026-08-11',
+    publisher: 'California High-Speed Rail Authority',
+    url: 'https://hsr.ca.gov/2026/08/11/news-release-california-high-speed-rail-completes-corcoran-highway-grade-separation-in-kings-county/',
+  },
+  hsr_four_structures_2026: {
+    title: 'Four New Structures Push High-Speed Rail Progress to 66 Completed Along First 119 Miles',
+    date: '2026-10-07',
+    publisher: 'California High-Speed Rail Authority',
+    url: 'https://hsr.ca.gov/2026/10/07/news-release-four-new-structures-push-high-speed-rail-progress-to-66-completed-along-first-119-miles/',
+  },
+  hsr_hanford_2026: {
+    title: 'California High-Speed Rail Celebrates Completion of Largest Structure in the Central Valley, Surpasses 20,000 Jobs Created',
+    date: '2026-11-12',
+    publisher: 'California High-Speed Rail Authority',
+    url: 'https://hsr.ca.gov/2026/11/12/news-release-california-high-speed-rail-celebrates-completion-of-largest-structure-in-the-central-valley-surpasses-20000-jobs-created/',
+  },
 
   business_plan_2026: {
     title: '2026 Business Plan',

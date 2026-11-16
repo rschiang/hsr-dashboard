@@ -15,9 +15,15 @@ export type NamedStructure = {
   name: string;
   status: 'Completed' | 'In progress';
   url: string;
-  sourceId: 'arcgis_structures';
+  sourceId: SourceId;
+  /** Which source the status comes from: the newest of the three that speaks for the structure. */
+  basis: 'arcgis' | 'cvsr' | 'announcement';
   objectId: number;
   globalId: string;
+  /**
+   * ArcGIS: the layer's last edit (ISO). CVSR: first day of the data month.
+   * Announcement: the evidence date as published (YYYY-MM-DD or YYYY-MM).
+   */
   observedAt: string;
   locationMethod: 'crosswalk' | 'spatial' | 'package-only' | 'reviewed-context';
   contextScope?: 'enabling-works' | 'third-party';
@@ -47,6 +53,8 @@ export type SegmentObservation = {
   scheduleFinish?: string;
   table?: 'underway' | 'completed';
 };
+
+export type StructureObservation = { completion: number | null; table: 'underway' | 'completed' };
 
 export type Segment = {
   id: string;
@@ -96,6 +104,13 @@ export type SegmentsArtifact = {
    * layer reported one.
    */
   arcgisEditedAt?: string;
+  /** The progress layer's own last edit; absent when the layer reports none. */
+  arcgisProgressEditedAt?: string;
+  /**
+   * Newest dated fact in the artifact, YYYY-MM-DD: the last CVSR data month's last
+   * day, a layer edit, or an announcement.
+   */
+  currentAsOf: string;
   model: string;
   calibration: Partial<Record<ConstructionPackage, Calibration>>;
   crossCheck?: {
@@ -180,6 +195,8 @@ type SnapshotFields = {
   sourceId: SourceId;
   reportFile?: string;
   perSegment?: Record<string, SegmentObservation>;
+  /** CVSR rows for ArcGIS named structures that are not strip segments, keyed by GlobalID. */
+  perStructure?: Record<string, StructureObservation>;
   structureEvidence?: StructureEvidence[];
   unmatchedCvsrRows?: Array<{ cp: CvsrPackageId; kind: 'structure' | 'guideway'; location: string }>;
   perPackage?: Partial<Record<'CP1' | 'CP2-3' | 'CP4', PackageMetrics>>;
@@ -197,7 +214,7 @@ export type Snapshot = SnapshotFields & ({
   reportUrl?: string;
   originalReportUrl?: string;
 } | {
-  /** The poll day, `polledAt` truncated; the key every replay comparison uses. */
+  /** The progress layer's last-edit day; the poll day only when the layer reports no edit date. */
   date: string;
   tier: 2;
   /**
@@ -281,5 +298,10 @@ export type HistoryArtifact = {
    */
   replayMonths: string[];
   snapshots: Snapshot[];
+  /**
+   * Newest dated evidence after the last CVSR month; drawn as the final 'Current' tick.
+   * Absent when the last report is the newest evidence.
+   */
+  currentDate?: string;
   cvsrInventory: CvsrInventory;
 };

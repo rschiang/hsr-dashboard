@@ -155,3 +155,37 @@ test('a completed CVSR table row resolves categorically even below 100 percent',
     'structure_complete',
   );
 });
+
+const announcedCompletion: StructureEvidence = {
+  ...completionEvidence,
+  id: 'announced-complete-2026-11-12',
+  date: '2026-11-12',
+  datePrecision: 'day',
+};
+
+test('a completion announced after the observed month outranks an underway row', () => {
+  const subject = segment({ evidence: [announcedCompletion] });
+  const resolved = resolveSegmentStatus(subject, '2026-11-12', { completion: 0.95, table: 'underway' }, '2026-08');
+
+  assert.equal(resolved.status, 'structure_complete');
+  assert.equal(resolved.evidence, announcedCompletion);
+});
+
+test('a report covering the announcement month controls, and replay before the announcement ignores it', () => {
+  const subject = segment({ evidence: [announcedCompletion] });
+
+  assert.equal(
+    resolveSegmentStatus(subject, '2026-11-12', { completion: 0.95, table: 'underway' }, '2026-11').status,
+    'under_construction',
+  );
+  assert.equal(
+    resolveSegmentStatus(subject, '2026-08-01', { completion: 0.95, table: 'underway' }, '2026-08').status,
+    'under_construction',
+  );
+});
+
+test('completion evidence on a guideway reads guideway complete, not structure complete', () => {
+  const subject = segment({ kind: 'guideway', evidence: [completionEvidence] });
+
+  assert.equal(resolveSegmentStatus(subject, '2021-03-01').status, 'guideway_complete');
+});

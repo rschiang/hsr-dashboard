@@ -59,7 +59,7 @@ export function TimeScrubber({
           onChange={(event) => onDateChange(dates[Number(event.currentTarget.value)])}
           aria-label="Progress date"
         />
-        {/* The last tick is not a month: it is the present, CVSR base plus any later ArcGIS poll. */}
+        {/* The last tick is not a month: it is the newest dated evidence, the CVSR base plus any later announcement or layer edit. */}
         <time dateTime={date}>{index === dates.length - 1 ? 'Current' : date.slice(0, 7)}</time>
       </div>
     </div>

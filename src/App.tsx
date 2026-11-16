@@ -61,27 +61,18 @@ function App() {
     ])
       .then(([segments, history, geojson]) => {
         setData({ segments, history, geojson });
-        const latest = [...history.replayMonths, ...history.snapshots.map((snapshot) => snapshot.date)].sort().at(-1);
-        setDate(latest ?? segments.generatedAt.slice(0, 10));
+        const latest = (history.currentDate ? [...history.replayMonths, history.currentDate] : history.replayMonths).at(-1);
+        setDate(latest ?? segments.currentAsOf);
       })
       .catch((error) => setLoadError(String(error)));
   }, []);
 
-  // Tier 2 applies to the last tick only. Every live poll is already eligible there
-  // (deriveStatuses takes the newest observation per segment), so the axis needs one
-  // tick, not one per poll.
-  const currentPoll = useMemo(
-    () => data?.history.snapshots
-      .filter((snapshot) => snapshot.tier === 2)
-      .sort((left, right) => left.date.localeCompare(right.date))
-      .at(-1),
-    [data],
-  );
+  // The last tick is the newest dated evidence when it is newer than the last report.
   const dates = useMemo(
     () => data
-      ? (currentPoll ? [...data.history.replayMonths, currentPoll.date] : data.history.replayMonths)
+      ? (data.history.currentDate ? [...data.history.replayMonths, data.history.currentDate] : data.history.replayMonths)
       : [],
-    [currentPoll, data],
+    [data],
   );
   const derived = useMemo(
     () => data && date
@@ -149,7 +140,7 @@ function App() {
           <div className="topbar-meta">
             <span>CA HSR Construction Dashboard</span>
             <span>
-              Last updated {new Date(data.segments.generatedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}
+              Last updated {new Date(`${data.segments.currentAsOf}T00:00:00Z`).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })}
               {' '}(
               {data.segments.arcgisEditedAt
                 ? <>ArcGIS edited {new Date(data.segments.arcgisEditedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' })} · </>
@@ -200,7 +191,7 @@ function App() {
               selectedMonth={selectedMonth}
               gaps={selectedCvsrGaps}
               exact={exactCvsrSnapshot !== undefined}
-              arcgisObserved={currentPoll && date === currentPoll.date ? currentPoll.date : undefined}
+              laterEvidence={data.history.currentDate !== undefined && date === data.history.currentDate ? date : undefined}
             />
           </aside>
         </div>
@@ -302,7 +293,7 @@ function MetricRail({
   selectedMonth,
   gaps,
   exact,
-  arcgisObserved,
+  laterEvidence,
 }: {
   snapshot: Snapshot | undefined;
   snapshots: Snapshot[];
@@ -310,8 +301,8 @@ function MetricRail({
   selectedMonth: string;
   gaps: CvsrGap[];
   exact: boolean;
-  /** Poll date when the selected tick is the ArcGIS-overlaid present, else undefined. */
-  arcgisObserved?: string;
+  /** Date of the Current tick when it is selected, else undefined. */
+  laterEvidence?: string;
 }) {
   const beforeCoverage = selectedMonth < inventory.coverageStart;
   const afterCoverage = selectedMonth > inventory.coverageEnd;
@@ -388,7 +379,7 @@ function MetricRail({
         {beforeCoverage
           ? <>Before the published <Abbr>{CVSR}</Abbr> series (starts {inventory.coverageStart})</>
           : afterCoverage && snapshot
-            ? <><Abbr>{CVSR}</Abbr> data through {inventory.coverageEnd}<SnapshotReportLink snapshot={snapshot} />{arcgisObserved && <> · ArcGIS observed {arcgisObserved}</>}</>
+            ? <><Abbr>{CVSR}</Abbr> data through {inventory.coverageEnd}<SnapshotReportLink snapshot={snapshot} />{laterEvidence && <> · later evidence through {laterEvidence}</>}</>
             : exact && snapshot
               ? <><Abbr>{CVSR}</Abbr> data through {selectedMonth}<SnapshotReportLink snapshot={snapshot} /></>
               : snapshot

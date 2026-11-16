@@ -84,6 +84,7 @@ export function SegmentDetail({
                   <li key={structure.globalId}>
                     <a href={structure.url} target="_blank" rel="noreferrer">{structure.name}</a>
                     {' — '}{structureObservationLabel(structure, date)}
+                    {' '}<SourceLink sourceId={structure.sourceId} />
                   </li>
                 ))}
               </ul>

@@ -5,8 +5,8 @@ import nearestPointOnLine from '@turf/nearest-point-on-line';
 import { lineString, point, type Feature, type LineString, type Position } from '@turf/helpers';
 import type { ConstructionPackage, CvsrPackageId, Segment, SegmentsArtifact, Snapshot } from '../src/data/types';
 import { CVSR_ROW_CROSSWALK } from '../src/data/cvsr-row-crosswalk';
-import { STRUCTURE_CROSSWALK, STRUCTURE_EVIDENCE } from '../src/data/structure-evidence';
-import { SOURCES } from '../src/data/sources';
+import { NAMED_STRUCTURE_ANNOUNCEMENTS, STRUCTURE_CROSSWALK, STRUCTURE_EVIDENCE } from '../src/data/structure-evidence';
+import { SOURCES, type SourceId } from '../src/data/sources';
 import { formatOfficialMp, stationToIosMile } from '../src/lib/mileposts';
 import { resolveSegmentStatus } from '../src/lib/status';
 import { assignWeights } from '../src/lib/weights';
@@ -264,10 +264,10 @@ herndonCp1Gap.label = 'Herndon Avenue to Golden State Boulevard realignment — 
 herndonCp1Gap.completion = 0;
 herndonCp1Gap.currentStatus = 'not_started';
 herndonCp1Gap.sourceId = 'cvsr';
-// The two named CVSR rows are what establishes this gap's coverage; no ArcGIS row
+// The named CVSR row is what establishes this gap's coverage; no ArcGIS row
 // publishes a station range for it.
 herndonCp1Gap.stationSourceId = 'cvsr';
-herndonCp1Gap.coveringCvsrRows = ['Viaduct 203 at SJR to Herndon Canal', 'Herndon Canal to Swift Ave'];
+herndonCp1Gap.coveringCvsrRows = ['Viaduct 203 at SJR to Herndon Canal'];
 
 const centerline = JSON.parse(await readFile('public/data/centerline.geojson', 'utf8')) as Feature<LineString>;
 const mileposts = JSON.parse(await readFile('public/data/mileposts.json', 'utf8')) as MilepostArtifact;
@@ -376,6 +376,10 @@ const arcgisEditedAt = metadata.sources
 // date — not the newest edit across all four layers — dates the earthwork-equivalent
 // miles computed below.
 const progressEditedAt = metadata.sources.find((source) => source.name === 'progress')?.dataLastEditedAt;
+// The structures layer is dated by its own last edit, never by the poll: a poll only
+// proves the server still answers, not that the Authority reviewed a status.
+const structuresEditedAt = metadata.sources.find((source) => source.name === 'structures')?.dataLastEditedAt ?? metadata.fetchedAt;
+const evidenceDay = (date: string) => date.length === 7 ? `${date}-01` : date.slice(0, 10);
 const structures = JSON.parse(await readFile('data/raw/arcgis/structures.json', 'utf8')) as StructureResponse;
 if (structures.features.length !== 88) throw new Error(`Expected 88 structure features, received ${structures.features.length}`);
 for (const [globalId, segmentId] of Object.entries(STRUCTURE_CROSSWALK)) {
@@ -458,18 +462,19 @@ for (const feature of structures.features) {
     status: feature.attributes.status,
     url: feature.attributes.projectPageURL,
     sourceId: 'arcgis_structures',
+    basis: 'arcgis',
     objectId: feature.attributes.OBJECTID,
     globalId,
-    observedAt: metadata.fetchedAt,
+    observedAt: structuresEditedAt,
     locationMethod,
     ...(contextProject ? { contextScope: contextProject.scope } : {}),
   });
   if (locationMethod === 'crosswalk') {
     target.evidence.push({
-      id: `arcgis-structure-${globalId}-${metadata.fetchedAt.slice(0, 10)}`,
+      id: `arcgis-structure-${globalId}-${structuresEditedAt.slice(0, 10)}`,
       segmentId: target.id,
       claim: feature.attributes.status === 'Completed' ? 'completed' : 'in_progress',
-      date: metadata.fetchedAt.slice(0, 10),
+      date: structuresEditedAt.slice(0, 10),
       datePrecision: 'as_of',
       label: feature.attributes.name,
       sourceTitle: SOURCES.arcgis_structures.title,
@@ -482,13 +487,6 @@ for (const feature of structures.features) {
     if (feature.attributes.status === 'Completed') completedStructures += 1;
     else inProgressStructures += 1;
   }
-}
-for (const segment of segments) {
-  segment.currentStatus = resolveSegmentStatus(
-    segment,
-    metadata.fetchedAt,
-    { completion: segment.completion },
-  ).status;
 }
 // The exclusion arithmetic, not the status split: a structure completing flips one
 // record from in-progress to completed every month or two, which is the program
@@ -566,16 +564,18 @@ const parsedSnapshotsRaw = await readFile('data/raw/cvsr/parsed-snapshots.json',
   },
 );
 let crossCheck: SegmentsArtifact['crossCheck'];
+let latestCvsr: Extract<Snapshot, { tier: 1 }> | undefined;
 if (parsedSnapshotsRaw === null) {
   console.warn('data/raw/cvsr/parsed-snapshots.json absent; skipping the per-package CVSR cross-check');
 } else {
   const parsed = JSON.parse(parsedSnapshotsRaw) as { snapshots?: Snapshot[] };
   const allSnapshots = parsed.snapshots ?? [];
   const latest = allSnapshots
-    .filter((snapshot) => snapshot.tier === 1 && snapshot.perPackage !== undefined)
-    .sort((a, b) => a.dataMonth!.localeCompare(b.dataMonth!))
+    .filter((snapshot): snapshot is Extract<Snapshot, { tier: 1 }> => snapshot.tier === 1 && snapshot.perPackage !== undefined)
+    .sort((a, b) => a.dataMonth.localeCompare(b.dataMonth))
     .at(-1);
   if (!latest) throw new Error('parsed-snapshots.json holds no tier-1 CVSR snapshot with package metrics');
+  latestCvsr = latest;
   const anchor = progressEditedAt === undefined
     ? undefined
     : anchorSnapshot(allSnapshots, anchorDataMonth(progressEditedAt));
@@ -625,14 +625,16 @@ if (parsedSnapshotsRaw === null) {
         segmentId,
         arcgis,
         cvsr: observation.completion,
-        cvsrMonth: latest.dataMonth!,
+        cvsrMonth: latest.dataMonth,
         reportFile: observation.reportFile!,
         reportUrl: observation.reportUrl!,
       });
     }
+    // CVSR schedule months fill a missing ArcGIS schedule only; they never override one.
+    if (segment.start === null && observation.scheduleStart) segment.start = `${observation.scheduleStart}-01`;
+    if (segment.finish === null && observation.scheduleFinish) segment.finish = `${observation.scheduleFinish}-01`;
     segment.completion = observation.completion;
     segment.sourceId = observation.sourceId;
-    segment.currentStatus = resolveSegmentStatus(segment, metadata.fetchedAt, observation).status;
   }
   const structureIds = new Set(segments.filter((segment) => segment.kind === 'structure').map((segment) => segment.id));
   const crosswalkIds = new Set(Object.values(CVSR_ROW_CROSSWALK));
@@ -650,17 +652,70 @@ if (parsedSnapshotsRaw === null) {
   const matchedGuideways = Object.keys(latest.perSegment ?? {}).filter(
     (id) => segments.find((segment) => segment.id === id)?.kind === 'guideway',
   ).length;
-  if (matchedGuideways < 49) {
-    throw new Error(`CVSR guideway label resolution regressed to ${matchedGuideways}; 49 resolved as of the 2026-06 report`);
+  if (matchedGuideways < 62) {
+    throw new Error(`CVSR guideway label resolution regressed to ${matchedGuideways}; 62 resolved as of the 2026-08 data month`);
   }
   crossCheck = {
-    cvsrDataMonth: latest.dataMonth!,
+    cvsrDataMonth: latest.dataMonth,
     ...(anchor ? { arcgisAnchorMonth: anchor.dataMonth } : {}),
     perPackage,
     unmatchedCvsrRows,
     disagreements,
   };
   console.log(`cross-check vs CVSR ${latest.dataMonth} (package miles vs ${anchor ? anchor.dataMonth : `${latest.dataMonth}, unbounded`}): ${structureIds.size}/${crosswalkIds.size} structures, ${matchedGuideways} guideways, ${unmatchedCvsrRows.length} unmatched rows, ${disagreements.length} disagreements`);
+}
+
+// Named structures read the newest source that speaks for them. Precedence is
+// announcement, then CVSR, then ArcGIS: a completion is not undone by a lagging source.
+const announced = new Map<string, { date: string; sourceId: SourceId }>();
+for (const item of NAMED_STRUCTURE_ANNOUNCEMENTS) announced.set(item.globalId, item);
+for (const [globalId, segmentId] of Object.entries(STRUCTURE_CROSSWALK)) {
+  const newest = STRUCTURE_EVIDENCE
+    .filter((evidence) => evidence.segmentId === segmentId && evidence.claim === 'completed')
+    .sort((a, b) => evidenceDay(b.date).localeCompare(evidenceDay(a.date)))[0];
+  if (newest) announced.set(globalId, { date: newest.date, sourceId: newest.sourceId });
+}
+let newestCompleted = 0;
+let newestInProgress = 0;
+for (const segment of segments) {
+  for (const structure of segment.structures) {
+    if (structure.contextScope) continue;
+    const announcement = announced.get(structure.globalId);
+    const crosswalked = STRUCTURE_CROSSWALK[structure.globalId];
+    const row = crosswalked ? latestCvsr?.perSegment?.[crosswalked] : latestCvsr?.perStructure?.[structure.globalId];
+    if (announcement) {
+      structure.status = 'Completed';
+      structure.basis = 'announcement';
+      structure.observedAt = announcement.date;
+      structure.sourceId = announcement.sourceId;
+    } else if (row && latestCvsr) {
+      structure.status = row.table === 'completed' ? 'Completed' : 'In progress';
+      structure.basis = 'cvsr';
+      structure.observedAt = `${latestCvsr.dataMonth}-01`;
+      structure.sourceId = 'cvsr';
+    }
+    if (structure.status === 'Completed') newestCompleted += 1;
+    else newestInProgress += 1;
+  }
+}
+
+const cvsrMonthEnd = latestCvsr === undefined
+  ? undefined
+  : new Date(Date.UTC(Number(latestCvsr.dataMonth.slice(0, 4)), Number(latestCvsr.dataMonth.slice(5, 7)), 0)).toISOString().slice(0, 10);
+const currentAsOf = [
+  cvsrMonthEnd,
+  progressEditedAt?.slice(0, 10),
+  structuresEditedAt.slice(0, 10),
+  ...STRUCTURE_EVIDENCE.map((evidence) => evidenceDay(evidence.date)),
+  ...NAMED_STRUCTURE_ANNOUNCEMENTS.map((item) => evidenceDay(item.date)),
+].filter((day): day is string => day !== undefined).sort().at(-1)!;
+
+for (const segment of segments) {
+  const observation = latestCvsr?.perSegment?.[segment.id];
+  segment.currentStatus = (observation && latestCvsr
+    ? resolveSegmentStatus(segment, currentAsOf, observation, latestCvsr.dataMonth)
+    : resolveSegmentStatus(segment, currentAsOf, { completion: segment.completion }, progressEditedAt?.slice(0, 7))
+  ).status;
 }
 
 // Corridor invariants run before the first artifact write: a run that ultimately throws
@@ -682,6 +737,8 @@ if (!(inputGeometryMiles > 118 && inputGeometryMiles < 119.5)) {
 const artifact: SegmentsArtifact = {
   generatedAt: metadata.fetchedAt,
   ...(arcgisEditedAt ? { arcgisEditedAt } : {}),
+  ...(progressEditedAt ? { arcgisProgressEditedAt: progressEditedAt } : {}),
+  currentAsOf,
   model: 'Package and extension totals are published contract values; the structure/guideway split and structure type factors are editorial with no published basis',
   calibration,
   ...(crossCheck ? { crossCheck } : {}),
@@ -734,3 +791,4 @@ console.log(`segments: 102 inputs → ${segments.length} outputs; CP1 no-data ga
 console.log(`coverage: ${coveredMiles.toFixed(2)} mi; strict 100% guideway ${JSON.stringify(completeByPackage)} = ${totalComplete.toFixed(1)} mi`);
 console.log(`overlaps: ${overlaps.length} nested structure/guideway pairs totalling ${overlapMiles.toFixed(2)} mi of double-counted corridor`);
 console.log(`structures: ${completedStructures} completed + ${inProgressStructures} in progress`);
+console.log(`named structures by newest source: ${newestCompleted} completed + ${newestInProgress} in progress`);

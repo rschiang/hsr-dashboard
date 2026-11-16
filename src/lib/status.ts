@@ -101,7 +101,7 @@ export function scheduledStatus(segment: Segment, date: string): AlignmentStatus
   return current === 'guideway_complete' ? 'guideway_complete' : current;
 }
 
-function evidenceDate(evidence: StructureEvidence): string {
+export function evidenceDate(evidence: StructureEvidence): string {
   return evidence.date.length === 7 ? `${evidence.date}-01` : evidence.date.slice(0, 10);
 }
 
@@ -124,22 +124,29 @@ export function resolveSegmentStatus(
   segment: Segment,
   date: string,
   observation?: Pick<SegmentObservation, 'completion' | 'table'>,
+  /** YYYY-MM the observation speaks for; lets a completion published after it outrank it. */
+  observedMonth?: string,
 ): ResolvedSegmentStatus {
+  const latestEvidence = latestStructureEvidence(segment, date);
+  const complete: AlignmentStatus = segment.kind === 'structure' ? 'structure_complete' : 'guideway_complete';
+  // A completion published after the observation's month outranks it: the report has not caught up.
+  if (
+    observation !== undefined && observation.table !== 'completed' && observedMonth !== undefined
+    && latestEvidence?.claim === 'completed' && evidenceDate(latestEvidence).slice(0, 7) > observedMonth
+  ) {
+    return { status: complete, evidence: latestEvidence };
+  }
   if (observation?.table === 'completed') {
-    return {
-      status: segment.kind === 'structure' ? 'structure_complete' : 'guideway_complete',
-      evidence: latestStructureEvidence(segment, date),
-    };
+    return { status: complete, evidence: latestEvidence };
   }
   if (observation !== undefined && observation.completion !== null) {
     return { status: statusFromCompletion(observation.completion, segment.start, date) };
   }
 
-  const evidence = latestStructureEvidence(segment, date);
-  if (evidence !== undefined) {
+  if (latestEvidence !== undefined) {
     return {
-      status: evidence.claim === 'completed' ? 'structure_complete' : 'under_construction',
-      evidence,
+      status: latestEvidence.claim === 'completed' ? complete : 'under_construction',
+      evidence: latestEvidence,
     };
   }
 
@@ -167,7 +174,10 @@ export function deriveStatuses(
       (snapshot) => snapshot.perSegment !== undefined && Object.hasOwn(snapshot.perSegment, segment.id),
     );
     const observation = observed?.perSegment?.[segment.id];
-    const resolved = resolveSegmentStatus(segment, date, observation);
+    const observedMonth = observed === undefined
+      ? undefined
+      : observed.tier === 1 ? observed.dataMonth : observed.date.slice(0, 7);
+    const resolved = resolveSegmentStatus(segment, date, observation, observedMonth);
     statuses[segment.id] = resolved.status;
     evidence[segment.id] = resolved.evidence;
   }

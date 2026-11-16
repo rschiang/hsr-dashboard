@@ -1,3 +1,4 @@
+import type { SourceId } from './sources';
 import type { StructureEvidence } from './types';
 
 /**
@@ -234,4 +235,113 @@ export const STRUCTURE_EVIDENCE: readonly StructureEvidence[] = [
     sourceId: 'hsr_ventura_2026',
     quote: 'The Ventura Street underpass grade separation project is complete and open to traffic in the city of Fresno.',
   },
+  {
+    id: 'cross-creek-complete-2026-10-07',
+    segmentId: 'CP2-3:130',
+    claim: 'completed',
+    date: '2026-10-07',
+    datePrecision: 'day',
+    label: 'Cross Creek Viaduct',
+    sourceTitle: 'Four New Structures Push High-Speed Rail Progress to 66 Completed Along First 119 Miles',
+    sourceUrl: 'https://hsr.ca.gov/2026/10/07/news-release-four-new-structures-push-high-speed-rail-progress-to-66-completed-along-first-119-miles/',
+    sourceId: 'hsr_four_structures_2026',
+    quote: 'The California High-Speed Rail Authority (Authority) today announced the completion of four new structures in Kings and Tulare counties, bringing the total number of structures completed in 2026 alone to eight.',
+  },
+  {
+    id: 'tule-river-complete-2026-10-07',
+    segmentId: 'CP2-3:131',
+    claim: 'completed',
+    date: '2026-10-07',
+    datePrecision: 'day',
+    label: 'Tule River Viaduct',
+    sourceTitle: 'Four New Structures Push High-Speed Rail Progress to 66 Completed Along First 119 Miles',
+    sourceUrl: 'https://hsr.ca.gov/2026/10/07/news-release-four-new-structures-push-high-speed-rail-progress-to-66-completed-along-first-119-miles/',
+    sourceId: 'hsr_four_structures_2026',
+    quote: 'The California High-Speed Rail Authority (Authority) today announced the completion of four new structures in Kings and Tulare counties, bringing the total number of structures completed in 2026 alone to eight.',
+  },
+  {
+    id: 'avenue-136-complete-2026-10-07',
+    segmentId: 'CP2-3:151',
+    claim: 'completed',
+    date: '2026-10-07',
+    datePrecision: 'day',
+    label: 'Avenue 136 Underpass',
+    sourceTitle: 'Four New Structures Push High-Speed Rail Progress to 66 Completed Along First 119 Miles',
+    sourceUrl: 'https://hsr.ca.gov/2026/10/07/news-release-four-new-structures-push-high-speed-rail-progress-to-66-completed-along-first-119-miles/',
+    sourceId: 'hsr_four_structures_2026',
+    quote: 'The California High-Speed Rail Authority (Authority) today announced the completion of four new structures in Kings and Tulare counties, bringing the total number of structures completed in 2026 alone to eight.',
+  },
+  {
+    id: 'hanford-complete-2026-11-12',
+    segmentId: 'CP2-3:128',
+    claim: 'completed',
+    date: '2026-11-12',
+    datePrecision: 'day',
+    label: 'Hanford Viaduct',
+    sourceTitle: 'California High-Speed Rail Celebrates Completion of Largest Structure in the Central Valley, Surpasses 20,000 Jobs Created',
+    sourceUrl: 'https://hsr.ca.gov/2026/11/12/news-release-california-high-speed-rail-celebrates-completion-of-largest-structure-in-the-central-valley-surpasses-20000-jobs-created/',
+    sourceId: 'hsr_hanford_2026',
+    quote: 'The California High-Speed Rail Authority (Authority), alongside local and state leaders, today celebrated the completion of the Hanford Viaduct, the largest high-speed rail structure across the first 119 miles of construction, with a ribbon cutting ceremony in Kings County.',
+  },
+  {
+    id: 'conejo-complete-2026-11-12',
+    segmentId: 'CP2-3:129',
+    claim: 'completed',
+    date: '2026-11-12',
+    datePrecision: 'day',
+    label: 'Conejo Viaduct',
+    sourceTitle: 'California High-Speed Rail Celebrates Completion of Largest Structure in the Central Valley, Surpasses 20,000 Jobs Created',
+    sourceUrl: 'https://hsr.ca.gov/2026/11/12/news-release-california-high-speed-rail-celebrates-completion-of-largest-structure-in-the-central-valley-surpasses-20000-jobs-created/',
+    sourceId: 'hsr_hanford_2026',
+    quote: 'The Authority also completed five other structures in Fresno, Kings and Tulare counties:',
+  },
+  {
+    id: 'cole-slough-complete-2026-11-12',
+    segmentId: 'CP2-3:117',
+    claim: 'completed',
+    date: '2026-11-12',
+    datePrecision: 'day',
+    label: 'Cole Slough Bridge',
+    sourceTitle: 'California High-Speed Rail Celebrates Completion of Largest Structure in the Central Valley, Surpasses 20,000 Jobs Created',
+    sourceUrl: 'https://hsr.ca.gov/2026/11/12/news-release-california-high-speed-rail-celebrates-completion-of-largest-structure-in-the-central-valley-surpasses-20000-jobs-created/',
+    sourceId: 'hsr_hanford_2026',
+    quote: 'The Authority also completed five other structures in Fresno, Kings and Tulare counties:',
+  },
+  {
+    id: 'dutch-john-cut-complete-2026-11-12',
+    segmentId: 'CP2-3:137',
+    claim: 'completed',
+    date: '2026-11-12',
+    datePrecision: 'day',
+    label: 'Dutch John Cut Bridge',
+    sourceTitle: 'California High-Speed Rail Celebrates Completion of Largest Structure in the Central Valley, Surpasses 20,000 Jobs Created',
+    sourceUrl: 'https://hsr.ca.gov/2026/11/12/news-release-california-high-speed-rail-celebrates-completion-of-largest-structure-in-the-central-valley-surpasses-20000-jobs-created/',
+    sourceId: 'hsr_hanford_2026',
+    quote: 'The Authority also completed five other structures in Fresno, Kings and Tulare counties:',
+  },
+  {
+    id: 'deer-creek-complete-2026-11-12',
+    segmentId: 'CP2-3:170',
+    claim: 'completed',
+    date: '2026-11-12',
+    datePrecision: 'day',
+    label: 'Deer Creek Viaduct',
+    sourceTitle: 'California High-Speed Rail Celebrates Completion of Largest Structure in the Central Valley, Surpasses 20,000 Jobs Created',
+    sourceUrl: 'https://hsr.ca.gov/2026/11/12/news-release-california-high-speed-rail-celebrates-completion-of-largest-structure-in-the-central-valley-surpasses-20000-jobs-created/',
+    sourceId: 'hsr_hanford_2026',
+    quote: 'The Authority also completed five other structures in Fresno, Kings and Tulare counties:',
+  },
+];
+
+/**
+ * Dated completion announcements for named structures with no strip segment of their
+ * own. Only the date and the citation are displayed, so no quote is stored.
+ */
+export const NAMED_STRUCTURE_ANNOUNCEMENTS: ReadonlyArray<{ globalId: string; date: string; sourceId: SourceId }> = [
+  // Corcoran Highway Grade Separation — "marks the 62nd structure to be completed"
+  { globalId: '6343dc8a-0041-47e4-b1a9-1bb2cd7db20b', date: '2026-08-11', sourceId: 'hsr_corcoran_2026' },
+  // SR 43 Curved Bridge — one of the four structures in the release
+  { globalId: 'ecd5ef3b-089e-4ea2-9b74-93fa0c090faf', date: '2026-10-07', sourceId: 'hsr_four_structures_2026' },
+  // Houston Avenue Grade Separation — "is now open to traffic"
+  { globalId: '3633ed8b-91a5-4751-9449-524cf67275cf', date: '2026-11-12', sourceId: 'hsr_hanford_2026' },
 ];

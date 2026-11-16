@@ -4322,6 +4322,66 @@
         }
       },
       "perSegment": {
+        "CP1:186": {
+          "completion": null,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/05/FA-Central-Valley-Status-Report-June-2026-A11Y.pdf",
+          "dataMonth": "2026-03",
+          "scheduleStart": "2018-09",
+          "scheduleFinish": "2019-09",
+          "table": "completed"
+        },
+        "CP1:200": {
+          "completion": null,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/05/FA-Central-Valley-Status-Report-June-2026-A11Y.pdf",
+          "dataMonth": "2026-03",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2020-02",
+          "table": "completed"
+        },
+        "CP1:188": {
+          "completion": null,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/05/FA-Central-Valley-Status-Report-June-2026-A11Y.pdf",
+          "dataMonth": "2026-03",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2020-03",
+          "table": "completed"
+        },
+        "CP1:177": {
+          "completion": null,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/05/FA-Central-Valley-Status-Report-June-2026-A11Y.pdf",
+          "dataMonth": "2026-03",
+          "scheduleStart": "2017-12",
+          "scheduleFinish": "2020-06",
+          "table": "completed"
+        },
+        "CP1:196": {
+          "completion": null,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/05/FA-Central-Valley-Status-Report-June-2026-A11Y.pdf",
+          "dataMonth": "2026-03",
+          "scheduleStart": "2019-05",
+          "scheduleFinish": "2020-09",
+          "table": "completed"
+        },
+        "CP1:181": {
+          "completion": null,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/05/FA-Central-Valley-Status-Report-June-2026-A11Y.pdf",
+          "dataMonth": "2026-03",
+          "scheduleStart": "2018-08",
+          "scheduleFinish": "2022-09",
+          "table": "completed"
+        },
         "CP2-3:138": {
           "completion": 0.96,
           "sourceId": "cvsr",
@@ -5043,6 +5103,108 @@
           "table": "completed"
         }
       },
+      "perStructure": {
+        "37b3f86e-fab2-46d3-a299-21c5235387cd": {
+          "completion": null,
+          "table": "completed"
+        },
+        "29c432d7-29ce-4278-ac5a-83c2e891bcbc": {
+          "completion": null,
+          "table": "completed"
+        },
+        "af56fa57-ecaf-4252-a03b-faf6cf999e54": {
+          "completion": 0.98,
+          "table": "underway"
+        },
+        "f18165fc-4f7a-4583-ab91-25875834b4fb": {
+          "completion": null,
+          "table": "completed"
+        },
+        "2eb51002-fcc2-4ce7-8e40-165129bc020b": {
+          "completion": null,
+          "table": "completed"
+        },
+        "74cfef2f-baf3-4fc6-8a44-21e7a17596d1": {
+          "completion": null,
+          "table": "completed"
+        },
+        "30446461-3764-4ceb-b2da-db9e515a691a": {
+          "completion": null,
+          "table": "completed"
+        },
+        "8376a91b-aa51-485b-9cf2-efe28e201522": {
+          "completion": null,
+          "table": "completed"
+        },
+        "09c6365c-3528-47e3-980f-fd992fbd789b": {
+          "completion": 0.62,
+          "table": "underway"
+        },
+        "8db0f6ce-0dbf-4132-8134-ffd39ca8eb37": {
+          "completion": null,
+          "table": "completed"
+        },
+        "ada3aaa3-d793-4a1c-8796-731b7e79899b": {
+          "completion": 0.75,
+          "table": "underway"
+        },
+        "235eb26c-7879-48d0-9d64-f86d80261e8a": {
+          "completion": null,
+          "table": "completed"
+        },
+        "8cd42a12-4814-4485-9398-0c2b9492fe9f": {
+          "completion": null,
+          "table": "completed"
+        },
+        "1eb82982-9662-4c8f-9031-ab5f6005326d": {
+          "completion": null,
+          "table": "completed"
+        },
+        "43195a4a-d438-48fb-a793-03730e72e403": {
+          "completion": null,
+          "table": "completed"
+        },
+        "b1de8484-57cd-4dba-854b-3e759822e786": {
+          "completion": 0.4,
+          "table": "underway"
+        },
+        "6343dc8a-0041-47e4-b1a9-1bb2cd7db20b": {
+          "completion": 0.67,
+          "table": "underway"
+        },
+        "ecd5ef3b-089e-4ea2-9b74-93fa0c090faf": {
+          "completion": 0.6,
+          "table": "underway"
+        },
+        "dcd4e7da-dfa5-4cf6-baa7-21ee93dc109c": {
+          "completion": null,
+          "table": "completed"
+        },
+        "c10fe0d1-5a20-4738-bcb2-1d4567944d5b": {
+          "completion": null,
+          "table": "completed"
+        },
+        "631c61a9-e20c-42e8-ac16-79df1d868b83": {
+          "completion": 0.8,
+          "table": "underway"
+        },
+        "4f63c6ec-f81a-4c46-9b88-4447d0620d29": {
+          "completion": null,
+          "table": "completed"
+        },
+        "30230ea3-cc03-4eba-a756-445c261736a7": {
+          "completion": null,
+          "table": "completed"
+        },
+        "3633ed8b-91a5-4751-9449-524cf67275cf": {
+          "completion": 0.2,
+          "table": "underway"
+        },
+        "91c87fbd-5d6d-4335-b72b-017cae6867ee": {
+          "completion": null,
+          "table": "completed"
+        }
+      },
       "structureEvidence": [
         {
           "id": "cvsr-row-fa-central-valley-status-report-june-2026-a11y-dutch-john-cut-to-9th-ave",
@@ -5181,31 +5343,6 @@
         {
           "cp": "CP1",
           "kind": "guideway",
-          "location": "Cottonwood Creek Test Strip to Ave 12"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 9 to Ave 8"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 11 to Ave 10"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 8 to Viaduct 203 at SJR"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 12 to Ave 11"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
           "location": "Viaduct 203.2 San Joaquin River Crossing"
         },
         {
@@ -5217,136 +5354,6 @@
           "cp": "CP1",
           "kind": "guideway",
           "location": "Fresno Viaduct Caltrans Bridge"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Viaduct 501 at Fresno River to Cottonwood Creek"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Excelsior Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "SR 43 Jersey"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "SR 43 Curved Bridge"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Corcoran HWY"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Manning Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Nebraska Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Ave 120"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Houston Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "South Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Jackson Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Kent Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Adams Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Fowler Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Ave 88"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Dover Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Idaho Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Elkhorn Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Davis Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Kansas Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Flint Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Floral Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Mt. View"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Ave 56"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Fargo Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Hanford Armona"
         }
       ]
     },
@@ -5519,7 +5526,7 @@
           "scheduleFinish": "2026-03",
           "table": "completed"
         },
-        "CP1:gap:1": {
+        "CP1:182": {
           "completion": 0,
           "sourceId": "cvsr",
           "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
@@ -5528,6 +5535,136 @@
           "scheduleStart": "2026-06",
           "scheduleFinish": "2026-09",
           "table": "underway"
+        },
+        "CP1:180": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "dataMonth": "2026-04",
+          "scheduleStart": "2024-05",
+          "scheduleFinish": "2027-04",
+          "table": "underway"
+        },
+        "CP1:185": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "dataMonth": "2026-04",
+          "scheduleStart": "2027-02",
+          "scheduleFinish": "2027-06",
+          "table": "underway"
+        },
+        "CP1:gap:1": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "dataMonth": "2026-04",
+          "scheduleStart": "2027-02",
+          "scheduleFinish": "2027-06",
+          "table": "underway"
+        },
+        "CP1:194": {
+          "completion": 0.94,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "dataMonth": "2026-04",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2026-02",
+          "table": "underway"
+        },
+        "CP1:198": {
+          "completion": 0.93,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "dataMonth": "2026-04",
+          "scheduleStart": "2023-02",
+          "scheduleFinish": "2026-07",
+          "table": "underway"
+        },
+        "CP1:193": {
+          "completion": 0.9,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "dataMonth": "2026-04",
+          "scheduleStart": "2021-05",
+          "scheduleFinish": "2026-06",
+          "table": "underway"
+        },
+        "CP1:175": {
+          "completion": 0.28,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "dataMonth": "2026-04",
+          "scheduleStart": "2024-12",
+          "scheduleFinish": "2026-08",
+          "table": "underway"
+        },
+        "CP1:186": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "dataMonth": "2026-04",
+          "scheduleStart": "2018-09",
+          "scheduleFinish": "2019-09",
+          "table": "completed"
+        },
+        "CP1:200": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "dataMonth": "2026-04",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2020-02",
+          "table": "completed"
+        },
+        "CP1:188": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "dataMonth": "2026-04",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2020-03",
+          "table": "completed"
+        },
+        "CP1:177": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "dataMonth": "2026-04",
+          "scheduleStart": "2017-12",
+          "scheduleFinish": "2020-06",
+          "table": "completed"
+        },
+        "CP1:196": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "dataMonth": "2026-04",
+          "scheduleStart": "2019-05",
+          "scheduleFinish": "2020-09",
+          "table": "completed"
+        },
+        "CP1:181": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "dataMonth": "2026-04",
+          "scheduleStart": "2018-08",
+          "scheduleFinish": "2022-09",
+          "table": "completed"
         },
         "CP2-3:129": {
           "completion": 0.96,
@@ -6250,6 +6387,180 @@
           "table": "completed"
         }
       },
+      "perStructure": {
+        "4b135b9b-0265-4bb3-8fdf-c9cba22cd460": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "c3ceec97-6971-418d-912e-3b64c831c777": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "5c4c543a-97cf-4bf8-b056-be6a37c5d649": {
+          "completion": 0.43,
+          "table": "underway"
+        },
+        "706574fb-83f2-4b37-a0c1-ce9fdbd1efd7": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "b465c82c-07e5-431b-9be5-34f03a1e21c3": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "35855fd1-46ac-44b7-a587-7fdb3cb71486": {
+          "completion": 0.68,
+          "table": "underway"
+        },
+        "4fdf460c-6e3f-4190-9092-9cb278839552": {
+          "completion": 0.79,
+          "table": "underway"
+        },
+        "996baabb-f54c-41a0-b58c-ea95bd82515b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "9dd208a3-a160-4cf1-9a58-e80b2f4946d9": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "6b8c91de-e76f-4c0d-a0b2-f097b433d349": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "5cec2249-a923-46d1-ab32-cb10d1d416eb": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "a321a15d-2add-4bbe-8286-d370cf88180b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "271a4b3f-079d-42c4-85b7-1bfcf8802bc9": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "96777523-e9dd-45bc-a90a-c7b5df70fcc6": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "16df7cd4-b458-4c04-a31f-3065a0c96d4e": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "e2cc637e-57ed-4e28-a62a-17bc722766ee": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "5a31c2e7-032c-4b24-a601-91d100a29d34": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "e48808cc-570a-476b-ba74-0217ad670886": {
+          "completion": 0.99,
+          "table": "underway"
+        },
+        "37b3f86e-fab2-46d3-a299-21c5235387cd": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "29c432d7-29ce-4278-ac5a-83c2e891bcbc": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "af56fa57-ecaf-4252-a03b-faf6cf999e54": {
+          "completion": 0.98,
+          "table": "completed"
+        },
+        "f18165fc-4f7a-4583-ab91-25875834b4fb": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "2eb51002-fcc2-4ce7-8e40-165129bc020b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "74cfef2f-baf3-4fc6-8a44-21e7a17596d1": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "30446461-3764-4ceb-b2da-db9e515a691a": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "8376a91b-aa51-485b-9cf2-efe28e201522": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "09c6365c-3528-47e3-980f-fd992fbd789b": {
+          "completion": 0.65,
+          "table": "underway"
+        },
+        "8db0f6ce-0dbf-4132-8134-ffd39ca8eb37": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "ada3aaa3-d793-4a1c-8796-731b7e79899b": {
+          "completion": 0.77,
+          "table": "underway"
+        },
+        "235eb26c-7879-48d0-9d64-f86d80261e8a": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "8cd42a12-4814-4485-9398-0c2b9492fe9f": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "1eb82982-9662-4c8f-9031-ab5f6005326d": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "43195a4a-d438-48fb-a793-03730e72e403": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "b1de8484-57cd-4dba-854b-3e759822e786": {
+          "completion": 0.45,
+          "table": "underway"
+        },
+        "6343dc8a-0041-47e4-b1a9-1bb2cd7db20b": {
+          "completion": 0.7,
+          "table": "underway"
+        },
+        "ecd5ef3b-089e-4ea2-9b74-93fa0c090faf": {
+          "completion": 0.7,
+          "table": "underway"
+        },
+        "dcd4e7da-dfa5-4cf6-baa7-21ee93dc109c": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "c10fe0d1-5a20-4738-bcb2-1d4567944d5b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "631c61a9-e20c-42e8-ac16-79df1d868b83": {
+          "completion": 0.9,
+          "table": "completed"
+        },
+        "4f63c6ec-f81a-4c46-9b88-4447d0620d29": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "30230ea3-cc03-4eba-a756-445c261736a7": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "3633ed8b-91a5-4751-9449-524cf67275cf": {
+          "completion": 0.29,
+          "table": "underway"
+        },
+        "91c87fbd-5d6d-4335-b72b-017cae6867ee": {
+          "completion": 1,
+          "table": "completed"
+        }
+      },
       "structureEvidence": [
         {
           "id": "cvsr-row-fa-central-valley-status-report-june-24-2026-a11y-muscat-ave",
@@ -6354,6 +6665,84 @@
           "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
           "sourceId": "cvsr",
           "quote": "Ventura Underpass Jun-21 Mar-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-june-24-2026-a11y-cottonwood-creek-test-strip-to-ave-12",
+          "segmentId": "CP1:186",
+          "claim": "completed",
+          "date": "2019-09",
+          "datePrecision": "month",
+          "label": "Cottonwood Creek Test Strip to Ave 12",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Cottonwood Creek Test Strip to Ave 12 Sep-18 Sep-19 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-june-24-2026-a11y-ave-9-to-ave-8",
+          "segmentId": "CP1:200",
+          "claim": "completed",
+          "date": "2020-02",
+          "datePrecision": "month",
+          "label": "Ave 9 to Ave 8",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 9 to Ave 8 Nov-18 Feb-20 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-june-24-2026-a11y-ave-11-to-ave-10",
+          "segmentId": "CP1:188",
+          "claim": "completed",
+          "date": "2020-03",
+          "datePrecision": "month",
+          "label": "Ave 11 to Ave 10",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 11 to Ave 10 Nov-18 Mar-20 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-june-24-2026-a11y-ave-8-to-viaduct-203-at-sjr",
+          "segmentId": "CP1:177",
+          "claim": "completed",
+          "date": "2020-06",
+          "datePrecision": "month",
+          "label": "Ave 8 to Viaduct 203 at SJR",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 8 to Viaduct 203 at SJR Dec-17 Jun-20 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-june-24-2026-a11y-ave-12-to-ave-11",
+          "segmentId": "CP1:196",
+          "claim": "completed",
+          "date": "2020-09",
+          "datePrecision": "month",
+          "label": "Ave 12 to Ave 11",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 12 to Ave 11 May-19 Sep-20 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-june-24-2026-a11y-viaduct-501-at-fresno-river-to-cottonwood-creek",
+          "segmentId": "CP1:181",
+          "claim": "completed",
+          "date": "2022-09",
+          "datePrecision": "month",
+          "label": "Viaduct 501 at Fresno River to Cottonwood Creek",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/06/FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-June-24-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Viaduct 501 at Fresno River to Cottonwood Creek Aug-18 Sep-22 100%"
         },
         {
           "id": "cvsr-row-fa-central-valley-status-report-june-24-2026-a11y-9th-ave",
@@ -6695,127 +7084,7 @@
         {
           "cp": "CP1",
           "kind": "structure",
-          "location": "Road 26"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
           "location": "Shaw Avenue"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "McKinley"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Church Ave"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Tuolumne Bridge"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 10"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 7"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 15"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 11"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 8"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "American Ave"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 12 BNSF"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 12 HST"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Road 27"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 15.5"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 9"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Belmont Avenue 1"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "E Central Avenue"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 17"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Clinton Ave Connector to Fresno Trench"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Viaduct 203 at SJR to Herndon Canal"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 10 to Ave 09"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Caltrans Section"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "N1A Boundary to Viaduct 501"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "GW North Extension"
         },
         {
           "cp": "CP1",
@@ -6855,31 +7124,6 @@
         {
           "cp": "CP1",
           "kind": "guideway",
-          "location": "Cottonwood Creek Test Strip to Ave 12"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 9 to Ave 8"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 11 to Ave 10"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 8 to Viaduct 203 at SJR"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 12 to Ave 11"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
           "location": "Viaduct 203.2 San Joaquin River Crossing"
         },
         {
@@ -6891,136 +7135,6 @@
           "cp": "CP1",
           "kind": "guideway",
           "location": "Fresno Viaduct Caltrans Bridge"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Viaduct 501 at Fresno River to Cottonwood Creek"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "SR 43 Curved Bridge"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Corcoran HWY"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Manning Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Nebraska Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Ave 120"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Houston Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Excelsior Ave1"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "South Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Jackson Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Kent Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Adams Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Fowler Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Ave 88"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Dover Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Idaho Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Elkhorn Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Davis Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Kansas Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Flint Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Floral Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Mt. View"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Ave 56"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Fargo Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Hanford Armona"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "SR 43 Jersey1"
         }
       ],
       "program": {
@@ -7209,7 +7323,7 @@
           "scheduleFinish": "2026-03",
           "table": "completed"
         },
-        "CP1:gap:1": {
+        "CP1:182": {
           "completion": 0,
           "sourceId": "cvsr",
           "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
@@ -7218,6 +7332,136 @@
           "scheduleStart": "2026-06",
           "scheduleFinish": "2026-08",
           "table": "underway"
+        },
+        "CP1:185": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2026-09",
+          "scheduleFinish": "2026-10",
+          "table": "underway"
+        },
+        "CP1:gap:1": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2026-09",
+          "scheduleFinish": "2026-10",
+          "table": "underway"
+        },
+        "CP1:180": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2024-05",
+          "scheduleFinish": "2026-12",
+          "table": "underway"
+        },
+        "CP1:194": {
+          "completion": 0.95,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2026-02",
+          "table": "underway"
+        },
+        "CP1:193": {
+          "completion": 0.95,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2021-05",
+          "scheduleFinish": "2026-06",
+          "table": "underway"
+        },
+        "CP1:175": {
+          "completion": 0.26,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2024-12",
+          "scheduleFinish": "2026-08",
+          "table": "underway"
+        },
+        "CP1:198": {
+          "completion": 0.95,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2023-02",
+          "scheduleFinish": "2026-11",
+          "table": "underway"
+        },
+        "CP1:186": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2018-09",
+          "scheduleFinish": "2019-09",
+          "table": "completed"
+        },
+        "CP1:200": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2020-02",
+          "table": "completed"
+        },
+        "CP1:188": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2020-03",
+          "table": "completed"
+        },
+        "CP1:177": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2017-12",
+          "scheduleFinish": "2020-06",
+          "table": "completed"
+        },
+        "CP1:196": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2019-05",
+          "scheduleFinish": "2020-09",
+          "table": "completed"
+        },
+        "CP1:181": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "dataMonth": "2026-05",
+          "scheduleStart": "2018-08",
+          "scheduleFinish": "2022-09",
+          "table": "completed"
         },
         "CP2-3:131": {
           "completion": 0.98,
@@ -7940,6 +8184,180 @@
           "table": "completed"
         }
       },
+      "perStructure": {
+        "4b135b9b-0265-4bb3-8fdf-c9cba22cd460": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "c3ceec97-6971-418d-912e-3b64c831c777": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "5c4c543a-97cf-4bf8-b056-be6a37c5d649": {
+          "completion": 0.43,
+          "table": "underway"
+        },
+        "706574fb-83f2-4b37-a0c1-ce9fdbd1efd7": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "b465c82c-07e5-431b-9be5-34f03a1e21c3": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "35855fd1-46ac-44b7-a587-7fdb3cb71486": {
+          "completion": 0.7,
+          "table": "underway"
+        },
+        "4fdf460c-6e3f-4190-9092-9cb278839552": {
+          "completion": 0.79,
+          "table": "underway"
+        },
+        "996baabb-f54c-41a0-b58c-ea95bd82515b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "9dd208a3-a160-4cf1-9a58-e80b2f4946d9": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "6b8c91de-e76f-4c0d-a0b2-f097b433d349": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "5cec2249-a923-46d1-ab32-cb10d1d416eb": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "a321a15d-2add-4bbe-8286-d370cf88180b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "271a4b3f-079d-42c4-85b7-1bfcf8802bc9": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "96777523-e9dd-45bc-a90a-c7b5df70fcc6": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "16df7cd4-b458-4c04-a31f-3065a0c96d4e": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "e2cc637e-57ed-4e28-a62a-17bc722766ee": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "5a31c2e7-032c-4b24-a601-91d100a29d34": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "e48808cc-570a-476b-ba74-0217ad670886": {
+          "completion": 0.99,
+          "table": "completed"
+        },
+        "37b3f86e-fab2-46d3-a299-21c5235387cd": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "29c432d7-29ce-4278-ac5a-83c2e891bcbc": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "af56fa57-ecaf-4252-a03b-faf6cf999e54": {
+          "completion": 0.99,
+          "table": "completed"
+        },
+        "f18165fc-4f7a-4583-ab91-25875834b4fb": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "2eb51002-fcc2-4ce7-8e40-165129bc020b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "74cfef2f-baf3-4fc6-8a44-21e7a17596d1": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "30446461-3764-4ceb-b2da-db9e515a691a": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "8376a91b-aa51-485b-9cf2-efe28e201522": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "09c6365c-3528-47e3-980f-fd992fbd789b": {
+          "completion": 0.68,
+          "table": "underway"
+        },
+        "8db0f6ce-0dbf-4132-8134-ffd39ca8eb37": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "ada3aaa3-d793-4a1c-8796-731b7e79899b": {
+          "completion": 0.85,
+          "table": "underway"
+        },
+        "235eb26c-7879-48d0-9d64-f86d80261e8a": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "8cd42a12-4814-4485-9398-0c2b9492fe9f": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "1eb82982-9662-4c8f-9031-ab5f6005326d": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "43195a4a-d438-48fb-a793-03730e72e403": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "b1de8484-57cd-4dba-854b-3e759822e786": {
+          "completion": 0.5,
+          "table": "underway"
+        },
+        "6343dc8a-0041-47e4-b1a9-1bb2cd7db20b": {
+          "completion": 0.73,
+          "table": "underway"
+        },
+        "ecd5ef3b-089e-4ea2-9b74-93fa0c090faf": {
+          "completion": 0.74,
+          "table": "underway"
+        },
+        "dcd4e7da-dfa5-4cf6-baa7-21ee93dc109c": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "c10fe0d1-5a20-4738-bcb2-1d4567944d5b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "631c61a9-e20c-42e8-ac16-79df1d868b83": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "4f63c6ec-f81a-4c46-9b88-4447d0620d29": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "30230ea3-cc03-4eba-a756-445c261736a7": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "3633ed8b-91a5-4751-9449-524cf67275cf": {
+          "completion": 0.35,
+          "table": "underway"
+        },
+        "91c87fbd-5d6d-4335-b72b-017cae6867ee": {
+          "completion": 1,
+          "table": "completed"
+        }
+      },
       "structureEvidence": [
         {
           "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-muscat-ave",
@@ -8044,6 +8462,84 @@
           "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
           "sourceId": "cvsr",
           "quote": "Ventura Underpass Jun-21 Mar-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-cottonwood-creek-test-strip-to-ave-12",
+          "segmentId": "CP1:186",
+          "claim": "completed",
+          "date": "2019-09",
+          "datePrecision": "month",
+          "label": "Cottonwood Creek Test Strip to Ave 12",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Cottonwood Creek Test Strip to Ave 12 (1.49 Miles) Sep-18 Sep-19 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-ave-9-to-ave-8",
+          "segmentId": "CP1:200",
+          "claim": "completed",
+          "date": "2020-02",
+          "datePrecision": "month",
+          "label": "Ave 9 to Ave 8",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 9 to Ave 8 (1.82 Miles) Nov-18 Feb-20 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-ave-11-to-ave-10",
+          "segmentId": "CP1:188",
+          "claim": "completed",
+          "date": "2020-03",
+          "datePrecision": "month",
+          "label": "Ave 11 to Ave 10",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 11 to Ave 10 (1.02 Miles) Nov-18 Mar-20 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-ave-8-to-viaduct-203-at-sjr",
+          "segmentId": "CP1:177",
+          "claim": "completed",
+          "date": "2020-06",
+          "datePrecision": "month",
+          "label": "Ave 8 to Viaduct 203 at SJR",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 8 to Viaduct 203 at SJR (0.1 Miles) Dec-17 Jun-20 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-ave-12-to-ave-11",
+          "segmentId": "CP1:196",
+          "claim": "completed",
+          "date": "2020-09",
+          "datePrecision": "month",
+          "label": "Ave 12 to Ave 11",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 12 to Ave 11 (1.03 Miles) May-19 Sep-20 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-viaduct-501-at-fresno-river-to-cottonwood-creek",
+          "segmentId": "CP1:181",
+          "claim": "completed",
+          "date": "2022-09",
+          "datePrecision": "month",
+          "label": "Viaduct 501 at Fresno River to Cottonwood Creek",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/07/FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-July-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Viaduct 501 at Fresno River to Cottonwood Creek (2.92 Miles) Aug-18 Sep-22 100%"
         },
         {
           "id": "cvsr-row-fa-central-valley-status-report-july-2026-a11y-9th-ave",
@@ -8454,128 +8950,8 @@
         },
         {
           "cp": "CP1",
-          "kind": "structure",
-          "location": "McKinley"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Church Ave"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Tuolumne Bridge"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 10"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 7"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 15"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 11"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 8"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "American Ave"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 12 BNSF"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 12 HST"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Road 27"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 15.5"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 9"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Belmont Avenue1"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "E Central Avenue"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 17"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Road 261"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Viaduct 203 at SJR to Herndon Canal"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Clinton Ave Connector to Fresno Trench"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 10 to Ave 09"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "N1A Boundary to Viaduct 501"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "GW North Extension"
-        },
-        {
-          "cp": "CP1",
           "kind": "guideway",
           "location": "HST Guideway"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Caltrans Section"
         },
         {
           "cp": "CP1",
@@ -8610,31 +8986,6 @@
         {
           "cp": "CP1",
           "kind": "guideway",
-          "location": "Cottonwood Creek Test Strip to Ave 12"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 9 to Ave 8"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 11 to Ave 10"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 8 to Viaduct 203 at SJR"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 12 to Ave 11"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
           "location": "Viaduct 203.2 San Joaquin River Crossing"
         },
         {
@@ -8646,136 +8997,6 @@
           "cp": "CP1",
           "kind": "guideway",
           "location": "Fresno Viaduct Caltrans Bridge"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Viaduct 501 at Fresno River to Cottonwood Creek"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "SR 43 Curved Bridge"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Corcoran Hwy"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Manning Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Nebraska Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Ave 120"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Houston Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "South Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Jackson Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Kent Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Adams Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Fowler Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Ave 88"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Dover Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Idaho Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Elkhorn Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Davis Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Kansas Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Flint Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Floral Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Mt. View"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Ave 56"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Fargo Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Hanford Armona"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "SR 43 Jersey"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Excelsior Ave1"
         }
       ],
       "program": {
@@ -8964,7 +9185,7 @@
           "scheduleFinish": "2026-03",
           "table": "completed"
         },
-        "CP1:gap:1": {
+        "CP1:182": {
           "completion": 0,
           "sourceId": "cvsr",
           "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
@@ -8973,6 +9194,136 @@
           "scheduleStart": "2026-06",
           "scheduleFinish": "2026-11",
           "table": "underway"
+        },
+        "CP1:180": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2024-05",
+          "scheduleFinish": "2027-05",
+          "table": "underway"
+        },
+        "CP1:185": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2026-09",
+          "scheduleFinish": "2027-06",
+          "table": "underway"
+        },
+        "CP1:gap:1": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2026-09",
+          "scheduleFinish": "2027-06",
+          "table": "underway"
+        },
+        "CP1:175": {
+          "completion": 0.55,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2024-12",
+          "scheduleFinish": "2026-09",
+          "table": "underway"
+        },
+        "CP1:198": {
+          "completion": 0.95,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2023-02",
+          "scheduleFinish": "2026-11",
+          "table": "underway"
+        },
+        "CP1:186": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2018-09",
+          "scheduleFinish": "2019-09",
+          "table": "completed"
+        },
+        "CP1:200": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2020-02",
+          "table": "completed"
+        },
+        "CP1:188": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2020-03",
+          "table": "completed"
+        },
+        "CP1:177": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2017-12",
+          "scheduleFinish": "2020-06",
+          "table": "completed"
+        },
+        "CP1:196": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2019-05",
+          "scheduleFinish": "2020-09",
+          "table": "completed"
+        },
+        "CP1:181": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2018-08",
+          "scheduleFinish": "2022-09",
+          "table": "completed"
+        },
+        "CP1:194": {
+          "completion": 0.95,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2026-02",
+          "table": "completed"
+        },
+        "CP1:193": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "dataMonth": "2026-06",
+          "scheduleStart": "2021-05",
+          "scheduleFinish": "2026-06",
+          "table": "completed"
         },
         "CP2-3:129": {
           "completion": 0.98,
@@ -9695,6 +10046,180 @@
           "table": "completed"
         }
       },
+      "perStructure": {
+        "4b135b9b-0265-4bb3-8fdf-c9cba22cd460": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "c3ceec97-6971-418d-912e-3b64c831c777": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "5c4c543a-97cf-4bf8-b056-be6a37c5d649": {
+          "completion": 0.44,
+          "table": "underway"
+        },
+        "706574fb-83f2-4b37-a0c1-ce9fdbd1efd7": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "b465c82c-07e5-431b-9be5-34f03a1e21c3": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "35855fd1-46ac-44b7-a587-7fdb3cb71486": {
+          "completion": 0.71,
+          "table": "underway"
+        },
+        "4fdf460c-6e3f-4190-9092-9cb278839552": {
+          "completion": 0.8,
+          "table": "underway"
+        },
+        "996baabb-f54c-41a0-b58c-ea95bd82515b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "9dd208a3-a160-4cf1-9a58-e80b2f4946d9": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "6b8c91de-e76f-4c0d-a0b2-f097b433d349": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "5cec2249-a923-46d1-ab32-cb10d1d416eb": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "a321a15d-2add-4bbe-8286-d370cf88180b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "271a4b3f-079d-42c4-85b7-1bfcf8802bc9": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "96777523-e9dd-45bc-a90a-c7b5df70fcc6": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "16df7cd4-b458-4c04-a31f-3065a0c96d4e": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "e2cc637e-57ed-4e28-a62a-17bc722766ee": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "5a31c2e7-032c-4b24-a601-91d100a29d34": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "e48808cc-570a-476b-ba74-0217ad670886": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "37b3f86e-fab2-46d3-a299-21c5235387cd": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "29c432d7-29ce-4278-ac5a-83c2e891bcbc": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "af56fa57-ecaf-4252-a03b-faf6cf999e54": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "f18165fc-4f7a-4583-ab91-25875834b4fb": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "2eb51002-fcc2-4ce7-8e40-165129bc020b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "74cfef2f-baf3-4fc6-8a44-21e7a17596d1": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "30446461-3764-4ceb-b2da-db9e515a691a": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "8376a91b-aa51-485b-9cf2-efe28e201522": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "09c6365c-3528-47e3-980f-fd992fbd789b": {
+          "completion": 0.69,
+          "table": "underway"
+        },
+        "8db0f6ce-0dbf-4132-8134-ffd39ca8eb37": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "ada3aaa3-d793-4a1c-8796-731b7e79899b": {
+          "completion": 0.86,
+          "table": "underway"
+        },
+        "235eb26c-7879-48d0-9d64-f86d80261e8a": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "8cd42a12-4814-4485-9398-0c2b9492fe9f": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "1eb82982-9662-4c8f-9031-ab5f6005326d": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "43195a4a-d438-48fb-a793-03730e72e403": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "b1de8484-57cd-4dba-854b-3e759822e786": {
+          "completion": 0.5,
+          "table": "underway"
+        },
+        "6343dc8a-0041-47e4-b1a9-1bb2cd7db20b": {
+          "completion": 0.73,
+          "table": "underway"
+        },
+        "ecd5ef3b-089e-4ea2-9b74-93fa0c090faf": {
+          "completion": 0.77,
+          "table": "underway"
+        },
+        "dcd4e7da-dfa5-4cf6-baa7-21ee93dc109c": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "c10fe0d1-5a20-4738-bcb2-1d4567944d5b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "631c61a9-e20c-42e8-ac16-79df1d868b83": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "4f63c6ec-f81a-4c46-9b88-4447d0620d29": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "30230ea3-cc03-4eba-a756-445c261736a7": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "3633ed8b-91a5-4751-9449-524cf67275cf": {
+          "completion": 0.43,
+          "table": "underway"
+        },
+        "91c87fbd-5d6d-4335-b72b-017cae6867ee": {
+          "completion": 1,
+          "table": "completed"
+        }
+      },
       "structureEvidence": [
         {
           "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-muscat-ave",
@@ -9799,6 +10324,97 @@
           "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
           "sourceId": "cvsr",
           "quote": "Ventura Underpass Jun-21 Mar-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-cottonwood-creek-test-strip-to-ave-12",
+          "segmentId": "CP1:186",
+          "claim": "completed",
+          "date": "2019-09",
+          "datePrecision": "month",
+          "label": "Cottonwood Creek Test Strip to Ave 12",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Cottonwood Creek Test Strip to Ave 12 (1.49 Miles) Sep-18 Sep-19 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-ave-9-to-ave-8",
+          "segmentId": "CP1:200",
+          "claim": "completed",
+          "date": "2020-02",
+          "datePrecision": "month",
+          "label": "Ave 9 to Ave 8",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 9 to Ave 8 (1.82 Miles) Nov-18 Feb-20 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-ave-11-to-ave-10",
+          "segmentId": "CP1:188",
+          "claim": "completed",
+          "date": "2020-03",
+          "datePrecision": "month",
+          "label": "Ave 11 to Ave 10",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 11 to Ave 10 (1.02 Miles) Nov-18 Mar-20 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-ave-8-to-viaduct-203-at-sjr",
+          "segmentId": "CP1:177",
+          "claim": "completed",
+          "date": "2020-06",
+          "datePrecision": "month",
+          "label": "Ave 8 to Viaduct 203 at SJR",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 8 to Viaduct 203 at SJR (0.1 Miles) Dec-17 Jun-20 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-ave-12-to-ave-11",
+          "segmentId": "CP1:196",
+          "claim": "completed",
+          "date": "2020-09",
+          "datePrecision": "month",
+          "label": "Ave 12 to Ave 11",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 12 to Ave 11 (1.03 Miles) May-19 Sep-20 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-viaduct-501-at-fresno-river-to-cottonwood-creek",
+          "segmentId": "CP1:181",
+          "claim": "completed",
+          "date": "2022-09",
+          "datePrecision": "month",
+          "label": "Viaduct 501 at Fresno River to Cottonwood Creek",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Viaduct 501 at Fresno River to Cottonwood Creek (2.92 Miles) Aug-18 Sep-22 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-n1a-boundary-to-viaduct-501",
+          "segmentId": "CP1:193",
+          "claim": "completed",
+          "date": "2026-06",
+          "datePrecision": "month",
+          "label": "N1A Boundary to Viaduct 501",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/08/FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-August-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "N1A Boundary to Viaduct 501 (1.03 Miles) May-21 Jun-26 100%"
         },
         {
           "id": "cvsr-row-fa-central-valley-status-report-august-2026-a11y-9th-ave",
@@ -10231,107 +10847,7 @@
         {
           "cp": "CP1",
           "kind": "structure",
-          "location": "McKinley"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Church Ave"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
           "location": "Olive Ave"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Tuolumne Bridge"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 10"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 7"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 15"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 11"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 8"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "American Ave"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 12 BNSF"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 12 HST"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Road 27"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 15.5"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 9"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Belmont Avenue 1"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "E Central Avenue"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 17"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Road 26 1"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Clinton Ave Connector to Fresno Trench"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Viaduct 203 at SJR to Herndon Canal"
         },
         {
           "cp": "CP1",
@@ -10341,17 +10857,7 @@
         {
           "cp": "CP1",
           "kind": "guideway",
-          "location": "GW North Extension"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
           "location": "Fresno St to SR 41"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Caltrans Section"
         },
         {
           "cp": "CP1",
@@ -10386,31 +10892,6 @@
         {
           "cp": "CP1",
           "kind": "guideway",
-          "location": "Cottonwood Creek Test Strip to Ave 12"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 9 to Ave 8"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 11 to Ave 10"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 8 to Viaduct 203 at SJR"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 12 to Ave 11"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
           "location": "Viaduct 203.2 San Joaquin River Crossing"
         },
         {
@@ -10422,146 +10903,6 @@
           "cp": "CP1",
           "kind": "guideway",
           "location": "Fresno Viaduct Caltrans Bridge"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Viaduct 501 at Fresno River to Cottonwood Creek"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 10 to Ave 09"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "N1A Boundary to Viaduct 501"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Corcoran HWY"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Manning Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "SR 43 Curved Bridge"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Nebraska Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Houston Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Ave 120"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "South Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Jackson Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Kent Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Adams Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Fowler Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Ave 88"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Dover Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Idaho Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Elkhorn Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Davis Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Kansas Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Flint Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Floral Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Mt. View"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Ave 56"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Fargo Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Hanford Armona"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "SR 43 Jersey"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Excelsior Ave"
         }
       ],
       "program": {
@@ -10750,7 +11091,7 @@
           "scheduleFinish": "2026-03",
           "table": "completed"
         },
-        "CP1:gap:1": {
+        "CP1:182": {
           "completion": 0,
           "sourceId": "cvsr",
           "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
@@ -10759,6 +11100,136 @@
           "scheduleStart": "2026-06",
           "scheduleFinish": "2026-09",
           "table": "underway"
+        },
+        "CP1:180": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "dataMonth": "2026-07",
+          "scheduleStart": "2024-05",
+          "scheduleFinish": "2027-05",
+          "table": "underway"
+        },
+        "CP1:185": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "dataMonth": "2026-07",
+          "scheduleStart": "2026-08",
+          "scheduleFinish": "2027-08",
+          "table": "underway"
+        },
+        "CP1:gap:1": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "dataMonth": "2026-07",
+          "scheduleStart": "2026-08",
+          "scheduleFinish": "2027-08",
+          "table": "underway"
+        },
+        "CP1:175": {
+          "completion": 0.71,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "dataMonth": "2026-07",
+          "scheduleStart": "2024-12",
+          "scheduleFinish": "2026-07",
+          "table": "underway"
+        },
+        "CP1:198": {
+          "completion": 0.95,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "dataMonth": "2026-07",
+          "scheduleStart": "2023-02",
+          "scheduleFinish": "2026-10",
+          "table": "underway"
+        },
+        "CP1:186": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "dataMonth": "2026-07",
+          "scheduleStart": "2018-09",
+          "scheduleFinish": "2019-09",
+          "table": "completed"
+        },
+        "CP1:200": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "dataMonth": "2026-07",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2020-02",
+          "table": "completed"
+        },
+        "CP1:188": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "dataMonth": "2026-07",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2020-03",
+          "table": "completed"
+        },
+        "CP1:177": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "dataMonth": "2026-07",
+          "scheduleStart": "2017-12",
+          "scheduleFinish": "2020-06",
+          "table": "completed"
+        },
+        "CP1:196": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "dataMonth": "2026-07",
+          "scheduleStart": "2019-05",
+          "scheduleFinish": "2020-09",
+          "table": "completed"
+        },
+        "CP1:181": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "dataMonth": "2026-07",
+          "scheduleStart": "2018-08",
+          "scheduleFinish": "2022-09",
+          "table": "completed"
+        },
+        "CP1:194": {
+          "completion": 0.95,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "dataMonth": "2026-07",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2026-02",
+          "table": "completed"
+        },
+        "CP1:193": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "dataMonth": "2026-07",
+          "scheduleStart": "2021-05",
+          "scheduleFinish": "2026-06",
+          "table": "completed"
         },
         "CP2-3:117": {
           "completion": 0.87,
@@ -11481,6 +11952,180 @@
           "table": "completed"
         }
       },
+      "perStructure": {
+        "4b135b9b-0265-4bb3-8fdf-c9cba22cd460": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "c3ceec97-6971-418d-912e-3b64c831c777": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "5c4c543a-97cf-4bf8-b056-be6a37c5d649": {
+          "completion": 0.48,
+          "table": "underway"
+        },
+        "706574fb-83f2-4b37-a0c1-ce9fdbd1efd7": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "b465c82c-07e5-431b-9be5-34f03a1e21c3": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "35855fd1-46ac-44b7-a587-7fdb3cb71486": {
+          "completion": 0.75,
+          "table": "underway"
+        },
+        "4fdf460c-6e3f-4190-9092-9cb278839552": {
+          "completion": 0.8,
+          "table": "underway"
+        },
+        "996baabb-f54c-41a0-b58c-ea95bd82515b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "9dd208a3-a160-4cf1-9a58-e80b2f4946d9": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "6b8c91de-e76f-4c0d-a0b2-f097b433d349": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "5cec2249-a923-46d1-ab32-cb10d1d416eb": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "a321a15d-2add-4bbe-8286-d370cf88180b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "271a4b3f-079d-42c4-85b7-1bfcf8802bc9": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "96777523-e9dd-45bc-a90a-c7b5df70fcc6": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "16df7cd4-b458-4c04-a31f-3065a0c96d4e": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "e2cc637e-57ed-4e28-a62a-17bc722766ee": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "5a31c2e7-032c-4b24-a601-91d100a29d34": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "e48808cc-570a-476b-ba74-0217ad670886": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "37b3f86e-fab2-46d3-a299-21c5235387cd": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "29c432d7-29ce-4278-ac5a-83c2e891bcbc": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "af56fa57-ecaf-4252-a03b-faf6cf999e54": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "f18165fc-4f7a-4583-ab91-25875834b4fb": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "2eb51002-fcc2-4ce7-8e40-165129bc020b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "74cfef2f-baf3-4fc6-8a44-21e7a17596d1": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "30446461-3764-4ceb-b2da-db9e515a691a": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "8376a91b-aa51-485b-9cf2-efe28e201522": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "09c6365c-3528-47e3-980f-fd992fbd789b": {
+          "completion": 0.75,
+          "table": "underway"
+        },
+        "8db0f6ce-0dbf-4132-8134-ffd39ca8eb37": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "ada3aaa3-d793-4a1c-8796-731b7e79899b": {
+          "completion": 0.89,
+          "table": "underway"
+        },
+        "235eb26c-7879-48d0-9d64-f86d80261e8a": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "8cd42a12-4814-4485-9398-0c2b9492fe9f": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "1eb82982-9662-4c8f-9031-ab5f6005326d": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "43195a4a-d438-48fb-a793-03730e72e403": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "b1de8484-57cd-4dba-854b-3e759822e786": {
+          "completion": 0.6,
+          "table": "underway"
+        },
+        "6343dc8a-0041-47e4-b1a9-1bb2cd7db20b": {
+          "completion": 0.84,
+          "table": "completed"
+        },
+        "ecd5ef3b-089e-4ea2-9b74-93fa0c090faf": {
+          "completion": 0.85,
+          "table": "underway"
+        },
+        "dcd4e7da-dfa5-4cf6-baa7-21ee93dc109c": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "c10fe0d1-5a20-4738-bcb2-1d4567944d5b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "631c61a9-e20c-42e8-ac16-79df1d868b83": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "4f63c6ec-f81a-4c46-9b88-4447d0620d29": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "30230ea3-cc03-4eba-a756-445c261736a7": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "3633ed8b-91a5-4751-9449-524cf67275cf": {
+          "completion": 0.48,
+          "table": "underway"
+        },
+        "91c87fbd-5d6d-4335-b72b-017cae6867ee": {
+          "completion": 1,
+          "table": "completed"
+        }
+      },
       "structureEvidence": [
         {
           "id": "cvsr-row-fa-central-valley-status-report-september-2026-a11y-muscat-ave",
@@ -11585,6 +12230,97 @@
           "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
           "sourceId": "cvsr",
           "quote": "Ventura Underpass Jun-21 Mar-26 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-september-2026-a11y-cottonwood-creek-test-strip-to-ave-12",
+          "segmentId": "CP1:186",
+          "claim": "completed",
+          "date": "2019-09",
+          "datePrecision": "month",
+          "label": "Cottonwood Creek Test Strip to Ave 12",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Cottonwood Creek Test Strip to Ave 12 (1.49 Miles) Sep-18 Sep-19 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-september-2026-a11y-ave-9-to-ave-8",
+          "segmentId": "CP1:200",
+          "claim": "completed",
+          "date": "2020-02",
+          "datePrecision": "month",
+          "label": "Ave 9 to Ave 8",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 9 to Ave 8 (1.82 Miles) Nov-18 Feb-20 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-september-2026-a11y-ave-11-to-ave-10",
+          "segmentId": "CP1:188",
+          "claim": "completed",
+          "date": "2020-03",
+          "datePrecision": "month",
+          "label": "Ave 11 to Ave 10",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 11 to Ave 10 (1.02 Miles) Nov-18 Mar-20 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-september-2026-a11y-ave-8-to-viaduct-203-at-sjr",
+          "segmentId": "CP1:177",
+          "claim": "completed",
+          "date": "2020-06",
+          "datePrecision": "month",
+          "label": "Ave 8 to Viaduct 203 at SJR",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 8 to Viaduct 203 at SJR (0.1 Miles) Dec-17 Jun-20 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-september-2026-a11y-ave-12-to-ave-11",
+          "segmentId": "CP1:196",
+          "claim": "completed",
+          "date": "2020-09",
+          "datePrecision": "month",
+          "label": "Ave 12 to Ave 11",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 12 to Ave 11 (1.03 Miles) May-19 Sep-20 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-september-2026-a11y-viaduct-501-at-fresno-river-to-cottonwood-creek",
+          "segmentId": "CP1:181",
+          "claim": "completed",
+          "date": "2022-09",
+          "datePrecision": "month",
+          "label": "Viaduct 501 at Fresno River to Cottonwood Creek",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Viaduct 501 at Fresno River to Cottonwood Creek (2.92 Miles) Aug-18 Sep-22 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-september-2026-a11y-n1a-boundary-to-viaduct-501",
+          "segmentId": "CP1:193",
+          "claim": "completed",
+          "date": "2026-06",
+          "datePrecision": "month",
+          "label": "N1A Boundary to Viaduct 501",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-September-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "N1A Boundary to Viaduct 501 (1.03 Miles) May-21 Jun-26 100%"
         },
         {
           "id": "cvsr-row-fa-central-valley-status-report-september-2026-a11y-9th-ave",
@@ -12121,112 +12857,7 @@
         {
           "cp": "CP1",
           "kind": "structure",
-          "location": "McKinley"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Church Ave"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
           "location": "Olive Ave"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Tuolumne Bridge"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 10"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 7"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 15"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 11"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 8"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "American Ave"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 12 BNSF"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 12 HST"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Road 27"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 15.5"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 9"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Belmont Avenue 1"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "E Central Avenue"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 17"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Road 26 1"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Clinton Ave Connector to Fresno Trench"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Viaduct 203 at SJR to Herndon Canal"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "GW North Extension"
         },
         {
           "cp": "CP1",
@@ -12242,11 +12873,6 @@
           "cp": "CP1",
           "kind": "guideway",
           "location": "HST Guideway"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Caltrans Section"
         },
         {
           "cp": "CP1",
@@ -12276,31 +12902,6 @@
         {
           "cp": "CP1",
           "kind": "guideway",
-          "location": "Cottonwood Creek Test Strip to Ave 12"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 9 to Ave 8"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 11 to Ave 10"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 8 to Viaduct 203 at SJR"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 12 to Ave 11"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
           "location": "Viaduct 203.2 San Joaquin River Crossing"
         },
         {
@@ -12312,146 +12913,6 @@
           "cp": "CP1",
           "kind": "guideway",
           "location": "Fresno Viaduct Caltrans Bridge"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Viaduct 501 at Fresno River to Cottonwood Creek"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 10 to Ave 09 (1.10 Miles)1"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "N1A Boundary to Viaduct 501"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Manning Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "SR 43 Curved Bridge"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Nebraska Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Houston Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Ave 120"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "South Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Jackson Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Kent Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Adams Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Fowler Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Ave 88"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Dover Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Idaho Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Elkhorn Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Davis Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Kansas Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Flint Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Floral Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Mt. View"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Ave 56"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Fargo Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Hanford Armona"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "SR 43 Jersey"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Excelsior Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Corcoran HWY1"
         }
       ],
       "program": {
@@ -12640,7 +13101,27 @@
           "scheduleFinish": "2019-06",
           "table": "completed"
         },
-        "CP1:gap:1": {
+        "CP1:180": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "dataMonth": "2026-08",
+          "scheduleStart": "2024-05",
+          "scheduleFinish": "2027-05",
+          "table": "underway"
+        },
+        "CP1:198": {
+          "completion": 0.95,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "dataMonth": "2026-08",
+          "scheduleStart": "2023-02",
+          "scheduleFinish": "2026-10",
+          "table": "underway"
+        },
+        "CP1:182": {
           "completion": 0,
           "sourceId": "cvsr",
           "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
@@ -12648,6 +13129,116 @@
           "dataMonth": "2026-08",
           "scheduleStart": "2026-06",
           "scheduleFinish": "2026-09",
+          "table": "underway"
+        },
+        "CP1:185": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "dataMonth": "2026-08",
+          "scheduleStart": "2026-08",
+          "scheduleFinish": "2027-08",
+          "table": "underway"
+        },
+        "CP1:gap:1": {
+          "completion": 0,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "dataMonth": "2026-08",
+          "scheduleStart": "2026-08",
+          "scheduleFinish": "2027-08",
+          "table": "underway"
+        },
+        "CP1:177": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "dataMonth": "2026-08",
+          "scheduleStart": "2017-12",
+          "scheduleFinish": "2020-06",
+          "table": "completed"
+        },
+        "CP1:200": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "dataMonth": "2026-08",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2020-02",
+          "table": "completed"
+        },
+        "CP1:194": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "dataMonth": "2026-08",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2026-02",
+          "table": "completed"
+        },
+        "CP1:188": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "dataMonth": "2026-08",
+          "scheduleStart": "2018-11",
+          "scheduleFinish": "2020-03",
+          "table": "completed"
+        },
+        "CP1:196": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "dataMonth": "2026-08",
+          "scheduleStart": "2019-05",
+          "scheduleFinish": "2020-09",
+          "table": "completed"
+        },
+        "CP1:186": {
+          "completion": 0.99,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "dataMonth": "2026-08",
+          "scheduleStart": "2018-09",
+          "scheduleFinish": "2019-09",
+          "table": "completed"
+        },
+        "CP1:181": {
+          "completion": 0.99,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "dataMonth": "2026-08",
+          "scheduleStart": "2018-08",
+          "scheduleFinish": "2022-09",
+          "table": "completed"
+        },
+        "CP1:193": {
+          "completion": 1,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "dataMonth": "2026-08",
+          "scheduleStart": "2021-05",
+          "scheduleFinish": "2026-06",
+          "table": "completed"
+        },
+        "CP1:175": {
+          "completion": 0.75,
+          "sourceId": "cvsr",
+          "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "reportUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "dataMonth": "2026-08",
+          "scheduleStart": "2024-12",
+          "scheduleFinish": "2026-07",
           "table": "underway"
         },
         "CP2-3:118": {
@@ -13371,6 +13962,180 @@
           "table": "completed"
         }
       },
+      "perStructure": {
+        "4b135b9b-0265-4bb3-8fdf-c9cba22cd460": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "c3ceec97-6971-418d-912e-3b64c831c777": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "5c4c543a-97cf-4bf8-b056-be6a37c5d649": {
+          "completion": 0.5,
+          "table": "underway"
+        },
+        "706574fb-83f2-4b37-a0c1-ce9fdbd1efd7": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "b465c82c-07e5-431b-9be5-34f03a1e21c3": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "35855fd1-46ac-44b7-a587-7fdb3cb71486": {
+          "completion": 0.75,
+          "table": "underway"
+        },
+        "4fdf460c-6e3f-4190-9092-9cb278839552": {
+          "completion": 0.82,
+          "table": "underway"
+        },
+        "996baabb-f54c-41a0-b58c-ea95bd82515b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "9dd208a3-a160-4cf1-9a58-e80b2f4946d9": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "6b8c91de-e76f-4c0d-a0b2-f097b433d349": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "5cec2249-a923-46d1-ab32-cb10d1d416eb": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "a321a15d-2add-4bbe-8286-d370cf88180b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "271a4b3f-079d-42c4-85b7-1bfcf8802bc9": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "96777523-e9dd-45bc-a90a-c7b5df70fcc6": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "16df7cd4-b458-4c04-a31f-3065a0c96d4e": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "e2cc637e-57ed-4e28-a62a-17bc722766ee": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "5a31c2e7-032c-4b24-a601-91d100a29d34": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "e48808cc-570a-476b-ba74-0217ad670886": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "37b3f86e-fab2-46d3-a299-21c5235387cd": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "29c432d7-29ce-4278-ac5a-83c2e891bcbc": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "af56fa57-ecaf-4252-a03b-faf6cf999e54": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "f18165fc-4f7a-4583-ab91-25875834b4fb": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "2eb51002-fcc2-4ce7-8e40-165129bc020b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "74cfef2f-baf3-4fc6-8a44-21e7a17596d1": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "30446461-3764-4ceb-b2da-db9e515a691a": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "8376a91b-aa51-485b-9cf2-efe28e201522": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "09c6365c-3528-47e3-980f-fd992fbd789b": {
+          "completion": 0.85,
+          "table": "underway"
+        },
+        "8db0f6ce-0dbf-4132-8134-ffd39ca8eb37": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "ada3aaa3-d793-4a1c-8796-731b7e79899b": {
+          "completion": 0.93,
+          "table": "underway"
+        },
+        "235eb26c-7879-48d0-9d64-f86d80261e8a": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "8cd42a12-4814-4485-9398-0c2b9492fe9f": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "1eb82982-9662-4c8f-9031-ab5f6005326d": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "43195a4a-d438-48fb-a793-03730e72e403": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "b1de8484-57cd-4dba-854b-3e759822e786": {
+          "completion": 0.61,
+          "table": "underway"
+        },
+        "6343dc8a-0041-47e4-b1a9-1bb2cd7db20b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "ecd5ef3b-089e-4ea2-9b74-93fa0c090faf": {
+          "completion": 0.92,
+          "table": "completed"
+        },
+        "dcd4e7da-dfa5-4cf6-baa7-21ee93dc109c": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "c10fe0d1-5a20-4738-bcb2-1d4567944d5b": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "631c61a9-e20c-42e8-ac16-79df1d868b83": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "4f63c6ec-f81a-4c46-9b88-4447d0620d29": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "30230ea3-cc03-4eba-a756-445c261736a7": {
+          "completion": 1,
+          "table": "completed"
+        },
+        "3633ed8b-91a5-4751-9449-524cf67275cf": {
+          "completion": 0.58,
+          "table": "underway"
+        },
+        "91c87fbd-5d6d-4335-b72b-017cae6867ee": {
+          "completion": 1,
+          "table": "completed"
+        }
+      },
       "structureEvidence": [
         {
           "id": "cvsr-row-fa-central-valley-status-report-october-2026-a11y-muscat-ave",
@@ -13475,6 +14240,71 @@
           "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
           "sourceId": "cvsr",
           "quote": "Fresno River Viaduct 501 -- 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-october-2026-a11y-ave-8-to-viaduct-203-at-sjr",
+          "segmentId": "CP1:177",
+          "claim": "completed",
+          "date": "2020-06",
+          "datePrecision": "month",
+          "label": "Ave 8 to Viaduct 203 at SJR",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 8 to Viaduct 203 at SJR (1.82 Miles) -- 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-october-2026-a11y-ave-9-to-ave-8",
+          "segmentId": "CP1:200",
+          "claim": "completed",
+          "date": "2020-02",
+          "datePrecision": "month",
+          "label": "Ave 9 to Ave 8",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 9 to Ave 8 (1.14 Miles) -- 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-october-2026-a11y-ave-11-to-ave-10",
+          "segmentId": "CP1:188",
+          "claim": "completed",
+          "date": "2020-03",
+          "datePrecision": "month",
+          "label": "Ave 11 to Ave 10",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 11 to Ave 10 (1.02 Miles) -- 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-october-2026-a11y-ave-12-to-ave-11",
+          "segmentId": "CP1:196",
+          "claim": "completed",
+          "date": "2020-09",
+          "datePrecision": "month",
+          "label": "Ave 12 to Ave 11",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "Ave 12 to Ave 11 (1.03 Miles) -- 100%"
+        },
+        {
+          "id": "cvsr-row-fa-central-valley-status-report-october-2026-a11y-n1a-boundary-to-viaduct-501",
+          "segmentId": "CP1:193",
+          "claim": "completed",
+          "date": "2026-06",
+          "datePrecision": "month",
+          "label": "N1A Boundary to Viaduct 501",
+          "sourceTitle": "Central Valley Status Report",
+          "sourceUrl": "https://hsr.ca.gov/wp-content/uploads/2026/10/FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "reportFile": "FA-Central-Valley-Status-Report-October-2026-A11Y.pdf",
+          "sourceId": "cvsr",
+          "quote": "N1A Boundary to Viaduct 501 (1.03 Miles) -- 100%"
         },
         {
           "id": "cvsr-row-fa-central-valley-status-report-october-2026-a11y-cairo-ave",
@@ -14196,37 +15026,7 @@
         {
           "cp": "CP1",
           "kind": "structure",
-          "location": "American Ave"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "E Central Avenue"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Church Ave"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Tuolumne Bridge"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Belmont Avenue"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
           "location": "Olive Ave"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "McKinley"
         },
         {
           "cp": "CP1",
@@ -14237,66 +15037,6 @@
           "cp": "CP1",
           "kind": "structure",
           "location": "Herndon UPRR Bridge"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 7"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 8"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 9"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 10"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 11"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 12 HST"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 12 BNSF"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 15"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 15.5"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Avenue 17"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Road 27"
-        },
-        {
-          "cp": "CP1",
-          "kind": "structure",
-          "location": "Road 26"
         },
         {
           "cp": "CP1",
@@ -14341,52 +15081,7 @@
         {
           "cp": "CP1",
           "kind": "guideway",
-          "location": "Clinton Ave Connector to Fresno Trench"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Caltrans Section"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Viaduct 203 at SJR to Herndon Canal"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
           "location": "Viaduct 203.2 San Joaquin River Crossing"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 8 to Viaduct 203 at SJR"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 9 to Ave 8"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 10 to Ave 09"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 11 to Ave 10"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Ave 12 to Ave 11"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "Cottonwood Creek Test Strip to Ave 12"
         },
         {
           "cp": "CP1",
@@ -14396,147 +15091,7 @@
         {
           "cp": "CP1",
           "kind": "guideway",
-          "location": "Viaduct 501 at Fresno River to Cottonwood Creek"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
           "location": "HST Viaduct 501 - Fresno River-18 Bents"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "N1A Boundary to Viaduct 501"
-        },
-        {
-          "cp": "CP1",
-          "kind": "guideway",
-          "location": "GW North Extension"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Fargo Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Flint Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Excelsior Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Dover Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Davis Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Fowler Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Elkhorn Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Mt. View"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Nebraska Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Floral Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Manning Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "South Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Adams Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Ave 56"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Ave 88"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Ave 120"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Corcoran HWY"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "SR 43 Curved Bridge"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Kansas Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Kent Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "SR 43 Jersey"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Jackson Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Idaho Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Houston Ave"
-        },
-        {
-          "cp": "CP2-3",
-          "kind": "structure",
-          "location": "Hanford Armona"
         }
       ],
       "program": {

@@ -14,13 +14,14 @@ export function evidenceDateLabel(evidence: StructureEvidence): string {
   return `by ${formatted}`;
 }
 
-export function structureObservationLabel(
-  structure: Segment['structures'][number],
-  selectedDate: string,
-): string {
-  const observed = structure.observedAt.slice(0, 10);
-  if (observed <= selectedDate.slice(0, 10)) {
-    return `${structure.status}, observed as of ${observed}`;
-  }
-  return `Location marker; ${structure.status} observed as of ${observed}, after selected date`;
+const BASIS_PHRASE = {
+  arcgis: (observedAt: string) => `ArcGIS layer last edited ${observedAt.slice(0, 10)}`,
+  cvsr: (observedAt: string) => `CVSR ${observedAt.slice(0, 7)} data`,
+  announcement: (observedAt: string) => `announced ${observedAt}`,
+} as const;
+
+export function structureObservationLabel(structure: Segment['structures'][number], selectedDate: string): string {
+  const observed = structure.observedAt.length === 7 ? `${structure.observedAt}-01` : structure.observedAt.slice(0, 10);
+  const phrase = `${structure.status}, ${BASIS_PHRASE[structure.basis](structure.observedAt)}`;
+  return observed <= selectedDate.slice(0, 10) ? phrase : `Location marker; ${phrase}, after selected date`;
 }

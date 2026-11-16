@@ -80,6 +80,19 @@ export function NotesList({ gaps, revisions, overlapMiles }: {
           layer publishes. <SourceLink sourceId="arcgis_progress" /> <SourceLink sourceId="cvsr" />
         </li>
         <li>
+          <b>Current.</b> The last tick is not a month. It shows the newest status report plus any
+          completion the Authority has announced since: a dated announcement turns a structure
+          complete until a report covering that month is published, and then the report
+          controls. <SourceLink sourceId="hsr_hanford_2026" /> The report counts a structure
+          complete at substantial completion, so its count runs ahead of the news releases’: 70 of
+          92 in the August-2026 data against 66 announced on October 7,
+          2026. <SourceLink sourceId="cvsr_2026_10" page="p. 6" />{' '}
+          <SourceLink sourceId="hsr_four_structures_2026" /> Named structures show the newest of
+          three sources: an announcement, the status report’s row, or the ArcGIS layer, which is
+          dated by the Authority’s last edit and not by when this page polled
+          it. <SourceLink sourceId="hsr_corcoran_2026" /> <SourceLink sourceId="arcgis_structures" />
+        </li>
+        <li>
           <b>Track installation.</b> Exhibit D.0 of the 2026 Final Business Plan lists Track &amp;
           Systems Design &amp; Construction for the 119-mile Central Valley Segment as NOT
           STARTED <SourceLink sourceId="bp2026_schedule" />, and the Authority’s 2026 milestones put

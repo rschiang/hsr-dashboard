@@ -46,15 +46,18 @@ Primary inputs:
 
 The citation registry lives in [`src/data/sources.ts`](src/data/sources.ts). Numeric claims in the UI resolve through that registry.
 Reviewed dated structure claims live in [`src/data/structure-evidence.ts`](src/data/structure-evidence.ts). Stable ArcGIS GlobalIDs in its crosswalk—not name similarity or spatial proximity—attach named projects to progress segments.
+Reviewed CVSR row pairings live in [`src/data/cvsr-row-crosswalk.ts`](src/data/cvsr-row-crosswalk.ts): structure rows to strip segments, CP1 guideway rows to the segments they span (checked by station length), and structure rows to ArcGIS named structures that are not strip segments.
 
 ### Replay tiers
 
 | Tier | Meaning | Resolution |
 |---|---|---|
-| 1 | Observed metrics parsed from monthly Central Valley Status Reports | Package metrics for all 90 months; per-segment observations for six reports: June 2026 (March 2026 data, 72 rows), June 24, 2026 (April 2026 data, 85 rows), July 2026 (May 2026 data, 85 rows), August 2026 (June 2026 data, 85 rows), September 2026 (July 2026 data, 85 rows), and October 2026 (August 2026 data, 85 rows, hand-transcribed) |
-| 2 | One BuildHSR ArcGIS poll: what the layers returned at a single recorded instant | Per segment, applied to the last scrubber tick only |
+| 1 | Observed metrics parsed from monthly Central Valley Status Reports | Package metrics for all 90 months; per-segment observations for six reports: June 2026 (March 2026 data, 78 segments), June 24, 2026 (April 2026 data, 98 segments), July 2026 (May 2026 data, 98 segments), August 2026 (June 2026 data, 98 segments), September 2026 (July 2026 data, 98 segments), and October 2026 (August 2026 data, 98 segments, hand-transcribed); the same reports carry rows for 43 named structures (25 in the March data) |
+| 2 | The BuildHSR ArcGIS progress layer's present state, dated by the layer's own last edit | Only the segments no CVSR row covers |
 
-**CVSR is the replay spine.** This is a ten-year program and monthly granularity sits comfortably against it. The status reports are the stable record: a published data month, a fixed PDF that can be re-read years later, and a correction trail when the Authority restates a figure. ArcGIS is realtime and therefore volatile — it can regress or blank out between reads, and none of it is archived. Tier 2 overlays the last tick during the two to three months before a report lands; once a report covering that month is published the poll is superseded and dropped, and tier 1 controls.
+**CVSR is the replay spine.** This is a ten-year program and monthly granularity sits comfortably against it. The status reports are the stable record: a published data month, a fixed PDF that can be re-read years later, and a correction trail when the Authority restates a figure. ArcGIS is realtime and therefore volatile — it can regress or blank out between reads, and none of it is archived. Every ArcGIS value is dated by the layer's last edit, never by the poll: a poll proves the server answered, not that the Authority reviewed a status.
+
+**The last tick is "Current".** When dated evidence is newer than the last report, `history.json` carries `currentDate` and the scrubber ends on it. There a completion the Authority announced after the report's data month (`STRUCTURE_EVIDENCE`, `NAMED_STRUCTURE_ANNOUNCEMENTS`) turns the structure complete; once a report covering that month is published, the report controls again. Named structures read the newest of announcement, CVSR row, and ArcGIS, in that precedence.
 
 Months with no observation behind them are filled by a schedule reconstruction from published segment start/finish dates, clamped to current observed completion (`scheduledStatus`). It is a computed fallback, not a stored tier — no `Snapshot` carries it.
 
@@ -108,7 +111,7 @@ Refresh ArcGIS inputs and rebuild the centerline, segments, and history:
 npm run fetch
 ```
 
-The pipeline writes static artifacts under `public/data/`. Raw ArcGIS responses are cached under `data/raw/arcgis/` so the latest committed snapshot remains reproducible if a query-only source changes or disappears.
+The pipeline writes static artifacts under `public/data/`. Raw ArcGIS responses are cached under `data/raw/arcgis/` so the latest committed snapshot remains reproducible if a query-only source changes or disappears. A re-fetch that differs from the cache only by last-digit coordinate noise leaves the cached file untouched, so it never reads as a refresh.
 
 ### Central Valley Status Reports
 
@@ -157,6 +160,11 @@ silently gone stale before.
    definitions behind the legend captions, and the `CVS 119 Track and System Installation Forecast`
    page behind the **Track installation** note and the Track chip. If the forecast's start quarter
    moves, update both the note and `TRACK_ARIA_LABEL` in `src/App.tsx`.
+8. Completions the Authority announced since the report's data month are registered: a release in
+   `src/data/sources.ts`, a `STRUCTURE_EVIDENCE` entry for a strip segment or a
+   `NAMED_STRUCTURE_ANNOUNCEMENTS` entry for any other named structure. The **Current** note in
+   `src/components/Notes.tsx` quotes the report's and the releases' structure counts; update both
+   figures together.
 
 ## Validation
 
@@ -175,7 +183,7 @@ The data scripts also enforce corridor invariants, including TS1 section totals,
 - Parcels delivered to the design-builder are not published for 2019-09 through 2020-01. Acquisition is shown separately; the January-data report exposes only a March 9 audit, not an exact January package split.
 - Package utility relocation counts are not published for 2019-03 through 2020-07.
 - ArcGIS structure-row `Completion` is null; current percentages come from cited CVSR row observations.
-- CP1 guideway decompositions do not have a one-to-one CVSR/ArcGIS crosswalk. Unmatched CVSR rows remain recorded in the generated artifact.
+- CP1 guideway rows `HST Guideway`, `Fresno St to SR 41` and `Jensen Trench` (6.83 mi against `CP1:173` + `CP1:191`, 6.80 mi) have no one-to-one split and stay unpaired, as do CP1 structure rows `Olive Ave`, `Shaw Avenue` and `Herndon UPRR Bridge`, which have no ArcGIS record. Unmatched CVSR rows remain recorded in the generated artifact.
 
 ## Static deployment
 

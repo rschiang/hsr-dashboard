@@ -13,26 +13,21 @@ function monthSequence(start: string, end: string): string[] {
 }
 
 /**
- * The one observation a fetch can honestly produce. The ArcGIS feature services
- * expose only their present state, so each poll yields exactly one snapshot and
- * nothing reconstructs a poll that was never taken.
+ * The one observation the ArcGIS progress layer can honestly produce: its present state,
+ * dated by the layer's own last edit. It holds only the segments whose completion still
+ * comes from the layer, so it can never shadow a CVSR row.
  */
-function observedSnapshot(polledAt: string, segments: Segment[]): Snapshot {
+function observedSnapshot(observedAt: string, polledAt: string, segments: Segment[]): Snapshot {
   return {
-    date: polledAt.slice(0, 10),
+    date: observedAt.slice(0, 10),
     tier: 2,
     polledAt,
     sourceId: 'arcgis_progress',
-    perSegment: Object.fromEntries(segments.map((segment) => [
-      segment.id,
-      {
-        completion: segment.completion,
-        sourceId: segment.sourceId === 'cvsr' ? 'cvsr' : 'arcgis_progress',
-        ...(segment.sourceId === 'cvsr' && (segment.currentStatus === 'structure_complete' || segment.currentStatus === 'guideway_complete')
-          ? { table: 'completed' as const }
-          : {}),
-      },
-    ])),
+    perSegment: Object.fromEntries(
+      segments
+        .filter((segment) => segment.kind !== 'no-data' && segment.sourceId === 'arcgis_progress' && segment.completion !== null)
+        .map((segment) => [segment.id, { completion: segment.completion, sourceId: 'arcgis_progress' as const }]),
+    ),
   };
 }
 
@@ -55,13 +50,10 @@ if (lastPublishedMonth === undefined) {
   throw new Error('No tier 1 CVSR snapshots: the replay axis has no published month to end on');
 }
 
-// A poll is the leading edge only until CVSR publishes a report covering its month.
-// After that the report is the controlling verdict and the poll has no UI role, so it
-// never reaches the browser artifact — which keeps the supersession rule out of
-// deriveStatuses and selectedCompletions entirely.
-const poll = observedSnapshot(artifact.generatedAt, artifact.segments);
-const pollSuperseded = poll.date.slice(0, 7) <= lastPublishedMonth.slice(0, 7);
-if (!pollSuperseded) snapshots.push(poll);
+// Per-segment precedence in deriveStatuses (the newest snapshot containing the segment)
+// ranks the layer observation against the reports; it holds none of the segments a
+// report covers.
+snapshots.push(observedSnapshot(artifact.arcgisProgressEditedAt ?? artifact.generatedAt, artifact.generatedAt, artifact.segments));
 snapshots.sort((a, b) => a.date.localeCompare(b.date) || a.tier - b.tier);
 
 // The replay ends on the last month CVSR actually published. A month past it has
@@ -70,11 +62,14 @@ snapshots.sort((a, b) => a.date.localeCompare(b.date) || a.tier - b.tier);
 // observation come from published Start/Finish dates via scheduledStatus; no
 // completion number is invented.
 const replayMonths = monthSequence('2018-11-01', lastPublishedMonth);
+// The final 'Current' tick exists only when dated evidence is newer than the last report.
+const currentDate = artifact.currentAsOf.slice(0, 7) > lastPublishedMonth.slice(0, 7) ? artifact.currentAsOf : undefined;
 
 const history: HistoryArtifact = {
   generatedAt: artifact.generatedAt,
   replayMonths,
   snapshots,
+  ...(currentDate ? { currentDate } : {}),
   cvsrInventory: parsed.cvsrInventory,
 };
 await writeFile('public/data/history.json', `${JSON.stringify(history)}\n`);
@@ -82,4 +77,4 @@ const counts = snapshots.reduce<Record<number, number>>((result, snapshot) => {
   result[snapshot.tier] = (result[snapshot.tier] ?? 0) + 1;
   return result;
 }, {});
-console.log(`history: months=${replayMonths.length} (through ${lastPublishedMonth.slice(0, 7)}), tier 1=${counts[1] ?? 0}, tier 2=${counts[2] ?? 0}${pollSuperseded ? ` (poll ${poll.date} superseded, dropped)` : ''}`);
+console.log(`history: months=${replayMonths.length} (through ${lastPublishedMonth.slice(0, 7)}), tier 1=${counts[1] ?? 0}, tier 2=${counts[2] ?? 0}${currentDate ? `, current ${currentDate}` : ''}`);
