@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-10T22:30:03.639Z",
+  "fetchedAt": "2026-11-17T23:56:07.357Z",
   "sources": [
     {
       "name": "alignment",
@@ -17,7 +17,7 @@
       "name": "structures",
       "url": "https://services3.arcgis.com/rGGp0aiv6Rf11t2H/arcgis/rest/services/Closures_and_Detours_Public/FeatureServer/0/query",
       "stale": false,
-      "dataLastEditedAt": "2026-06-04T15:19:16.064Z"
+      "dataLastEditedAt": "2026-11-17T17:31:07.521Z"
     },
     {
       "name": "stations",
